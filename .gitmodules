@@ -1,0 +1,3 @@
+[submodule "faker"]
+	path = faker
+	url = git@github.com:stympy/faker.git
