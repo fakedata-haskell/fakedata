@@ -17,7 +17,10 @@ import System.Random
 
 data FakerSettings = FakerSettings { locale :: Text, randomGen :: StdGen } deriving (Show)
 
-data FakerException = InvalidLocale String deriving (Typeable, Show)
+data FakerException = InvalidLocale String
+                    | InvalidField String Text
+                      deriving (Typeable, Show)
+
 instance Exception FakerException
 
 defaultFakerSettings :: FakerSettings

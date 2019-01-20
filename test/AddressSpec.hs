@@ -32,3 +32,12 @@ spec = do
     it "produces random integer only for hash" $ do
        txt <- interpolateNumbers "ab-##"
        txt `shouldSatisfy` (\x -> T.length x == 5 && (T.take 3 x == "ab-"))
+    it "resolve field" $ do
+       let field = resolveFields "#{community_prefix} #{community_suffix}"
+       field `shouldBe` ["community_prefix", "community_suffix"]
+    it "resolve field with dot" $ do
+       let field = resolveFields "#{city_prefix} #{Name.first_name}#{city_suffix}"
+       field `shouldBe` ["city_prefix", "Name.first_name", "city_suffix"]
+    it "resolve field with commas" $ do
+       let field = resolveFields "#{secondary_address} #{street_address}, #{city}, #{state_abbr} #{zip_code}"
+       field `shouldBe` ["secondary_address", "street_address", "city", "state_abbr", "zip_code"]

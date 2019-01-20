@@ -41,12 +41,15 @@ addressFile fname = do
   then pure fname
   else throwM $ InvalidLocale fname
 
-countries :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-countries settings = do
+fetchData :: (MonadThrow m, MonadIO m) => FakerSettings -> (Value -> Parser a) -> m a
+fetchData settings parser = do
   let fname = guessAddressFile (fakerLocale settings)
   afile <- addressFile fname
   yaml <- decodeFileThrow afile
-  parseMonad parseCountry yaml
+  parseMonad parser yaml
+
+countries :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+countries settings = fetchData settings parseCountry
 
 newtype Unresolved a = Unresolved { unresolvedField :: a } deriving (Functor)
 
@@ -65,6 +68,64 @@ parseBuildingNumber (Object obj) = do
   building_number <- address .: "building_number"
   pure $ pure $ building_number
 parseBuildingNumber val = fail $ "expected Object, but got " <> (show val)
+
+parseAddress :: Object -> Parser Object
+parseAddress obj = do
+  en <- obj .: "en"
+  faker <- en .: "faker"
+  (Object address) <- faker .: "address"
+  pure address
+
+parseCommunityPrefix :: Value -> Parser (Vector Text)
+parseCommunityPrefix (Object obj) = do
+  address <- parseAddress obj
+  community_prefix <- address .: "community_prefix"
+  pure community_prefix
+parseCommunityPrefix val = fail $ "expected Object, but got " <> (show val)
+
+parseCommunitySuffix :: Value -> Parser (Vector Text)
+parseCommunitySuffix (Object obj) = do
+  address <- parseAddress obj
+  community_suffix <- address .: "community_suffix"
+  pure community_suffix
+parseCommunitySuffix val = fail $ "expected Object, but got " <> (show val)
+
+communitySuffix :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+communitySuffix settings = fetchData settings parseCommunitySuffix
+
+communityPrefix :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+communityPrefix settings = fetchData settings parseCommunityPrefix
+
+parseCommunity :: Value -> Parser (Unresolved (Vector Text))
+parseCommunity (Object obj) = do
+  address <- parseAddress obj
+  community <- address .: "community"
+  pure $ pure community
+parseCommunity val = fail $ "expected Object, but got " <> (show val)
+
+resolveCommunityField :: (MonadThrow m) => FakerSettings -> Text -> m Text
+resolveCommunityField settings "community_suffix" = undefined --pick one from communitySuffix
+resolveCommunityField settings "community_prefix" = undefined --pick one from communityPrefix
+resolveCommunityField settings str = throwM $ InvalidField "community" str
+
+
+resolveCommunityText :: Text -> IO Text
+resolveCommunityText txt = undefined -- interoperate based on `txt`. Need to use `resolveCommunityField` function.
+    where
+      fields = resolveFields txt
+
+extractSingleField :: Text -> (Text, Text)
+extractSingleField txt = let (field, remaining) = T.span (\x -> x /= '}') txt''
+                         in (T.drop 2 field, T.drop 1 remaining)
+    where
+      txt' = strip txt
+      txt'' = snd $ T.span (\x -> x /= '#') txt'
+
+resolveFields :: Text -> [Text]
+resolveFields txt = let (field, remaining) = extractSingleField txt
+                    in case T.null remaining of
+                         True -> [field]
+                         False -> [field] <> resolveFields remaining
 
 digitToChar :: Int -> Char
 digitToChar 0 = '0'
@@ -95,6 +156,8 @@ randomIntText acc c = if isHash c
 
 interpolateNumbers :: Text -> IO Text
 interpolateNumbers txt = T.foldl' randomIntText (pure T.empty) txt
+
+
 
 interpolateAddress :: (MonadThrow m, MonadIO m) => Text -> m Text
 interpolateAddress = undefined -- you have to use random function here
