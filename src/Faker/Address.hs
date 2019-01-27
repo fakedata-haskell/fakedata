@@ -9,6 +9,7 @@ import Data.Yaml
 import Faker
 import Config
 import Data.Vector
+import qualified Data.Vector as V
 import Control.Monad.Catch
 import Data.Text
 import System.Directory (doesFileExist)
@@ -103,12 +104,21 @@ parseCommunity (Object obj) = do
   pure $ pure community
 parseCommunity val = fail $ "expected Object, but got " <> (show val)
 
-resolveCommunityField :: (MonadThrow m) => FakerSettings -> Text -> m Text
-resolveCommunityField settings "community_suffix" = undefined --pick one from communitySuffix
-resolveCommunityField settings "community_prefix" = undefined --pick one from communityPrefix
+-- todo: i don't think this is proper random. Running it multiple times will give the same result. check it.
+resolveCommunityField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveCommunityField settings "community_suffix" = do
+  csuffix <- communitySuffix settings
+  let csuffixLen = V.length csuffix
+      (index, _) = randomR (0, csuffixLen) (getRandomGen settings)
+  pure $ csuffix ! index
+resolveCommunityField settings "community_prefix" = do
+  cprefix <- communityPrefix settings
+  let cprefixLen = V.length cprefix
+      (index, _) = randomR (0, cprefixLen) (getRandomGen settings)
+  pure $ cprefix ! index
 resolveCommunityField settings str = throwM $ InvalidField "community" str
 
-
+-- > resolveCommunityText "#{community_prefix} #{community_suffix}"
 resolveCommunityText :: Text -> IO Text
 resolveCommunityText txt = undefined -- interoperate based on `txt`. Need to use `resolveCommunityField` function.
     where

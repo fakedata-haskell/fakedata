@@ -6,6 +6,7 @@ module Faker
       defaultFakerSettings,
       setLocale,
       setRandomGen,
+      getRandomGen,
       FakerException (..),
       fakerLocale
     ) where
@@ -31,6 +32,9 @@ setLocale localeTxt fs = fs { locale = localeTxt }
 
 setRandomGen :: StdGen -> FakerSettings -> FakerSettings
 setRandomGen gen fs = fs { randomGen = gen}
+
+getRandomGen :: FakerSettings -> StdGen
+getRandomGen settings = randomGen settings
 
 fakerLocale :: FakerSettings -> Text
 fakerLocale FakerSettings {..} = locale
