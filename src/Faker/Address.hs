@@ -9,7 +9,7 @@ module Faker.Address where
 import Data.Yaml
 import Faker
 import Config
-import Data.Vector
+import Data.Vector (Vector, (!))
 import qualified Data.Vector as V
 import Control.Monad.Catch
 import Data.Text
@@ -143,12 +143,18 @@ operateField origWord word = helper origWord word []
                    Nothing -> origWord
                    Just (c, rem2) -> helper rem2 word (acc <> [c])
 
+operateFields :: Text -> [Text] -> Text
+operateFields origWord [] = origWord
+operateFields origWord (x:xs) = operateFields (operateField origWord x) xs
+
 dropTillBrace :: Text -> Text
 dropTillBrace txt = T.dropWhile (== '}') $ T.dropWhile (/= '}') txt
 
 -- > resolveCommunityText "#{community_prefix} #{community_suffix}"
-resolveCommunityText :: Text -> IO Text
-resolveCommunityText txt = undefined -- interoperate based on `txt`. Need to use `resolveCommunityField` function. And probably use foldr and operatedField ?
+resolveCommunityText :: FakerSettings -> Text -> IO Text
+resolveCommunityText settings txt = do
+    communityFields :: [Text] <- mapM (resolveCommunityField settings) fields
+    pure $ operateFields txt communityFields
     where
       fields = resolveFields txt
 

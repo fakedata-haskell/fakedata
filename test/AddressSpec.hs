@@ -69,3 +69,16 @@ spec = do
       it "edge case" $ do
         let item = operateField "this is" "jam"
         item `shouldBe` "this is"
+    describe "operateFields" $ do
+      it "sample example" $ do
+        let item = operateFields "#{hello} #{world}" ["jam", "cream"]
+        item `shouldBe` "jam cream"
+      it "leading space example" $ do
+        let item = operateFields " #{hello} #{world}" ["jam", "cream"]
+        item `shouldBe` " jam cream"
+      it "extra arguments" $ do
+        let item = operateFields " #{hello} #{world} kool" ["jam", "kool", "name"]
+        item `shouldBe` " jam kool kool"
+    it "resolveCommunityText" $ do
+      item <- resolveCommunityText defaultFakerSettings "#{community_prefix} #{community_suffix}"
+      item `shouldSatisfy` (\x -> T.length x > 0 && T.any (== ' ') item)
