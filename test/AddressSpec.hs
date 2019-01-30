@@ -53,3 +53,19 @@ spec = do
     it "resolveCommunityField" $ do
       item <- resolveCommunityField defaultFakerSettings "community_suffix"
       item `shouldSatisfy` (\x -> T.length x > 0)
+    it "uncons2" $ do
+      let item = uncons2 "hello"
+      item `shouldBe` Just ("he" :: String, "llo" :: Text)
+    describe "operateField" $ do
+      it "sample example" $ do
+        let item = operateField "#{hello} #{world}" "jam"
+        item `shouldBe` "jam #{world}"
+      it "leading space example" $ do
+        let item = operateField " #{hello} #{world}" "jam"
+        item `shouldBe` " jam #{world}"
+      it "trailing chars" $ do
+        let item = operateField " #{hello} #{world} kool" "jam"
+        item `shouldBe` " jam #{world} kool"
+      it "edge case" $ do
+        let item = operateField "this is" "jam"
+        item `shouldBe` "this is"

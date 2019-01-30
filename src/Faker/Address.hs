@@ -1,6 +1,7 @@
 {-#LANGUAGE OverloadedStrings#-}
 {-#LANGUAGE DeriveFunctor#-}
 {-#LANGUAGE GeneralizedNewtypeDeriving#-}
+{-#LANGUAGE BangPatterns#-}
 {-#LANGUAGE ScopedTypeVariables#-}
 
 module Faker.Address where
@@ -17,6 +18,7 @@ import System.FilePath
 import Control.Monad.IO.Class
 import qualified Data.Text as T
 import System.Random
+import Debug.Trace
 
 parseCountry :: Value -> Parser (Vector Text)
 parseCountry (Object obj) = do
@@ -118,9 +120,35 @@ resolveCommunityField settings "community_prefix" = do
   pure $ cprefix ! index
 resolveCommunityField settings str = throwM $ InvalidField "community" str
 
+uncons2 :: Text -> Maybe (String, Text)
+uncons2 txt = do
+   (c1, rem1) <- T.uncons txt
+   (c2, rem2) <- T.uncons rem1
+   pure $ ((c1:[c2]), rem2)
+
+-- operateField "#{hello} #{world}" "jam"
+-- "jam #{world}"
+operateField :: Text -> Text -> Text
+operateField origWord word = helper origWord word []
+  where
+    helper :: Text -> Text -> String -> Text
+    helper txt word acc =
+      case uncons2 txt of
+        Nothing -> origWord
+        Just (str, rem) ->
+          if str == "#{"
+            then let actualRem = dropTillBrace rem
+                  in (T.pack acc) <> word <> actualRem
+            else case T.uncons txt of
+                   Nothing -> origWord
+                   Just (c, rem2) -> helper rem2 word (acc <> [c])
+
+dropTillBrace :: Text -> Text
+dropTillBrace txt = T.dropWhile (== '}') $ T.dropWhile (/= '}') txt
+
 -- > resolveCommunityText "#{community_prefix} #{community_suffix}"
 resolveCommunityText :: Text -> IO Text
-resolveCommunityText txt = undefined -- interoperate based on `txt`. Need to use `resolveCommunityField` function.
+resolveCommunityText txt = undefined -- interoperate based on `txt`. Need to use `resolveCommunityField` function. And probably use foldr and operatedField ?
     where
       fields = resolveFields txt
 
