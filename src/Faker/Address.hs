@@ -11,6 +11,7 @@ import Faker
 import Config
 import Data.Vector (Vector, (!))
 import qualified Data.Vector as V
+import Data.Map.Strict (Map)
 import Control.Monad.Catch
 import Data.Text
 import System.Directory (doesFileExist)
@@ -20,7 +21,7 @@ import qualified Data.Text as T
 import System.Random
 import Debug.Trace
 
-parseAddress :: Value -> Parser Object
+parseAddress :: FromJSON a => Value -> Parser a
 parseAddress (Object obj) = do
   en <- obj .: "en"
   faker <- en .: "faker"
@@ -28,21 +29,50 @@ parseAddress (Object obj) = do
   pure address
 parseAddress val = fail $ "expected Object, but got " <> (show val)
 
-parsePostCode = undefined
-parseStreetSuffix = undefined
-parseState = undefined
+parseAddressField :: FromJSON a => Text -> Value -> Parser a
+parseAddressField txt val = do
+  address <- parseAddress val
+  field <- address .: txt
+  pure field
 
-parseCountry :: Value -> Parser (Vector Text)
+parseUnresolvedAddressField :: FromJSON a => Text -> Value -> Parser (Unresolved a)
+parseUnresolvedAddressField txt val = do
+  address <- parseAddress val
+  field <- address .: txt
+  pure $ pure field
+
+parseCityPrefix :: FromJSON a => Value -> Parser a
+parseCityPrefix val = do
+  address <- parseAddress val
+  cityPrefix <- address .: "city_prefix"
+  pure cityPrefix
+
+parseCitySuffix :: FromJSON a => Value -> Parser a
+parseCitySuffix val = do
+  address <- parseAddress val
+  citySuffix <- address .: "city_suffix"
+  pure citySuffix
+
+parseCountry :: FromJSON a => Value -> Parser a
 parseCountry val = do
   address <- parseAddress val
   country <- address .: "country"
   pure country
 
-parseBuildingNumber :: Value -> Parser (Unresolved (Vector Text))
-parseBuildingNumber val = do
-  address <- parseAddress val
-  building_number <- address .: "building_number"
-  pure $ pure $ building_number
+parseCountryByCode :: FromJSON a => Value -> Parser a
+parseCountryByCode = parseAddressField "country_by_code"
+
+parseCountryByName :: FromJSON a => Value -> Parser a
+parseCountryByName = parseAddressField "country_by_name"
+
+parseCountryCode :: FromJSON a => Value -> Parser a
+parseCountryCode = parseAddressField "country_code"
+
+parseCountryCodeLong :: FromJSON a => Value -> Parser a
+parseCountryCodeLong = parseAddressField "country_code_long"
+
+parseBuildingNumber :: FromJSON a => Value -> Parser (Unresolved a)
+parseBuildingNumber = parseUnresolvedAddressField "building_number"
 
 parseCommunityPrefix :: Value -> Parser (Vector Text)
 parseCommunityPrefix val = do
@@ -62,6 +92,36 @@ parseCommunity val = do
   community <- address .: "community"
   pure $ pure community
 
+parseSecondaryAddress :: FromJSON a => Value -> Parser (Unresolved a)
+parseSecondaryAddress = parseUnresolvedAddressField "secondary_address"
+
+parsePostcode :: FromJSON a => Value -> Parser (Unresolved a)
+parsePostcode = parseUnresolvedAddressField "postcode"
+
+parsePostcodeByState :: FromJSON a => Value -> Parser (Unresolved a)
+parsePostcodeByState = parseUnresolvedAddressField "postcode_by_state"
+
+parseState :: FromJSON a => Value -> Parser a
+parseState = parseAddressField "state"
+
+parseStateAbbr :: FromJSON a => Value -> Parser a
+parseStateAbbr = parseAddressField "state_abbr"
+
+parseTimeZone :: FromJSON a => Value -> Parser a
+parseTimeZone = parseAddressField "time_zone"
+
+parseCity :: FromJSON a => Value -> Parser (Unresolved a)
+parseCity = parseUnresolvedAddressField "city"
+
+parseStreetName :: FromJSON a => Value -> Parser (Unresolved a)
+parseStreetName = parseUnresolvedAddressField "street_name"
+
+parseStreetAddress :: FromJSON a => Value -> Parser (Unresolved a)
+parseStreetAddress = parseUnresolvedAddressField "street_address"
+
+parseFullAddress :: FromJSON a => Value -> Parser (Unresolved a)
+parseFullAddress = parseUnresolvedAddressField "full_address"
+
 addressFileEn :: FilePath
 addressFileEn = localesEnDirectory </> "address.yml"
 
@@ -77,16 +137,6 @@ addressFile fname = do
   then pure fname
   else throwM $ InvalidLocale fname
 
-fetchData :: (MonadThrow m, MonadIO m) => FakerSettings -> (Value -> Parser a) -> m a
-fetchData settings parser = do
-  let fname = guessAddressFile (fakerLocale settings)
-  afile <- addressFile fname
-  yaml <- decodeFileThrow afile
-  parseMonad parser yaml
-
-countries :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-countries settings = fetchData settings parseCountry
-
 newtype Unresolved a = Unresolved { unresolvedField :: a } deriving (Functor)
 
 instance Applicative Unresolved where
@@ -96,27 +146,70 @@ instance Monad Unresolved where
     return = pure
     (Unresolved f) >>= f1 = f1 f
 
+fetchData :: (MonadThrow m, MonadIO m) => FakerSettings -> (Value -> Parser a) -> m a
+fetchData settings parser = do
+  let fname = guessAddressFile (fakerLocale settings)
+  afile <- addressFile fname
+  yaml <- decodeFileThrow afile
+  parseMonad parser yaml
 
-communitySuffix :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-communitySuffix settings = fetchData settings parseCommunitySuffix
+countriesProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+countriesProvider settings = fetchData settings parseCountry
 
-communityPrefix :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-communityPrefix settings = fetchData settings parseCommunityPrefix
+cityPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+cityPrefixProvider settings = fetchData settings parseCityPrefix
+
+citySuffixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+citySuffixProvider settings = fetchData settings parseCitySuffix
+
+countryByCodeProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Map Text Text)
+countryByCodeProvider settings = fetchData settings parseCountryByCode
+
+countryByNameProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Map Text Text)
+countryByNameProvider settings = fetchData settings parseCountryByName
+
+countryCodeProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+countryCodeProvider settings = fetchData settings parseCountryCode
+
+countryCodeLongProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+countryCodeLongProvider settings = fetchData settings parseCountryCodeLong
+
+buildingNumberProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
+buildingNumberProvider settings = fetchData settings parseBuildingNumber
+
+communityPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+communityPrefixProvider settings = fetchData settings parseCommunityPrefix
+
+communitySuffixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+communitySuffixProvider settings = fetchData settings parseCommunitySuffix
+
+communityProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
+communityProvider settings = fetchData settings parseCommunity
+
+resolveUnresolved :: (MonadThrow m, MonadIO m) => FakerSettings -> Unresolved (Vector Text) -> m Text
+resolveUnresolved settings (Unresolved unres) =
+    let unresLen = V.length unres
+        (index, _) = randomR (0, unresLen) (getRandomGen settings)
+        randomItem = unres ! index
+        resolve = if operateField randomItem "hello" == randomItem
+                  then resolveAddressField settings randomItem
+                  else interpolateNumbers randomItem
+    in resolve
 
 
 -- todo: i don't think this is proper random. Running it multiple times will give the same result. check it.
-resolveCommunityField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveCommunityField settings "community_suffix" = do
-  csuffix <- communitySuffix settings
+resolveAddressField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveAddressField settings "community_suffix" = do
+  csuffix <- communitySuffixProvider settings
   let csuffixLen = V.length csuffix
       (index, _) = randomR (0, csuffixLen) (getRandomGen settings)
   pure $ csuffix ! index
-resolveCommunityField settings "community_prefix" = do
-  cprefix <- communityPrefix settings
+resolveAddressField settings "community_prefix" = do
+  cprefix <- communityPrefixProvider settings
   let cprefixLen = V.length cprefix
       (index, _) = randomR (0, cprefixLen) (getRandomGen settings)
   pure $ cprefix ! index
-resolveCommunityField settings str = throwM $ InvalidField "community" str
+resolveAddressField settings str = throwM $ InvalidField "community" str
 
 uncons2 :: Text -> Maybe (String, Text)
 uncons2 txt = do
@@ -151,7 +244,7 @@ dropTillBrace txt = T.dropWhile (== '}') $ T.dropWhile (/= '}') txt
 -- > resolveCommunityText "#{community_prefix} #{community_suffix}"
 resolveCommunityText :: FakerSettings -> Text -> IO Text
 resolveCommunityText settings txt = do
-    communityFields :: [Text] <- mapM (resolveCommunityField settings) fields
+    communityFields :: [Text] <- mapM (resolveAddressField settings) fields
     pure $ operateFields txt communityFields
     where
       fields = resolveFields txt
@@ -185,10 +278,10 @@ digitToChar x = error $ "Expected single digit number, but received " <> show x
 isHash :: Char -> Bool
 isHash c = c == '#'
 
-randomIntText :: IO Text -> Char -> IO Text
+randomIntText :: (MonadIO m) => m Text -> Char -> m Text
 randomIntText acc c = if isHash c
                       then do
-                        gen <- newStdGen
+                        gen <- liftIO $ newStdGen
                         a <- acc
                         let (int :: Int, _) = randomR (0,9) gen
                         pure $ a <> T.singleton (digitToChar int)
@@ -196,7 +289,11 @@ randomIntText acc c = if isHash c
                         a <- acc
                         pure $ a <> T.singleton c
 
-interpolateNumbers :: Text -> IO Text
+-- >> interpolateNumbers "#####"
+-- >> 23456
+-- >> interpolateNumbers "ab-##"
+-- >> ab-32
+interpolateNumbers :: (MonadIO m) => Text -> m Text
 interpolateNumbers txt = T.foldl' randomIntText (pure T.empty) txt
 
 

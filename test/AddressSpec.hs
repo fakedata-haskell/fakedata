@@ -5,6 +5,7 @@ module AddressSpec where
 
 import Config
 import Data.Text hiding (all, map)
+import qualified Data.Map as M
 import qualified Data.Text as T
 import qualified Data.Vector as V
 import Faker
@@ -15,13 +16,16 @@ spec :: Spec
 spec = do
   describe "Address" $ do
     it "parses countries for defaultSettings" $ do
-      ctries <- countries defaultFakerSettings
+      ctries <- countriesProvider defaultFakerSettings
       ctries `shouldSatisfy` (\x -> V.length x >= 40)
+    it "parses countryByCode for defaultSettings" $ do
+      ctries <- countryByCodeProvider defaultFakerSettings
+      ctries `shouldSatisfy` (\x -> Prelude.length (M.toList x) >= 40)
     it "parses countries for other locales" $ do
       locales <- populateLocales
       let settings :: [FakerSettings] =
             map (\l -> setLocale l defaultFakerSettings) locales
-          ctries :: IO [V.Vector Text] = mapM countries settings
+          ctries :: IO [V.Vector Text] = mapM countriesProvider settings
       ctries' :: [V.Vector Text] <- ctries
       let exp :: [Bool] = map (\x -> V.length x >= 10) ctries'
       True `shouldBe` (all (\x -> x == True) exp)
@@ -50,8 +54,8 @@ spec = do
         , "state_abbr"
         , "zip_code"
         ]
-    it "resolveCommunityField" $ do
-      item <- resolveCommunityField defaultFakerSettings "community_suffix"
+    it "resolveAddressField" $ do
+      item <- resolveAddressField defaultFakerSettings "community_suffix"
       item `shouldSatisfy` (\x -> T.length x > 0)
     it "uncons2" $ do
       let item = uncons2 "hello"
