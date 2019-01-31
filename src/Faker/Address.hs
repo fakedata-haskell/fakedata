@@ -20,14 +20,47 @@ import qualified Data.Text as T
 import System.Random
 import Debug.Trace
 
-parseCountry :: Value -> Parser (Vector Text)
-parseCountry (Object obj) = do
+parseAddress :: Value -> Parser Object
+parseAddress (Object obj) = do
   en <- obj .: "en"
   faker <- en .: "faker"
   address <- faker .: "address"
+  pure address
+parseAddress val = fail $ "expected Object, but got " <> (show val)
+
+parsePostCode = undefined
+parseStreetSuffix = undefined
+parseState = undefined
+
+parseCountry :: Value -> Parser (Vector Text)
+parseCountry val = do
+  address <- parseAddress val
   country <- address .: "country"
   pure country
-parseCountry val = fail $ "expected Object, but got " <> (show val)
+
+parseBuildingNumber :: Value -> Parser (Unresolved (Vector Text))
+parseBuildingNumber val = do
+  address <- parseAddress val
+  building_number <- address .: "building_number"
+  pure $ pure $ building_number
+
+parseCommunityPrefix :: Value -> Parser (Vector Text)
+parseCommunityPrefix val = do
+  address <- parseAddress val
+  community_prefix <- address .: "community_prefix"
+  pure community_prefix
+
+parseCommunitySuffix :: Value -> Parser (Vector Text)
+parseCommunitySuffix val = do
+  address <- parseAddress val
+  community_suffix <- address .: "community_suffix"
+  pure community_suffix
+
+parseCommunity :: Value -> Parser (Unresolved (Vector Text))
+parseCommunity val = do
+  address <- parseAddress val
+  community <- address .: "community"
+  pure $ pure community
 
 addressFileEn :: FilePath
 addressFileEn = localesEnDirectory </> "address.yml"
@@ -63,35 +96,6 @@ instance Monad Unresolved where
     return = pure
     (Unresolved f) >>= f1 = f1 f
 
-parseBuildingNumber :: Value -> Parser (Unresolved (Vector Text))
-parseBuildingNumber (Object obj) = do
-  en <- obj .: "en"
-  faker <- en .: "faker"
-  address <- faker .: "address"
-  building_number <- address .: "building_number"
-  pure $ pure $ building_number
-parseBuildingNumber val = fail $ "expected Object, but got " <> (show val)
-
-parseAddress :: Object -> Parser Object
-parseAddress obj = do
-  en <- obj .: "en"
-  faker <- en .: "faker"
-  (Object address) <- faker .: "address"
-  pure address
-
-parseCommunityPrefix :: Value -> Parser (Vector Text)
-parseCommunityPrefix (Object obj) = do
-  address <- parseAddress obj
-  community_prefix <- address .: "community_prefix"
-  pure community_prefix
-parseCommunityPrefix val = fail $ "expected Object, but got " <> (show val)
-
-parseCommunitySuffix :: Value -> Parser (Vector Text)
-parseCommunitySuffix (Object obj) = do
-  address <- parseAddress obj
-  community_suffix <- address .: "community_suffix"
-  pure community_suffix
-parseCommunitySuffix val = fail $ "expected Object, but got " <> (show val)
 
 communitySuffix :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 communitySuffix settings = fetchData settings parseCommunitySuffix
@@ -99,12 +103,6 @@ communitySuffix settings = fetchData settings parseCommunitySuffix
 communityPrefix :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 communityPrefix settings = fetchData settings parseCommunityPrefix
 
-parseCommunity :: Value -> Parser (Unresolved (Vector Text))
-parseCommunity (Object obj) = do
-  address <- parseAddress obj
-  community <- address .: "community"
-  pure $ pure community
-parseCommunity val = fail $ "expected Object, but got " <> (show val)
 
 -- todo: i don't think this is proper random. Running it multiple times will give the same result. check it.
 resolveCommunityField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
