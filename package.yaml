@@ -30,6 +30,7 @@ dependencies:
 - yaml
 - directory
 - filepath
+- containers
 
 library:
   source-dirs: src
