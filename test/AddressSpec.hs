@@ -112,4 +112,4 @@ spec = do
       it "street_address via function" $ do
         comm <- streetAddressProvider defaultFakerSettings
         item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
-        item `shouldSatisfy` (\x -> T.length x == 5)
+        item `shouldSatisfy` (\x -> T.length x >= 5)

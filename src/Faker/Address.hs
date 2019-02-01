@@ -207,13 +207,13 @@ resolveAddressField settings "Name.first_name" = resolveNameField settings "firs
 resolveAddressField settings "city_suffix" = randomVec settings citySuffixProvider
 resolveAddressField settings "Name.last_name" = resolveNameField settings "last_name"
 resolveAddressField settings "street_suffix" = randomVec settings streetSuffixProvider
-resolveAddressField settings "building_number" = randomUnresolvedVec settings buildingNumberProvider resolveAddressField
-resolveAddressField settings "street_name" = randomUnresolvedVec settings streetNameProvider resolveAddressField
-resolveAddressField settings "street_address" = randomUnresolvedVec settings streetAddressProvider resolveAddressField
-resolveAddressField settings "city" = randomUnresolvedVec settings cityProvider resolveAddressField
+resolveAddressField settings "building_number" = randomUnresolvedVec settings buildingNumberProvider resolveAddressText
+resolveAddressField settings "street_name" = randomUnresolvedVec settings streetNameProvider resolveAddressText
+resolveAddressField settings "street_address" = randomUnresolvedVec settings streetAddressProvider resolveAddressText
+resolveAddressField settings "city" = randomUnresolvedVec settings cityProvider resolveAddressText
 resolveAddressField settings "state_abbr" = randomVec settings stateAbbrProvider
-resolveAddressField settings "zip_code" = randomUnresolvedVec settings postcodeProvider resolveAddressField
-resolveAddressField settings "secondary_address" = randomUnresolvedVec settings secondaryAddressProvider resolveAddressField
+resolveAddressField settings "zip_code" = randomUnresolvedVec settings postcodeProvider resolveAddressText
+resolveAddressField settings "secondary_address" = randomUnresolvedVec settings secondaryAddressProvider resolveAddressText
 resolveAddressField settings str = throwM $ InvalidField "address" str
 
 
