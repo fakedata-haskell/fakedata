@@ -41,6 +41,7 @@ data SourceData = Address | Name
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = localesEnDirectory </> "address.yml"
+sourceFile Name = localesEnDirectory </> "name.yml"
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc = case sysloc of

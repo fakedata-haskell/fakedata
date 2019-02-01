@@ -43,6 +43,10 @@ spec = do
       let field =
             resolveFields "#{city_prefix} #{Name.first_name}#{city_suffix}"
       field `shouldBe` ["city_prefix", "Name.first_name", "city_suffix"]
+    it "resolve field with dot (2)" $ do
+      let field =
+            resolveFields "#{Name.last_name} #{street_suffix}"
+      field `shouldBe` ["Name.last_name", "street_suffix"]
     it "resolve field with commas" $ do
       let field =
             resolveFields
@@ -103,6 +107,9 @@ spec = do
         item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
         item `shouldSatisfy` (\x -> T.length x >= 5)
       it "street_address" $ do
+        item <- resolveAddressText defaultFakerSettings "#{Name.last_name} #{street_suffix}"
+        item `shouldSatisfy` (\x -> T.length x >= 5)
+      it "street_address via function" $ do
         comm <- streetAddressProvider defaultFakerSettings
         item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
         item `shouldSatisfy` (\x -> T.length x == 5)

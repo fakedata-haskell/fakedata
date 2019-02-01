@@ -18,6 +18,7 @@ import Control.Monad.IO.Class
 import qualified Data.Text as T
 import System.Random
 import Debug.Trace
+import Faker.Name (resolveNameField)
 
 parseAddress :: FromJSON a => Value -> Parser a
 parseAddress (Object obj) = do
@@ -202,9 +203,9 @@ resolveAddressField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m T
 resolveAddressField settings "community_suffix" = randomVec settings communitySuffixProvider
 resolveAddressField settings "community_prefix" = randomVec settings communityPrefixProvider
 resolveAddressField settings "city_prefix" = randomVec settings cityPrefixProvider
-resolveAddressField settings "Name.first_name" = undefined
+resolveAddressField settings "Name.first_name" = resolveNameField settings "first_name"
 resolveAddressField settings "city_suffix" = randomVec settings citySuffixProvider
-resolveAddressField settings "Name.last_name" = undefined
+resolveAddressField settings "Name.last_name" = resolveNameField settings "last_name"
 resolveAddressField settings "street_suffix" = randomVec settings streetSuffixProvider
 resolveAddressField settings "building_number" = randomUnresolvedVec settings buildingNumberProvider resolveAddressField
 resolveAddressField settings "street_name" = randomUnresolvedVec settings streetNameProvider resolveAddressField
