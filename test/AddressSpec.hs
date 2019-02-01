@@ -83,6 +83,26 @@ spec = do
       it "extra arguments" $ do
         let item = operateFields " #{hello} #{world} kool" ["jam", "kool", "name"]
         item `shouldBe` " jam kool kool"
-    it "resolveCommunityText" $ do
-      item <- resolveCommunityText defaultFakerSettings "#{community_prefix} #{community_suffix}"
+    it "resolveAddressText" $ do
+      item <- resolveAddressText defaultFakerSettings "#{community_prefix} #{community_suffix}"
       item `shouldSatisfy` (\x -> T.length x > 0 && T.any (== ' ') item)
+    describe "Resolver check" $ do
+      it "community" $ do
+        item <- resolveAddressText defaultFakerSettings "#{community_prefix} #{community_suffix}"
+        item `shouldSatisfy` (\x -> T.length x >= 5)
+      it "community via function" $ do
+        comm <- communityProvider defaultFakerSettings
+        item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
+        item `shouldSatisfy` (\x -> T.length x >= 5)
+      it "building_number" $ do
+        comm <- buildingNumberProvider defaultFakerSettings
+        item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
+        item `shouldSatisfy` (\x -> T.length x >= 3)
+      it "secondary_address" $ do
+        comm <- secondaryAddressProvider defaultFakerSettings
+        item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
+        item `shouldSatisfy` (\x -> T.length x >= 5)
+      it "street_address" $ do
+        comm <- streetAddressProvider defaultFakerSettings
+        item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
+        item `shouldSatisfy` (\x -> T.length x == 5)

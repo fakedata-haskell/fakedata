@@ -1,6 +1,4 @@
 {-#LANGUAGE OverloadedStrings#-}
-{-#LANGUAGE DeriveFunctor#-}
-{-#LANGUAGE GeneralizedNewtypeDeriving#-}
 {-#LANGUAGE BangPatterns#-}
 {-#LANGUAGE ScopedTypeVariables#-}
 
@@ -92,6 +90,9 @@ parseCommunity val = do
   community <- address .: "community"
   pure $ pure community
 
+parseStreetSuffix :: Value -> Parser (Vector Text)
+parseStreetSuffix = parseAddressField "street_suffix"
+
 parseSecondaryAddress :: FromJSON a => Value -> Parser (Unresolved a)
 parseSecondaryAddress = parseUnresolvedAddressField "secondary_address"
 
@@ -122,187 +123,101 @@ parseStreetAddress = parseUnresolvedAddressField "street_address"
 parseFullAddress :: FromJSON a => Value -> Parser (Unresolved a)
 parseFullAddress = parseUnresolvedAddressField "full_address"
 
-addressFileEn :: FilePath
-addressFileEn = localesEnDirectory </> "address.yml"
-
-guessAddressFile :: Text -> FilePath
-guessAddressFile sysloc = case sysloc of
-                            "en" -> addressFileEn
-                            oth  -> localesDirectory </> (unpack oth <> ".yml")
-
-addressFile :: (MonadThrow m, MonadIO m) => FilePath -> m FilePath
-addressFile fname = do
-  exist <- liftIO $ doesFileExist fname
-  if exist
-  then pure fname
-  else throwM $ InvalidLocale fname
-
-newtype Unresolved a = Unresolved { unresolvedField :: a } deriving (Functor)
-
-instance Applicative Unresolved where
-    pure = Unresolved
-    Unresolved f1 <*> Unresolved f2 = pure $ f1 f2
-instance Monad Unresolved where
-    return = pure
-    (Unresolved f) >>= f1 = f1 f
-
-fetchData :: (MonadThrow m, MonadIO m) => FakerSettings -> (Value -> Parser a) -> m a
-fetchData settings parser = do
-  let fname = guessAddressFile (fakerLocale settings)
-  afile <- addressFile fname
-  yaml <- decodeFileThrow afile
-  parseMonad parser yaml
-
 countriesProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-countriesProvider settings = fetchData settings parseCountry
+countriesProvider settings = fetchData settings Address parseCountry
 
 cityPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-cityPrefixProvider settings = fetchData settings parseCityPrefix
+cityPrefixProvider settings = fetchData settings Address parseCityPrefix
 
 citySuffixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-citySuffixProvider settings = fetchData settings parseCitySuffix
+citySuffixProvider settings = fetchData settings Address parseCitySuffix
 
 countryByCodeProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Map Text Text)
-countryByCodeProvider settings = fetchData settings parseCountryByCode
+countryByCodeProvider settings = fetchData settings Address parseCountryByCode
 
 countryByNameProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Map Text Text)
-countryByNameProvider settings = fetchData settings parseCountryByName
+countryByNameProvider settings = fetchData settings Address parseCountryByName
 
 countryCodeProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-countryCodeProvider settings = fetchData settings parseCountryCode
+countryCodeProvider settings = fetchData settings Address parseCountryCode
 
 countryCodeLongProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-countryCodeLongProvider settings = fetchData settings parseCountryCodeLong
+countryCodeLongProvider settings = fetchData settings Address parseCountryCodeLong
 
 buildingNumberProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
-buildingNumberProvider settings = fetchData settings parseBuildingNumber
+buildingNumberProvider settings = fetchData settings Address parseBuildingNumber
 
 communityPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-communityPrefixProvider settings = fetchData settings parseCommunityPrefix
+communityPrefixProvider settings = fetchData settings Address parseCommunityPrefix
 
 communitySuffixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-communitySuffixProvider settings = fetchData settings parseCommunitySuffix
+communitySuffixProvider settings = fetchData settings Address parseCommunitySuffix
 
 communityProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
-communityProvider settings = fetchData settings parseCommunity
+communityProvider settings = fetchData settings Address parseCommunity
 
-resolveUnresolved :: (MonadThrow m, MonadIO m) => FakerSettings -> Unresolved (Vector Text) -> m Text
-resolveUnresolved settings (Unresolved unres) =
-    let unresLen = V.length unres
-        (index, _) = randomR (0, unresLen) (getRandomGen settings)
-        randomItem = unres ! index
-        resolve = if operateField randomItem "hello" == randomItem
-                  then resolveAddressField settings randomItem
-                  else interpolateNumbers randomItem
-    in resolve
+streetSuffixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+streetSuffixProvider settings = fetchData settings Address parseStreetSuffix
 
+secondaryAddressProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
+secondaryAddressProvider settings = fetchData settings Address parseSecondaryAddress
 
--- todo: i don't think this is proper random. Running it multiple times will give the same result. check it.
-resolveAddressField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveAddressField settings "community_suffix" = do
-  csuffix <- communitySuffixProvider settings
-  let csuffixLen = V.length csuffix
-      (index, _) = randomR (0, csuffixLen) (getRandomGen settings)
-  pure $ csuffix ! index
-resolveAddressField settings "community_prefix" = do
-  cprefix <- communityPrefixProvider settings
-  let cprefixLen = V.length cprefix
-      (index, _) = randomR (0, cprefixLen) (getRandomGen settings)
-  pure $ cprefix ! index
-resolveAddressField settings str = throwM $ InvalidField "community" str
+postcodeProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
+postcodeProvider settings = fetchData settings Address parsePostcode
 
-uncons2 :: Text -> Maybe (String, Text)
-uncons2 txt = do
-   (c1, rem1) <- T.uncons txt
-   (c2, rem2) <- T.uncons rem1
-   pure $ ((c1:[c2]), rem2)
+-- todo: write test case for this in resolver
+postcodeByStateProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Map Text Text))
+postcodeByStateProvider settings = fetchData settings Address parsePostcodeByState
 
--- operateField "#{hello} #{world}" "jam"
--- "jam #{world}"
-operateField :: Text -> Text -> Text
-operateField origWord word = helper origWord word []
-  where
-    helper :: Text -> Text -> String -> Text
-    helper txt word acc =
-      case uncons2 txt of
-        Nothing -> origWord
-        Just (str, rem) ->
-          if str == "#{"
-            then let actualRem = dropTillBrace rem
-                  in (T.pack acc) <> word <> actualRem
-            else case T.uncons txt of
-                   Nothing -> origWord
-                   Just (c, rem2) -> helper rem2 word (acc <> [c])
+stateProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+stateProvider settings = fetchData settings Address parseState
 
-operateFields :: Text -> [Text] -> Text
-operateFields origWord [] = origWord
-operateFields origWord (x:xs) = operateFields (operateField origWord x) xs
+stateAbbrProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+stateAbbrProvider settings = fetchData settings Address parseStateAbbr
 
-dropTillBrace :: Text -> Text
-dropTillBrace txt = T.dropWhile (== '}') $ T.dropWhile (/= '}') txt
+timeZoneProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+timeZoneProvider settings = fetchData settings Address parseTimeZone
+
+cityProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
+cityProvider settings = fetchData settings Address parseCity
+
+streetNameProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
+streetNameProvider settings = fetchData settings Address parseStreetName
+
+streetAddressProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
+streetAddressProvider settings = fetchData settings Address parseStreetAddress
+
+fullAddressProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Map Text Text))
+fullAddressProvider settings = fetchData settings Address parseFullAddress
 
 -- > resolveCommunityText "#{community_prefix} #{community_suffix}"
-resolveCommunityText :: FakerSettings -> Text -> IO Text
-resolveCommunityText settings txt = do
+resolveAddressText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolveAddressText settings txt = do
     communityFields :: [Text] <- mapM (resolveAddressField settings) fields
     pure $ operateFields txt communityFields
     where
       fields = resolveFields txt
 
-extractSingleField :: Text -> (Text, Text)
-extractSingleField txt = let (field, remaining) = T.span (\x -> x /= '}') txt''
-                         in (T.drop 2 field, T.drop 1 remaining)
-    where
-      txt' = strip txt
-      txt'' = snd $ T.span (\x -> x /= '#') txt'
-
-resolveFields :: Text -> [Text]
-resolveFields txt = let (field, remaining) = extractSingleField txt
-                    in case T.null remaining of
-                         True -> [field]
-                         False -> [field] <> resolveFields remaining
-
-digitToChar :: Int -> Char
-digitToChar 0 = '0'
-digitToChar 1 = '1'
-digitToChar 2 = '2'
-digitToChar 3 = '3'
-digitToChar 4 = '4'
-digitToChar 5 = '5'
-digitToChar 6 = '6'
-digitToChar 7 = '7'
-digitToChar 8 = '8'
-digitToChar 9 = '9'
-digitToChar x = error $ "Expected single digit number, but received " <> show x
-
-isHash :: Char -> Bool
-isHash c = c == '#'
-
-randomIntText :: (MonadIO m) => m Text -> Char -> m Text
-randomIntText acc c = if isHash c
-                      then do
-                        gen <- liftIO $ newStdGen
-                        a <- acc
-                        let (int :: Int, _) = randomR (0,9) gen
-                        pure $ a <> T.singleton (digitToChar int)
-                      else do
-                        a <- acc
-                        pure $ a <> T.singleton c
-
--- >> interpolateNumbers "#####"
--- >> 23456
--- >> interpolateNumbers "ab-##"
--- >> ab-32
-interpolateNumbers :: (MonadIO m) => Text -> m Text
-interpolateNumbers txt = T.foldl' randomIntText (pure T.empty) txt
+resolveAddressField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveAddressField settings "community_suffix" = randomVec settings communitySuffixProvider
+resolveAddressField settings "community_prefix" = randomVec settings communityPrefixProvider
+resolveAddressField settings "city_prefix" = randomVec settings cityPrefixProvider
+resolveAddressField settings "Name.first_name" = undefined
+resolveAddressField settings "city_suffix" = randomVec settings citySuffixProvider
+resolveAddressField settings "Name.last_name" = undefined
+resolveAddressField settings "street_suffix" = randomVec settings streetSuffixProvider
+resolveAddressField settings "building_number" = randomUnresolvedVec settings buildingNumberProvider resolveAddressField
+resolveAddressField settings "street_name" = randomUnresolvedVec settings streetNameProvider resolveAddressField
+resolveAddressField settings "street_address" = randomUnresolvedVec settings streetAddressProvider resolveAddressField
+resolveAddressField settings "city" = randomUnresolvedVec settings cityProvider resolveAddressField
+resolveAddressField settings "state_abbr" = randomVec settings stateAbbrProvider
+resolveAddressField settings "zip_code" = randomUnresolvedVec settings postcodeProvider resolveAddressField
+resolveAddressField settings "secondary_address" = randomUnresolvedVec settings secondaryAddressProvider resolveAddressField
+resolveAddressField settings str = throwM $ InvalidField "address" str
 
 
 
-interpolateAddress :: (MonadThrow m, MonadIO m) => Text -> m Text
-interpolateAddress = undefined -- you have to use random function here
 
-cities :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
-cities settings = undefined
 
 -- https://hackage.haskell.org/package/fake-0.1.1.1/docs/Fake.html
 -- FGen type has to be modified to take a Config { cfLocale :: String, cfStdGen :: Gen}
