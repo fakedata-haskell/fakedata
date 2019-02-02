@@ -141,3 +141,12 @@ spec = do
 
         fakeCountry <- generate someCountry
         fakeCountry `shouldBe` ("Ecuador","French Guiana")
+      it "Non equality of sequence" $ do
+        let someCountry :: Fake (Text, Text)
+            someCountry = do
+              c1 <- country
+              c2 <- country
+              pure (c1, c2)
+
+        (c1, c2) <- generate someCountry
+        c1 `shouldNotBe` c2
