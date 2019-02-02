@@ -129,9 +129,10 @@ countriesProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Tex
 countriesProvider settings = fetchData settings Address parseCountry
 
 country :: Fake Text
-country = Fake (\settings -> do
-                  items :: Text <- randomVec settings countriesProvider
-                  pure items)
+country = Fake (\settings -> randomVec settings countriesProvider)
+-- country = Fake (\settings -> do
+--                   items :: Text <- randomVec settings countriesProvider
+--                   pure items)
 
 cityPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 cityPrefixProvider settings = fetchData settings Address parseCityPrefix

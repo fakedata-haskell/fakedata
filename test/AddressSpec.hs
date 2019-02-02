@@ -118,15 +118,20 @@ spec = do
         fakeCountry <- generate country
         fakeCountry `shouldBe` "Ecuador"
       it "Monad instance of Fake" $ do
-        let someCountry :: Fake (Text, Text, Text)
+        let someCountry :: Fake Text
             someCountry = do
               c1 <- country
-              c2 <- country
-              c3 <- country
-              pure (c1, c2, c3)
-
+              pure c1
         fakeCountry <- generate someCountry
-        fakeCountry `shouldBe` ("Ecuador","Ecuador","Ecuador")
+        fakeCountry `shouldBe` "Ecuador"
+      it "Equality of normal generation and Monad" $ do
+        fakeCountry <- generate country
+        let someCountry :: Fake Text
+            someCountry = do
+              c1 <- country
+              pure c1
+        c2 <- generate someCountry
+        fakeCountry `shouldBe` c2
       it "Monad instance of Fake (tuple)" $ do
         let someCountry :: Fake (Text, Text)
             someCountry = do
@@ -135,4 +140,4 @@ spec = do
               pure (c1, c2)
 
         fakeCountry <- generate someCountry
-        fakeCountry `shouldBe` ("Ecuador","Ecuador")
+        fakeCountry `shouldBe` ("Ecuador","French Guiana")

@@ -73,7 +73,8 @@ randomVec :: (MonadThrow m, MonadIO m) => FakerSettings -> (FakerSettings -> m (
 randomVec settings provider = do
   items <- provider settings
   let itemsLen = V.length items
-      (index, _) = randomR (0, itemsLen - 1) (getRandomGen settings)
+      stdGen = getRandomGen settings
+      (index, _) = randomR (0, itemsLen - 1) stdGen
   pure $ items ! index
 
 randomUnresolvedVec :: (MonadThrow m, MonadIO m) => FakerSettings -> (FakerSettings -> m (Unresolved (Vector Text))) -> (FakerSettings -> Text -> m Text) -> m Text
@@ -84,7 +85,8 @@ randomUnresolvedVec settings provider resolver = do
 resolveUnresolved :: (MonadThrow m, MonadIO m) => FakerSettings -> Unresolved (Vector Text) -> (FakerSettings -> Text -> m Text) -> m Text
 resolveUnresolved settings (Unresolved unres) resolver =
     let unresLen = V.length unres
-        (index, _) = randomR (0, unresLen - 1) (getRandomGen settings)
+        stdGen = getRandomGen settings
+        (index, _) = randomR (0, unresLen - 1) stdGen
         randomItem = unres ! index
         resolve = if operateField randomItem "hello" == randomItem -- todo: remove hack
                   then interpolateNumbers randomItem
@@ -186,13 +188,13 @@ instance Monad Fake where
     return x = Fake (\_ -> return x)
 
     (>>=) :: Fake a -> (a -> Fake b) -> Fake b
-    (Fake h) >>= k = Fake (\r ->
-                               let stdGen = getRandomGen (r :: FakerSettings)
-                                   (r1, r2) = split stdGen
+    (Fake h) >>= k = Fake (\settings ->
+                               let stdGen = getRandomGen settings
+                                   (r1, _) = split stdGen
                                    m = do
-                                     (item :: a) <- h (setRandomGen r1 r)
+                                     (item :: a) <- h settings
                                      let (Fake k1) = k item
-                                     k1 (setRandomGen r2 r)
+                                     k1 (setRandomGen r1 settings)
                                in m
                          )
 
