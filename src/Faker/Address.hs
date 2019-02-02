@@ -128,12 +128,6 @@ parseFullAddress = parseUnresolvedAddressField "full_address"
 countriesProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 countriesProvider settings = fetchData settings Address parseCountry
 
-country :: Fake Text
-country = Fake (\settings -> randomVec settings countriesProvider)
--- country = Fake (\settings -> do
---                   items :: Text <- randomVec settings countriesProvider
---                   pure items)
-
 cityPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 cityPrefixProvider settings = fetchData settings Address parseCityPrefix
 
@@ -223,8 +217,26 @@ resolveAddressField settings "zip_code" = randomUnresolvedVec settings postcodeP
 resolveAddressField settings "secondary_address" = randomUnresolvedVec settings secondaryAddressProvider resolveAddressText
 resolveAddressField settings str = throwM $ InvalidField "address" str
 
+country :: Fake Text
+country = Fake (\settings -> randomVec settings countriesProvider)
 
+cityPrefix :: Fake Text
+cityPrefix = Fake (\settings -> randomVec settings cityPrefixProvider)
 
+citySuffix :: Fake Text
+citySuffix = Fake (\settings -> randomVec settings citySuffixProvider)
+
+countryCode :: Fake Text
+countryCode = Fake (\settings -> randomVec settings countryCodeProvider)
+
+countryCodeLong :: Fake Text
+countryCodeLong = Fake (\settings -> randomVec settings countryCodeLongProvider)
+
+buildingNumber :: Fake Text
+buildingNumber = Fake (\settings -> randomUnresolvedVec settings buildingNumberProvider resolveAddressText)
+
+communityPrefix :: Fake Text
+communityPrefix = Fake (\settings -> randomVec settings communityPrefixProvider)
 
 -- https://hackage.haskell.org/package/fake-0.1.1.1/docs/Fake.html
 -- FGen type has to be modified to take a Config { cfLocale :: String, cfStdGen :: Gen}

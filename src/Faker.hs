@@ -89,7 +89,7 @@ resolveUnresolved settings (Unresolved unres) resolver =
         (index, _) = randomR (0, unresLen - 1) stdGen
         randomItem = unres ! index
         resolve = if operateField randomItem "hello" == randomItem -- todo: remove hack
-                  then interpolateNumbers randomItem
+                  then pure $ interpolateNumbers settings randomItem
                   else resolver settings randomItem
     in resolve
 
@@ -152,23 +152,30 @@ digitToChar x = error $ "Expected single digit number, but received " <> show x
 isHash :: Char -> Bool
 isHash c = c == '#'
 
-randomIntText :: (MonadIO m) => m Text -> Char -> m Text
-randomIntText acc c = if isHash c
-                      then do
-                        gen <- liftIO $ newStdGen
-                        a <- acc
-                        let (int :: Int, _) = randomR (0,9) gen
-                        pure $ a <> T.singleton (digitToChar int)
-                      else do
-                        a <- acc
-                        pure $ a <> T.singleton c
-
 -- >> interpolateNumbers "#####"
 -- >> 23456
 -- >> interpolateNumbers "ab-##"
 -- >> ab-32
-interpolateNumbers :: (MonadIO m) => Text -> m Text
-interpolateNumbers txt = T.foldl' randomIntText (pure T.empty) txt
+interpolateNumbers :: FakerSettings -> Text -> Text
+interpolateNumbers settings txt = helper settings [] txt
+  where
+    helper settings acc txt =
+      case T.null txt of
+        True -> T.pack acc
+        False ->
+          case T.uncons txt of
+            Nothing -> T.pack acc
+            Just (c, rem) ->
+              if isHash c
+                then let stdGen = getRandomGen settings
+                         (int, gen) = randomR (0, 9) stdGen
+                      in helper
+                           (setRandomGen gen settings)
+                           (acc ++ [digitToChar int])
+                           rem
+                else helper settings (acc ++ [c]) rem
+
+
 
 newtype Fake a = Fake { unFake :: FakerSettings -> IO a }
 

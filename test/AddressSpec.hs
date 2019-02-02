@@ -30,11 +30,11 @@ spec = do
       let exp :: [Bool] = map (\x -> V.length x >= 10) ctries'
       True `shouldBe` (all (\x -> x == True) exp)
     it "produces random integer text" $ do
-      txt <- interpolateNumbers "#####"
+      let txt = interpolateNumbers defaultFakerSettings "#####"
       let num :: Int = read (unpack txt)
       num `shouldSatisfy` (\x -> x >= 0 && T.length txt == 5)
     it "produces random integer only for hash" $ do
-      txt <- interpolateNumbers "ab-##"
+      let txt = interpolateNumbers defaultFakerSettings "ab-##"
       txt `shouldSatisfy` (\x -> T.length x == 5 && (T.take 3 x == "ab-"))
     it "resolve field" $ do
       let field = resolveFields "#{community_prefix} #{community_suffix}"
@@ -149,4 +149,15 @@ spec = do
               pure (c1, c2)
 
         (c1, c2) <- generate someCountry
+        c1 `shouldNotBe` c2
+      it "Resolver based function" $ do
+        bno <- generate buildingNumber
+        bno `shouldBe` "153"
+      it "Resolver based function - monad" $ do
+        let someBuilding :: Fake (Text, Text)
+            someBuilding = do
+              c1 <- buildingNumber
+              c2 <- buildingNumber
+              pure (c1, c2)
+        (c1, c2) <- generate someBuilding
         c1 `shouldNotBe` c2
