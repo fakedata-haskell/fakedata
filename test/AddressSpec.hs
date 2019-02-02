@@ -12,6 +12,9 @@ import Faker
 import Faker.Address
 import Test.Hspec
 
+fakerException :: Selector FakerException
+fakerException = const True
+
 spec :: Spec
 spec = do
   describe "Address" $ do
@@ -164,3 +167,10 @@ spec = do
               pure (c1, c2)
         (c1, c2) <- generate someBuilding
         c1 `shouldNotBe` c2
+    describe "Empty data sources" $ do
+      it "For ee locale, countries is empty" $ do
+        ctries <- countriesProvider (setLocale "ee" defaultFakerSettings)
+        ctries `shouldSatisfy` (\x -> V.length x == 0)
+      it "For ee locale, throws exception" $ do
+        let action =  generateWithSettings (setLocale "ee" defaultFakerSettings) country
+        action `shouldThrow` fakerException

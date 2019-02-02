@@ -47,8 +47,8 @@ data FakerSettings = FakerSettings
 
 data FakerException
   = InvalidLocale String
-  | InvalidField String
-                 Text
+  | InvalidField String Text
+  | NoDataFound FakerSettings
   deriving (Typeable, Show)
 
 instance Exception FakerException
@@ -100,7 +100,9 @@ randomVec settings provider = do
   let itemsLen = V.length items
       stdGen = getRandomGen settings
       (index, _) = randomR (0, itemsLen - 1) stdGen
-  pure $ items ! index
+  if itemsLen == 0
+  then throwM $ NoDataFound settings
+  else pure $ items ! index
 
 randomUnresolvedVec ::
      (MonadThrow m, MonadIO m)
@@ -127,7 +129,10 @@ resolveUnresolved settings (Unresolved unres) resolver =
         if operateField randomItem "hello" == randomItem -- todo: remove hack
           then pure $ interpolateNumbers settings randomItem
           else resolver settings randomItem
-   in resolve
+   in do
+     if unresLen == 0
+     then throwM $ NoDataFound settings
+     else resolve
 
 uncons2 :: Text -> Maybe (String, Text)
 uncons2 txt = do

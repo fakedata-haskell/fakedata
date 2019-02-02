@@ -21,49 +21,49 @@ import qualified Data.Text as T
 import System.Random
 import Debug.Trace
 
-parseName :: FromJSON a => Value -> Parser a
-parseName (Object obj) = do
-  en <- obj .: "en"
+parseName :: FromJSON a => FakerSettings -> Value -> Parser a
+parseName settings (Object obj) = do
+  en <- obj .: (getLocale settings)
   faker <- en .: "faker"
   name <- faker .: "name"
   pure name
-parseName val = fail $ "expected Object, but got " <> (show val)
+parseName settings val = fail $ "expected Object, but got " <> (show val)
 
-parseNameField :: FromJSON a => Text -> Value -> Parser a
-parseNameField txt val = do
-  name <- parseName val
+parseNameField :: FromJSON a => FakerSettings -> Text -> Value -> Parser a
+parseNameField settings txt val = do
+  name <- parseName settings val
   field <- name .: txt
   pure field
 
-parseUnresolvedNameField :: FromJSON a => Text -> Value -> Parser (Unresolved a)
-parseUnresolvedNameField txt val = do
-  name <- parseName val
+parseUnresolvedNameField :: FromJSON a => FakerSettings -> Text -> Value -> Parser (Unresolved a)
+parseUnresolvedNameField settings txt val = do
+  name <- parseName settings val
   field <- name .: txt
   pure $ pure field
 
-parseMaleFirstName :: FromJSON a => Value -> Parser a
-parseMaleFirstName = parseNameField "male_first_name"
+parseMaleFirstName :: FromJSON a => FakerSettings -> Value -> Parser a
+parseMaleFirstName settings = parseNameField settings "male_first_name"
 
-parseFemaleFirstName :: FromJSON a => Value -> Parser a
-parseFemaleFirstName = parseNameField "female_first_name"
+parseFemaleFirstName :: FromJSON a => FakerSettings -> Value -> Parser a
+parseFemaleFirstName settings = parseNameField settings "female_first_name"
 
-parseFirstName :: FromJSON a => Value -> Parser (Unresolved a)
-parseFirstName = parseUnresolvedNameField "first_name"
+parseFirstName :: FromJSON a => FakerSettings -> Value -> Parser (Unresolved a)
+parseFirstName settings = parseUnresolvedNameField settings  "first_name"
 
-parseLastName :: FromJSON a => Value -> Parser a
-parseLastName = parseNameField "last_name"
+parseLastName :: FromJSON a => FakerSettings -> Value -> Parser a
+parseLastName settings = parseNameField settings "last_name"
 
-parsePrefix :: FromJSON a => Value -> Parser a
-parsePrefix = parseNameField "prefix"
+parsePrefix :: FromJSON a => FakerSettings -> Value -> Parser a
+parsePrefix settings = parseNameField settings "prefix"
 
-parseSuffix :: FromJSON a => Value -> Parser a
-parseSuffix = parseNameField "suffix"
+parseSuffix :: FromJSON a => FakerSettings -> Value -> Parser a
+parseSuffix settings = parseNameField settings "suffix"
 
-parseFieldName :: FromJSON a => Value -> Parser (Unresolved a)
-parseFieldName = parseUnresolvedNameField "name"
+parseFieldName :: FromJSON a => FakerSettings -> Value -> Parser (Unresolved a)
+parseFieldName settings = parseUnresolvedNameField settings  "name"
 
-parseNameWithMiddle :: FromJSON a => Value -> Parser (Unresolved a)
-parseNameWithMiddle = parseUnresolvedNameField "name_with_middle"
+parseNameWithMiddle :: FromJSON a => FakerSettings -> Value -> Parser (Unresolved a)
+parseNameWithMiddle settings = parseUnresolvedNameField settings "name_with_middle"
 
 maleFirstNameProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 maleFirstNameProvider settings = fetchData settings Name parseMaleFirstName

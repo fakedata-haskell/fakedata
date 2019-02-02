@@ -21,109 +21,109 @@ import Debug.Trace
 import Faker.Name (resolveNameField)
 import Faker.Combinators
 
-parseAddress :: FromJSON a => Value -> Parser a
-parseAddress (Object obj) = do
-  en <- obj .: "en"
+parseAddress :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseAddress settings (Object obj) = do
+  en <- obj .: (getLocale settings)
   faker <- en .: "faker"
   address <- faker .: "address"
   pure address
-parseAddress val = fail $ "expected Object, but got " <> (show val)
+parseAddress settings val = fail $ "expected Object, but got " <> (show val)
 
-parseAddressField :: FromJSON a => Text -> Value -> Parser a
-parseAddressField txt val = do
-  address <- parseAddress val
+parseAddressField :: FromJSON a => FakerSettings ->  Text -> Value -> Parser a
+parseAddressField settings txt val = do
+  address <- parseAddress settings val
   field <- address .: txt
   pure field
 
-parseUnresolvedAddressField :: FromJSON a => Text -> Value -> Parser (Unresolved a)
-parseUnresolvedAddressField txt val = do
-  address <- parseAddress val
+parseUnresolvedAddressField :: FromJSON a => FakerSettings ->  Text -> Value -> Parser (Unresolved a)
+parseUnresolvedAddressField settings txt val = do
+  address <- parseAddress settings val
   field <- address .: txt
   pure $ pure field
 
-parseCityPrefix :: FromJSON a => Value -> Parser a
-parseCityPrefix val = do
-  address <- parseAddress val
+parseCityPrefix :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseCityPrefix settings val = do
+  address <- parseAddress settings val
   cityPrefix <- address .: "city_prefix"
   pure cityPrefix
 
-parseCitySuffix :: FromJSON a => Value -> Parser a
-parseCitySuffix val = do
-  address <- parseAddress val
+parseCitySuffix :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseCitySuffix settings val = do
+  address <- parseAddress settings val
   citySuffix <- address .: "city_suffix"
   pure citySuffix
 
-parseCountry :: FromJSON a => Value -> Parser a
-parseCountry val = do
-  address <- parseAddress val
-  country <- address .: "country"
+parseCountry :: (FromJSON a, Monoid a) => FakerSettings ->  Value -> Parser a
+parseCountry settings val = do
+  address <- parseAddress settings val
+  country <- address .:? "country" .!= mempty
   pure country
 
-parseCountryByCode :: FromJSON a => Value -> Parser a
-parseCountryByCode = parseAddressField "country_by_code"
+parseCountryByCode :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseCountryByCode settings = parseAddressField settings "country_by_code"
 
-parseCountryByName :: FromJSON a => Value -> Parser a
-parseCountryByName = parseAddressField "country_by_name"
+parseCountryByName :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseCountryByName settings = parseAddressField settings  "country_by_name"
 
-parseCountryCode :: FromJSON a => Value -> Parser a
-parseCountryCode = parseAddressField "country_code"
+parseCountryCode :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseCountryCode settings = parseAddressField settings "country_code"
 
-parseCountryCodeLong :: FromJSON a => Value -> Parser a
-parseCountryCodeLong = parseAddressField "country_code_long"
+parseCountryCodeLong :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseCountryCodeLong settings = parseAddressField settings "country_code_long"
 
-parseBuildingNumber :: FromJSON a => Value -> Parser (Unresolved a)
-parseBuildingNumber = parseUnresolvedAddressField "building_number"
+parseBuildingNumber :: FromJSON a => FakerSettings ->  Value -> Parser (Unresolved a)
+parseBuildingNumber settings = parseUnresolvedAddressField settings "building_number"
 
-parseCommunityPrefix :: Value -> Parser (Vector Text)
-parseCommunityPrefix val = do
-  address <- parseAddress val
+parseCommunityPrefix :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseCommunityPrefix settings val = do
+  address <- parseAddress settings val
   community_prefix <- address .: "community_prefix"
   pure community_prefix
 
-parseCommunitySuffix :: Value -> Parser (Vector Text)
-parseCommunitySuffix val = do
-  address <- parseAddress val
+parseCommunitySuffix :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseCommunitySuffix settings val = do
+  address <- parseAddress settings val
   community_suffix <- address .: "community_suffix"
   pure community_suffix
 
-parseCommunity :: Value -> Parser (Unresolved (Vector Text))
-parseCommunity val = do
-  address <- parseAddress val
+parseCommunity :: FromJSON a => FakerSettings ->  Value -> Parser (Unresolved a)
+parseCommunity settings val = do
+  address <- parseAddress settings val
   community <- address .: "community"
   pure $ pure community
 
-parseStreetSuffix :: Value -> Parser (Vector Text)
-parseStreetSuffix = parseAddressField "street_suffix"
+parseStreetSuffix :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseStreetSuffix settings = parseAddressField settings "street_suffix"
 
-parseSecondaryAddress :: FromJSON a => Value -> Parser (Unresolved a)
-parseSecondaryAddress = parseUnresolvedAddressField "secondary_address"
+parseSecondaryAddress :: FromJSON a => FakerSettings ->  Value -> Parser (Unresolved a)
+parseSecondaryAddress settings = parseUnresolvedAddressField settings  "secondary_address"
 
-parsePostcode :: FromJSON a => Value -> Parser (Unresolved a)
-parsePostcode = parseUnresolvedAddressField "postcode"
+parsePostcode :: FromJSON a => FakerSettings ->  Value -> Parser (Unresolved a)
+parsePostcode settings = parseUnresolvedAddressField settings  "postcode"
 
-parsePostcodeByState :: FromJSON a => Value -> Parser (Unresolved a)
-parsePostcodeByState = parseUnresolvedAddressField "postcode_by_state"
+parsePostcodeByState :: FromJSON a => FakerSettings ->  Value -> Parser (Unresolved a)
+parsePostcodeByState settings = parseUnresolvedAddressField settings  "postcode_by_state"
 
-parseState :: FromJSON a => Value -> Parser a
-parseState = parseAddressField "state"
+parseState :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseState settings = parseAddressField settings "state"
 
-parseStateAbbr :: FromJSON a => Value -> Parser a
-parseStateAbbr = parseAddressField "state_abbr"
+parseStateAbbr :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseStateAbbr settings = parseAddressField settings "state_abbr"
 
-parseTimeZone :: FromJSON a => Value -> Parser a
-parseTimeZone = parseAddressField "time_zone"
+parseTimeZone :: FromJSON a => FakerSettings ->  Value -> Parser a
+parseTimeZone settings = parseAddressField settings "time_zone"
 
-parseCity :: FromJSON a => Value -> Parser (Unresolved a)
-parseCity = parseUnresolvedAddressField "city"
+parseCity :: FromJSON a => FakerSettings ->  Value -> Parser (Unresolved a)
+parseCity settings = parseUnresolvedAddressField settings  "city"
 
-parseStreetName :: FromJSON a => Value -> Parser (Unresolved a)
-parseStreetName = parseUnresolvedAddressField "street_name"
+parseStreetName :: FromJSON a => FakerSettings ->  Value -> Parser (Unresolved a)
+parseStreetName settings = parseUnresolvedAddressField settings  "street_name"
 
-parseStreetAddress :: FromJSON a => Value -> Parser (Unresolved a)
-parseStreetAddress = parseUnresolvedAddressField "street_address"
+parseStreetAddress :: FromJSON a => FakerSettings ->  Value -> Parser (Unresolved a)
+parseStreetAddress settings = parseUnresolvedAddressField settings  "street_address"
 
-parseFullAddress :: FromJSON a => Value -> Parser (Unresolved a)
-parseFullAddress = parseUnresolvedAddressField "full_address"
+parseFullAddress :: FromJSON a => FakerSettings ->  Value -> Parser (Unresolved a)
+parseFullAddress settings = parseUnresolvedAddressField settings "full_address"
 
 countriesProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 countriesProvider settings = fetchData settings Address parseCountry
