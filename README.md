@@ -110,7 +110,7 @@ main = do
 ```
 
 For seeing the full list of combinators, see the module documentation
-for `Faker.Combinators`.
+of `Faker.Combinators`.
 
 # Comparision with other libraries
 

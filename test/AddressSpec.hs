@@ -4,8 +4,8 @@
 module AddressSpec where
 
 import Config
-import Data.Text hiding (all, map)
 import qualified Data.Map as M
+import Data.Text hiding (all, map)
 import qualified Data.Text as T
 import qualified Data.Vector as V
 import Faker
@@ -47,8 +47,7 @@ spec = do
             resolveFields "#{city_prefix} #{Name.first_name}#{city_suffix}"
       field `shouldBe` ["city_prefix", "Name.first_name", "city_suffix"]
     it "resolve field with dot (2)" $ do
-      let field =
-            resolveFields "#{Name.last_name} #{street_suffix}"
+      let field = resolveFields "#{Name.last_name} #{street_suffix}"
       field `shouldBe` ["Name.last_name", "street_suffix"]
     it "resolve field with commas" $ do
       let field =
@@ -88,14 +87,21 @@ spec = do
         let item = operateFields " #{hello} #{world}" ["jam", "cream"]
         item `shouldBe` " jam cream"
       it "extra arguments" $ do
-        let item = operateFields " #{hello} #{world} kool" ["jam", "kool", "name"]
+        let item =
+              operateFields " #{hello} #{world} kool" ["jam", "kool", "name"]
         item `shouldBe` " jam kool kool"
     it "resolveAddressText" $ do
-      item <- resolveAddressText defaultFakerSettings "#{community_prefix} #{community_suffix}"
+      item <-
+        resolveAddressText
+          defaultFakerSettings
+          "#{community_prefix} #{community_suffix}"
       item `shouldSatisfy` (\x -> T.length x > 0 && T.any (== ' ') item)
     describe "Resolver check" $ do
       it "community" $ do
-        item <- resolveAddressText defaultFakerSettings "#{community_prefix} #{community_suffix}"
+        item <-
+          resolveAddressText
+            defaultFakerSettings
+            "#{community_prefix} #{community_suffix}"
         item `shouldSatisfy` (\x -> T.length x >= 5)
       it "community via function" $ do
         comm <- communityProvider defaultFakerSettings
@@ -110,7 +116,10 @@ spec = do
         item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
         item `shouldSatisfy` (\x -> T.length x >= 5)
       it "street_address" $ do
-        item <- resolveAddressText defaultFakerSettings "#{Name.last_name} #{street_suffix}"
+        item <-
+          resolveAddressText
+            defaultFakerSettings
+            "#{Name.last_name} #{street_suffix}"
         item `shouldSatisfy` (\x -> T.length x >= 5)
       it "street_address via function" $ do
         comm <- streetAddressProvider defaultFakerSettings
@@ -141,16 +150,14 @@ spec = do
               c1 <- country
               c2 <- country
               pure (c1, c2)
-
         fakeCountry <- generate someCountry
-        fakeCountry `shouldBe` ("Ecuador","French Guiana")
+        fakeCountry `shouldBe` ("Ecuador", "French Guiana")
       it "Non equality of sequence" $ do
         let someCountry :: Fake (Text, Text)
             someCountry = do
               c1 <- country
               c2 <- country
               pure (c1, c2)
-
         (c1, c2) <- generate someCountry
         c1 `shouldNotBe` c2
       it "Resolver based function" $ do
@@ -172,5 +179,6 @@ spec = do
         ctries <- countriesProvider (setLocale "ee" defaultFakerSettings)
         ctries `shouldSatisfy` (\x -> V.length x == 0)
       it "For ee locale, throws exception" $ do
-        let action =  generateWithSettings (setLocale "ee" defaultFakerSettings) country
+        let action =
+              generateWithSettings (setLocale "ee" defaultFakerSettings) country
         action `shouldThrow` fakerException
