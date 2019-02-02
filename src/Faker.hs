@@ -23,7 +23,8 @@ module Faker
       operateField,
       uncons2,
       interpolateNumbers,
-      generate
+      generate,
+      generateWithSettings
     ) where
 
 import Control.Exception (Exception)
@@ -207,6 +208,9 @@ instance Monad Fake where
 
 generate :: Fake a -> IO a
 generate (Fake f) = f defaultFakerSettings
+
+generateWithSettings :: FakerSettings -> Fake a -> IO a
+generateWithSettings settings (Fake f) = f settings
 
 instance MonadIO Fake where
     liftIO :: IO a -> Fake a
