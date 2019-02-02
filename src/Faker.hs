@@ -2,9 +2,12 @@
 {-#LANGUAGE DeriveFunctor#-}
 {-#LANGUAGE OverloadedStrings#-}
 {-#LANGUAGE ScopedTypeVariables#-}
+{-#LANGUAGE InstanceSigs#-}
 
 module Faker
-    ( FakerSettings,
+    (
+      Fake(..),
+      FakerSettings,
       defaultFakerSettings,
       setLocale,
       setRandomGen,
@@ -23,14 +26,15 @@ module Faker
     ) where
 
 import Control.Exception (Exception)
-import Data.Text
+import Data.Text (Text, strip)
 import Data.Typeable
-import System.Random
+import System.Random (StdGen, split, randomR, newStdGen, mkStdGen)
 import Data.Vector (Vector, (!))
 import qualified Data.Vector as V
 import qualified Data.Text as T
 import Control.Monad.IO.Class
 import Control.Monad.Catch
+import Control.Monad (ap)
 
 data FakerSettings = FakerSettings { locale :: Text, randomGen :: StdGen } deriving (Show)
 
@@ -162,3 +166,28 @@ randomIntText acc c = if isHash c
 -- >> ab-32
 interpolateNumbers :: (MonadIO m) => Text -> m Text
 interpolateNumbers txt = T.foldl' randomIntText (pure T.empty) txt
+
+newtype Fake a = Fake { unFake :: FakerSettings -> a }
+
+instance Functor Fake where
+    fmap f (Fake h) = Fake (\r -> f (h r))
+
+instance Applicative Fake where
+    pure x = Fake (\_ -> x)
+    (<*>) = ap
+
+instance Monad Fake where
+    return x = Fake (\_ -> x)
+    (Fake h) >>= k = Fake (\r ->
+                               let stdGen = getRandomGen (r :: FakerSettings)
+                                   (r1, r2) = split stdGen
+                                   Fake m = k (h (setRandomGen r1 r))
+                               in m (setRandomGen r2 r)
+                          )
+
+-- generate :: Fake a -> IO a
+-- generate (Fake f) = pure $ f defaultFakerSettings
+
+-- instance MonadIO Fake where
+--     liftIO :: IO a -> Fake a
+--     liftIO xs = undefined

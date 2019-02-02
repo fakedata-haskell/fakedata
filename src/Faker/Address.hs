@@ -19,6 +19,7 @@ import qualified Data.Text as T
 import System.Random
 import Debug.Trace
 import Faker.Name (resolveNameField)
+import Faker.Combinators
 
 parseAddress :: FromJSON a => Value -> Parser a
 parseAddress (Object obj) = do
@@ -127,6 +128,9 @@ parseFullAddress = parseUnresolvedAddressField "full_address"
 countriesProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 countriesProvider settings = fetchData settings Address parseCountry
 
+-- country :: (MonadThrow m, MonadIO m) -> Fake Text
+-- country = Fake (\settings -> countriesProvider settings)
+
 cityPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 cityPrefixProvider settings = fetchData settings Address parseCityPrefix
 
@@ -215,7 +219,6 @@ resolveAddressField settings "state_abbr" = randomVec settings stateAbbrProvider
 resolveAddressField settings "zip_code" = randomUnresolvedVec settings postcodeProvider resolveAddressText
 resolveAddressField settings "secondary_address" = randomUnresolvedVec settings secondaryAddressProvider resolveAddressText
 resolveAddressField settings str = throwM $ InvalidField "address" str
-
 
 
 
