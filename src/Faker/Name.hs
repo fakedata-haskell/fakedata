@@ -90,11 +90,35 @@ nameWithMiddleProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unres
 nameWithMiddleProvider settings = fetchData settings Name parseNameWithMiddle
 
 
+resolveNameText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolveNameText settings txt = do
+  let fields = resolveFields txt
+  nameFields <- mapM (resolveNameField settings) fields
+  pure $ operateFields txt nameFields
+
 resolveNameField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveNameField settings "female_first_name" = randomVec settings femaleFirstNameProvider
 resolveNameField settings "male_first_name" = randomVec settings maleFirstNameProvider
 resolveNameField settings "prefix" = randomVec settings prefixProvider
 resolveNameField settings "suffix" = randomVec settings suffixProvider
-resolveNameField settings "first_name" = randomUnresolvedVec settings firstNameProvider resolveNameField
+resolveNameField settings "first_name" = randomUnresolvedVec settings firstNameProvider resolveNameText
 resolveNameField settings "last_name" = randomVec settings lastNameProvider
 resolveNameField settings str = throwM $ InvalidField "name" str
+
+maleFirstName :: Fake Text
+maleFirstName = Fake (\settings -> randomVec settings maleFirstNameProvider)
+
+femaleFirstName :: Fake Text
+femaleFirstName = Fake (\settings -> randomVec settings femaleFirstNameProvider)
+
+prefix :: Fake Text
+prefix = Fake (\settings -> randomVec settings prefixProvider)
+
+suffix :: Fake Text
+suffix = Fake (\settings -> randomVec settings suffixProvider)
+
+name :: Fake Text
+name = Fake (\settings -> randomUnresolvedVec settings nameProvider resolveNameText)
+
+nameWithMiddle :: Fake Text
+nameWithMiddle = Fake (\settings -> randomUnresolvedVec settings nameWithMiddleProvider resolveNameText)
