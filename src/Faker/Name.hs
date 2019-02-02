@@ -29,40 +29,40 @@ parseName settings (Object obj) = do
   pure name
 parseName settings val = fail $ "expected Object, but got " <> (show val)
 
-parseNameField :: FromJSON a => FakerSettings -> Text -> Value -> Parser a
+parseNameField :: (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
 parseNameField settings txt val = do
   name <- parseName settings val
-  field <- name .: txt
+  field <- name .:? txt .!= mempty
   pure field
 
-parseUnresolvedNameField :: FromJSON a => FakerSettings -> Text -> Value -> Parser (Unresolved a)
+parseUnresolvedNameField :: (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser (Unresolved a)
 parseUnresolvedNameField settings txt val = do
   name <- parseName settings val
-  field <- name .: txt
+  field <- name .:? txt .!= mempty
   pure $ pure field
 
-parseMaleFirstName :: FromJSON a => FakerSettings -> Value -> Parser a
+parseMaleFirstName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseMaleFirstName settings = parseNameField settings "male_first_name"
 
-parseFemaleFirstName :: FromJSON a => FakerSettings -> Value -> Parser a
+parseFemaleFirstName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseFemaleFirstName settings = parseNameField settings "female_first_name"
 
-parseFirstName :: FromJSON a => FakerSettings -> Value -> Parser (Unresolved a)
+parseFirstName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
 parseFirstName settings = parseUnresolvedNameField settings  "first_name"
 
-parseLastName :: FromJSON a => FakerSettings -> Value -> Parser a
+parseLastName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseLastName settings = parseNameField settings "last_name"
 
-parsePrefix :: FromJSON a => FakerSettings -> Value -> Parser a
+parsePrefix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parsePrefix settings = parseNameField settings "prefix"
 
-parseSuffix :: FromJSON a => FakerSettings -> Value -> Parser a
+parseSuffix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseSuffix settings = parseNameField settings "suffix"
 
-parseFieldName :: FromJSON a => FakerSettings -> Value -> Parser (Unresolved a)
+parseFieldName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
 parseFieldName settings = parseUnresolvedNameField settings  "name"
 
-parseNameWithMiddle :: FromJSON a => FakerSettings -> Value -> Parser (Unresolved a)
+parseNameWithMiddle :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
 parseNameWithMiddle settings = parseUnresolvedNameField settings "name_with_middle"
 
 maleFirstNameProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
