@@ -189,7 +189,7 @@ streetNameProvider settings = fetchData settings Address parseStreetName
 streetAddressProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
 streetAddressProvider settings = fetchData settings Address parseStreetAddress
 
-fullAddressProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Map Text Text))
+fullAddressProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
 fullAddressProvider settings = fetchData settings Address parseFullAddress
 
 -- > resolveCommunityText "#{community_prefix} #{community_suffix}"
@@ -238,5 +238,44 @@ buildingNumber = Fake (\settings -> randomUnresolvedVec settings buildingNumberP
 communityPrefix :: Fake Text
 communityPrefix = Fake (\settings -> randomVec settings communityPrefixProvider)
 
--- https://hackage.haskell.org/package/fake-0.1.1.1/docs/Fake.html
--- FGen type has to be modified to take a Config { cfLocale :: String, cfStdGen :: Gen}
+communitySuffix :: Fake Text
+communitySuffix = Fake (\settings -> randomVec settings communitySuffixProvider)
+
+community :: Fake Text
+community = Fake (\settings -> randomUnresolvedVec settings communityProvider resolveAddressText)
+
+streetSuffix :: Fake Text
+streetSuffix = Fake (\settings -> randomVec settings streetSuffixProvider)
+
+secondaryAddress :: Fake Text
+secondaryAddress = Fake (\settings -> randomUnresolvedVec settings secondaryAddressProvider resolveAddressText)
+
+resolver :: (MonadThrow m, MonadIO m) => (FakerSettings -> m (Vector Text)) -> FakerSettings -> m Text
+resolver provider = \settings -> randomVec settings provider
+
+unresolvedResolver :: (MonadThrow m, MonadIO m) => (FakerSettings -> m (Unresolved (Vector Text))) -> FakerSettings -> m Text
+unresolvedResolver provider = \settings -> randomUnresolvedVec settings provider resolveAddressText
+
+postcode :: Fake Text
+postcode = Fake (unresolvedResolver postcodeProvider)
+
+state :: Fake Text
+state = Fake (resolver stateProvider)
+
+stateAbbr :: Fake Text
+stateAbbr = Fake (resolver stateAbbrProvider)
+
+timeZone :: Fake Text
+timeZone = Fake (resolver timeZoneProvider)
+
+city :: Fake Text
+city = Fake (unresolvedResolver cityProvider)
+
+streetName :: Fake Text
+streetName = Fake (unresolvedResolver streetNameProvider)
+
+streetAddress :: Fake Text
+streetAddress = Fake (unresolvedResolver streetAddressProvider)
+
+fullAddress :: Fake Text
+fullAddress = Fake $ unresolvedResolver fullAddressProvider
