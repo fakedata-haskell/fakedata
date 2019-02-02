@@ -1,76 +1,100 @@
-{-#LANGUAGE RecordWildCards#-}
-{-#LANGUAGE DeriveFunctor#-}
-{-#LANGUAGE OverloadedStrings#-}
-{-#LANGUAGE ScopedTypeVariables#-}
-{-#LANGUAGE InstanceSigs#-}
+{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE InstanceSigs #-}
 
 module Faker
-    (
-      Fake(..),
-      FakerSettings,
-      defaultFakerSettings,
-      setLocale,
-      setRandomGen,
-      getRandomGen,
-      FakerException (..),
-      fakerLocale,
-      Unresolved (..),
-      randomVec,
-      randomUnresolvedVec,
-      operateFields,
-      resolveFields,
-      resolveUnresolved,
-      operateField,
-      uncons2,
-      interpolateNumbers,
-      generate,
-      generateWithSettings
-    ) where
+  ( Fake(..)
+  , FakerSettings
+  , defaultFakerSettings
+  , setLocale
+  , setRandomGen
+  , getRandomGen
+  , setDeterministic
+  , setNonDeterministic
+  , FakerException(..)
+  , getLocale
+  , Unresolved(..)
+  , randomVec
+  , randomUnresolvedVec
+  , operateFields
+  , resolveFields
+  , resolveUnresolved
+  , operateField
+  , uncons2
+  , interpolateNumbers
+  , generate
+  , generateWithSettings
+  ) where
 
 import Control.Exception (Exception)
+import Control.Monad (ap)
+import Control.Monad.Catch
+import Control.Monad.IO.Class
 import Data.Text (Text, strip)
+import qualified Data.Text as T
 import Data.Typeable
-import System.Random (StdGen, split, randomR, newStdGen, mkStdGen)
 import Data.Vector (Vector, (!))
 import qualified Data.Vector as V
-import qualified Data.Text as T
-import Control.Monad.IO.Class
-import Control.Monad.Catch
-import Control.Monad (ap)
+import System.Random (StdGen, mkStdGen, newStdGen, randomR, split)
 
-data FakerSettings = FakerSettings { locale :: Text, randomGen :: StdGen } deriving (Show)
+data FakerSettings = FakerSettings
+  { fslocale :: Text
+  , fsrandomGen :: StdGen
+  , fsDeterministic :: Bool
+  } deriving (Show)
 
-data FakerException = InvalidLocale String
-                    | InvalidField String Text
-                      deriving (Typeable, Show)
+data FakerException
+  = InvalidLocale String
+  | InvalidField String
+                 Text
+  deriving (Typeable, Show)
 
 instance Exception FakerException
 
 defaultFakerSettings :: FakerSettings
-defaultFakerSettings = FakerSettings { locale = "en", randomGen = (mkStdGen 10000) }
+defaultFakerSettings =
+  FakerSettings {fslocale = "en", fsrandomGen = (mkStdGen 10000), fsDeterministic = True}
 
 setLocale :: Text -> FakerSettings -> FakerSettings
-setLocale localeTxt fs = fs { locale = localeTxt }
+setLocale localeTxt fs = fs {fslocale = localeTxt}
 
 setRandomGen :: StdGen -> FakerSettings -> FakerSettings
-setRandomGen gen fs = fs { randomGen = gen}
+setRandomGen gen fs = fs {fsrandomGen = gen}
 
 getRandomGen :: FakerSettings -> StdGen
-getRandomGen settings = randomGen settings
+getRandomGen settings = fsrandomGen settings
 
-fakerLocale :: FakerSettings -> Text
-fakerLocale FakerSettings {..} = locale
+getLocale :: FakerSettings -> Text
+getLocale FakerSettings {..} = fslocale
 
-newtype Unresolved a = Unresolved { unresolvedField :: a } deriving (Functor)
+setDeterministic :: FakerSettings -> FakerSettings
+setDeterministic fs = fs { fsDeterministic = True}
+
+setNonDeterministic :: FakerSettings -> FakerSettings
+setNonDeterministic fs = fs { fsDeterministic = False }
+
+getDeterministic :: FakerSettings -> Bool
+getDeterministic FakerSettings {..} = fsDeterministic
+
+newtype Unresolved a = Unresolved
+  { unresolvedField :: a
+  } deriving (Functor)
 
 instance Applicative Unresolved where
-    pure = Unresolved
-    Unresolved f1 <*> Unresolved f2 = pure $ f1 f2
-instance Monad Unresolved where
-    return = pure
-    (Unresolved f) >>= f1 = f1 f
+  pure = Unresolved
+  Unresolved f1 <*> Unresolved f2 = pure $ f1 f2
 
-randomVec :: (MonadThrow m, MonadIO m) => FakerSettings -> (FakerSettings -> m (Vector Text)) -> m Text
+instance Monad Unresolved where
+  return = pure
+  (Unresolved f) >>= f1 = f1 f
+
+randomVec ::
+     (MonadThrow m, MonadIO m)
+  => FakerSettings
+  -> (FakerSettings -> m (Vector Text))
+  -> m Text
 randomVec settings provider = do
   items <- provider settings
   let itemsLen = V.length items
@@ -78,27 +102,38 @@ randomVec settings provider = do
       (index, _) = randomR (0, itemsLen - 1) stdGen
   pure $ items ! index
 
-randomUnresolvedVec :: (MonadThrow m, MonadIO m) => FakerSettings -> (FakerSettings -> m (Unresolved (Vector Text))) -> (FakerSettings -> Text -> m Text) -> m Text
+randomUnresolvedVec ::
+     (MonadThrow m, MonadIO m)
+  => FakerSettings
+  -> (FakerSettings -> m (Unresolved (Vector Text)))
+  -> (FakerSettings -> Text -> m Text)
+  -> m Text
 randomUnresolvedVec settings provider resolver = do
   items <- provider settings
   resolveUnresolved settings items resolver
 
-resolveUnresolved :: (MonadThrow m, MonadIO m) => FakerSettings -> Unresolved (Vector Text) -> (FakerSettings -> Text -> m Text) -> m Text
+resolveUnresolved ::
+     (MonadThrow m, MonadIO m)
+  => FakerSettings
+  -> Unresolved (Vector Text)
+  -> (FakerSettings -> Text -> m Text)
+  -> m Text
 resolveUnresolved settings (Unresolved unres) resolver =
-    let unresLen = V.length unres
-        stdGen = getRandomGen settings
-        (index, _) = randomR (0, unresLen - 1) stdGen
-        randomItem = unres ! index
-        resolve = if operateField randomItem "hello" == randomItem -- todo: remove hack
-                  then pure $ interpolateNumbers settings randomItem
-                  else resolver settings randomItem
-    in resolve
+  let unresLen = V.length unres
+      stdGen = getRandomGen settings
+      (index, _) = randomR (0, unresLen - 1) stdGen
+      randomItem = unres ! index
+      resolve =
+        if operateField randomItem "hello" == randomItem -- todo: remove hack
+          then pure $ interpolateNumbers settings randomItem
+          else resolver settings randomItem
+   in resolve
 
 uncons2 :: Text -> Maybe (String, Text)
 uncons2 txt = do
-   (c1, rem1) <- T.uncons txt
-   (c2, rem2) <- T.uncons rem1
-   pure $ ((c1:[c2]), rem2)
+  (c1, rem1) <- T.uncons txt
+  (c2, rem2) <- T.uncons rem1
+  pure $ ((c1 : [c2]), rem2)
 
 -- operateField "#{hello} #{world}" "jam"
 -- "jam #{world}"
@@ -125,17 +160,19 @@ dropTillBrace :: Text -> Text
 dropTillBrace txt = T.dropWhile (== '}') $ T.dropWhile (/= '}') txt
 
 extractSingleField :: Text -> (Text, Text)
-extractSingleField txt = let (field, remaining) = T.span (\x -> x /= '}') txt''
-                         in (T.drop 2 field, T.drop 1 remaining)
-    where
-      txt' = strip txt
-      txt'' = snd $ T.span (\x -> x /= '#') txt'
+extractSingleField txt =
+  let (field, remaining) = T.span (\x -> x /= '}') txt''
+   in (T.drop 2 field, T.drop 1 remaining)
+  where
+    txt' = strip txt
+    txt'' = snd $ T.span (\x -> x /= '#') txt'
 
 resolveFields :: Text -> [Text]
-resolveFields txt = let (field, remaining) = extractSingleField txt
-                    in case T.null remaining of
-                         True -> [field]
-                         False -> [field] <> resolveFields remaining
+resolveFields txt =
+  let (field, remaining) = extractSingleField txt
+   in case T.null remaining of
+        True -> [field]
+        False -> [field] <> resolveFields remaining
 
 digitToChar :: Int -> Char
 digitToChar 0 = '0'
@@ -176,42 +213,50 @@ interpolateNumbers settings txt = helper settings [] txt
                            rem
                 else helper settings (acc ++ [c]) rem
 
-
-
-newtype Fake a = Fake { unFake :: FakerSettings -> IO a }
+newtype Fake a = Fake
+  { unFake :: FakerSettings -> IO a
+  }
 
 instance Functor Fake where
-    fmap :: (a -> b) -> Fake a -> Fake b
-    fmap f (Fake h) = Fake (\r -> do
-                              a <- h r
-                              let b = f a
-                              pure b)
+  fmap :: (a -> b) -> Fake a -> Fake b
+  fmap f (Fake h) =
+    Fake
+      (\r -> do
+         a <- h r
+         let b = f a
+         pure b)
 
 instance Applicative Fake where
-    pure x = Fake (\_ -> pure x)
-    (<*>) = ap
+  pure x = Fake (\_ -> pure x)
+  (<*>) = ap
 
 instance Monad Fake where
-    return :: a -> Fake a
-    return x = Fake (\_ -> return x)
-
-    (>>=) :: Fake a -> (a -> Fake b) -> Fake b
-    (Fake h) >>= k = Fake (\settings ->
-                               let stdGen = getRandomGen settings
-                                   (r1, _) = split stdGen
-                                   m = do
-                                     (item :: a) <- h settings
-                                     let (Fake k1) = k item
-                                     k1 (setRandomGen r1 settings)
-                               in m
-                         )
+  return :: a -> Fake a
+  return x = Fake (\_ -> return x)
+  (>>=) :: Fake a -> (a -> Fake b) -> Fake b
+  (Fake h) >>= k =
+    Fake
+      (\settings ->
+         let stdGen = getRandomGen settings
+             (r1, _) = split stdGen
+             m = do
+               (item :: a) <- h settings
+               let (Fake k1) = k item
+               k1 (setRandomGen r1 settings)
+          in m)
 
 generate :: Fake a -> IO a
 generate (Fake f) = f defaultFakerSettings
 
 generateWithSettings :: FakerSettings -> Fake a -> IO a
-generateWithSettings settings (Fake f) = f settings
+generateWithSettings settings (Fake f) = do
+  let deterministic = getDeterministic settings
+  stdGen <- if deterministic
+            then pure $ getRandomGen settings
+            else newStdGen
+  let newSettings = setRandomGen stdGen settings
+  f newSettings
 
 instance MonadIO Fake where
-    liftIO :: IO a -> Fake a
-    liftIO xs = Fake (\settings -> xs >>= pure)
+  liftIO :: IO a -> Fake a
+  liftIO xs = Fake (\settings -> xs >>= pure)
