@@ -57,7 +57,7 @@ getSourceFile fname = do
 
 fetchData :: (MonadThrow m, MonadIO m) => FakerSettings -> SourceData -> (Value -> Parser a) -> m a
 fetchData settings sdata parser = do
-  let fname = guessSourceFile sdata (fakerLocale settings)
+  let fname = guessSourceFile sdata (getLocale settings)
   afile <- getSourceFile fname
   yaml <- decodeFileThrow afile
   parseMonad parser yaml
