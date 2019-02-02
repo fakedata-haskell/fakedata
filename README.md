@@ -27,7 +27,7 @@ quite high!
 
 ## Combining Fake datas
 
-```
+```haskell
 {-#LANGUAGE RecordWildCards#-}
 
 import Faker
@@ -76,4 +76,21 @@ And on executing the program, you will get a different output:
 Person {personName = "Ned Effertz Sr.", personAddress = "Suite 158 1580 Schulist Mall, Schulistburgh, NY 15804-3392"}
 ```
 
+The above program can be even minimized like this:
+
+``` haskell
+main :: IO ()
+main = do
+    let settings = setNonDeterministic defaultFakerSettings
+    person <- generateWithSettings settings fakePerson
+    print person
+```
+
 # Comparision with other libraries
+
+There are two other libraries in the Hackage providing fake data:
+
+* [faker](https://hackage.haskell.org/package/faker-0.0.0.2)
+* [fake](https://hackage.haskell.org/package/fake-0.1.1.1)
+
+The problem (for me) with both the above libraries is that the library covers a very small amount of fake data source. I wanted to have an equivalent functionality with something like [faker](https://github.com/stympy/faker). Also most of the combinators in this packages has been inspired (read as taken) from `fake`.
