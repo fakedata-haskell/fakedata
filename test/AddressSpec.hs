@@ -113,3 +113,26 @@ spec = do
         comm <- streetAddressProvider defaultFakerSettings
         item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
         item `shouldSatisfy` (\x -> T.length x >= 5)
+    describe "Address functions" $ do
+      it "basic check" $ do
+        fakeCountry <- generate country
+        fakeCountry `shouldBe` "Ecuador"
+      it "Monad instance of Fake" $ do
+        let someCountry :: Fake (Text, Text, Text)
+            someCountry = do
+              c1 <- country
+              c2 <- country
+              c3 <- country
+              pure (c1, c2, c3)
+
+        fakeCountry <- generate someCountry
+        fakeCountry `shouldBe` ("Ecuador","Ecuador","Ecuador")
+      it "Monad instance of Fake (tuple)" $ do
+        let someCountry :: Fake (Text, Text)
+            someCountry = do
+              c1 <- country
+              c2 <- country
+              pure (c1, c2)
+
+        fakeCountry <- generate someCountry
+        fakeCountry `shouldBe` ("Ecuador","Ecuador")

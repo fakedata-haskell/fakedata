@@ -128,8 +128,10 @@ parseFullAddress = parseUnresolvedAddressField "full_address"
 countriesProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 countriesProvider settings = fetchData settings Address parseCountry
 
--- country :: (MonadThrow m, MonadIO m) -> Fake Text
--- country = Fake (\settings -> countriesProvider settings)
+country :: Fake Text
+country = Fake (\settings -> do
+                  items :: Text <- randomVec settings countriesProvider
+                  pure items)
 
 cityPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 cityPrefixProvider settings = fetchData settings Address parseCityPrefix

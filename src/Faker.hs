@@ -22,7 +22,8 @@ module Faker
       resolveUnresolved,
       operateField,
       uncons2,
-      interpolateNumbers
+      interpolateNumbers,
+      generate
     ) where
 
 import Control.Exception (Exception)
@@ -167,27 +168,37 @@ randomIntText acc c = if isHash c
 interpolateNumbers :: (MonadIO m) => Text -> m Text
 interpolateNumbers txt = T.foldl' randomIntText (pure T.empty) txt
 
-newtype Fake a = Fake { unFake :: FakerSettings -> a }
+newtype Fake a = Fake { unFake :: FakerSettings -> IO a }
 
 instance Functor Fake where
-    fmap f (Fake h) = Fake (\r -> f (h r))
+    fmap :: (a -> b) -> Fake a -> Fake b
+    fmap f (Fake h) = Fake (\r -> do
+                              a <- h r
+                              let b = f a
+                              pure b)
 
 instance Applicative Fake where
-    pure x = Fake (\_ -> x)
+    pure x = Fake (\_ -> pure x)
     (<*>) = ap
 
 instance Monad Fake where
-    return x = Fake (\_ -> x)
+    return :: a -> Fake a
+    return x = Fake (\_ -> return x)
+
+    (>>=) :: Fake a -> (a -> Fake b) -> Fake b
     (Fake h) >>= k = Fake (\r ->
                                let stdGen = getRandomGen (r :: FakerSettings)
                                    (r1, r2) = split stdGen
-                                   Fake m = k (h (setRandomGen r1 r))
-                               in m (setRandomGen r2 r)
-                          )
+                                   m = do
+                                     (item :: a) <- h (setRandomGen r1 r)
+                                     let (Fake k1) = k item
+                                     k1 (setRandomGen r2 r)
+                               in m
+                         )
 
--- generate :: Fake a -> IO a
--- generate (Fake f) = pure $ f defaultFakerSettings
+generate :: Fake a -> IO a
+generate (Fake f) = f defaultFakerSettings
 
--- instance MonadIO Fake where
---     liftIO :: IO a -> Fake a
---     liftIO xs = undefined
+instance MonadIO Fake where
+    liftIO :: IO a -> Fake a
+    liftIO xs = Fake (\settings -> xs >>= pure)

@@ -8,11 +8,11 @@ import Data.List (sort)
 
 -- | Generates a random element in the given inclusive range.
 fromRange :: Random a => (a,a) -> Fake a
-fromRange rng = Fake (\r -> let (x,_) = randomR rng (getRandomGen r) in x)
+fromRange rng = Fake (\r -> let (x,_) = randomR rng (getRandomGen r) in pure x)
 
 -- | Generates a random element over the natural range of `a`.
 pickAny :: Random a => Fake a
-pickAny = Fake (\settings -> let (x,_) = random (getRandomGen settings) in x)
+pickAny = Fake (\settings -> let (x,_) = random (getRandomGen settings) in pure x)
 
 -- | Tries to generate a value that satisfies a predicate.
 suchThatMaybe :: Fake a -> (a -> Bool) -> Fake (Maybe a)
