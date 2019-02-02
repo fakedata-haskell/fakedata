@@ -153,6 +153,9 @@ spec = do
       it "Resolver based function" $ do
         bno <- generate buildingNumber
         bno `shouldBe` "153"
+      it "Resolver fullAddress" $ do
+        bno <- generate fullAddress
+        bno `shouldSatisfy` (\x -> T.length x > 25)
       it "Resolver based function - monad" $ do
         let someBuilding :: Fake (Text, Text)
             someBuilding = do
