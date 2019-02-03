@@ -4,18 +4,8 @@
 
 module Faker.Address where
 
-import Config
-import Control.Monad.Catch
-import Control.Monad.IO.Class
 import Data.Text
-import qualified Data.Text as T
-import Data.Vector (Vector, (!))
-import qualified Data.Vector as V
 import Faker
-import Faker.Combinators
-import System.Directory (doesFileExist)
-import System.FilePath
-import System.Random
 import Faker.Internal
 import Faker.Provider.Address
 
