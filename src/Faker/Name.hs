@@ -20,6 +20,7 @@ import Control.Monad.IO.Class
 import qualified Data.Text as T
 import System.Random
 import Debug.Trace
+import Faker.Internal
 
 parseName :: FromJSON a => FakerSettings -> Value -> Parser a
 parseName settings (Object obj) = do

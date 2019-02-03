@@ -20,6 +20,7 @@ import Faker.Name (resolveNameField)
 import System.Directory (doesFileExist)
 import System.FilePath
 import System.Random
+import Faker.Internal
 
 parseAddress :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAddress settings (Object obj) = do
