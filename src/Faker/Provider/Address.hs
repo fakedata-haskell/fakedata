@@ -12,7 +12,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Name (resolveNameField)
+import Faker.Provider.Name (resolveNameField)
 
 parseAddress :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAddress settings (Object obj) = do
