@@ -47,6 +47,9 @@ data SourceData
   | ATHF
   | Artist
   | BTTF
+  | Bank
+  | Beer
+  | BoJackHorseman
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -58,6 +61,9 @@ sourceFile Appliance = "appliance"
 sourceFile ATHF = "aqua_teen_hunger_force"
 sourceFile Artist = "artist"
 sourceFile BTTF = "back_to_the_future"
+sourceFile Bank = "bank"
+sourceFile Beer = "beer"
+sourceFile BoJackHorseman = "bojack_horseman"
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
