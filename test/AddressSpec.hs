@@ -3,7 +3,6 @@
 
 module AddressSpec where
 
-
 import Config
 import qualified Data.Map as M
 import Data.Text hiding (all, map)
@@ -11,8 +10,9 @@ import qualified Data.Text as T
 import qualified Data.Vector as V
 import Faker
 import Faker.Address
-import Test.Hspec
 import Faker.Internal
+import Faker.Provider.Address
+import Test.Hspec
 
 fakerException :: Selector FakerException
 fakerException = const True

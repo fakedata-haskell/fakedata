@@ -1,4 +1,5 @@
 {-#LANGUAGE OverloadedStrings#-}
+{-# LANGUAGE DeriveFunctor #-}
 
 module Faker.Internal where
 
@@ -10,6 +11,18 @@ import qualified Data.Vector as V
 import Data.Vector (Vector, (!))
 import Control.Monad.Catch
 import System.Random
+
+newtype Unresolved a = Unresolved
+  { unresolvedField :: a
+  } deriving (Functor)
+
+instance Applicative Unresolved where
+  pure = Unresolved
+  Unresolved f1 <*> Unresolved f2 = pure $ f1 f2
+
+instance Monad Unresolved where
+  return = pure
+  (Unresolved f) >>= f1 = f1 f
 
 randomVec ::
      (MonadThrow m, MonadIO m)
@@ -139,3 +152,18 @@ interpolateNumbers settings txt = helper settings [] txt
                            (acc ++ [digitToChar int])
                            rem
                 else helper settings (acc ++ [c]) rem
+
+resolver ::
+     (MonadThrow m, MonadIO m)
+  => (FakerSettings -> m (Vector Text))
+  -> FakerSettings
+  -> m Text
+resolver provider = \settings -> randomVec settings provider
+
+unresolvedResolver ::
+     (MonadThrow m, MonadIO m)
+  => (FakerSettings -> m (Unresolved (Vector Text)))
+  -> (FakerSettings -> Text -> m Text)
+  -> (FakerSettings -> m Text)
+unresolvedResolver provider resolver =
+  \settings -> randomUnresolvedVec settings provider resolver

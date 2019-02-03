@@ -1,5 +1,4 @@
 {-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE InstanceSigs #-}
@@ -15,7 +14,6 @@ module Faker
   , setNonDeterministic
   , FakerException(..)
   , getLocale
-  , Unresolved(..)
   , generate
   , generateWithSettings
   ) where
@@ -32,16 +30,16 @@ import qualified Data.Vector as V
 import System.Random (StdGen, mkStdGen, newStdGen, randomR, split)
 
 data FakerSettings = FakerSettings
-  { fslocale :: Text
-  , fsrandomGen :: StdGen
-  , fsDeterministic :: Bool
+  { fslocale :: Text -- ^ Locale settings for your fake data source.
+  , fsrandomGen :: StdGen -- ^ Standord random generator
+  , fsDeterministic :: Bool -- ^ Controls whether you want deterministic out. This overrides fsrandomGen.
   } deriving (Show)
 
 data FakerException
-  = InvalidLocale String
-  | InvalidField String
-                 Text
-  | NoDataFound FakerSettings
+  = InvalidLocale String -- ^ This is thrown when it is not able to find the fake data source for your localization.
+  | InvalidField String -- ^ The field it is trying to resolve
+                 Text -- ^ The invalid field you passed on
+  | NoDataFound FakerSettings -- ^ This is thrown when you have no data. This may likely happen for locales other than `en`.
   deriving (Typeable, Show)
 
 instance Exception FakerException
@@ -71,18 +69,6 @@ setNonDeterministic fs = fs {fsDeterministic = False}
 
 getDeterministic :: FakerSettings -> Bool
 getDeterministic FakerSettings {..} = fsDeterministic
-
-newtype Unresolved a = Unresolved
-  { unresolvedField :: a
-  } deriving (Functor)
-
-instance Applicative Unresolved where
-  pure = Unresolved
-  Unresolved f1 <*> Unresolved f2 = pure $ f1 f2
-
-instance Monad Unresolved where
-  return = pure
-  (Unresolved f) >>= f1 = f1 f
 
 newtype Fake a = Fake
   { unFake :: FakerSettings -> IO a
