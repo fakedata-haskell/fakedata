@@ -49,20 +49,20 @@ data SourceData
   | BTTF
 
 sourceFile :: SourceData -> FilePath
-sourceFile Address = localesEnDirectory </> "address.yml"
-sourceFile Name = localesEnDirectory </> "name.yml"
-sourceFile Ancient = localesEnDirectory </> "ancient.yml"
-sourceFile Animal = localesEnDirectory </> "animal.yml"
-sourceFile App = localesEnDirectory </> "app.yml"
-sourceFile Appliance = localesEnDirectory </> "appliance.yml"
-sourceFile ATHF = localesEnDirectory </> "aqua_teen_hunger_force.yml"
-sourceFile Artist = localesEnDirectory </> "artist.yml"
-sourceFile BTTF = localesEnDirectory </> "back_to_the_future.yml"
+sourceFile Address = "address"
+sourceFile Name = "name"
+sourceFile Ancient = "ancient"
+sourceFile Animal = "animal"
+sourceFile App = "app"
+sourceFile Appliance = "appliance"
+sourceFile ATHF = "aqua_teen_hunger_force"
+sourceFile Artist = "artist"
+sourceFile BTTF = "back_to_the_future"
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
   case sysloc of
-    "en" -> sourceFile sdata
+    "en" -> localesEnDirectory </> (sourceFile sdata) <.> "yml"
     oth -> localesDirectory </> (unpack oth <> ".yml")
 
 getSourceFile :: (MonadThrow m, MonadIO m) => FilePath -> m FilePath

@@ -25,6 +25,22 @@ quite high!
 "Antony Langosh"
 ```
 
+### Generate quotes from the movie [Back to the Future](https://en.wikipedia.org/wiki/Back_to_the_Future)
+
+```
+λ> import Faker.BackToTheFuture
+λ> import Faker.Combinators
+λ> qs <- generate $ listOf 5 quote
+λ> qs
+[ "Yes. Yes. I'm George. George McFly. I'm your density. I mean, your destiny."
+, "Hello? Hello? Anybody home? Huh? Think, McFly. Think! I gotta have time to get them retyped. Do you realize what would happen if I hand in my reports in your handwriting? I'll get fired. You wouldn't want that to happen, would ya? Would ya?"
+, "Lorraine. My density has brought me to you."
+, "See you in about 30 years."
+, "You really think I ought to swear?"
+]
+
+```
+
 ### Combining Fake datas
 
 ```haskell
