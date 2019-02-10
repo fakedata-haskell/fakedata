@@ -53,6 +53,7 @@ data SourceData
   | Beer
   | BoJackHorseman
   | Book
+  | BossaNova
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -68,6 +69,7 @@ sourceFile Bank = "bank"
 sourceFile Beer = "beer"
 sourceFile BoJackHorseman = "bojack_horseman"
 sourceFile Book = "book"
+sourceFile BossaNova = "bossa_nova"
 
 mapSource :: Text -> Name
 mapSource "address" = 'Address
@@ -83,6 +85,7 @@ mapSource "bank" = 'Bank
 mapSource "beer" = 'Beer
 mapSource "bojackHourseman" = 'BoJackHorseman
 mapSource "book" = 'Book
+mapSource "bossaNova" = 'BossaNova
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
