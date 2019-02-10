@@ -10,7 +10,7 @@ import qualified Data.Text as T
 import qualified Data.Vector as V
 import Faker
 
--- import Faker.App
+import Faker.App
 import Faker.Internal
 import Faker.Provider.App
 import Test.Hspec
@@ -21,6 +21,18 @@ spec = do
     it "Resolves App name" $ do
       ctries <- resolveAppField defaultFakerSettings "Name.name"
       ctries `shouldSatisfy` (\x -> T.length x >= 0)
-    -- it "Resolves App name" $ do
-    --   aname <- generate author
-    --   aname `shouldBe` "test"
+    it "generates App name (sanity TH check)" $ do
+      aname <- generate name
+      aname `shouldBe` "Pannier"
+    it "generates App name (TH check)" $ do
+      let name2 :: Fake Text
+          name2 = Fake $ resolver appNameProvider
+      aname <- generate name
+      bname <- generate name2
+      aname `shouldBe` bname
+    it "generates App name (TH check)" $ do
+      let name2 :: Fake Text
+          name2 = Fake $ resolver appNameProvider
+      aname <- generate name
+      bname <- generate name2
+      aname `shouldBe` bname
