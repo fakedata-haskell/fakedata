@@ -74,6 +74,7 @@ data SourceData
   | Currency
   | DcComics
   | Demographic
+  | Dessert
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -110,6 +111,7 @@ sourceFile CultureSeries = "culture_series"
 sourceFile Currency = "currency"
 sourceFile DcComics = "dc_comics"
 sourceFile Demographic = "demographic"
+sourceFile Dessert = "dessert"
 
 mapSource :: Text -> Name
 mapSource "address" = 'Address
@@ -146,6 +148,7 @@ mapSource "cultureSeries" = 'CultureSeries
 mapSource "currency" = 'Currency
 mapSource "dcComics" = 'DcComics
 mapSource "demographic" = 'Demographic
+mapSource "dessert" = 'Dessert
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
