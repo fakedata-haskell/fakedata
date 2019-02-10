@@ -60,11 +60,11 @@ genParser entityName fieldName = do
         ]
     ]
 
-mapSource :: Text -> Name
-mapSource "beer" = 'Beer
-
 -- λ> runQ [d|beerNameProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text); beerNameProvider settings = fetchData settings Beer parseBeerName|]
 -- [SigD beerNameProvider_1 (ForallT [] [AppT (ConT Control.Monad.Catch.MonadThrow) (VarT m_0),AppT (ConT Control.Monad.IO.Class.MonadIO) (VarT m_0)] (AppT (AppT ArrowT (ConT Faker.FakerSettings)) (AppT (VarT m_0) (AppT (ConT Data.Vector.Vector) (ConT Data.Text.Internal.Text))))),FunD beerNameProvider_1 [Clause [VarP settings_2] (NormalB (AppE (AppE (AppE (VarE Config.fetchData) (VarE settings_2)) (ConE Config.Beer)) (VarE Faker.Provider.Beer.parseBeerName))) []]]
+-- $(genProvider "beer" "name")
+-- This will produce a function named: "beerNameProvider"
+-- Assumes the presence of parseBeerName function in the scope.
 genProvider ::
      Text -- ^ Entity name. Example: animal, beer etc. This should be always lowercase.
   -> Text -- ^ Field name within the entity.
@@ -106,9 +106,106 @@ genProvider entityName fieldName = do
         ]
     ]
 
-genParserAndProvider :: Text -> Text -> Q [Dec]
-genParserAndProvider entityName fieldName = do
-  dec1 <- genParser entityName fieldName
-  dec2 <- genProvider entityName fieldName
-  return $ dec1 <> dec2
--- Interesting testing strategy: https://stackoverflow.com/questions/30655883/how-can-i-automate-testing-a-template-haskell-function#comment49414077_30655883
+-- λ> runQ [d|parseVersionApp :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a); parseVersionApp settings = parseUnresolvedAppField settings "version"|]
+-- [SigD parseVersionApp_1 (ForallT [] [AppT (ConT Data.Aeson.Types.FromJSON.FromJSON) (VarT a_0),AppT (ConT GHC.Base.Monoid) (VarT a_0)] (AppT (AppT ArrowT (ConT Faker.FakerSettings)) (AppT (AppT ArrowT (ConT Data.Aeson.Types.Internal.Value)) (AppT (ConT Data.Aeson.Types.Internal.Parser) (AppT (ConT Faker.Internal.Unresolved) (VarT a_0)))))),FunD parseVersionApp_1 [Clause [VarP settings_2] (NormalB (AppE (AppE (VarE Faker.Provider.App.parseUnresolvedAppField) (VarE settings_2)) (LitE (StringL "version")))) []]]
+-- $(genParserUnresolved "app" "version")
+-- This will generate a function named parseAppVersionUnresolved :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
+-- This function assumes that parseUnresolvedAppField function is available in the scope.
+genParserUnresolved :: Text -> Text -> Q [Dec]
+genParserUnresolved entityName fieldName = do
+  let funName =
+        mkName $
+        unpack $
+        "parse" <> (toTitle entityName) <> (toTitle fieldName) <> "Unresolved"
+  let parserFnName =
+        unpack $ "parseUnresolved" <> (toTitle entityName) <> "Field"
+  parserName <- lookupValueName parserFnName
+  parserFn <-
+    case parserName of
+      Nothing -> fail $ "Faker.TH: Didn't find function " <> parserFnName
+      Just fn -> return fn
+  let tvA = mkName "a"
+  tsettings <- newName "settings"
+  return $
+    [ SigD
+        funName
+        (ForallT
+           []
+           [AppT (ConT ''FromJSON) (VarT tvA), AppT (ConT ''Monoid) (VarT tvA)]
+           (AppT
+              (AppT ArrowT (ConT ''FakerSettings))
+              (AppT
+                 (AppT ArrowT (ConT ''Value))
+                 (AppT (ConT ''Parser) (AppT (ConT ''Unresolved) (VarT tvA))))))
+    , FunD
+        funName
+        [ Clause
+            [VarP tsettings]
+            (NormalB
+               (AppE
+                  (AppE (VarE parserFn) (VarE tsettings))
+                  (LitE (StringL (unpack fieldName)))))
+            []
+        ]
+    ]
+
+-- λ> runQ [d|versionAppProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text)); versionAppProvider settings = fetchData settings App parseVersionApp|]
+-- [SigD versionAppProvider_1 (ForallT [] [AppT (ConT Control.Monad.Catch.MonadThrow) (VarT m_0),AppT (ConT Control.Monad.IO.Class.MonadIO) (VarT m_0)] (AppT (AppT ArrowT (ConT Faker.FakerSettings)) (AppT (VarT m_0) (AppT (ConT Faker.Internal.Unresolved) (AppT (ConT Data.Vector.Vector) (ConT Data.Text.Internal.Text)))))),FunD versionAppProvider_1 [Clause [VarP settings_2] (NormalB (AppE (AppE (AppE (VarE Config.fetchData) (VarE settings_2)) (ConE Config.App)) (VarE Faker.Provider.App.parseVersionApp))) []]]
+-- $(genProvider "beer" "name")
+-- This will produce a function named: "beerNameProvider"
+-- Assumes the presence of parseBeerNameUnresolved function in the scope.
+genProviderUnresolved ::
+     Text -- ^ Entity name. Example: animal, beer etc. This should be always lowercase.
+  -> Text -- ^ Field name within the entity.
+  -> Q [Dec]
+genProviderUnresolved entityName fieldName = do
+  let funName =
+        mkName $ unpack $ entityName <> (toTitle fieldName) <> "Provider"
+      tvM = mkName "m"
+      parserFnName =
+        unpack $
+        "parse" <> (toTitle entityName) <> (toTitle fieldName) <> "Unresolved"
+  parserName <- lookupValueName parserFnName
+  parserFn <-
+    case parserName of
+      Nothing -> fail $ "Faker.TH: Didn't find function " <> parserFnName
+      Just fn -> return fn
+  tsettings <- newName "settings"
+  return $
+    [ SigD
+        funName
+        (ForallT
+           []
+           [ AppT (ConT ''MonadThrow) (VarT tvM)
+           , AppT (ConT ''MonadIO) (VarT tvM)
+           ]
+           (AppT
+              (AppT ArrowT (ConT ''FakerSettings))
+              (AppT
+                 (VarT tvM)
+                 (AppT (ConT ''Unresolved) (AppT (ConT ''Vector) (ConT ''Text))))))
+    , FunD
+        funName
+        [ Clause
+            [VarP tsettings]
+            (NormalB
+               (AppE
+                  (AppE
+                     (AppE (VarE 'fetchData) (VarE tsettings))
+                     (ConE (mapSource entityName)))
+                  (VarE parserFn)))
+            []
+        ]
+    ]
+
+genAppParser :: Text -> Q [Dec]
+genAppParser = genParser "app"
+
+genAppProvider :: Text -> Q [Dec]
+genAppProvider = genProvider "app"
+
+genAppParserUnresolved :: Text -> Q [Dec]
+genAppParserUnresolved = genParserUnresolved "app"
+
+genAppProviderUnresolved :: Text -> Q [Dec]
+genAppProviderUnresolved = genProviderUnresolved "app"
