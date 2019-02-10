@@ -7,13 +7,21 @@ module Faker.Provider.TH where
 import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
+import Data.Char (toUpper)
 import Data.Map.Strict (Map)
-import Data.Text (Text, toTitle, unpack)
+import Data.Text (Text, unpack)
+import qualified Data.Text as T
 import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
 import Language.Haskell.TH
+
+textTitle :: Text -> Text
+textTitle txt =
+  case T.uncons txt of
+    Nothing -> txt
+    Just (c, rem) -> T.cons (toUpper c) rem
 
 -- λ> runQ [d| parseBeerName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a; parseBeerName settings = parseBeerField settings "name"|]
 -- [SigD parseBeerName_1 (ForallT [] [AppT (ConT Data.Aeson.Types.FromJSON.FromJSON) (VarT a_0),AppT (ConT GHC.Base.Monoid) (VarT a_0)] (AppT (AppT ArrowT (ConT Faker.FakerSettings)) (AppT (AppT ArrowT (ConT Data.Aeson.Types.Internal.Value)) (AppT (ConT Data.Aeson.Types.Internal.Parser) (VarT a_0))))),FunD parseBeerName_1 [Clause [VarP settings_2] (NormalB (AppE (AppE (VarE Faker.Provider.Beer.parseBeerField) (VarE settings_2)) (LitE (StringL "name")))) []]]
@@ -28,8 +36,9 @@ genParser ::
   -> Q [Dec]
 genParser entityName fieldName = do
   let funName =
-        mkName $ unpack $ "parse" <> (toTitle entityName) <> (toTitle fieldName)
-  let parserFnName = unpack $ "parse" <> (toTitle entityName) <> "Field"
+        mkName $
+        unpack $ "parse" <> (textTitle entityName) <> (textTitle fieldName)
+  let parserFnName = unpack $ "parse" <> (textTitle entityName) <> "Field"
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -71,10 +80,10 @@ genProvider ::
   -> Q [Dec]
 genProvider entityName fieldName = do
   let funName =
-        mkName $ unpack $ entityName <> (toTitle fieldName) <> "Provider"
+        mkName $ unpack $ entityName <> (textTitle fieldName) <> "Provider"
       tvM = mkName "m"
       parserFnName =
-        unpack $ "parse" <> (toTitle entityName) <> (toTitle fieldName)
+        unpack $ "parse" <> (textTitle entityName) <> (textTitle fieldName)
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -116,9 +125,10 @@ genParserUnresolved entityName fieldName = do
   let funName =
         mkName $
         unpack $
-        "parse" <> (toTitle entityName) <> (toTitle fieldName) <> "Unresolved"
+        "parse" <> (textTitle entityName) <> (textTitle fieldName) <>
+        "Unresolved"
   let parserFnName =
-        unpack $ "parseUnresolved" <> (toTitle entityName) <> "Field"
+        unpack $ "parseUnresolved" <> (textTitle entityName) <> "Field"
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -160,11 +170,12 @@ genProviderUnresolved ::
   -> Q [Dec]
 genProviderUnresolved entityName fieldName = do
   let funName =
-        mkName $ unpack $ entityName <> (toTitle fieldName) <> "Provider"
+        mkName $ unpack $ entityName <> (textTitle fieldName) <> "Provider"
       tvM = mkName "m"
       parserFnName =
         unpack $
-        "parse" <> (toTitle entityName) <> (toTitle fieldName) <> "Unresolved"
+        "parse" <> (textTitle entityName) <> (textTitle fieldName) <>
+        "Unresolved"
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
