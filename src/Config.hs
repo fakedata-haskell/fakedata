@@ -73,6 +73,7 @@ data SourceData
   | CultureSeries
   | Currency
   | DcComics
+  | Demographic
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -108,6 +109,7 @@ sourceFile CryptoCoin = "crypto_coin"
 sourceFile CultureSeries = "culture_series"
 sourceFile Currency = "currency"
 sourceFile DcComics = "dc_comics"
+sourceFile Demographic = "demographic"
 
 mapSource :: Text -> Name
 mapSource "address" = 'Address
@@ -143,6 +145,7 @@ mapSource "cryptoCoin" = 'CryptoCoin
 mapSource "cultureSeries" = 'CultureSeries
 mapSource "currency" = 'Currency
 mapSource "dcComics" = 'DcComics
+mapSource "demographic" = 'Demographic
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
