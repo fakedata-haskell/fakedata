@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskellQuotes #-}
 
 module Config where
 
@@ -8,6 +9,7 @@ import Control.Monad.IO.Class
 import Data.Text (Text, pack, unpack)
 import Data.Yaml
 import Faker
+import Language.Haskell.TH (Name)
 import System.Directory (doesFileExist, listDirectory)
 import System.FilePath (takeExtension, takeFileName)
 import System.FilePath
@@ -64,6 +66,20 @@ sourceFile BTTF = "back_to_the_future"
 sourceFile Bank = "bank"
 sourceFile Beer = "beer"
 sourceFile BoJackHorseman = "bojack_horseman"
+
+mapSource :: Text -> Name
+mapSource "address" = 'Address
+mapSource "name" = 'Name
+mapSource "ancient" = 'Ancient
+mapSource "animal" = 'Animal
+mapSource "app" = 'App
+mapSource "appliance" = 'Appliance
+mapSource "aquaTeenHungerForce" = 'ATHF
+mapSource "artist" = 'Artist
+mapSource "backToTheFuture" = 'BTTF
+mapSource "bank" = 'Bank
+mapSource "beer" = 'Beer
+mapSource "bojackHourseman" = 'BoJackHorseman
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
