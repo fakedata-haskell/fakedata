@@ -19,7 +19,7 @@ parseBreakingBad :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBreakingBad settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  breakingBad <- faker .: "bossa_nova"
+  breakingBad <- faker .: "breaking_bad"
   pure breakingBad
 parseBreakingBad settings val = fail $ "expected Object, but got " <> (show val)
 
