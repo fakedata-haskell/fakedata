@@ -30,6 +30,19 @@ parseCoffeeField settings txt val = do
   field <- coffee .:? txt .!= mempty
   pure field
 
+parseCoffeeFields ::
+     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+parseCoffeeFields settings txts val = do
+  coffee <- parseCoffee settings val
+  helper coffee txts
+  where
+    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper a [] = parseJSON a
+    helper (Object a) (x:xs) = do
+      field <- a .: x
+      helper field xs
+    helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
+
 parseUnresolvedCoffeeField ::
      (FromJSON a, Monoid a)
   => FakerSettings
@@ -44,6 +57,14 @@ parseUnresolvedCoffeeField settings txt val = do
 $(genParser "coffee" "country")
 
 $(genProvider "coffee" "country")
+
+parseCoffeeRegionsBrazil ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseCoffeeRegionsBrazil settings =
+  parseCoffeeFields settings ["regions", "brazil"]
+
+coffeeRegionsBrazilProvider settings =
+  fetchData settings Coffee parseCoffeeRegionsBrazil
 
 $(genParser "coffee" "variety")
 

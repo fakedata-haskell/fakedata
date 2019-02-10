@@ -75,6 +75,11 @@ data SourceData
   | DcComics
   | Demographic
   | Dessert
+  | Device
+  | Dog
+  | Dota
+  | DrWho
+  | DragonBall
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -112,6 +117,11 @@ sourceFile Currency = "currency"
 sourceFile DcComics = "dc_comics"
 sourceFile Demographic = "demographic"
 sourceFile Dessert = "dessert"
+sourceFile Device = "device"
+sourceFile Dog = "dog"
+sourceFile Dota = "dota"
+sourceFile DrWho = "dr_who"
+sourceFile DragonBall = "dragon_ball"
 
 mapSource :: Text -> Name
 mapSource "address" = 'Address
@@ -149,6 +159,11 @@ mapSource "currency" = 'Currency
 mapSource "dcComics" = 'DcComics
 mapSource "demographic" = 'Demographic
 mapSource "dessert" = 'Dessert
+mapSource "device" = 'Device
+mapSource "dog" = 'Dog
+mapSource "dota" = 'Dota
+mapSource "drWho" = 'DrWho
+mapSource "dragonBall" = 'DragonBall
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =

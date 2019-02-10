@@ -12,4 +12,4 @@ $(generateFakeField "currency" "name")
 
 $(generateFakeField "currency" "code")
 
-$(generateFakeField "currency" "symbol1")
+$(generateFakeField "currency" "symbol")

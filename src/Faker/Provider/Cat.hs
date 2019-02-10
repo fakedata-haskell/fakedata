@@ -4,7 +4,6 @@
 module Faker.Provider.Cat where
 
 import Config
-import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
 import Data.Text (Text)
