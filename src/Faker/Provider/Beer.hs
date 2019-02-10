@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Faker.Provider.Beer where
 
@@ -11,6 +12,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
+import Faker.Provider.TH
 
 parseBeer :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBeer settings (Object obj) = do
@@ -27,11 +29,11 @@ parseBeerField settings txt val = do
   field <- beer .:? txt .!= mempty
   pure field
 
-parseBeerName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseBeerName settings = parseBeerField settings "name"
+-- parseBeerName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+-- parseBeerName settings = parseBeerField settings "name"
+$(genParser "beer" "name")
 
-parseBeerBrand :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseBeerBrand settings = parseBeerField settings "brand"
+$(genParser "beer" "brand")
 
 parseBeerHop :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseBeerHop settings = parseBeerField settings "hop"
@@ -45,13 +47,15 @@ parseBeerMalt settings = parseBeerField settings "malt"
 parseBeerStyle :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseBeerStyle settings = parseBeerField settings "style"
 
-beerNameProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-beerNameProvider settings = fetchData settings Beer parseBeerName
+-- beerNameProvider ::
+--      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+-- beerNameProvider settings = fetchData settings Beer parseBeerName
+-- it should generate two functions
+-- one is parser, one is provider
+-- type of inputs: function name, Beer, Resolved/Unresolved, String represting field
+$(genProvider "beer" "name")
 
-beerBrandProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-beerBrandProvider settings = fetchData settings Beer parseBeerBrand
+$(genProvider "beer" "brand")
 
 beerHopProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 beerHopProvider settings = fetchData settings Beer parseBeerHop
