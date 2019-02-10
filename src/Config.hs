@@ -63,6 +63,7 @@ data SourceData
   | Code
   | Coffee
   | Coin
+  | Color
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -88,6 +89,7 @@ sourceFile ChuckNorris = "chuck_norris"
 sourceFile Code = "code"
 sourceFile Coffee = "coffee"
 sourceFile Coin = "coin"
+sourceFile Color = "color"
 
 mapSource :: Text -> Name
 mapSource "address" = 'Address
@@ -113,6 +115,7 @@ mapSource "chuckNorris" = 'ChuckNorris
 mapSource "code" = 'Code
 mapSource "coffee" = 'Coffee
 mapSource "coin" = 'Coin
+mapSource "color" = 'Color
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
