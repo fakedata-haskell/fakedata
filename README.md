@@ -141,3 +141,10 @@ an equivalent functionality with something like
 [faker](https://github.com/stympy/faker). Also, most of the
 combinators in this packages has been inspired (read as taken) from
 the `fake` library.
+
+# Todo
+
+* coffee, commerce
+* company - buzzword, bs. Implementation of type in Faker.Company.hs
+* compass.yml
+* dota quotes
