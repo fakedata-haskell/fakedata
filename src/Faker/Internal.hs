@@ -1,15 +1,15 @@
-{-#LANGUAGE OverloadedStrings#-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveFunctor #-}
 
 module Faker.Internal where
 
+import Control.Monad.Catch
+import Control.Monad.IO.Class
 import qualified Data.Text as T
 import Data.Text (Text, strip)
-import Faker
-import Control.Monad.IO.Class
 import qualified Data.Vector as V
 import Data.Vector (Vector, (!))
-import Control.Monad.Catch
+import Faker
 import System.Random
 
 newtype Unresolved a = Unresolved
@@ -59,12 +59,13 @@ resolveUnresolved settings (Unresolved unres) resolver =
       stdGen = getRandomGen settings
       (index, _) = randomR (0, unresLen - 1) stdGen
       randomItem = unres ! index
-      resolve = if operateField randomItem "hello" == randomItem -- todo: remove hack
-                then pure $ interpolateNumbers settings randomItem
-                else resolver settings randomItem
-  in if unresLen == 0
-     then throwM $ NoDataFound settings
-     else resolve
+      resolve =
+        if operateField randomItem "hello" == randomItem -- todo: remove hack
+          then pure $ interpolateNumbers settings randomItem
+          else resolver settings randomItem
+   in if unresLen == 0
+        then throwM $ NoDataFound settings
+        else resolve
 
 uncons2 :: Text -> Maybe (String, Text)
 uncons2 txt = do
@@ -110,9 +111,6 @@ resolveFields txt =
    in case T.null remaining of
         True -> [field]
         False -> [field] <> resolveFields remaining
-
-
-
 
 digitToChar :: Int -> Char
 digitToChar 0 = '0'
