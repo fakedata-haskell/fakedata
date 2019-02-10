@@ -66,6 +66,13 @@ data SourceData
   | Color
   | Commerce
   | Community
+  | Company
+  | Construction
+  | Cosmere
+  | CryptoCoin
+  | CultureSeries
+  | Currency
+  | DcComics
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -94,6 +101,13 @@ sourceFile Coin = "coin"
 sourceFile Color = "color"
 sourceFile Commerce = "commerce"
 sourceFile Community = "community"
+sourceFile Company = "company"
+sourceFile Construction = "construction"
+sourceFile Cosmere = "cosmere"
+sourceFile CryptoCoin = "crypto_coin"
+sourceFile CultureSeries = "culture_series"
+sourceFile Currency = "currency"
+sourceFile DcComics = "dc_comics"
 
 mapSource :: Text -> Name
 mapSource "address" = 'Address
@@ -122,6 +136,13 @@ mapSource "coin" = 'Coin
 mapSource "color" = 'Color
 mapSource "commerce" = 'Commerce
 mapSource "community" = 'Community
+mapSource "company" = 'Company
+mapSource "construction" = 'Construction
+mapSource "cosmere" = 'Cosmere
+mapSource "cryptoCoin" = 'CryptoCoin
+mapSource "cultureSeries" = 'CultureSeries
+mapSource "currency" = 'Currency
+mapSource "dcComics" = 'DcComics
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
