@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Faker.Provider.App where
 
@@ -12,6 +13,8 @@ import Data.Yaml
 import Faker
 import Faker.Internal
 import Faker.Provider.Name (nameProvider, resolveNameText)
+import Faker.Provider.TH
+import Language.Haskell.TH
 
 parseApp :: FromJSON a => FakerSettings -> Value -> Parser a
 parseApp settings (Object obj) = do
@@ -39,27 +42,17 @@ parseUnresolvedAppField settings txt val = do
   field <- app .:? txt .!= mempty
   pure $ pure field
 
-parseNameApp :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseNameApp settings = parseAppField settings "name"
+$(genAppParser "name")
 
-parseVersionApp ::
-     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
-parseVersionApp settings = parseUnresolvedAppField settings "version"
+$(genAppProvider "name")
 
-parseAuthorApp ::
-     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
-parseAuthorApp settings = parseUnresolvedAppField settings "author"
+$(genAppParserUnresolved "version")
 
-nameAppProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-nameAppProvider settings = fetchData settings App parseNameApp
+$(genAppParserUnresolved "author")
 
-versionAppProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
-versionAppProvider settings = fetchData settings App parseVersionApp
+$(genAppProviderUnresolved "version")
 
-authorAppProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
-authorAppProvider settings = fetchData settings App parseAuthorApp
+$(genAppProviderUnresolved "author")
 
 resolveAppText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveAppText settings txt = do

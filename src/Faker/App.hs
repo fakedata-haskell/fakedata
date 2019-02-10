@@ -1,15 +1,15 @@
+{-# LANGUAGE TemplateHaskell #-}
+
 module Faker.App where
 
 import Data.Text
 import Faker
 import Faker.Internal
 import Faker.Provider.App
+import Faker.TH
 
-name :: Fake Text
-name = Fake $ resolver nameAppProvider
+$(generateFakeField "app" "name")
 
-author :: Fake Text
-author = Fake $ unresolvedResolver authorAppProvider resolveAppText
+$(generateFakeFieldUnresolved "app" "author")
 
-version :: Fake Text
-version = Fake $ unresolvedResolver versionAppProvider resolveAppText
+$(generateFakeFieldUnresolved "app" "version")
