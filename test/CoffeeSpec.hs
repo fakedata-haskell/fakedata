@@ -13,6 +13,7 @@ import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Faker
 import Faker.Coffee
+import Faker.Commerce
 import Faker.Internal
 import Faker.Provider.Coffee
 import Test.Hspec
@@ -35,3 +36,7 @@ spec = do
     it "India region (via TH)" $ do
       ctries <- generate regionsIndia
       ctries `shouldBe` "Sheveroys"
+  describe "Commerce" $ do
+    it "Nested field" $ do
+      ctries <- generate product_nameAdjective
+      ctries `shouldBe` "Rustic"
