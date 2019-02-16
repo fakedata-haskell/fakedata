@@ -7,7 +7,7 @@ module Faker.TH where
 import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
-import Data.Char (toUpper)
+import Data.Char (toLower, toUpper)
 import Data.Map.Strict (Map)
 import Data.Text (Text, unpack)
 import Data.Vector (Vector)
@@ -20,6 +20,10 @@ stringTitle :: String -> String
 stringTitle [] = []
 stringTitle (x:xs) = (toUpper x) : xs
 
+lowerTitle :: String -> String
+lowerTitle [] = []
+lowerTitle (x:xs) = (toLower x) : xs
+
 -- λ> runQ [d|state :: Fake Text;state = Fake (resolver stateProvider)|]
 -- [SigD state_0 (AppT (ConT Faker.Fake) (ConT Data.Text.Internal.Text)),ValD (VarP state_0) (NormalB (AppE (ConE Faker.Fake) (AppE (VarE Faker.Internal.resolver) (VarE Faker.Provider.Address.stateProvider)))) []]
 -- $(genrateFakeField "address" "state")
@@ -29,6 +33,26 @@ generateFakeField :: String -> String -> Q [Dec]
 generateFakeField entityName fieldName = do
   let funName = mkName fieldName
       pfn = entityName <> (stringTitle fieldName) <> "Provider"
+  providerName <- lookupValueName pfn
+  providerFn <-
+    case providerName of
+      Nothing ->
+        fail $ "generateFakefield: Function " <> pfn <> " not found in scope"
+      Just fn -> return fn
+  return $
+    [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))
+    , ValD
+        (VarP funName)
+        (NormalB (AppE (ConE 'Fake) (AppE (VarE 'resolver) (VarE providerFn))))
+        []
+    ]
+
+generateFakeFields :: String -> [String] -> Q [Dec]
+generateFakeFields entityName fieldName = do
+  let fieldName' = map stringTitle fieldName
+      fieldName'' = concat fieldName'
+      pfn = entityName <> fieldName'' <> "Provider"
+      funName = mkName $ lowerTitle fieldName''
   providerName <- lookupValueName pfn
   providerFn <-
     case providerName of
