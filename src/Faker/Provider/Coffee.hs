@@ -63,8 +63,14 @@ parseCoffeeRegionsBrazil ::
 parseCoffeeRegionsBrazil settings =
   parseCoffeeFields settings ["regions", "brazil"]
 
+coffeeRegionsBrazilProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 coffeeRegionsBrazilProvider settings =
   fetchData settings Coffee parseCoffeeRegionsBrazil
+
+$(genParsers "coffee" ["regions", "colombia"])
+
+$(genProviders "coffee" ["regions", "colombia"])
 
 $(genParser "coffee" "variety")
 
