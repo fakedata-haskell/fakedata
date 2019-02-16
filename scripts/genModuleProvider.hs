@@ -401,6 +401,87 @@ commerce =
         ]
     }
 
+dune :: ModuleInfo
+dune =
+  ModuleInfo
+    { moduleName = "dune"
+    , jsonField = "dune"
+    , fields = ["characters", "titles", "planets"]
+    , unresolvedFields = []
+    , nestedFields =
+        [ ["quotes", "guild_navigator"]
+        , ["quotes", "emperor"]
+        , ["quotes", "paul"]
+        , ["quotes", "thufir"]
+        , ["quotes", "jessica"]
+        , ["quotes", "irulan"]
+        , ["quotes", "mohiam"]
+        , ["quotes", "gurney"]
+        , ["quotes", "leto"]
+        , ["quotes", "stilgar"]
+        , ["quotes", "liet_kynes"]
+        , ["quotes", "pardot_kynes"]
+        , ["quotes", "baron_harkonnen"]
+        , ["quotes", "piter"]
+        , ["quotes", "alia"]
+        , ["quotes", "mapes"]
+        , ["quotes", "duncan"]
+        , ["quotes", "yueh"]
+        , ["sayings", "bene_gesserit"]
+        , ["sayings", "fremen"]
+        , ["sayings", "mentat"]
+        , ["sayings", "muaddib"]
+        , ["sayings", "orange_catholic_bible"]
+        ]
+    }
+
+dota :: ModuleInfo
+dota =
+  ModuleInfo
+    { moduleName = "dota"
+    , jsonField = "dota"
+    , fields = ["hero", "iteam", "team", "player"]
+    , nestedFields =
+        [ ["abaddon", "quote"]
+        , ["alchemist", "quote"]
+        , ["axe", "quote"]
+        , ["beastmaster", "quote"]
+        , ["brewmaster", "quote"]
+        , ["bristleback", "quote"]
+        , ["centaur", "quote"]
+        , ["chaos_knight", "quote"]
+        , ["clockwerk", "quote"]
+        , ["doom", "quote"]
+        , ["dragon_knight", "quote"]
+        , ["earth_knight", "quote"]
+        , ["earthshaker", "quote"]
+        , ["elder_titan", "quote"]
+        , ["huskar", "quote"]
+        , ["io", "quote"]
+        , ["kunkka", "quote"]
+        , ["legion_commander", "quote"]
+        , ["lifestealer", "quote"]
+        , ["lycan", "quote"]
+        , ["magnus", "quote"]
+        , ["night_stalker", "quote"]
+        , ["omniknight", "quote"]
+        , ["phoenix", "quote"]
+        , ["pudge", "quote"]
+        , ["sand_king", "quote"]
+        , ["slardar", "quote"]
+        , ["spirit_breaker", "quote"]
+        , ["sven", "quote"]
+        , ["tidehunter", "quote"]
+        , ["timbersaw", "quote"]
+        , ["tiny", "quote"]
+        , ["tusk", "quote"]
+        , ["underlord", "quote"]
+        , ["undying", "quote"]
+        , ["wraith_king", "quote"]
+        ]
+    , unresolvedFields = []
+    }
+
 main :: IO ()
-main = generateModule commerce
+main = generateModule dune
 -- main = mapM_ generateModule fields -- dumbAndDumberInfo

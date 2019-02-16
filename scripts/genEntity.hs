@@ -51,7 +51,7 @@ module Faker.#{capModname} where
 import Data.Text
 import Faker
 import Faker.Internal
-import Faker.Provider.Book
+import Faker.Provider.#{capModname}
 import Faker.TH
 
 #{fakeFields}
@@ -107,6 +107,87 @@ commerce =
         ]
     }
 
+dota :: ModuleInfo
+dota =
+  ModuleInfo
+    { moduleName = "dota"
+    , jsonField = "dota"
+    , fields = ["hero", "iteam", "team", "player"]
+    , nestedFields =
+        [ ["abaddon", "quote"]
+        , ["alchemist", "quote"]
+        , ["axe", "quote"]
+        , ["beastmaster", "quote"]
+        , ["brewmaster", "quote"]
+        , ["bristleback", "quote"]
+        , ["centaur", "quote"]
+        , ["chaos_knight", "quote"]
+        , ["clockwerk", "quote"]
+        , ["doom", "quote"]
+        , ["dragon_knight", "quote"]
+        , ["earth_knight", "quote"]
+        , ["earthshaker", "quote"]
+        , ["elder_titan", "quote"]
+        , ["huskar", "quote"]
+        , ["io", "quote"]
+        , ["kunkka", "quote"]
+        , ["legion_commander", "quote"]
+        , ["lifestealer", "quote"]
+        , ["lycan", "quote"]
+        , ["magnus", "quote"]
+        , ["night_stalker", "quote"]
+        , ["omniknight", "quote"]
+        , ["phoenix", "quote"]
+        , ["pudge", "quote"]
+        , ["sand_king", "quote"]
+        , ["slardar", "quote"]
+        , ["spirit_breaker", "quote"]
+        , ["sven", "quote"]
+        , ["tidehunter", "quote"]
+        , ["timbersaw", "quote"]
+        , ["tiny", "quote"]
+        , ["tusk", "quote"]
+        , ["underlord", "quote"]
+        , ["undying", "quote"]
+        , ["wraith_king", "quote"]
+        ]
+    , unresolvedFields = []
+    }
+
+dune :: ModuleInfo
+dune =
+  ModuleInfo
+    { moduleName = "dune"
+    , jsonField = "dune"
+    , fields = ["characters", "titles", "planets"]
+    , unresolvedFields = []
+    , nestedFields =
+        [ ["quotes", "guild_navigator"]
+        , ["quotes", "emperor"]
+        , ["quotes", "paul"]
+        , ["quotes", "thufir"]
+        , ["quotes", "jessica"]
+        , ["quotes", "irulan"]
+        , ["quotes", "mohiam"]
+        , ["quotes", "gurney"]
+        , ["quotes", "leto"]
+        , ["quotes", "stilgar"]
+        , ["quotes", "liet_kynes"]
+        , ["quotes", "pardot_kynes"]
+        , ["quotes", "baron_harkonnen"]
+        , ["quotes", "piter"]
+        , ["quotes", "alia"]
+        , ["quotes", "mapes"]
+        , ["quotes", "duncan"]
+        , ["quotes", "yueh"]
+        , ["sayings", "bene_gesserit"]
+        , ["sayings", "fremen"]
+        , ["sayings", "mentat"]
+        , ["sayings", "muaddib"]
+        , ["sayings", "orange_catholic_bible"]
+        ]
+    }
+
 generateModule :: ModuleInfo -> IO ()
 generateModule m@ModuleInfo {..} = do
   let fname = (capitalize moduleName) <.> "hs"
@@ -114,4 +195,4 @@ generateModule m@ModuleInfo {..} = do
   writeFile fname dat
 
 main :: IO ()
-main = generateModule commerce
+main = generateModule dune
