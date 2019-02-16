@@ -15,6 +15,7 @@ import Faker
 import Faker.Coffee
 import Faker.Commerce
 import Faker.Dota
+import qualified Faker.DumbAndDumber as DD
 import Faker.Dune
 import Faker.Internal
 import Faker.Provider.Coffee
@@ -49,4 +50,8 @@ spec = do
   describe "Dune" $ do
     it "Nested field" $ do
       ctries <- generate quotesJessica
+      ctries `shouldSatisfy` (\x -> T.length x > 5)
+  describe "DumbAndDumber" $ do
+    it "Nested field" $ do
+      ctries <- generate DD.actors
       ctries `shouldSatisfy` (\x -> T.length x > 5)
