@@ -41,23 +41,13 @@ parse#{capModname}Field settings txt val = do
   field <- #{moduleName} .:? txt .!= mempty
   pure field
 
-parseUnresolved#{capModname}Field ::
-     (FromJSON a, Monoid a)
-  => FakerSettings
-  -> Text
-  -> Value
-  -> Parser (Unresolved a)
-parseUnresolved#{capModname}Field settings txt val = do
-  #{moduleName} <- parse#{capModname} settings val
-  field <- #{moduleName} .:? txt .!= mempty
-  pure $ pure field
+#{unresolvedParser}
 
 #{resolvedFields}
 
-#{unresolved}
+#{unresolvedStr}
 
-#{unresolverFunction1}
-
+#{generateresolveFieldFnsString}
 
 |]
   where
@@ -89,6 +79,11 @@ $(genProviderUnresolved "#{moduleName}" "#{field}")
     unres = map unresolvedField unresolvedFields
     unresolved :: String
     unresolved = foldMap (mempty <>) unres
+    unresolvedStr :: String
+    unresolvedStr =
+      if unresolvedFields == []
+        then mempty
+        else unresolved
     unresolverFunction1 :: String
     unresolverFunction1 =
       [i|
@@ -109,8 +104,29 @@ resolve#{capModname}Field settings str = throwM $ InvalidField "#{moduleName}" s
 resolve#{capModname}Field settings undefined =
   randomUnresolvedVec settings #{field}Provider resolve#{cf}Text
 |]
+    generateresolveFieldFnsString :: String
+    generateresolveFieldFnsString =
+      if unresolvedFields == []
+        then mempty
+        else unresolverFunction1
     generateresolveFieldFns :: String
     generateresolveFieldFns = concatMap generateresolveFieldFn unresolvedFields
+    unresolvedParser :: String
+    unresolvedParser =
+      if unresolvedFields == []
+        then mempty
+        else [i|
+parseUnresolved#{capModname}Field ::
+     (FromJSON a, Monoid a)
+  => FakerSettings
+  -> Text
+  -> Value
+  -> Parser (Unresolved a)
+parseUnresolved#{capModname}Field settings txt val = do
+  #{moduleName} <- parse#{capModname} settings val
+  field <- #{moduleName} .:? txt .!= mempty
+  pure $ pure field
+|]
 
 data ModuleInfo = ModuleInfo
   { moduleName :: String -- eg: buffy
@@ -123,7 +139,7 @@ bookModuleInfo =
   ModuleInfo
     { moduleName = "book"
     , fields = ["title", "publisher", "genre"]
-    , unresolvedFields = ["author", "jani"]
+    , unresolvedFields = []
     }
 
 main :: IO ()
