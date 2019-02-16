@@ -68,10 +68,6 @@ coffeeRegionsBrazilProvider ::
 coffeeRegionsBrazilProvider settings =
   fetchData settings Coffee parseCoffeeRegionsBrazil
 
-$(genParsers "coffee" ["regions", "colombia"])
-
-$(genProviders "coffee" ["regions", "colombia"])
-
 $(genParser "coffee" "variety")
 
 $(genProvider "coffee" "variety")
@@ -103,6 +99,74 @@ $(genProvider "coffee" "name_2")
 $(genParserUnresolved "coffee" "blend_name")
 
 $(genProviderUnresolved "coffee" "blend_name")
+
+$(genParsers "coffee" ["regions", "colombia"])
+
+$(genProviders "coffee" ["regions", "colombia"])
+
+$(genParsers "coffee" ["regions", "sumatra"])
+
+$(genProviders "coffee" ["regions", "sumatra"])
+
+$(genParsers "coffee" ["regions", "ethiopia"])
+
+$(genProviders "coffee" ["regions", "ethiopia"])
+
+$(genParsers "coffee" ["regions", "honduras"])
+
+$(genProviders "coffee" ["regions", "honduras"])
+
+$(genParsers "coffee" ["regions", "kenya"])
+
+$(genProviders "coffee" ["regions", "kenya"])
+
+$(genParsers "coffee" ["regions", "uganda"])
+
+$(genProviders "coffee" ["regions", "uganda"])
+
+$(genParsers "coffee" ["regions", "mexico"])
+
+$(genProviders "coffee" ["regions", "mexico"])
+
+$(genParsers "coffee" ["regions", "guatemala"])
+
+$(genProviders "coffee" ["regions", "guatemala"])
+
+$(genParsers "coffee" ["regions", "nicaragua"])
+
+$(genProviders "coffee" ["regions", "nicaragua"])
+
+$(genParsers "coffee" ["regions", "costa_rica"])
+
+$(genProviders "coffee" ["regions", "costa_rica"])
+
+$(genParsers "coffee" ["regions", "tanzania"])
+
+$(genProviders "coffee" ["regions", "tanzania"])
+
+$(genParsers "coffee" ["regions", "el_salvador"])
+
+$(genProviders "coffee" ["regions", "el_salvador"])
+
+$(genParsers "coffee" ["regions", "rwanda"])
+
+$(genProviders "coffee" ["regions", "rwanda"])
+
+$(genParsers "coffee" ["regions", "burundi"])
+
+$(genProviders "coffee" ["regions", "burundi"])
+
+$(genParsers "coffee" ["regions", "panama"])
+
+$(genProviders "coffee" ["regions", "panama"])
+
+$(genParsers "coffee" ["regions", "yemen"])
+
+$(genProviders "coffee" ["regions", "yemen"])
+
+$(genParsers "coffee" ["regions", "india"])
+
+$(genProviders "coffee" ["regions", "india"])
 
 resolveCoffeeText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
