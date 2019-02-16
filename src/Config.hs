@@ -310,6 +310,7 @@ mapSource "dota" = 'Dota
 mapSource "drWho" = 'DrWho
 mapSource "dragonBall" = 'DragonBall
 mapSource "dumbAndDumber" = 'DumbAndDumber
+mapSource "dune" = 'Dune
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =

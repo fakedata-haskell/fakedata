@@ -144,7 +144,7 @@ the `fake` library.
 
 # Todo
 
-* coffee, commerce
 * company - buzzword, bs. Implementation of type in Faker.Company.hs
 * compass.yml
-* dota quotes
+* educator - tertiary
+* finance
