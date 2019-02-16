@@ -46,6 +46,19 @@ parse#{capModname}Field settings txt val = do
   field <- #{moduleName} .:? txt .!= mempty
   pure field
 
+parse#{capModname}Fields ::
+     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+parse#{capModname}Fields settings txts val = do
+  #{moduleName} <- parse#{capModname} settings val
+  helper #{moduleName} txts
+  where
+    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper a [] = parseJSON a
+    helper (Object a) (x:xs) = do
+      field <- a .: x
+      helper field xs
+    helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
+
 #{unresolvedParser}
 
 #{resolvedFields}
@@ -372,6 +385,22 @@ cofee =
         ]
     }
 
+commerce :: ModuleInfo
+commerce =
+  ModuleInfo
+    { moduleName = "commerce"
+    , jsonField = "commerce"
+    , fields = ["department"]
+    , unresolvedFields = []
+    , nestedFields =
+        [ ["product_name", "adjective"]
+        , ["product_name", "material"]
+        , ["product_name", "product"]
+        , ["promotion_code", "adjective"]
+        , ["promotion_code", "noun"]
+        ]
+    }
+
 main :: IO ()
-main = generateModule cofee
+main = generateModule commerce
 -- main = mapM_ generateModule fields -- dumbAndDumberInfo

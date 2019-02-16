@@ -91,6 +91,22 @@ cofee =
         ]
     }
 
+commerce :: ModuleInfo
+commerce =
+  ModuleInfo
+    { moduleName = "commerce"
+    , jsonField = "commerce"
+    , fields = ["department"]
+    , unresolvedFields = []
+    , nestedFields =
+        [ ["product_name", "adjective"]
+        , ["product_name", "material"]
+        , ["product_name", "product"]
+        , ["promotion_code", "adjective"]
+        , ["promotion_code", "noun"]
+        ]
+    }
+
 generateModule :: ModuleInfo -> IO ()
 generateModule m@ModuleInfo {..} = do
   let fname = (capitalize moduleName) <.> "hs"
@@ -98,4 +114,4 @@ generateModule m@ModuleInfo {..} = do
   writeFile fname dat
 
 main :: IO ()
-main = generateModule cofee
+main = generateModule commerce
