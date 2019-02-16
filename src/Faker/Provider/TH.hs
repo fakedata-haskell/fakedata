@@ -69,6 +69,87 @@ genParser entityName fieldName = do
         ]
     ]
 
+genParsers ::
+     Text -- ^ Entity name. Example: animal, beer etc. This should be always lowercase.
+  -> [Text] -- ^ Field name within the entity.
+  -> Q [Dec]
+genParsers entityName fieldName = do
+  let fieldNames = map textTitle fieldName
+      fieldNames' = T.concat fieldNames
+      funName =
+        mkName $ unpack $ "parse" <> (textTitle entityName) <> (fieldNames')
+  let parserFnName = unpack $ "parse" <> (textTitle entityName) <> "Fields"
+  parserName <- lookupValueName parserFnName
+  parserFn <-
+    case parserName of
+      Nothing -> fail $ "Faker.TH: Didn't find function " <> parserFnName
+      Just fn -> return fn
+  let tvA = mkName "a"
+  tsettings <- newName "settings"
+  return $
+    [ SigD
+        funName
+        (ForallT
+           []
+           [AppT (ConT ''FromJSON) (VarT tvA), AppT (ConT ''Monoid) (VarT tvA)]
+           (AppT
+              (AppT ArrowT (ConT ''FakerSettings))
+              (AppT
+                 (AppT ArrowT (ConT ''Value))
+                 (AppT (ConT ''Parser) (VarT tvA)))))
+    , FunD
+        funName
+        [ Clause
+            [VarP tsettings]
+            (NormalB
+               (AppE
+                  (AppE (VarE parserFn) (VarE tsettings))
+                  (ListE (map (\x -> LitE (StringL (unpack x))) fieldName))))
+            []
+        ]
+    ]
+
+genProviders ::
+     Text -- ^ Entity name. Example: animal, beer etc. This should be always lowercase.
+  -> [Text] -- ^ Field name within the entity.
+  -> Q [Dec]
+genProviders entityName fieldName = do
+  let fieldNames = map textTitle fieldName
+      fieldNames' = T.concat fieldNames
+      funName = mkName $ unpack $ entityName <> fieldNames' <> "Provider"
+      tvM = mkName "m"
+      parserFnName = unpack $ "parse" <> (textTitle entityName) <> fieldNames'
+  parserName <- lookupValueName parserFnName
+  parserFn <-
+    case parserName of
+      Nothing -> fail $ "Faker.TH: Didn't find function " <> parserFnName
+      Just fn -> return fn
+  tsettings <- newName "settings"
+  return $
+    [ SigD
+        funName
+        (ForallT
+           []
+           [ AppT (ConT ''MonadThrow) (VarT tvM)
+           , AppT (ConT ''MonadIO) (VarT tvM)
+           ]
+           (AppT
+              (AppT ArrowT (ConT ''FakerSettings))
+              (AppT (VarT tvM) (AppT (ConT ''Vector) (ConT ''Text)))))
+    , FunD
+        funName
+        [ Clause
+            [VarP tsettings]
+            (NormalB
+               (AppE
+                  (AppE
+                     (AppE (VarE 'fetchData) (VarE tsettings))
+                     (ConE (mapSource entityName)))
+                  (VarE parserFn)))
+            []
+        ]
+    ]
+
 -- λ> runQ [d|beerNameProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text); beerNameProvider settings = fetchData settings Beer parseBeerName|]
 -- [SigD beerNameProvider_1 (ForallT [] [AppT (ConT Control.Monad.Catch.MonadThrow) (VarT m_0),AppT (ConT Control.Monad.IO.Class.MonadIO) (VarT m_0)] (AppT (AppT ArrowT (ConT Faker.FakerSettings)) (AppT (VarT m_0) (AppT (ConT Data.Vector.Vector) (ConT Data.Text.Internal.Text))))),FunD beerNameProvider_1 [Clause [VarP settings_2] (NormalB (AppE (AppE (AppE (VarE Config.fetchData) (VarE settings_2)) (ConE Config.Beer)) (VarE Faker.Provider.Beer.parseBeerName))) []]]
 -- $(genProvider "beer" "name")
