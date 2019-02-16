@@ -14,6 +14,8 @@ import qualified Data.Vector as V
 import Faker
 import Faker.Coffee
 import Faker.Commerce
+import Faker.Dota
+import Faker.Dune
 import Faker.Internal
 import Faker.Provider.Coffee
 import Test.Hspec
@@ -40,3 +42,11 @@ spec = do
     it "Nested field" $ do
       ctries <- generate product_nameAdjective
       ctries `shouldBe` "Rustic"
+  describe "Dota" $ do
+    it "Nested field" $ do
+      ctries <- generate spirit_breakerQuote
+      ctries `shouldSatisfy` (\x -> T.length x > 5)
+  describe "Dune" $ do
+    it "Nested field" $ do
+      ctries <- generate quotesJessica
+      ctries `shouldSatisfy` (\x -> T.length x > 5)
