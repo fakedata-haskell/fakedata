@@ -80,6 +80,108 @@ data SourceData
   | Dota
   | DrWho
   | DragonBall
+  | DumbAndDumber
+  | Dune
+  | Educator
+  | ElderScrolls
+  | ElectricalComponents
+  | Esport
+  | Fallout
+  | FamilyGuy
+  | File
+  | Finance
+  | Food
+  | Football
+  | FreshPrinceOfBelAir
+  | Friends
+  | FunnyName
+  | GameOfThrones
+  | Gender
+  | GhostBusters
+  | GratefulDead
+  | GreekPhilosophers
+  | Hacker
+  | HalfLife
+  | HarryPotter
+  | Heroes
+  | HeroesOfTheStorm
+  | HeyArnold
+  | Hipster
+  | HitchhikersGuideToTheGalaxy
+  | Hobbit
+  | House
+  | HowIMetYourMother
+  | IdNumber
+  | IndustrySegments
+  | Internet
+  | Invoice
+  | Job
+  | Kpop
+  | LeagueOfLegends
+  | Lebowski
+  | LordOfTheRings
+  | Lorem
+  | LoveCraft
+  | Markdown
+  | Marketing
+  | Measurement
+  | MichaelScott
+  | Military
+  | Movie
+  | Music
+  | Myst
+  | Nation
+  | NatoPhoneticAlphabet
+  | NewGirl
+  | OnePiece
+  | OverWatch
+  | ParksAndRec
+  | Phish
+  | PhoneNumber
+  | Pokemon
+  | PrincessBride
+  | ProgrammingLanguage
+  | Quote
+  | Relationship
+  | Restaurant
+  | RickAndMorty
+  | RockBand
+  | Rupaul
+  | Science
+  | Seinfeld
+  | Shakespeare
+  | SiliconValley
+  | Simpsons
+  | SlackEmoji
+  | SonicTheHedgehog
+  | Source
+  | SouthPark
+  | Space
+  | StarTrek
+  | StarWars
+  | StarGate
+  | StrangerThings
+  | Stripe
+  | Subscription
+  | SuperSmashBros
+  | SuperHero
+  | SwordArtOnline
+  | Team
+  | TheExpanse
+  | TheItCrowd
+  | TheThickOfIt
+  | TwinPeaks
+  | UmphreysMcgee
+  | University
+  | VForVendetta
+  | Vehicle
+  | VentureBros
+  | Verbs
+  | Witcher
+  | WorldCup
+  | WorldOfWarcraft
+  | Yoda
+  | Zelda
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -122,7 +224,50 @@ sourceFile Dog = "dog"
 sourceFile Dota = "dota"
 sourceFile DrWho = "dr_who"
 sourceFile DragonBall = "dragon_ball"
+sourceFile DumbAndDumber = "dumb_and_dumber"
+sourceFile Dune = "dune"
+sourceFile Educator = "educator"
+sourceFile ElderScrolls = "elder_scrolls"
+sourceFile ElectricalComponents = "electrical_components"
+sourceFile Esport = "esport"
+sourceFile Fallout = "fallout"
+sourceFile FamilyGuy = "family_guy"
+sourceFile File = "file"
+sourceFile Finance = "finance"
+sourceFile Food = "food"
+sourceFile Football = "football"
+sourceFile FreshPrinceOfBelAir = "fresh_prince_of_bel_air"
+sourceFile Friends = "friends"
+sourceFile FunnyName = "funny_name"
+sourceFile GameOfThrones = "game_of_thrones"
+sourceFile Gender = "gender"
+sourceFile GhostBusters = "ghostbusters"
+sourceFile GratefulDead = "grateful_dead"
+sourceFile GreekPhilosophers = "greek_philosophers"
+sourceFile Hacker = "hacker"
+sourceFile HalfLife = "half_life"
+sourceFile HarryPotter = "harry_potter"
+sourceFile Heroes = "heroes"
+sourceFile HeroesOfTheStorm = "heroes_of_the_storm"
+sourceFile HeyArnold = "hey_arnold"
+sourceFile Hipster = "hipster"
+sourceFile HitchhikersGuideToTheGalaxy = "hitchhikers_guide_to_the_galaxy"
+sourceFile Hobbit = "hobbit"
+sourceFile House = "house"
+sourceFile HowIMetYourMother = "how_i_met_your_mother"
+sourceFile IdNumber = "id_number"
+sourceFile IndustrySegments = "industry_segments"
+sourceFile Internet = "internet"
+sourceFile Invoice = "invoice"
+sourceFile Job = "job"
+sourceFile Kpop = "kpop"
+sourceFile LeagueOfLegends = "league_of_legends"
+sourceFile Lebowski = "lebowski"
+sourceFile LordOfTheRings = "lord_of_the_rings"
+sourceFile Lorem = "lorem"
+sourceFile LoveCraft = "lovecraft"
 
+-- todo
 mapSource :: Text -> Name
 mapSource "address" = 'Address
 mapSource "name" = 'Name
@@ -164,6 +309,7 @@ mapSource "dog" = 'Dog
 mapSource "dota" = 'Dota
 mapSource "drWho" = 'DrWho
 mapSource "dragonBall" = 'DragonBall
+mapSource "dumbAndDumber" = 'DumbAndDumber
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
