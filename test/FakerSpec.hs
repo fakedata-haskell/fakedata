@@ -16,6 +16,7 @@ import Faker.Combinators
 import Faker.Compass
 import Faker.Educator
 import qualified Faker.ElderScrolls as ES
+import Faker.ElectricalComponents
 import Faker.Internal
 import Faker.Provider.Educator
 import Test.Hspec
@@ -38,4 +39,7 @@ spec = do
       (ctries) `shouldSatisfy` (\x -> Prelude.length x == 5)
     it "Elder Scroll" $ do
       ctries <- generate ES.first_name
+      (ctries) `shouldSatisfy` isText
+    it "Electrical component" $ do
+      ctries <- generate passive
       (ctries) `shouldSatisfy` isText
