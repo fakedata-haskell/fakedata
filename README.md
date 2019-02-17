@@ -145,6 +145,5 @@ the `fake` library.
 # Todo
 
 * company - buzzword, bs. Implementation of type in Faker.Company.hs
-* compass.yml
-* educator - tertiary
+* compass.yml -- finish this first. Need to provider the Faker module and write test for it. You may also have to modify the gen script slightly.
 * finance
