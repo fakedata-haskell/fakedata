@@ -5,16 +5,8 @@
 
 import Data.Char (toUpper)
 import Data.String.Interpolate
+import ModuleInfo
 import System.FilePath ((<.>))
-
-data ModuleInfo = ModuleInfo
-  { moduleName :: String -- eg: buffy
-  , jsonField :: String
-  , fields :: [String]
-  , unresolvedFields :: [String]
-  , nestedFields :: [[String]]
-  , unresolvedNestedFields :: [[String]]
-  } deriving (Show, Eq, Ord)
 
 capitalize :: String -> String
 capitalize [] = []
@@ -69,29 +61,5 @@ generateModule m@ModuleInfo {..} = do
       dat = moduleDef m
   writeFile fname dat
 
-compass :: ModuleInfo
-compass =
-  ModuleInfo
-    { moduleName = "compass"
-    , jsonField = "compass"
-    , fields = []
-    , unresolvedFields = ["direction", "abbreviation", "azimuth"]
-    , nestedFields =
-        [ ["cardinal", "word"]
-        , ["cardinal", "abbreviation"]
-        , ["cardinal", "azimuth"]
-        , ["ordinal", "word"]
-        , ["ordinal", "abbreviation"]
-        , ["ordinal", "azimuth"]
-        , ["half-wind", "word"]
-        , ["half-wind", "abbreviation"]
-        , ["half-wind", "azimuth"]
-        , ["quarter-wind", "word"]
-        , ["quarter-wind", "abbreviation"]
-        , ["quarter-wind", "azimuth"]
-        ]
-    , unresolvedNestedFields = []
-    }
-
 main :: IO ()
-main = generateModule compass
+main = generateModule currentOne
