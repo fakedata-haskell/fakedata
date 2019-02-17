@@ -18,6 +18,7 @@ import Faker.Educator
 import qualified Faker.ElderScrolls as ES
 import Faker.ElectricalComponents
 import Faker.Esport
+import Faker.Fallout
 import Faker.Internal
 import Faker.Provider.Educator
 import Test.Hspec
@@ -47,3 +48,6 @@ spec = do
     it "Esport" $ do
       ctries <- generate leagues
       (ctries) `shouldSatisfy` isText
+    it "Fallout" $ do
+      ctries <- generate factions
+      ctries `shouldSatisfy` isText
