@@ -19,6 +19,9 @@ import qualified Faker.ElderScrolls as ES
 import Faker.ElectricalComponents
 import Faker.Esport
 import Faker.Fallout
+import qualified Faker.FamilyGuy as FG
+import Faker.File
+import Faker.Food
 import Faker.Internal
 import Faker.Provider.Educator
 import Test.Hspec
@@ -50,4 +53,13 @@ spec = do
       (ctries) `shouldSatisfy` isText
     it "Fallout" $ do
       ctries <- generate factions
+      ctries `shouldSatisfy` isText
+    it "Family Guy" $ do
+      ctries <- generate FG.quote
+      ctries `shouldSatisfy` isText
+    it "File" $ do
+      ctries <- generate mime_type
+      ctries `shouldSatisfy` isText
+    it "Food" $ do
+      ctries <- generate dish
       ctries `shouldSatisfy` isText
