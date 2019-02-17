@@ -17,6 +17,7 @@ import Faker.Commerce
 import Faker.Dota
 import qualified Faker.DumbAndDumber as DD
 import Faker.Dune
+import Faker.Educator
 import Faker.Internal
 import Faker.Provider.Coffee
 import Test.Hspec
@@ -55,3 +56,7 @@ spec = do
     it "Nested field" $ do
       ctries <- generate DD.actors
       ctries `shouldSatisfy` (\x -> T.length x > 5)
+  describe "Educator" $ do
+    it "Nested field" $ do
+      ctries <- generate tertiaryType
+      ctries `shouldBe` "University"
