@@ -17,6 +17,7 @@ import Faker.Compass
 import Faker.Educator
 import qualified Faker.ElderScrolls as ES
 import Faker.ElectricalComponents
+import Faker.Esport
 import Faker.Internal
 import Faker.Provider.Educator
 import Test.Hspec
@@ -42,4 +43,7 @@ spec = do
       (ctries) `shouldSatisfy` isText
     it "Electrical component" $ do
       ctries <- generate passive
+      (ctries) `shouldSatisfy` isText
+    it "Esport" $ do
+      ctries <- generate leagues
       (ctries) `shouldSatisfy` isText
