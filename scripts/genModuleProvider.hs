@@ -7,6 +7,15 @@ import Data.Char (toUpper)
 import Data.String.Interpolate
 import System.FilePath ((<.>))
 
+data ModuleInfo = ModuleInfo
+  { moduleName :: String -- eg: buffy
+  , jsonField :: String
+  , fields :: [String]
+  , unresolvedFields :: [String]
+  , nestedFields :: [[String]]
+  , unresolvedNestedFields :: [[String]]
+  } deriving (Show, Eq, Ord)
+
 capitalize :: String -> String
 capitalize [] = []
 capitalize (x:xs) = (toUpper x) : xs
@@ -69,8 +78,53 @@ parse#{capModname}Fields settings txts val = do
 
 #{generateNestedField1}
 
+#{unresolvedFns2}
+
 |]
   where
+    unresolvedNested :: String
+    unresolvedNested =
+      [i|
+parseUnresolved#{capModname}Fields ::
+     (FromJSON a, Monoid a)
+  => FakerSettings
+  -> [Text]
+  -> Value
+  -> Parser (Unresolved a)
+parseUnresolved#{capModname}Fields settings txts val = do
+  #{moduleName} <- parse#{capModname} settings val
+  helper #{moduleName} txts
+  where
+    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper a [] = do
+      v <- parseJSON a
+      pure $ pure v
+    helper (Object a) (x:xs) = do
+      field <- a .: x
+      helper field xs
+    helper a _ = fail $ "expect Object, but got " <> (show a)
+
+#{unresolvedFns1}
+|]
+    -- unresolvedNFn :: [String] -> String
+    -- unresolvedNFn
+    unresolvedFn :: [String] -> String
+    unresolvedFn field =
+      [i|
+$(genParserUnresolveds "#{moduleName}" "#{show field}")
+
+$(genProviderUnresolveds "#{moduleName}" "#{show field}")
+
+|]
+    unresolvedFns :: [String]
+    unresolvedFns = map unresolvedFn unresolvedNestedFields
+    unresolvedFns1 :: String
+    unresolvedFns1 = foldMap (mempty <>) unresolvedFns
+    unresolvedFns2 :: String
+    unresolvedFns2 =
+      if unresolvedNestedFields == []
+        then mempty
+        else unresolvedFns1
     capModname :: String
     capModname = capitalize moduleName
     genField :: String -> String
@@ -154,14 +208,6 @@ parseUnresolved#{capModname}Field settings txt val = do
   pure $ pure field
 |]
 
-data ModuleInfo = ModuleInfo
-  { moduleName :: String -- eg: buffy
-  , jsonField :: String
-  , fields :: [String]
-  , unresolvedFields :: [String]
-  , nestedFields :: [[String]]
-  } deriving (Show, Eq, Ord)
-
 bookModuleInfo :: ModuleInfo
 bookModuleInfo =
   ModuleInfo
@@ -170,6 +216,7 @@ bookModuleInfo =
     , fields = ["title", "publisher", "genre"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 dumbAndDumberInfo :: ModuleInfo
@@ -180,6 +227,22 @@ dumbAndDumberInfo =
     , fields = ["actors", "characters", "quotes"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+educator :: ModuleInfo
+educator =
+  ModuleInfo
+    { moduleName = "educator"
+    , jsonField = "educator"
+    , fields = ["name", "secondary"]
+    , nestedFields =
+        [ ["tertiary", "type"]
+        , ["tertiary", "degree", "subject"]
+        , ["tertiary", "degree", "type"]
+        ]
+    , unresolvedFields = ["hi"]
+    , unresolvedNestedFields = []
     }
 
 generateModule :: ModuleInfo -> IO ()
@@ -199,6 +262,7 @@ duneModuleInfo =
     , fields = ["characters", "titles", "planets"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 educatorModuleInfo :: ModuleInfo
@@ -207,8 +271,9 @@ educatorModuleInfo =
     { moduleName = "educator"
     , jsonField = "educator"
     , fields = ["name", "secondary"]
-    , unresolvedFields = []
+    , unresolvedFields = ["hi"]
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 elderScrolls :: ModuleInfo
@@ -227,6 +292,7 @@ elderScrolls =
         ]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 electricalComponents :: ModuleInfo
@@ -237,6 +303,7 @@ electricalComponents =
     , fields = ["active", "passive", "electromechanical"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 esport :: ModuleInfo
@@ -247,6 +314,7 @@ esport =
     , fields = ["players", "teams", "events", "leagues", "games"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 fallout :: ModuleInfo
@@ -257,6 +325,7 @@ fallout =
     , fields = ["characters", "factions", "locations", "quotes"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 familyGuy :: ModuleInfo
@@ -267,6 +336,7 @@ familyGuy =
     , fields = ["character", "location", "quote"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 file :: ModuleInfo
@@ -277,6 +347,7 @@ file =
     , fields = ["extension", "mime_type"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 food :: ModuleInfo
@@ -298,6 +369,7 @@ food =
         ]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 football :: ModuleInfo
@@ -308,6 +380,7 @@ football =
     , fields = ["teams", "players", "coaches", "competitions", "positions"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 fpba :: ModuleInfo
@@ -318,6 +391,7 @@ fpba =
     , fields = ["characters", "celebrities", "quotes"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 friends :: ModuleInfo
@@ -328,6 +402,7 @@ friends =
     , fields = ["characters", "locations", "quotes"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 funnyName :: ModuleInfo
@@ -338,6 +413,7 @@ funnyName =
     , fields = ["name"]
     , unresolvedFields = []
     , nestedFields = []
+    , unresolvedNestedFields = []
     }
 
 files :: [ModuleInfo]
@@ -383,6 +459,7 @@ cofee =
         , ["regions", "yemen"]
         , ["regions", "india"]
         ]
+    , unresolvedNestedFields = []
     }
 
 commerce :: ModuleInfo
@@ -399,6 +476,7 @@ commerce =
         , ["promotion_code", "adjective"]
         , ["promotion_code", "noun"]
         ]
+    , unresolvedNestedFields = []
     }
 
 dune :: ModuleInfo
@@ -433,6 +511,7 @@ dune =
         , ["sayings", "muaddib"]
         , ["sayings", "orange_catholic_bible"]
         ]
+    , unresolvedNestedFields = []
     }
 
 dota :: ModuleInfo
@@ -480,8 +559,33 @@ dota =
         , ["wraith_king", "quote"]
         ]
     , unresolvedFields = []
+    , unresolvedNestedFields = []
+    }
+
+compass :: ModuleInfo
+compass =
+  ModuleInfo
+    { moduleName = "compass"
+    , jsonField = "compass"
+    , fields = []
+    , unresolvedFields = ["direction", "abbreviation", "azimuth"]
+    , nestedFields =
+        [ ["cardinal", "word"]
+        , ["cardinal", "abbreviation"]
+        , ["cardinal", "azimuth"]
+        , ["ordinal", "word"]
+        , ["ordinal", "abbreviation"]
+        , ["ordinal", "azimuth"]
+        , ["half-wind", "word"]
+        , ["half-wind", "abbreviation"]
+        , ["half-wind", "azimuth"]
+        , ["quarter-wind", "word"]
+        , ["quarter-wind", "abbreviation"]
+        , ["quarter-wind", "azimuth"]
+        ]
+    , unresolvedNestedFields = []
     }
 
 main :: IO ()
-main = generateModule dune
+main = generateModule compass
 -- main = mapM_ generateModule fields -- dumbAndDumberInfo
