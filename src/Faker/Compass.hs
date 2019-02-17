@@ -10,9 +10,10 @@ import Faker.TH
 
 $(generateFakeFieldUnresolved "compass" "direction")
 
--- todo: fix this
--- $(generateFakeFieldUnresolved "compass" "abbreviation")
--- $(generateFakeFieldUnresolved "compass" "azimuth")
+$(generateFakeFieldUnresolved "compass" "abbreviation")
+
+$(generateFakeFieldUnresolved "compass" "azimuth")
+
 $(generateFakeFields "compass" ["cardinal", "word"])
 
 $(generateFakeFields "compass" ["cardinal", "abbreviation"])

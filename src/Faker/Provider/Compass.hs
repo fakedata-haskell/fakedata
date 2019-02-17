@@ -152,6 +152,15 @@ quarterWindProvider settings = do
   caz <- compassQuarterwindAzimuthProvider settings
   pure $ cw <> ca <> caz
 
+abbreviationProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+abbreviationProvider settings = do
+  cw <- compassCardinalAbbreviationProvider settings
+  ca <- compassOrdinalAbbreviationProvider settings
+  caz <- compassHalfwindAbbreviationProvider settings
+  qw <- compassQuarterwindAbbreviationProvider settings
+  pure $ cw <> ca <> caz <> qw
+
 resolveCompassField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveCompassField settings "cardinal" = randomVec settings cardinalProvider
@@ -159,6 +168,26 @@ resolveCompassField settings "ordinal" = randomVec settings ordinalProvider
 resolveCompassField settings "half_wind" = randomVec settings halfWindProvider
 resolveCompassField settings "quarter_wind" =
   randomVec settings quarterWindProvider
+resolveCompassField settings "cardinal_abbreviation" =
+  randomVec settings compassCardinalAbbreviationProvider
+resolveCompassField settings "ordinal_abbreviation" =
+  randomVec settings compassOrdinalAbbreviationProvider
+resolveCompassField settings "half_wind_abbreviation" =
+  randomVec settings compassHalfwindAbbreviationProvider
+resolveCompassField settings "quarter_wind_abbreviation" =
+  randomVec settings compassQuarterwindAbbreviationProvider
+resolveCompassField settings "cardinal_azimuth" =
+  randomVec settings compassCardinalAzimuthProvider
+resolveCompassField settings "ordinal_azimuth" =
+  randomVec settings compassOrdinalAzimuthProvider
+resolveCompassField settings "half_wind_azimuth" =
+  randomVec settings compassHalfwindAzimuthProvider
+resolveCompassField settings "quarter_wind_azimuth" =
+  randomVec settings compassQuarterwindAzimuthProvider
 resolveCompassField settings "direction" =
   randomUnresolvedVec settings compassDirectionProvider resolveCompassText
+resolveCompassField settings "abbreviation" =
+  randomUnresolvedVec settings compassAbbreviationProvider resolveCompassText
+resolveCompassField settings "azimuth" =
+  randomUnresolvedVec settings compassAzimuthProvider resolveCompassText
 resolveCompassField settings str = throwM $ InvalidField "compass" str
