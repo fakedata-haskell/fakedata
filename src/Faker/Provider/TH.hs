@@ -69,13 +69,17 @@ genParser entityName fieldName = do
         ]
     ]
 
+blackListChar :: [Char]
+blackListChar = ['-']
+
 genParsers ::
      Text -- ^ Entity name. Example: animal, beer etc. This should be always lowercase.
   -> [Text] -- ^ Field name within the entity.
   -> Q [Dec]
 genParsers entityName fieldName = do
   let fieldNames = map textTitle fieldName
-      fieldNames' = T.concat fieldNames
+      fieldNames' =
+        T.filter (\x -> not $ x `elem` blackListChar) $ T.concat fieldNames
       funName =
         mkName $ unpack $ "parse" <> (textTitle entityName) <> (fieldNames')
   let parserFnName = unpack $ "parse" <> (textTitle entityName) <> "Fields"
@@ -116,9 +120,16 @@ genProviders ::
 genProviders entityName fieldName = do
   let fieldNames = map textTitle fieldName
       fieldNames' = T.concat fieldNames
-      funName = mkName $ unpack $ entityName <> fieldNames' <> "Provider"
+      funName =
+        mkName $
+        unpack $
+        T.filter (\x -> not $ x `elem` blackListChar) $
+        entityName <> fieldNames' <> "Provider"
       tvM = mkName "m"
-      parserFnName = unpack $ "parse" <> (textTitle entityName) <> fieldNames'
+      parserFnName =
+        unpack $
+        T.filter (\x -> not $ x `elem` blackListChar) $
+        "parse" <> (textTitle entityName) <> fieldNames'
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -236,6 +247,89 @@ genParserUnresolved entityName fieldName = do
                (AppE
                   (AppE (VarE parserFn) (VarE tsettings))
                   (LitE (StringL (unpack fieldName)))))
+            []
+        ]
+    ]
+
+genParserUnresolveds :: Text -> [Text] -> Q [Dec]
+genParserUnresolveds entityName fieldNames = do
+  let fieldNames' = T.concat $ map textTitle fieldNames
+      funName =
+        mkName $
+        unpack $
+        "parse" <> (textTitle entityName) <> fieldNames' <> "Unresolved"
+  let parserFnName =
+        unpack $ "parseUnresolved" <> (textTitle entityName) <> "Fields"
+  parserName <- lookupValueName parserFnName
+  parserFn <-
+    case parserName of
+      Nothing -> fail $ "Faker.TH: Didn't find function " <> parserFnName
+      Just fn -> return fn
+  let tvA = mkName "a"
+  tsettings <- newName "settings"
+  return $
+    [ SigD
+        funName
+        (ForallT
+           []
+           [AppT (ConT ''FromJSON) (VarT tvA), AppT (ConT ''Monoid) (VarT tvA)]
+           (AppT
+              (AppT ArrowT (ConT ''FakerSettings))
+              (AppT
+                 (AppT ArrowT (ConT ''Value))
+                 (AppT (ConT ''Parser) (AppT (ConT ''Unresolved) (VarT tvA))))))
+    , FunD
+        funName
+        [ Clause
+            [VarP tsettings]
+            (NormalB
+               (AppE
+                  (AppE (VarE parserFn) (VarE tsettings))
+                  (ListE (map (\x -> LitE (StringL (unpack x))) fieldNames))))
+            []
+        ]
+    ]
+
+genProviderUnresolveds ::
+     Text -- ^ Entity name. Example: animal, beer etc. This should be always lowercase.
+  -> [Text] -- ^ Field name within the entity.
+  -> Q [Dec]
+genProviderUnresolveds entityName fieldNames = do
+  let fieldNames' = T.concat $ map textTitle fieldNames
+      funName = mkName $ unpack $ entityName <> fieldNames' <> "Provider"
+      tvM = mkName "m"
+      parserFnName =
+        unpack $
+        "parse" <> (textTitle entityName) <> fieldNames' <> "Unresolved"
+  parserName <- lookupValueName parserFnName
+  parserFn <-
+    case parserName of
+      Nothing -> fail $ "Faker.TH: Didn't find function " <> parserFnName
+      Just fn -> return fn
+  tsettings <- newName "settings"
+  return $
+    [ SigD
+        funName
+        (ForallT
+           []
+           [ AppT (ConT ''MonadThrow) (VarT tvM)
+           , AppT (ConT ''MonadIO) (VarT tvM)
+           ]
+           (AppT
+              (AppT ArrowT (ConT ''FakerSettings))
+              (AppT
+                 (VarT tvM)
+                 (AppT (ConT ''Unresolved) (AppT (ConT ''Vector) (ConT ''Text))))))
+    , FunD
+        funName
+        [ Clause
+            [VarP tsettings]
+            (NormalB
+               (AppE
+                  (AppE
+                     (AppE (VarE 'fetchData) (VarE tsettings))
+                     (ConE (mapSource entityName)))
+                  (VarE parserFn)))
             []
         ]
     ]

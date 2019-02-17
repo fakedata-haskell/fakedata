@@ -47,10 +47,14 @@ generateFakeField entityName fieldName = do
         []
     ]
 
+blackListChar :: [Char]
+blackListChar = ['-']
+
 generateFakeFields :: String -> [String] -> Q [Dec]
 generateFakeFields entityName fieldName = do
   let fieldName' = map stringTitle fieldName
-      fieldName'' = concat fieldName'
+      fieldName'' =
+        filter (\x -> not $ x `elem` blackListChar) $ concat fieldName'
       pfn = entityName <> fieldName'' <> "Provider"
       funName = mkName $ lowerTitle fieldName''
   providerName <- lookupValueName pfn
@@ -76,6 +80,39 @@ generateFakeFieldUnresolved :: String -> String -> Q [Dec]
 generateFakeFieldUnresolved entityName fieldName = do
   let funName = mkName fieldName
       pfn = entityName <> (stringTitle fieldName) <> "Provider"
+      rfn = "resolve" <> (stringTitle entityName) <> "Text"
+  providerName <- lookupValueName pfn
+  resolverName <- lookupValueName rfn
+  providerFn <-
+    case providerName of
+      Nothing ->
+        fail $
+        "generateFakeFieldUnresolved: Function " <> pfn <> " not found in scope"
+      Just fn -> return fn
+  resolverFn <-
+    case resolverName of
+      Nothing ->
+        fail $
+        "generateFakeFieldUnresolved: Function " <> rfn <> " not found in scope"
+      Just fn -> return fn
+  return $
+    [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))
+    , ValD
+        (VarP funName)
+        (NormalB
+           (AppE
+              (ConE 'Fake)
+              (AppE
+                 (AppE (VarE 'unresolvedResolver) (VarE providerFn))
+                 (VarE resolverFn))))
+        []
+    ]
+
+generateFakeFieldUnresolveds :: String -> [String] -> Q [Dec]
+generateFakeFieldUnresolveds entityName fieldNames = do
+  let fieldName' = concat $ map stringTitle fieldNames
+      funName = mkName $ lowerTitle fieldName'
+      pfn = entityName <> fieldName' <> "Provider"
       rfn = "resolve" <> (stringTitle entityName) <> "Text"
   providerName <- lookupValueName pfn
   resolverName <- lookupValueName rfn
