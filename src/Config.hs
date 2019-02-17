@@ -69,6 +69,7 @@ data SourceData
   | Company
   | Construction
   | Cosmere
+  | Compass
   | CryptoCoin
   | CultureSeries
   | Currency
@@ -210,6 +211,7 @@ sourceFile Coin = "coin"
 sourceFile Color = "color"
 sourceFile Commerce = "commerce"
 sourceFile Community = "community"
+sourceFile Compass = "compass"
 sourceFile Company = "company"
 sourceFile Construction = "construction"
 sourceFile Cosmere = "cosmere"
@@ -311,6 +313,8 @@ mapSource "drWho" = 'DrWho
 mapSource "dragonBall" = 'DragonBall
 mapSource "dumbAndDumber" = 'DumbAndDumber
 mapSource "dune" = 'Dune
+mapSource "educator" = 'Educator
+mapSource "compass" = 'Compass
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
