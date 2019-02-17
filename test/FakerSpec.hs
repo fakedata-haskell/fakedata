@@ -15,9 +15,13 @@ import Faker
 import Faker.Combinators
 import Faker.Compass
 import Faker.Educator
+import qualified Faker.ElderScrolls as ES
 import Faker.Internal
 import Faker.Provider.Educator
 import Test.Hspec
+
+isText :: Text -> Bool
+isText x = T.length x >= 1
 
 spec :: Spec
 spec = do
@@ -32,3 +36,6 @@ spec = do
     it "Resolver check" $ do
       ctries <- generate $ listOf 5 direction
       (ctries) `shouldSatisfy` (\x -> Prelude.length x == 5)
+    it "Elder Scroll" $ do
+      ctries <- generate ES.first_name
+      (ctries) `shouldSatisfy` isText
