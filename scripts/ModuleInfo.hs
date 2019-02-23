@@ -1109,5 +1109,66 @@ swars =
     , unresolvedNestedFields = []
     }
 
+stargate :: ModuleInfo
+stargate =
+  ModuleInfo
+    { moduleName = "stargate"
+    , jsonField = "stargate"
+    , fields = ["characters", "planets", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+strangerThings :: ModuleInfo
+strangerThings =
+  ModuleInfo
+    { moduleName = "strangerThings"
+    , jsonField = "stranger_things"
+    , fields = ["characters", "quote"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+subscription :: ModuleInfo
+subscription =
+  ModuleInfo
+    { moduleName = "subscription"
+    , jsonField = "subscription"
+    , fields =
+        [ "plans"
+        , "statuses"
+        , "payment_methods"
+        , "subscription_terms"
+        , "payment_terms"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+ssb :: ModuleInfo
+ssb =
+  ModuleInfo
+    { moduleName = "superSmashBros"
+    , jsonField = "super_smash_bros"
+    , fields = ["fighter", "stage"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+superhero :: ModuleInfo
+superhero =
+  ModuleInfo
+    { moduleName = "superhero"
+    , jsonField = "superhero"
+    , fields = ["power", "prefix", "suffix", "descriptor"]
+    , unresolvedFields = ["name"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = swars
+currentOne = superhero
