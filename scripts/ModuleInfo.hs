@@ -875,5 +875,239 @@ science =
     , unresolvedNestedFields = []
     }
 
+seinfeld :: ModuleInfo
+seinfeld =
+  ModuleInfo
+    { moduleName = "seinfeld"
+    , jsonField = "seinfeld"
+    , fields = ["character", "quote", "business"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+shakespeare :: ModuleInfo
+shakespeare =
+  ModuleInfo
+    { moduleName = "shakespeare"
+    , jsonField = "shakespeare"
+    , fields =
+        ["hamlet", "as_you_like_it", "king_richard_iii", "romeo_and_juliet"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+siliconValley :: ModuleInfo
+siliconValley =
+  ModuleInfo
+    { moduleName = "siliconValley"
+    , jsonField = "silicon_valley"
+    , fields =
+        [ "characters"
+        , "companies"
+        , "quotes"
+        , "apps"
+        , "inventions"
+        , "mottos"
+        , "urls"
+        , "email"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+simpsons :: ModuleInfo
+simpsons =
+  ModuleInfo
+    { moduleName = "simpsons"
+    , jsonField = "simpsons"
+    , fields = ["characters", "locations", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+slackEmoji :: ModuleInfo
+slackEmoji =
+  ModuleInfo
+    { moduleName = "slackEmoji"
+    , jsonField = "slack_emoji"
+    , fields =
+        [ "people"
+        , "nature"
+        , "food_and_drink"
+        , "celebration"
+        , "activity"
+        , "travel_and_places"
+        , "objects_and_symbols"
+        , "custom"
+        ]
+    , unresolvedFields = ["emoji"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+snh :: ModuleInfo
+snh =
+  ModuleInfo
+    { moduleName = "sonicTheHedgehog"
+    , jsonField = "sonic_the_hedgehog"
+    , fields = ["zone", "character", "game"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+source :: ModuleInfo
+source =
+  ModuleInfo
+    { moduleName = "source"
+    , jsonField = "source"
+    , fields = []
+    , unresolvedFields = []
+    , nestedFields =
+        [ ["hello_world", "ruby"]
+        , ["hello_world", "javascript"]
+        , ["print", "ruby"]
+        , ["print", "javascript"]
+        , ["print_1_to_10", "ruby"]
+        , ["print_1_to_10", "javascript"]
+        ]
+    , unresolvedNestedFields = []
+    }
+
+southPark :: ModuleInfo
+southPark =
+  ModuleInfo
+    { moduleName = "southPark"
+    , jsonField = "south_park"
+    , fields = ["characters", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+space :: ModuleInfo
+space =
+  ModuleInfo
+    { moduleName = "space"
+    , jsonField = "space"
+    , fields =
+        [ "planet"
+        , "moon"
+        , "galaxy"
+        , "nebula"
+        , "star_cluster"
+        , "constellation"
+        , "star"
+        , "agency"
+        , "agency_abv"
+        , "nasa_space_craft"
+        , "company"
+        , "distance_measurement"
+        , "meteorite"
+        , "launch_vehicule"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+strek :: ModuleInfo
+strek =
+  ModuleInfo
+    { moduleName = "starTrek"
+    , jsonField = "star_trek"
+    , fields = ["character", "location", "specie", "villain"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+swars :: ModuleInfo
+swars =
+  ModuleInfo
+    { moduleName = "starWars"
+    , jsonField = "star_wars"
+    , fields =
+        [ "characters"
+        , "call_squadrons"
+        , "droids"
+        , "planets"
+        , "species"
+        , "vehicles"
+        , "wookiee_words"
+        ]
+    , unresolvedFields = ["call_numbers", "call_sign"]
+    , nestedFields =
+        [ ["quotes", "admiral_ackbar"]
+        , ["quotes", "ahsoka_tano"]
+        , ["quotes", "anakin_skywalker"]
+        , ["quotes", "asajj_ventress"]
+        , ["quotes", "bendu"]
+        , ["quotes", "boba_fett"]
+        , ["quotes", "c_3po"]
+        , ["quotes", "count_dooku"]
+        , ["quotes", "darth_caedus"]
+        , ["quotes", "darth_vader"]
+        , ["quotes", "emperor_palpatine"]
+        , ["quotes", "finn"]
+        , ["quotes", "grand_admiral_thrawn"]
+        , ["quotes", "grand_moff_tarkin"]
+        , ["quotes", "greedo"]
+        , ["quotes", "han_solo"]
+        , ["quotes", "jabba_the_hutt"]
+        , ["quotes", "jar_jar_binks"]
+        , ["quotes", "k_2so"]
+        , ["quotes", "kylo_ren"]
+        , ["quotes", "lando_calrissian"]
+        , ["quotes", "leia_organa"]
+        , ["quotes", "luke_skywalker"]
+        , ["quotes", "mace_windu"]
+        , ["quotes", "maz_kanata"]
+        , ["quotes", "obi_wan_kenobi"]
+        , ["quotes", "padme_amidala"]
+        , ["quotes", "qui_gon_jinn"]
+        , ["quotes", "rey"]
+        , ["quotes", "shmi_skywalker"]
+        , ["quotes", "yoda"]
+        , ["alternate_character_spellings", "admiral_ackbar"]
+        , ["alternate_character_spellings", "ahsoka_tano"]
+        , ["alternate_character_spellings", "anakin_skywalker"]
+        , ["alternate_character_spellings", "asajj_ventress"]
+        , ["alternate_character_spellings", "bendu"]
+        , ["alternate_character_spellings", "boba_fett"]
+        , ["alternate_character_spellings", "c_3po"]
+        , ["alternate_character_spellings", "count_dooku"]
+        , ["alternate_character_spellings", "darth_caedus"]
+        , ["alternate_character_spellings", "darth_vader"]
+        , ["alternate_character_spellings", "emperor_palpatine"]
+        , ["alternate_character_spellings", "finn"]
+        , ["alternate_character_spellings", "general_hux"]
+        , ["alternate_character_spellings", "grand_admiral_thrawn"]
+        , ["alternate_character_spellings", "grand_moff_tarkin"]
+        , ["alternate_character_spellings", "greedo"]
+        , ["alternate_character_spellings", "han_solo"]
+        , ["alternate_character_spellings", "jabba_the_hutt"]
+        , ["alternate_character_spellings", "jar_jar_binks"]
+        , ["alternate_character_spellings", "k_2so"]
+        , ["alternate_character_spellings", "kylo_ren"]
+        , ["alternate_character_spellings", "lando_calrissian"]
+        , ["alternate_character_spellings", "leia_organa"]
+        , ["alternate_character_spellings", "luke_skywalker"]
+        , ["alternate_character_spellings", "mace_windu"]
+        , ["alternate_character_spellings", "maz_kanata"]
+        , ["alternate_character_spellings", "obi_wan_kenobi"]
+        , ["alternate_character_spellings", "padme_amidala"]
+        , ["alternate_character_spellings", "qui_gon_jinn"]
+        , ["alternate_character_spellings", "rey"]
+        , ["alternate_character_spellings", "shmi_skywalker"]
+        , ["alternate_character_spellings", "yoda"]
+        ]
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = science
+currentOne = swars
