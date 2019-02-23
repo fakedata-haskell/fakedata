@@ -146,3 +146,11 @@ the `fake` library.
 
 * company - buzzword, bs. Implementation of type in Faker.Company.hs
 * finance
+* id_number
+* invoice
+* job - see comments in code
+* lorem - multibyte ?
+* nation - multibyte
+* phone_number
+* restaurant
+* Write test for science - element

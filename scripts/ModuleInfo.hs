@@ -610,5 +610,270 @@ marketing =
     , unresolvedNestedFields = []
     }
 
+measurement :: ModuleInfo
+measurement =
+  ModuleInfo
+    { moduleName = "measurement"
+    , jsonField = "measurement"
+    , fields =
+        [ "height"
+        , "length"
+        , "volume"
+        , "weight"
+        , "metric_height"
+        , "metric_length"
+        , "metric_volume"
+        , "metric_weight"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+michaelScott :: ModuleInfo
+michaelScott =
+  ModuleInfo
+    { moduleName = "michaelScott"
+    , jsonField = "michael_scott"
+    , fields = ["quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+military :: ModuleInfo
+military =
+  ModuleInfo
+    { moduleName = "military"
+    , jsonField = "military"
+    , fields =
+        [ "army_rank"
+        , "marines_rank"
+        , "navy_rank"
+        , "air_force_rank"
+        , "dod_paygrade"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+movie :: ModuleInfo
+movie =
+  ModuleInfo
+    { moduleName = "movie"
+    , jsonField = "movie"
+    , fields = ["quote"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+music :: ModuleInfo
+music =
+  ModuleInfo
+    { moduleName = "music"
+    , jsonField = "music"
+    , fields = ["instruments", "bands", "albums", "genres"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+myst :: ModuleInfo
+myst =
+  ModuleInfo
+    { moduleName = "myst"
+    , jsonField = "myst"
+    , fields = ["games", "creatures", "characters", "ages", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+nation :: ModuleInfo
+nation =
+  ModuleInfo
+    { moduleName = "nation"
+    , jsonField = "nation"
+    , fields = ["nationality", "language", "capital_city"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+npa :: ModuleInfo
+npa =
+  ModuleInfo
+    { moduleName = "natoPhoneticAlphabet"
+    , jsonField = "nato_phonetic_alphabet"
+    , fields = ["code_word"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+newGirl :: ModuleInfo
+newGirl =
+  ModuleInfo
+    { moduleName = "newGirl"
+    , jsonField = "new_girl"
+    , fields = ["characters", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+onePiece :: ModuleInfo
+onePiece =
+  ModuleInfo
+    { moduleName = "onePiece"
+    , jsonField = "one_piece"
+    , fields =
+        ["characters", "seas", "islands", "locations", "quotes", "akumas_no_mi"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+parksAndRec :: ModuleInfo
+parksAndRec =
+  ModuleInfo
+    { moduleName = "parksAndRec"
+    , jsonField = "parks_and_rec"
+    , fields = ["characters", "cities"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+phish :: ModuleInfo
+phish =
+  ModuleInfo
+    { moduleName = "phish"
+    , jsonField = "phish"
+    , fields = ["song"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+phoneNumber :: ModuleInfo
+phoneNumber =
+  ModuleInfo
+    { moduleName = "phoneNumber"
+    , jsonField = "phone_number"
+    , fields = ["country_code"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+pokemon :: ModuleInfo
+pokemon =
+  ModuleInfo
+    { moduleName = "pokemon"
+    , jsonField = "pokemon"
+    , fields = ["names", "locations", "moves"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+pbride :: ModuleInfo
+pbride =
+  ModuleInfo
+    { moduleName = "princessBride"
+    , jsonField = "princess_bride"
+    , fields = ["characters", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+pl :: ModuleInfo
+pl =
+  ModuleInfo
+    { moduleName = "programmingLauguage"
+    , jsonField = "programming_language"
+    , fields = ["name", "creator"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+quote :: ModuleInfo
+quote =
+  ModuleInfo
+    { moduleName = "quote"
+    , jsonField = "quote"
+    , fields =
+        [ "famous_last_words"
+        , "matz"
+        , "most_interesting_man_in_the_world"
+        , "robin"
+        , "singular_siegler"
+        , "yoda"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+relationship :: ModuleInfo
+relationship =
+  ModuleInfo
+    { moduleName = "relationship"
+    , jsonField = "relationship"
+    , fields = ["in_law", "spouse", "parent", "sibling"]
+    , unresolvedFields = []
+    , nestedFields = [["familial", "direct"], ["familial", "extended"]]
+    , unresolvedNestedFields = []
+    }
+
+ram :: ModuleInfo
+ram =
+  ModuleInfo
+    { moduleName = "rickAndMorty"
+    , jsonField = "rick_and_morty"
+    , fields = ["characters", "locations", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+rockBand :: ModuleInfo
+rockBand =
+  ModuleInfo
+    { moduleName = "rockBand"
+    , jsonField = "rock_band"
+    , fields = ["name"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+rupaul :: ModuleInfo
+rupaul =
+  ModuleInfo
+    { moduleName = "rupaul"
+    , jsonField = "rupaul"
+    , fields = ["queens", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+science :: ModuleInfo
+science =
+  ModuleInfo
+    { moduleName = "science"
+    , jsonField = "science"
+    , fields = ["element", "element_symbol", "scientist"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = marketing
+currentOne = science
