@@ -19,9 +19,11 @@ parseLeagueOfLegends :: FromJSON a => FakerSettings -> Value -> Parser a
 parseLeagueOfLegends settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  leagueOfLegends <- faker .: "league_of_legends"
+  games <- faker .: "games"
+  leagueOfLegends <- games .: "league_of_legends"
   pure leagueOfLegends
-parseLeagueOfLegends settings val = fail $ "expected Object, but got " <> (show val)
+parseLeagueOfLegends settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseLeagueOfLegendsField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,45 +45,26 @@ parseLeagueOfLegendsFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "leagueOfLegends" "champion")
 
 $(genProvider "leagueOfLegends" "champion")
-
 
 $(genParser "leagueOfLegends" "location")
 
 $(genProvider "leagueOfLegends" "location")
 
-
 $(genParser "leagueOfLegends" "quote")
 
 $(genProvider "leagueOfLegends" "quote")
-
 
 $(genParser "leagueOfLegends" "summoner_spell")
 
 $(genProvider "leagueOfLegends" "summoner_spell")
 
-
 $(genParser "leagueOfLegends" "masteries")
 
 $(genProvider "leagueOfLegends" "masteries")
 
-
 $(genParser "leagueOfLegends" "rank")
 
 $(genProvider "leagueOfLegends" "rank")
-
-
-
-
-
-
-
-
-
-
-
