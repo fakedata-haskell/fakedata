@@ -14,8 +14,7 @@ capitalize (x:xs) = (toUpper x) : xs
 
 moduleData :: ModuleInfo -> String
 moduleData mod@ModuleInfo {..} =
-  [i|
-{-# LANGUAGE OverloadedStrings #-}
+  [i|{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Faker.Provider.#{capModname} where
@@ -204,7 +203,7 @@ generateModule :: ModuleInfo -> IO ()
 generateModule m@ModuleInfo {..} = do
   let fname = (capitalize moduleName) <.> "hs"
       dat = moduleData m
-  writeFile fname dat
+  writeFile ("../src/Faker/Provider/" <> fname) dat
 
 generateModules :: [ModuleInfo] -> IO ()
 generateModules xs = mapM_ generateModule xs

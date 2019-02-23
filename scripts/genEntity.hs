@@ -36,8 +36,7 @@ $(generateFakeFields "#{moduleName}" #{show str})
 |]
       nfakeFields :: String
       nfakeFields = concat $ map nfakeField nestedFields
-   in [i|
-{-# LANGUAGE TemplateHaskell #-}
+   in [i|{-# LANGUAGE TemplateHaskell #-}
 
 module Faker.#{capModname} where
 
@@ -59,7 +58,7 @@ generateModule :: ModuleInfo -> IO ()
 generateModule m@ModuleInfo {..} = do
   let fname = (capitalize moduleName) <.> "hs"
       dat = moduleDef m
-  writeFile fname dat
+  writeFile ("../src/Faker/" <> fname) dat
 
 main :: IO ()
 main = generateModule currentOne
