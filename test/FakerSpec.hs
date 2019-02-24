@@ -102,5 +102,4 @@ spec = do
     describe "WorldCup" $ do
       it "SouthKorea" $ do
         item <- generate rostersSouthKoreaCoach
-        print item
         item `shouldSatisfy` isText
