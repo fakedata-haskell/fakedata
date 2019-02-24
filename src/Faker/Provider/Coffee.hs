@@ -177,6 +177,6 @@ resolveCoffeeText settings txt = do
 
 resolveCoffeeField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveCoffeeField settings "name_1" = randomVec settings coffeeName_1Provider
-resolveCoffeeField settings "name_2" = randomVec settings coffeeName_2Provider
+resolveCoffeeField settings "name_1" = randomVec settings coffeeName1Provider
+resolveCoffeeField settings "name_2" = randomVec settings coffeeName2Provider
 resolveCoffeeField settings str = throwM $ InvalidField "coffee" str

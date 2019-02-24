@@ -139,17 +139,17 @@ ordinalProvider settings = do
 halfWindProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 halfWindProvider settings = do
-  cw <- compassHalfwindWordProvider settings
-  ca <- compassHalfwindAbbreviationProvider settings
-  caz <- compassHalfwindAzimuthProvider settings
+  cw <- compassHalfWindWordProvider settings
+  ca <- compassHalfWindAbbreviationProvider settings
+  caz <- compassHalfWindAzimuthProvider settings
   pure $ cw <> ca <> caz
 
 quarterWindProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 quarterWindProvider settings = do
-  cw <- compassQuarterwindWordProvider settings
-  ca <- compassQuarterwindAbbreviationProvider settings
-  caz <- compassQuarterwindAzimuthProvider settings
+  cw <- compassQuarterWindWordProvider settings
+  ca <- compassQuarterWindAbbreviationProvider settings
+  caz <- compassQuarterWindAzimuthProvider settings
   pure $ cw <> ca <> caz
 
 abbreviationProvider ::
@@ -157,8 +157,8 @@ abbreviationProvider ::
 abbreviationProvider settings = do
   cw <- compassCardinalAbbreviationProvider settings
   ca <- compassOrdinalAbbreviationProvider settings
-  caz <- compassHalfwindAbbreviationProvider settings
-  qw <- compassQuarterwindAbbreviationProvider settings
+  caz <- compassHalfWindAbbreviationProvider settings
+  qw <- compassQuarterWindAbbreviationProvider settings
   pure $ cw <> ca <> caz <> qw
 
 resolveCompassField ::
@@ -173,17 +173,17 @@ resolveCompassField settings "cardinal_abbreviation" =
 resolveCompassField settings "ordinal_abbreviation" =
   randomVec settings compassOrdinalAbbreviationProvider
 resolveCompassField settings "half_wind_abbreviation" =
-  randomVec settings compassHalfwindAbbreviationProvider
+  randomVec settings compassHalfWindAbbreviationProvider
 resolveCompassField settings "quarter_wind_abbreviation" =
-  randomVec settings compassQuarterwindAbbreviationProvider
+  randomVec settings compassQuarterWindAbbreviationProvider
 resolveCompassField settings "cardinal_azimuth" =
   randomVec settings compassCardinalAzimuthProvider
 resolveCompassField settings "ordinal_azimuth" =
   randomVec settings compassOrdinalAzimuthProvider
 resolveCompassField settings "half_wind_azimuth" =
-  randomVec settings compassHalfwindAzimuthProvider
+  randomVec settings compassHalfWindAzimuthProvider
 resolveCompassField settings "quarter_wind_azimuth" =
-  randomVec settings compassQuarterwindAzimuthProvider
+  randomVec settings compassQuarterWindAzimuthProvider
 resolveCompassField settings "direction" =
   randomUnresolvedVec settings compassDirectionProvider resolveCompassText
 resolveCompassField settings "abbreviation" =
