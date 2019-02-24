@@ -102,7 +102,7 @@ parseCountryCode settings val = fail $ "expected Object, but got " <> (show val)
 
 countryCodeProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-countryCodeProvider settings = fetchData settings PhoneNumber parseCellPhone
+countryCodeProvider settings = fetchData settings PhoneNumber parseCountryCode
 
 resolvePhoneNumberText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
