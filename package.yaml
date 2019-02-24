@@ -1,6 +1,6 @@
-name:                fakedata-provider
+name:                fakedata
 version:             0.1.0.0
-github:              "psibi/fakedata-provider"
+github:              "psibi/fakedata"
 license:             BSD3
 author:              "Sibi Prabakaran"
 maintainer:          "sibi@psibi.in"
@@ -19,7 +19,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/psibi/fakedata-provider#readme>
+description:         Please see the README on GitHub at <https://github.com/psibi/fakedata#readme>
 
 dependencies:
 - base >= 4.7 && < 5
