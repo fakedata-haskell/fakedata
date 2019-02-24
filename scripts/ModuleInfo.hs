@@ -1170,5 +1170,195 @@ superhero =
     , unresolvedNestedFields = []
     }
 
+sao :: ModuleInfo
+sao =
+  ModuleInfo
+    { moduleName = "swordArtOnline"
+    , jsonField = "sword_art_online"
+    , fields = ["real_name", "game_name", "location", "item"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+team :: ModuleInfo
+team =
+  ModuleInfo
+    { moduleName = "team"
+    , jsonField = "team"
+    , fields = ["creature", "sport", "mascot"]
+    , unresolvedFields = ["name"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+theExpanse :: ModuleInfo
+theExpanse =
+  ModuleInfo
+    { moduleName = "theExpanse"
+    , jsonField = "the_expanse"
+    , fields = ["characters", "locations", "ships", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+tic :: ModuleInfo
+tic =
+  ModuleInfo
+    { moduleName = "theItCrowd"
+    , jsonField = "the_it_crowd"
+    , fields = ["actors", "characters", "emails", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+ttoi :: ModuleInfo
+ttoi =
+  ModuleInfo
+    { moduleName = "theThickOfIt"
+    , jsonField = "the_thick_of_it"
+    , fields = ["characters", "positions", "departments"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+twinPeaks :: ModuleInfo
+twinPeaks =
+  ModuleInfo
+    { moduleName = "twinPeaks"
+    , jsonField = "twin_peaks"
+    , fields = ["characters", "locations", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+umphreysMcgee :: ModuleInfo
+umphreysMcgee =
+  ModuleInfo
+    { moduleName = "umphreysMcgee"
+    , jsonField = "umphreys_mcgee"
+    , fields = ["song"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+university :: ModuleInfo
+university =
+  ModuleInfo
+    { moduleName = "university"
+    , jsonField = "university"
+    , fields = ["prefix", "suffix"]
+    , unresolvedFields = ["name"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+vfv :: ModuleInfo
+vfv =
+  ModuleInfo
+    { moduleName = "vForVendetta"
+    , jsonField = "v_for_vendetta"
+    , fields = ["characters", "speeches", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+vehicle :: ModuleInfo
+vehicle =
+  ModuleInfo
+    { moduleName = "vehicle"
+    , jsonField = "vehicle"
+    , fields =
+        [ "manufacture"
+        , "makes"
+        , "colors"
+        , "transmissions"
+        , "drive_types"
+        , "fuel_types"
+        , "styles"
+        , "car_types"
+        , "car_options"
+        , "standard_specs"
+        , "doors"
+        , "engine_sizes"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+ventureBros :: ModuleInfo
+ventureBros =
+  ModuleInfo
+    { moduleName = "ventureBros"
+    , jsonField = "venture_bros"
+    , fields = ["character", "organization", "vehicle", "quote"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+verbs :: ModuleInfo
+verbs =
+  ModuleInfo
+    { moduleName = "verbs"
+    , jsonField = "verbs"
+    , fields = ["base", "past", "past_participle", "simple_present", "ing_form"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+witcher :: ModuleInfo
+witcher =
+  ModuleInfo
+    { moduleName = "witcher"
+    , jsonField = "witcher"
+    , fields =
+        ["characters", "witchers", "schools", "locations", "quotes", "monsters"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+wow :: ModuleInfo
+wow =
+  ModuleInfo
+    { moduleName = "worldOfWarcraft"
+    , jsonField = "world_of_warcraft"
+    , fields = ["hero", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+yoda :: ModuleInfo
+yoda =
+  ModuleInfo
+    { moduleName = "yoda"
+    , jsonField = "yoda"
+    , fields = ["quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+zelda :: ModuleInfo
+zelda =
+  ModuleInfo
+    { moduleName = "zelda"
+    , jsonField = "zelda"
+    , fields = ["games", "characters", "locations", "items"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = superhero
+currentOne = zelda
