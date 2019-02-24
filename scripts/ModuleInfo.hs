@@ -758,17 +758,6 @@ phish =
     , unresolvedNestedFields = []
     }
 
-phoneNumber :: ModuleInfo
-phoneNumber =
-  ModuleInfo
-    { moduleName = "phoneNumber"
-    , jsonField = "phone_number"
-    , fields = ["country_code"]
-    , unresolvedFields = []
-    , nestedFields = []
-    , unresolvedNestedFields = []
-    }
-
 pokemon :: ModuleInfo
 pokemon =
   ModuleInfo
@@ -1360,5 +1349,16 @@ zelda =
     , unresolvedNestedFields = []
     }
 
+phoneNumber :: ModuleInfo
+phoneNumber =
+  ModuleInfo
+    { moduleName = "phoneNumber"
+    , jsonField = "phone_number"
+    , fields = []
+    , unresolvedFields = ["formats"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = zelda
+currentOne = phoneNumber
