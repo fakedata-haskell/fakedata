@@ -9,6 +9,7 @@ import Control.Monad.IO.Class
 import qualified Data.Map as M
 import Data.Text hiding (all, map)
 import qualified Data.Text as T
+import qualified Data.Text.IO as TIO
 import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Faker
@@ -23,10 +24,12 @@ import qualified Faker.FamilyGuy as FG
 import Faker.File
 import Faker.Food
 import Faker.Internal
+import Faker.Nation (flagEmoji)
 import Faker.PhoneNumber
 import Faker.Provider.Educator
 import qualified Faker.Science as FS
 import Faker.StarWars
+import qualified Faker.University as FU
 import Test.Hspec
 
 isText :: Text -> Bool
@@ -85,3 +88,9 @@ spec = do
       it "formats" $ do
         item <- generate formats
         item `shouldSatisfy` isText
+    it "University" $ do
+      item <- generate FU.name
+      item `shouldSatisfy` isText
+    it "Nation - flagEmoji" $ do
+      item <- generate flagEmoji
+      item `shouldSatisfy` isText
