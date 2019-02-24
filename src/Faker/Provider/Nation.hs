@@ -9,6 +9,7 @@ import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
 import Data.Text (Text)
 import Data.Vector (Vector)
+import Data.Word (Word8)
 import Data.Yaml
 import Faker
 import Faker.Internal
@@ -43,30 +44,22 @@ parseNationFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "nation" "nationality")
 
 $(genProvider "nation" "nationality")
-
 
 $(genParser "nation" "language")
 
 $(genProvider "nation" "language")
 
-
 $(genParser "nation" "capital_city")
 
 $(genProvider "nation" "capital_city")
 
+parseNationFlagEmoji :: FakerSettings -> Value -> Parser (Vector (Vector Word8))
+parseNationFlagEmoji settings = parseNationField settings "flag"
 
-
-
-
-
-
-
-
-
-
+nationFlagEmojiProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector (Vector Word8))
+nationFlagEmojiProvider settings =
+  fetchData settings Nation parseNationFlagEmoji
