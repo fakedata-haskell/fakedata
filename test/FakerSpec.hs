@@ -23,6 +23,7 @@ import qualified Faker.FamilyGuy as FG
 import Faker.File
 import Faker.Food
 import Faker.Internal
+import Faker.PhoneNumber
 import Faker.Provider.Educator
 import qualified Faker.Science as FS
 import Faker.StarWars
@@ -73,5 +74,14 @@ spec = do
       item `shouldSatisfy` isText
     it "StarWars (2)" $ do
       item <- generate call_sign
-      print item
       item `shouldSatisfy` isText
+    describe "Phone number" $ do
+      it "countryCode" $ do
+        item <- generate countryCode
+        item `shouldSatisfy` isText
+      it "cellPhoneFormat" $ do
+        item <- generate cellPhoneFormat
+        item `shouldSatisfy` isText
+      it "formats" $ do
+        item <- generate formats
+        item `shouldSatisfy` isText
