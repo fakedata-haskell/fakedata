@@ -153,4 +153,7 @@ the `fake` library.
 * nation - multibyte
 * phone_number
 * restaurant
-* Write test for science - element
+* stripe
+* Write test for university - name
+* vehicle -
+* world_cup

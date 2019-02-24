@@ -24,6 +24,8 @@ import Faker.File
 import Faker.Food
 import Faker.Internal
 import Faker.Provider.Educator
+import qualified Faker.Science as FS
+import Faker.StarWars
 import Test.Hspec
 
 isText :: Text -> Bool
@@ -63,3 +65,13 @@ spec = do
     it "Food" $ do
       ctries <- generate dish
       ctries `shouldSatisfy` isText
+    it "Science" $ do
+      item <- generate FS.element
+      item `shouldSatisfy` isText
+    it "StarWars" $ do
+      item <- generate call_numbers
+      item `shouldSatisfy` isText
+    it "StarWars (2)" $ do
+      item <- generate call_sign
+      print item
+      item `shouldSatisfy` isText

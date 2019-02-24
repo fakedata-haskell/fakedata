@@ -99,7 +99,7 @@ resolveStarWarsText settings txt = do
 
 resolveStarWarsField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveStarWarsField settings "call_numbers" =
+resolveStarWarsField settings "call_number" =
   randomUnresolvedVec settings starWarsCall_numbersProvider resolveStarWarsText
 resolveStarWarsField settings "call_sign" =
   randomUnresolvedVec settings starWarsCall_signProvider resolveStarWarsText
