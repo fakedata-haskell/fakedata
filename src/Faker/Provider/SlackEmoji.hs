@@ -104,15 +104,15 @@ resolveSlackEmojiField settings "people" =
 resolveSlackEmojiField settings "nature" =
   randomVec settings slackEmojiNatureProvider
 resolveSlackEmojiField settings "food_and_drink" =
-  randomVec settings slackEmojiFood_and_drinkProvider
+  randomVec settings slackEmojiFoodAndDrinkProvider
 resolveSlackEmojiField settings "celebration" =
   randomVec settings slackEmojiCelebrationProvider
 resolveSlackEmojiField settings "activity" =
   randomVec settings slackEmojiActivityProvider
 resolveSlackEmojiField settings "travel_and_places" =
-  randomVec settings slackEmojiTravel_and_placesProvider
+  randomVec settings slackEmojiTravelAndPlacesProvider
 resolveSlackEmojiField settings "objects_and_symbols" =
-  randomVec settings slackEmojiObjects_and_symbolsProvider
+  randomVec settings slackEmojiObjectsAndSymbolsProvider
 resolveSlackEmojiField settings "custom" =
   randomVec settings slackEmojiCustomProvider
 resolveSlackEmojiField settings str = throwM $ InvalidField "slackEmoji" str
