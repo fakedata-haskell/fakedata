@@ -42,11 +42,11 @@ spec = do
       ctries `shouldBe` "Sheveroys"
   describe "Commerce" $ do
     it "Nested field" $ do
-      ctries <- generate product_nameAdjective
+      ctries <- generate productNameAdjective
       ctries `shouldBe` "Rustic"
   describe "Dota" $ do
     it "Nested field" $ do
-      ctries <- generate spirit_breakerQuote
+      ctries <- generate spiritBreakerQuote
       ctries `shouldSatisfy` (\x -> T.length x > 5)
   describe "Dune" $ do
     it "Nested field" $ do

@@ -31,6 +31,7 @@ import Faker.Provider.Educator
 import qualified Faker.Science as FS
 import Faker.StarWars
 import qualified Faker.University as FU
+import Faker.WorldCup
 import Test.Hspec
 
 isText :: Text -> Bool
@@ -40,7 +41,7 @@ spec :: Spec
 spec = do
   describe "Faker Generate" $ do
     it "Nested unresolved field" $ do
-      ctries <- generate tertiaryCourse_number
+      ctries <- generate tertiaryCourseNumber
       (ctries) `shouldBe` "215"
   describe "Faker Compass Generate" $ do
     it "Resolver check" $ do
@@ -50,7 +51,7 @@ spec = do
       ctries <- generate $ listOf 5 direction
       (ctries) `shouldSatisfy` (\x -> Prelude.length x == 5)
     it "Elder Scroll" $ do
-      ctries <- generate ES.first_name
+      ctries <- generate ES.firstName
       (ctries) `shouldSatisfy` isText
     it "Electrical component" $ do
       ctries <- generate passive
@@ -65,7 +66,7 @@ spec = do
       ctries <- generate FG.quote
       ctries `shouldSatisfy` isText
     it "File" $ do
-      ctries <- generate mime_type
+      ctries <- generate mimeType
       ctries `shouldSatisfy` isText
     it "Food" $ do
       ctries <- generate dish
@@ -74,10 +75,10 @@ spec = do
       item <- generate FS.element
       item `shouldSatisfy` isText
     it "StarWars" $ do
-      item <- generate call_numbers
+      item <- generate callNumbers
       item `shouldSatisfy` isText
     it "StarWars (2)" $ do
-      item <- generate call_sign
+      item <- generate callSign
       item `shouldSatisfy` isText
     describe "Phone number" $ do
       it "countryCode" $ do
@@ -98,3 +99,8 @@ spec = do
     it "Job" $ do
       item <- generate field
       item `shouldSatisfy` isText
+    describe "WorldCup" $ do
+      it "SouthKorea" $ do
+        item <- generate rostersSouthKoreaCoach
+        print item
+        item `shouldSatisfy` isText
