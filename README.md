@@ -151,9 +151,7 @@ the `fake` library.
 * job - see comments in code
 * lorem - multibyte ?
 * nation - multibyte
-* phone_number
 * restaurant
 * stripe
-* Write test for university - name
 * vehicle -
 * world_cup
