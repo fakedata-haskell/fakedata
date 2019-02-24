@@ -31,7 +31,7 @@ lowerTitle (x:xs) = (toLower x) : xs
 -- Assumes the presence of the function named "addressStateProvider"
 generateFakeField :: String -> String -> Q [Dec]
 generateFakeField entityName fieldName = do
-  let funName = mkName fieldName
+  let funName = mkName $ refinedString fieldName
       pfn = entityName <> (stringTitle fieldName) <> "Provider"
   providerName <- lookupValueName pfn
   providerFn <-
@@ -53,10 +53,9 @@ blackListChar = ['-']
 generateFakeFields :: String -> [String] -> Q [Dec]
 generateFakeFields entityName fieldName = do
   let fieldName' = map stringTitle fieldName
-      fieldName'' =
-        filter (\x -> not $ x `elem` blackListChar) $ concat fieldName'
+      fieldName'' = concat fieldName'
       pfn = entityName <> fieldName'' <> "Provider"
-      funName = mkName $ lowerTitle fieldName''
+      funName = mkName $ lowerTitle $ refinedString fieldName''
   providerName <- lookupValueName pfn
   providerFn <-
     case providerName of
@@ -78,7 +77,7 @@ generateFakeFields entityName fieldName = do
 -- Assumes the presence of the function named "addressStateProvider" and "resolveAddressText"
 generateFakeFieldUnresolved :: String -> String -> Q [Dec]
 generateFakeFieldUnresolved entityName fieldName = do
-  let funName = mkName fieldName
+  let funName = mkName $ refinedString fieldName
       pfn = entityName <> (stringTitle fieldName) <> "Provider"
       rfn = "resolve" <> (stringTitle entityName) <> "Text"
   providerName <- lookupValueName pfn
@@ -111,7 +110,7 @@ generateFakeFieldUnresolved entityName fieldName = do
 generateFakeFieldUnresolveds :: String -> [String] -> Q [Dec]
 generateFakeFieldUnresolveds entityName fieldNames = do
   let fieldName' = concat $ map stringTitle fieldNames
-      funName = mkName $ lowerTitle fieldName'
+      funName = mkName $ lowerTitle $ refinedString fieldName'
       pfn = entityName <> fieldName' <> "Provider"
       rfn = "resolve" <> (stringTitle entityName) <> "Text"
   providerName <- lookupValueName pfn

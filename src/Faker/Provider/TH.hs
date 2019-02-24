@@ -37,8 +37,11 @@ genParser ::
 genParser entityName fieldName = do
   let funName =
         mkName $
-        unpack $ "parse" <> (textTitle entityName) <> (textTitle fieldName)
-  let parserFnName = unpack $ "parse" <> (textTitle entityName) <> "Field"
+        unpack $
+        "parse" <> (refinedText $ textTitle entityName) <>
+        (refinedText $ textTitle fieldName)
+  let parserFnName =
+        unpack $ "parse" <> (refinedText $ textTitle entityName) <> "Field"
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -69,20 +72,19 @@ genParser entityName fieldName = do
         ]
     ]
 
-blackListChar :: [Char]
-blackListChar = ['-']
-
 genParsers ::
      Text -- ^ Entity name. Example: animal, beer etc. This should be always lowercase.
   -> [Text] -- ^ Field name within the entity.
   -> Q [Dec]
 genParsers entityName fieldName = do
   let fieldNames = map textTitle fieldName
-      fieldNames' =
-        T.filter (\x -> not $ x `elem` blackListChar) $ T.concat fieldNames
+      fieldNames' = refinedText $ T.concat fieldNames
       funName =
-        mkName $ unpack $ "parse" <> (textTitle entityName) <> (fieldNames')
-  let parserFnName = unpack $ "parse" <> (textTitle entityName) <> "Fields"
+        mkName $
+        unpack $
+        "parse" <> (refinedText $ textTitle entityName) <> (fieldNames')
+  let parserFnName =
+        unpack $ "parse" <> (refinedText $ textTitle entityName) <> "Fields"
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -119,17 +121,12 @@ genProviders ::
   -> Q [Dec]
 genProviders entityName fieldName = do
   let fieldNames = map textTitle fieldName
-      fieldNames' = T.concat fieldNames
+      fieldNames' = refinedText $ T.concat fieldNames
       funName =
-        mkName $
-        unpack $
-        T.filter (\x -> not $ x `elem` blackListChar) $
-        entityName <> fieldNames' <> "Provider"
+        mkName $ unpack $ (refinedText entityName) <> fieldNames' <> "Provider"
       tvM = mkName "m"
       parserFnName =
-        unpack $
-        T.filter (\x -> not $ x `elem` blackListChar) $
-        "parse" <> (textTitle entityName) <> fieldNames'
+        unpack $ "parse" <> (refinedText $ textTitle entityName) <> fieldNames'
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -172,10 +169,15 @@ genProvider ::
   -> Q [Dec]
 genProvider entityName fieldName = do
   let funName =
-        mkName $ unpack $ entityName <> (textTitle fieldName) <> "Provider"
+        mkName $
+        unpack $
+        (refinedText entityName) <> (refinedText $ textTitle fieldName) <>
+        "Provider"
       tvM = mkName "m"
       parserFnName =
-        unpack $ "parse" <> (textTitle entityName) <> (textTitle fieldName)
+        unpack $
+        "parse" <> (refinedText $ textTitle entityName) <>
+        (refinedText $ textTitle fieldName)
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
