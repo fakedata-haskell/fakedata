@@ -32,7 +32,7 @@ lowerTitle (x:xs) = (toLower x) : xs
 generateFakeField :: String -> String -> Q [Dec]
 generateFakeField entityName fieldName = do
   let funName = mkName $ refinedString fieldName
-      pfn = entityName <> (stringTitle fieldName) <> "Provider"
+      pfn = refinedString $ entityName <> (stringTitle fieldName) <> "Provider"
   providerName <- lookupValueName pfn
   providerFn <-
     case providerName of
@@ -54,7 +54,7 @@ generateFakeFields :: String -> [String] -> Q [Dec]
 generateFakeFields entityName fieldName = do
   let fieldName' = map stringTitle fieldName
       fieldName'' = concat fieldName'
-      pfn = entityName <> fieldName'' <> "Provider"
+      pfn = refinedString $ entityName <> fieldName'' <> "Provider"
       funName = mkName $ lowerTitle $ refinedString fieldName''
   providerName <- lookupValueName pfn
   providerFn <-
@@ -78,8 +78,8 @@ generateFakeFields entityName fieldName = do
 generateFakeFieldUnresolved :: String -> String -> Q [Dec]
 generateFakeFieldUnresolved entityName fieldName = do
   let funName = mkName $ refinedString fieldName
-      pfn = entityName <> (stringTitle fieldName) <> "Provider"
-      rfn = "resolve" <> (stringTitle entityName) <> "Text"
+      pfn = refinedString $ entityName <> (stringTitle fieldName) <> "Provider"
+      rfn = "resolve" <> (refinedString $ stringTitle entityName) <> "Text"
   providerName <- lookupValueName pfn
   resolverName <- lookupValueName rfn
   providerFn <-
@@ -109,23 +109,25 @@ generateFakeFieldUnresolved entityName fieldName = do
 
 generateFakeFieldUnresolveds :: String -> [String] -> Q [Dec]
 generateFakeFieldUnresolveds entityName fieldNames = do
-  let fieldName' = concat $ map stringTitle fieldNames
-      funName = mkName $ lowerTitle $ refinedString fieldName'
-      pfn = entityName <> fieldName' <> "Provider"
-      rfn = "resolve" <> (stringTitle entityName) <> "Text"
+  let fieldName' = refinedString $ concat $ map stringTitle fieldNames
+      funName = mkName $ lowerTitle fieldName'
+      pfn = refinedString $ entityName <> fieldName' <> "Provider"
+      rfn = "resolve" <> (refinedString $ stringTitle entityName) <> "Text"
   providerName <- lookupValueName pfn
   resolverName <- lookupValueName rfn
   providerFn <-
     case providerName of
       Nothing ->
         fail $
-        "generateFakeFieldUnresolved: Function " <> pfn <> " not found in scope"
+        "generateFakeFieldUnresolveds: Function " <> pfn <>
+        " not found in scope"
       Just fn -> return fn
   resolverFn <-
     case resolverName of
       Nothing ->
         fail $
-        "generateFakeFieldUnresolved: Function " <> rfn <> " not found in scope"
+        "generateFakeFieldUnresolveds: Function " <> rfn <>
+        " not found in scope"
       Just fn -> return fn
   return $
     [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))

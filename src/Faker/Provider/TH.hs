@@ -219,10 +219,12 @@ genParserUnresolved entityName fieldName = do
   let funName =
         mkName $
         unpack $
-        "parse" <> (textTitle entityName) <> (textTitle fieldName) <>
+        "parse" <> (refinedText $ textTitle entityName) <>
+        (refinedText $ textTitle fieldName) <>
         "Unresolved"
   let parserFnName =
-        unpack $ "parseUnresolved" <> (textTitle entityName) <> "Field"
+        unpack $
+        "parseUnresolved" <> (refinedText $ textTitle entityName) <> "Field"
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -255,13 +257,15 @@ genParserUnresolved entityName fieldName = do
 
 genParserUnresolveds :: Text -> [Text] -> Q [Dec]
 genParserUnresolveds entityName fieldNames = do
-  let fieldNames' = T.concat $ map textTitle fieldNames
+  let fieldNames' = refinedText $ T.concat $ map textTitle fieldNames
       funName =
         mkName $
         unpack $
-        "parse" <> (textTitle entityName) <> fieldNames' <> "Unresolved"
+        "parse" <> (refinedText $ textTitle entityName) <> fieldNames' <>
+        "Unresolved"
   let parserFnName =
-        unpack $ "parseUnresolved" <> (textTitle entityName) <> "Fields"
+        unpack $
+        "parseUnresolved" <> (refinedText $ textTitle entityName) <> "Fields"
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -297,12 +301,13 @@ genProviderUnresolveds ::
   -> [Text] -- ^ Field name within the entity.
   -> Q [Dec]
 genProviderUnresolveds entityName fieldNames = do
-  let fieldNames' = T.concat $ map textTitle fieldNames
-      funName = mkName $ unpack $ entityName <> fieldNames' <> "Provider"
+  let fieldNames' = refinedText $ T.concat $ map textTitle fieldNames
+      entityName' = refinedText entityName
+      funName = mkName $ unpack $ entityName' <> fieldNames' <> "Provider"
       tvM = mkName "m"
       parserFnName =
         unpack $
-        "parse" <> (textTitle entityName) <> fieldNames' <> "Unresolved"
+        "parse" <> (textTitle entityName') <> fieldNames' <> "Unresolved"
   parserName <- lookupValueName parserFnName
   parserFn <-
     case parserName of
@@ -347,11 +352,13 @@ genProviderUnresolved ::
   -> Q [Dec]
 genProviderUnresolved entityName fieldName = do
   let funName =
-        mkName $ unpack $ entityName <> (textTitle fieldName) <> "Provider"
+        mkName $
+        unpack $ refinedText $ entityName <> (textTitle fieldName) <> "Provider"
       tvM = mkName "m"
       parserFnName =
         unpack $
-        "parse" <> (textTitle entityName) <> (textTitle fieldName) <>
+        "parse" <> (refinedText $ textTitle entityName) <>
+        (refinedText $ textTitle fieldName) <>
         "Unresolved"
   parserName <- lookupValueName parserFnName
   parserFn <-
