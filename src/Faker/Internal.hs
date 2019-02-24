@@ -1,10 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DeriveFunctor #-}
 
 module Faker.Internal where
 
 import Control.Monad.Catch
 import Control.Monad.IO.Class
+import Data.Char (toUpper)
 import qualified Data.Text as T
 import Data.Text (Text, strip)
 import qualified Data.Vector as V
@@ -165,3 +167,23 @@ unresolvedResolver ::
   -> (FakerSettings -> m Text)
 unresolvedResolver provider resolver =
   \settings -> randomUnresolvedVec settings provider resolver
+
+uprStr :: String -> String
+uprStr [] = []
+uprStr (x:xs) = toUpper x : xs
+
+refinedString :: String -> String
+refinedString xs = aux xs []
+  where
+    whiteListChars :: [Char] = ['-', '_']
+    aux :: String -> String -> String
+    aux [] acc = acc
+    aux (x:rem) acc =
+      if x `elem` whiteListChars
+        then if null rem
+               then aux rem acc
+               else aux (uprStr rem) acc
+        else aux rem (acc ++ [x])
+
+refinedText :: Text -> Text
+refinedText = T.pack . refinedString . T.unpack
