@@ -47,9 +47,6 @@ generateFakeField entityName fieldName = do
         []
     ]
 
-blackListChar :: [Char]
-blackListChar = ['-']
-
 generateFakeFields :: String -> [String] -> Q [Dec]
 generateFakeFields entityName fieldName = do
   let fieldName' = map stringTitle fieldName
