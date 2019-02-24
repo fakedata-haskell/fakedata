@@ -175,7 +175,7 @@ uprStr (x:xs) = toUpper x : xs
 refinedString :: String -> String
 refinedString xs = aux xs []
   where
-    whiteListChars :: [Char] = ['-', '_']
+    whiteListChars :: [Char] = ['-', '_', ' ']
     aux :: String -> String -> String
     aux [] acc = acc
     aux (x:rem) acc =
