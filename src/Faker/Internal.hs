@@ -27,8 +27,8 @@ instance Monad Unresolved where
 randomVec ::
      (MonadThrow m, MonadIO m)
   => FakerSettings
-  -> (FakerSettings -> m (Vector Text))
-  -> m Text
+  -> (FakerSettings -> m (Vector a))
+  -> m a
 randomVec settings provider = do
   items <- provider settings
   let itemsLen = V.length items
