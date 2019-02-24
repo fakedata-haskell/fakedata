@@ -54,8 +54,13 @@ parseUnresolvedJobField settings txt val = do
   field <- job .:? txt .!= mempty
   pure $ pure field
 
--- $(genParser "job" "field")
--- $(genProvider "job" "field")
+parseJobField2 :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseJobField2 settings = parseJobField settings "field"
+
+jobField2Provider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+jobField2Provider settings = fetchData settings Job parseJobField2
+
 $(genParser "job" "seniority")
 
 $(genProvider "job" "seniority")

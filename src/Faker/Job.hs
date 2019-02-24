@@ -8,7 +8,9 @@ import Faker.Internal
 import Faker.Provider.Job
 import Faker.TH
 
--- $(generateFakeField "job" "field")
+field :: Fake Text
+field = Fake (resolver jobField2Provider)
+
 $(generateFakeField "job" "seniority")
 
 $(generateFakeField "job" "position")
