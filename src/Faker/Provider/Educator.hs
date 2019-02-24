@@ -73,15 +73,15 @@ parseUnresolvedEducatorFields settings txts val = do
       helper field xs
     helper a _ = fail $ "expect Object, but got " <> (show a)
 
-parseEducatorTertiaryCourse_number ::
+parseEducatorTertiaryCourseNumber ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
-parseEducatorTertiaryCourse_number settings =
+parseEducatorTertiaryCourseNumber settings =
   parseUnresolvedEducatorFields settings ["tertiary", "degree", "course_number"]
 
-educatorTertiaryCourse_numberProvider ::
+educatorTertiaryCourseNumberProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
-educatorTertiaryCourse_numberProvider settings =
-  fetchData settings Educator parseEducatorTertiaryCourse_number
+educatorTertiaryCourseNumberProvider settings =
+  fetchData settings Educator parseEducatorTertiaryCourseNumber
 
 $(genParser "educator" "name")
 
@@ -115,6 +115,6 @@ resolveEducatorField ::
 resolveEducatorField settings "course_number" =
   randomUnresolvedVec
     settings
-    educatorTertiaryCourse_numberProvider
+    educatorTertiaryCourseNumberProvider
     resolveEducatorText
 resolveEducatorField settings str = throwM $ InvalidField "educator" str
