@@ -24,6 +24,7 @@ import qualified Faker.FamilyGuy as FG
 import Faker.File
 import Faker.Food
 import Faker.Internal
+import Faker.Job (field)
 import Faker.Nation (flagEmoji)
 import Faker.PhoneNumber
 import Faker.Provider.Educator
@@ -93,4 +94,7 @@ spec = do
       item `shouldSatisfy` isText
     it "Nation - flagEmoji" $ do
       item <- generate flagEmoji
+      item `shouldSatisfy` isText
+    it "Job" $ do
+      item <- generate field
       item `shouldSatisfy` isText

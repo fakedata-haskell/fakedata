@@ -148,10 +148,8 @@ the `fake` library.
 * finance
 * id_number
 * invoice
-* job - see comments in code
-* lorem - multibyte ?
-* nation - multibyte
 * restaurant
 * stripe
 * vehicle -
 * world_cup
+* fix generated function names
