@@ -63,7 +63,10 @@ resolveUnresolved settings (Unresolved unres) resolver =
       randomItem = unres ! index
       resolve =
         if operateField randomItem "hello" == randomItem -- todo: remove hack
-          then pure $ interpolateNumbers settings randomItem
+          then pure $
+               interpolateString
+                 settings
+                 (interpolateNumbers settings randomItem)
           else resolver settings randomItem
    in if unresLen == 0
         then throwM $ NoDataFound settings
@@ -151,6 +154,29 @@ interpolateNumbers settings txt = helper settings [] txt
                            (setRandomGen gen settings)
                            (acc ++ [digitToChar int])
                            rem
+                else helper settings (acc ++ [c]) rem
+
+isQues :: Char -> Bool
+isQues c = c == '?'
+
+-- >> interpolateString "?????"
+-- >> ABCDE
+-- >> interpolateString "32-##"
+-- >> 32-ZF
+interpolateString :: FakerSettings -> Text -> Text
+interpolateString settings txt = helper settings [] txt
+  where
+    helper settings acc txt =
+      case T.null txt of
+        True -> T.pack acc
+        False ->
+          case T.uncons txt of
+            Nothing -> T.pack acc
+            Just (c, rem) ->
+              if isQues c
+                then let stdGen = getRandomGen settings
+                         (int, gen) = randomR ('A', 'Z') stdGen
+                      in helper (setRandomGen gen settings) (acc ++ [int]) rem
                 else helper settings (acc ++ [c]) rem
 
 resolver ::
