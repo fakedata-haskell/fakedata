@@ -41,6 +41,26 @@ spec = do
     it "produces random integer only for hash" $ do
       let txt = interpolateNumbers defaultFakerSettings "ab-##"
       txt `shouldSatisfy` (\x -> T.length x == 5 && (T.take 3 x == "ab-"))
+    it "produces random alphabets" $ do
+      let txt = interpolateString defaultFakerSettings "????"
+      txt `shouldBe` "XJZS"
+    it "preserves unwanted things" $ do
+      let txt = interpolateString defaultFakerSettings "32-????"
+      txt `shouldBe` "32-XJZS"
+    it "preserves unwanted things and works with numbers" $ do
+      txt <-
+        resolveUnresolved
+          defaultFakerSettings
+          (pure $ pure $ "32-????-####")
+          (\s t -> pure t)
+      txt `shouldBe` "32-XJZS-1534"
+    it "doesn't get confused with garbage" $ do
+      txt <-
+        resolveUnresolved
+          defaultFakerSettings
+          (pure $ pure $ "abjakf-324jak")
+          (\s t -> pure t)
+      txt `shouldBe` "abjakf-324jak"
     it "resolve field" $ do
       let field = resolveFields "#{community_prefix} #{community_suffix}"
       field `shouldBe` ["community_prefix", "community_suffix"]
