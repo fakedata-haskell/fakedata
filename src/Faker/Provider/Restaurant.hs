@@ -43,7 +43,6 @@ parseRestaurantFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
 parseUnresolvedRestaurantField ::
      (FromJSON a, Monoid a)
   => FakerSettings
@@ -55,29 +54,21 @@ parseUnresolvedRestaurantField settings txt val = do
   field <- restaurant .:? txt .!= mempty
   pure $ pure field
 
-
-
 $(genParser "restaurant" "name_suffix")
 
 $(genProvider "restaurant" "name_suffix")
-
 
 $(genParser "restaurant" "type")
 
 $(genProvider "restaurant" "type")
 
-
 $(genParser "restaurant" "description")
 
 $(genProvider "restaurant" "description")
 
-
 $(genParser "restaurant" "review")
 
 $(genProvider "restaurant" "review")
-
-
-
 
 $(genParserUnresolved "restaurant" "name_prefix")
 
@@ -87,26 +78,22 @@ $(genParserUnresolved "restaurant" "name")
 
 $(genProviderUnresolved "restaurant" "name")
 
-
-
-resolveRestaurantText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolveRestaurantText ::
+     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveRestaurantText settings txt = do
   let fields = resolveFields txt
   restaurantFields <- mapM (resolveRestaurantField settings) fields
   pure $ operateFields txt restaurantFields
 
-resolveRestaurantField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-
-resolveRestaurantField settings undefined =
-  randomUnresolvedVec settings name_prefixProvider resolveName_prefixText
-
-resolveRestaurantField settings undefined =
-  randomUnresolvedVec settings nameProvider resolveNameText
-
+resolveRestaurantField ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveRestaurantField settings "name_prefix" =
+  randomUnresolvedVec
+    settings
+    restaurantNamePrefixProvider
+    resolveRestaurantText
+resolveRestaurantField settings "name_suffix" =
+  randomVec settings restaurantNameSuffixProvider
+resolveRestaurantField settings "name" =
+  randomUnresolvedVec settings restaurantNameProvider resolveRestaurantText
 resolveRestaurantField settings str = throwM $ InvalidField "restaurant" str
-
-
-
-
-
-
