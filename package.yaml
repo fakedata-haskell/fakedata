@@ -46,7 +46,7 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - fakedata-provider
+    - fakedata
     - hspec
     - vector
     - hspec-discover
