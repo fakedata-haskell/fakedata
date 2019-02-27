@@ -14,6 +14,7 @@ import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Faker
 import Faker.Combinators
+import Faker.Company
 import Faker.Compass
 import Faker.Educator
 import qualified Faker.ElderScrolls as ES
@@ -28,9 +29,11 @@ import Faker.Job (field)
 import Faker.Nation (flagEmoji)
 import Faker.PhoneNumber
 import Faker.Provider.Educator
+import qualified Faker.Restaurant as FR
 import qualified Faker.Science as FS
 import Faker.StarWars
 import qualified Faker.University as FU
+import qualified Faker.Vehicle as FV
 import Faker.WorldCup
 import Test.Hspec
 
@@ -103,3 +106,21 @@ spec = do
       it "SouthKorea" $ do
         item <- generate rostersSouthKoreaCoach
         item `shouldSatisfy` isText
+    describe "Restaurant" $ do
+      it "name" $ do
+        item <- generate FR.name
+        item `shouldBe` "Thirsty House"
+      it "name_suffix" $ do
+        item <- generate FR.nameSuffix
+        item `shouldSatisfy` isText
+      it "type'" $ do
+        item <- generate FR.type'
+        item `shouldBe` "Bakery"
+    describe "Vehicle" $ do
+      it "license" $ do
+        item <- generate FV.licensePlate
+        item `shouldSatisfy` isText
+    -- describe "Company" $ do
+    --   it "buzzwords" $ do
+    --     item <- generate buzzwords
+    --     item `shouldBe` "hello"
