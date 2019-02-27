@@ -1258,30 +1258,6 @@ vfv =
     , unresolvedNestedFields = []
     }
 
-vehicle :: ModuleInfo
-vehicle =
-  ModuleInfo
-    { moduleName = "vehicle"
-    , jsonField = "vehicle"
-    , fields =
-        [ "manufacture"
-        , "makes"
-        , "colors"
-        , "transmissions"
-        , "drive_types"
-        , "fuel_types"
-        , "styles"
-        , "car_types"
-        , "car_options"
-        , "standard_specs"
-        , "doors"
-        , "engine_sizes"
-        ]
-    , unresolvedFields = []
-    , nestedFields = []
-    , unresolvedNestedFields = []
-    }
-
 ventureBros :: ModuleInfo
 ventureBros =
   ModuleInfo
@@ -1540,5 +1516,51 @@ wcup =
     , unresolvedNestedFields = []
     }
 
+restaurant :: ModuleInfo
+restaurant =
+  ModuleInfo
+    { moduleName = "restaurant"
+    , jsonField = "restaurant"
+    , fields = ["name_suffix", "type", "description", "review"]
+    , unresolvedFields = ["name_prefix", "name"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+vehicle :: ModuleInfo
+vehicle =
+  ModuleInfo
+    { moduleName = "vehicle"
+    , jsonField = "vehicle"
+    , fields =
+        [ "manufacture"
+        , "makes"
+        , "colors"
+        , "transmissions"
+        , "drive_types"
+        , "fuel_types"
+        , "styles"
+        , "car_types"
+        , "car_options"
+        , "standard_specs"
+        , "doors"
+        , "engine_sizes"
+        ]
+    , unresolvedFields = ["license_plate"]
+    , nestedFields =
+        [ ["models_by_make", "BMW"]
+        , ["models_by_make", "Audi"]
+        , ["models_by_make", "Toyota"]
+        , ["models_by_make", "Chevy"]
+        , ["models_by_make", "Ford"]
+        , ["models_by_make", "Dodge"]
+        , ["models_by_make", "Lincoln"]
+        , ["models_by_make", "Buick"]
+        , ["models_by_make", "Honda"]
+        , ["models_by_make", "Nissan"]
+        ]
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = wcup
+currentOne = vehicle
