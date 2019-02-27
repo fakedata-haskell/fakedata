@@ -26,6 +26,14 @@ instance Monad Unresolved where
   return = pure
   (Unresolved f) >>= f1 = f1 f
 
+rvec :: (MonadThrow m, MonadIO m) => FakerSettings -> Vector a -> m a
+rvec settings vec =
+  let itemsLen = V.length vec
+      (index, _) = randomR (0, itemsLen - 1) (getRandomGen settings)
+   in if itemsLen == 0
+        then throwM $ NoDataFound settings
+        else pure $ vec ! index
+
 randomVec ::
      (MonadThrow m, MonadIO m)
   => FakerSettings
