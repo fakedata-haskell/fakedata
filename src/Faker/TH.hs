@@ -31,7 +31,11 @@ lowerTitle (x:xs) = (toLower x) : xs
 -- Assumes the presence of the function named "addressStateProvider"
 generateFakeField :: String -> String -> Q [Dec]
 generateFakeField entityName fieldName = do
-  let funName = mkName $ refinedString fieldName
+  let funName =
+        mkName $
+        case refinedString fieldName of
+          "type" -> "type'"
+          other -> other
       pfn = refinedString $ entityName <> (stringTitle fieldName) <> "Provider"
   providerName <- lookupValueName pfn
   providerFn <-

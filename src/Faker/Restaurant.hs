@@ -10,7 +10,8 @@ import Faker.TH
 
 $(generateFakeField "restaurant" "name_suffix")
 
--- $(generateFakeField "restaurant" "type")
+$(generateFakeField "restaurant" "type")
+
 $(generateFakeField "restaurant" "description")
 
 $(generateFakeField "restaurant" "review")

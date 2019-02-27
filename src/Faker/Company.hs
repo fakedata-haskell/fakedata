@@ -19,5 +19,5 @@ $(generateFakeFieldUnresolved "company" "name")
 $(generateFakeField "company" "industry")
 
 $(generateFakeField "company" "profession")
--- cannot do this
--- $(generateFakeField "company" "type")
+
+$(generateFakeField "company" "type")
