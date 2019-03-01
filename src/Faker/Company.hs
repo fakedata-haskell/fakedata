@@ -13,7 +13,14 @@ import Faker.TH
 
 $(generateFakeField "company" "suffix")
 
-$(generateFakeField "company" "buzzwords")
+buzzword :: Fake Text
+buzzword =
+  Fake
+    (\settings -> do
+       vec :: V.Vector (V.Vector Text) <- companyBuzzwordsProvider settings
+       let item :: IO (V.Vector Text) = rvec settings vec
+       item' <- item
+       rvec settings item')
 
 bs :: Fake Text
 bs =

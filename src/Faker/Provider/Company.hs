@@ -48,7 +48,10 @@ $(genProvider "company" "suffix")
 
 $(genParser "company" "buzzwords")
 
-$(genProvider "company" "buzzwords")
+companyBuzzwordsProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector (Vector Text))
+companyBuzzwordsProvider settings =
+  fetchData settings Company parseCompanyBuzzwords
 
 $(genParser "company" "bs")
 
