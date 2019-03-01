@@ -163,7 +163,7 @@ There are two kind of modules provided by the library:
 
 -   Faker.Provider.\* : You most likely don't want to use them or read
     them. They are internally used by the library.
--   Faker.<Entity> : Here Entity refers to an generic object like Book,
+-   Faker.\<Entity\> : Here Entity refers to an generic object like Book,
     Movie etc. This is the module you should be interested to look upon.
 
 Comparision with other libraries
