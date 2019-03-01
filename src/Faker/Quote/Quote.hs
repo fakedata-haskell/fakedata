@@ -8,7 +8,6 @@ import Faker.Internal
 import Faker.Provider.Quote
 import Faker.TH
 
-
 $(generateFakeField "quote" "famous_last_words")
 
 $(generateFakeField "quote" "matz")
@@ -20,9 +19,3 @@ $(generateFakeField "quote" "robin")
 $(generateFakeField "quote" "singular_siegler")
 
 $(generateFakeField "quote" "yoda")
-
-
-
-
-
-

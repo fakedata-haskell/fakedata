@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Community where
+module Faker.TvShows.Community where
 
 import Data.Text
 import Faker

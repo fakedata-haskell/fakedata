@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Movie.Movie where
+module Faker.Movie where
 
 import Data.Text
 import Faker

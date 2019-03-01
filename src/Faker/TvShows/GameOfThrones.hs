@@ -1,13 +1,12 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.GameOfThrones where
+module Faker.TvShows.GameOfThrones where
 
 import Data.Text
 import Faker
 import Faker.Internal
 import Faker.Provider.GameOfThrones
 import Faker.TH
-
 
 $(generateFakeField "gameOfThrones" "characters")
 
@@ -18,9 +17,3 @@ $(generateFakeField "gameOfThrones" "cities")
 $(generateFakeField "gameOfThrones" "quotes")
 
 $(generateFakeField "gameOfThrones" "dragons")
-
-
-
-
-
-

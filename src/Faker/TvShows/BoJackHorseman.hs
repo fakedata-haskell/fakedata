@@ -1,4 +1,4 @@
-module Faker.BoJackHorseman where
+module Faker.TvShows.BoJackHorseman where
 
 import Data.Text
 import Faker

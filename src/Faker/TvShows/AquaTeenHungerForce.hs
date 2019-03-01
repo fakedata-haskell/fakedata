@@ -1,4 +1,4 @@
-module Faker.AquaTeenHungerForce where
+module Faker.TvShows.AquaTeenHungerForce where
 
 import Data.Text
 import Faker

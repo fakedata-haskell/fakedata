@@ -1,13 +1,12 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.SiliconValley where
+module Faker.TvShows.SiliconValley where
 
 import Data.Text
 import Faker
 import Faker.Internal
 import Faker.Provider.SiliconValley
 import Faker.TH
-
 
 $(generateFakeField "siliconValley" "characters")
 
@@ -24,9 +23,3 @@ $(generateFakeField "siliconValley" "mottos")
 $(generateFakeField "siliconValley" "urls")
 
 $(generateFakeField "siliconValley" "email")
-
-
-
-
-
-
