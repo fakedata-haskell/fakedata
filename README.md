@@ -1,16 +1,15 @@
-![fakedata](https://user-images.githubusercontent.com/737477/53659015-620cd780-3c80-11e9-9212-1bff1f854526.png)
+![fakedata](https://user-images.githubusercontent.com/737477/53658993-54575200-3c80-11e9-9125-fbcf9e54660f.png)
 [![Hackage](https://img.shields.io/hackage/v/fakedata.svg)](https://hackage.haskell.org/package/fakedata)
 [![Stackage
 Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.org/nightly/package/fakedata)
 [![Stackage
 LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
 
--   [fakedata](#fakedata)
+-   [Fakedata](#fakedata)
     -   [Tutorial](#tutorial)
         -   [Generating address](#generating-address)
         -   [Generating name](#generating-name)
-        -   [Generate quotes from the movie [Back to the
-            Future](https://en.wikipedia.org/wiki/Back_to_the_Future)](#generate-quotes-from-the-movie-back-to-the-future)
+        -   [Generate quotes from the movie Back to the Future](#generate-quotes-from-the-movie-back-to-the-future)
         -   [Combining Fake datas](#combining-fake-datas)
         -   [Combinators](#combinators)
     -   [Reading Haddock Documentation](#reading-haddock-documentation)
