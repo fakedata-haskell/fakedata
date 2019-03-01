@@ -1,5 +1,11 @@
 # fakedata
 
+[![Build Status](https://dev.azure.com/psibi2000/fakedata/_apis/build/status/psibi.fakedata?branchName=master)](https://dev.azure.com/psibi2000/fakedata/_build/latest?definitionId=5?branchName=master)
+
+[![Hackage](https://img.shields.io/hackage/v/fakedata.svg)](https://hackage.haskell.org/package/fakedata)
+[![Stackage Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.org/nightly/package/fakedata)
+[![Stackage LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
+
 This library is a port of Ruby's
 [faker](https://github.com/stympy/faker). Note that it directly uses
 the source data from that library, so the quality of fake data is
@@ -28,7 +34,7 @@ quite high!
 ### Generate quotes from the movie [Back to the Future](https://en.wikipedia.org/wiki/Back_to_the_Future)
 
 ```
-λ> import Faker.BackToTheFuture
+λ> import Faker.Movie.BackToTheFuture
 λ> import Faker.Combinators
 λ> qs <- generate $ listOf 5 quote
 λ> qs
@@ -125,10 +131,31 @@ main = do
 "Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"
 ```
 
+#### suchThat
+
+``` shellsession
+λ> import qualified Faker.Address as AD
+λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 5))
+λ> item
+"Ecuador"
+λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 8))
+λ> item
+"French Guiana"
+```
+
 For seeing the full list of combinators, see the module documentation
 of `Faker.Combinators`.
 
-# Comparision with other libraries
+## Reading Haddock Documentation
+
+There are two kind of modules provided by the library:
+
+* Faker.Provider.* : You most likely don't want to use them or read
+  them. They are internally used by the library.
+* Faker.<Entity> : Here Entity refers to an generic object like Book,
+  Movie etc. This is the module you should be interested to look upon.
+
+## Comparision with other libraries
 
 There are two other libraries in the Hackage providing fake data:
 
@@ -141,3 +168,9 @@ an equivalent functionality with something like
 [faker](https://github.com/stympy/faker). Also, most of the
 combinators in this packages has been inspired (read as taken) from
 the `fake` library.
+
+## Credits
+
+Benjamin Curtis for his [Ruby faker
+  library](https://github.com/stympy/faker) from which the data source
+  is taken from.
