@@ -1,4 +1,4 @@
-module Faker.BackToTheFuture where
+module Faker.Movie.BackToTheFuture where
 
 import Data.Text
 import Faker

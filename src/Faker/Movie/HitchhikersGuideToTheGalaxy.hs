@@ -1,13 +1,12 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.HitchhikersGuideToTheGalaxy where
+module Faker.Movie.HitchhikersGuideToTheGalaxy where
 
 import Data.Text
 import Faker
 import Faker.Internal
 import Faker.Provider.HitchhikersGuideToTheGalaxy
 import Faker.TH
-
 
 $(generateFakeField "hitchhikersGuideToTheGalaxy" "characters")
 
@@ -22,9 +21,3 @@ $(generateFakeField "hitchhikersGuideToTheGalaxy" "quotes")
 $(generateFakeField "hitchhikersGuideToTheGalaxy" "species")
 
 $(generateFakeField "hitchhikersGuideToTheGalaxy" "starships")
-
-
-
-
-
-
