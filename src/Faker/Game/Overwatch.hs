@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Games.Overwatch where
+module Faker.Game.Overwatch where
 
 import Data.Text
 import Faker

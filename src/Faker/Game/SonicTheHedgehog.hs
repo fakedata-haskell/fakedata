@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Games.SonicTheHedgehog where
+module Faker.Game.SonicTheHedgehog where
 
 import Data.Text
 import Faker

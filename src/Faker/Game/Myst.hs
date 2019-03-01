@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Games.Myst where
+module Faker.Game.Myst where
 
 import Data.Text
 import Faker
