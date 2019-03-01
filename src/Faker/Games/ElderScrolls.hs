@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.ElderScrolls where
+module Faker.Games.ElderScrolls where
 
 import Data.Text
 import Faker

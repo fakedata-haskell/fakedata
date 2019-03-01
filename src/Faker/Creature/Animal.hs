@@ -1,4 +1,4 @@
-module Faker.Animal where
+module Faker.Creature.Animal where
 
 import Data.Text
 import Faker

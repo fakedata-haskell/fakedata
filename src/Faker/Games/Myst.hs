@@ -1,13 +1,12 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Myst where
+module Faker.Games.Myst where
 
 import Data.Text
 import Faker
 import Faker.Internal
 import Faker.Provider.Myst
 import Faker.TH
-
 
 $(generateFakeField "myst" "games")
 
@@ -18,9 +17,3 @@ $(generateFakeField "myst" "characters")
 $(generateFakeField "myst" "ages")
 
 $(generateFakeField "myst" "quotes")
-
-
-
-
-
-

@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Cat where
+module Faker.Creature.Cat where
 
 import Data.Text
 import Faker
