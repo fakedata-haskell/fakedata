@@ -1,8 +1,6 @@
 # fakedata
 
 ![fakedata](https://user-images.githubusercontent.com/737477/53659015-620cd780-3c80-11e9-9212-1bff1f854526.png)
-[![Build Status](https://dev.azure.com/psibi2000/fakedata/_apis/build/status/psibi.fakedata?branchName=master)](https://dev.azure.com/psibi2000/fakedata/_build/latest?definitionId=5?branchName=master)
-
 [![Hackage](https://img.shields.io/hackage/v/fakedata.svg)](https://hackage.haskell.org/package/fakedata)
 [![Stackage Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.org/nightly/package/fakedata)
 [![Stackage LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
