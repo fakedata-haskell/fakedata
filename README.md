@@ -1,20 +1,39 @@
-# fakedata
-
 ![fakedata](https://user-images.githubusercontent.com/737477/53659015-620cd780-3c80-11e9-9212-1bff1f854526.png)
 [![Hackage](https://img.shields.io/hackage/v/fakedata.svg)](https://hackage.haskell.org/package/fakedata)
-[![Stackage Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.org/nightly/package/fakedata)
-[![Stackage LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
+[![Stackage
+Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.org/nightly/package/fakedata)
+[![Stackage
+LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
+
+-   [fakedata](#fakedata)
+    -   [Tutorial](#tutorial)
+        -   [Generating address](#generating-address)
+        -   [Generating name](#generating-name)
+        -   [Generate quotes from the movie [Back to the
+            Future](https://en.wikipedia.org/wiki/Back_to_the_Future)](#generate-quotes-from-the-movie-back-to-the-future)
+        -   [Combining Fake datas](#combining-fake-datas)
+        -   [Combinators](#combinators)
+    -   [Reading Haddock Documentation](#reading-haddock-documentation)
+    -   [Comparision with other
+        libraries](#comparision-with-other-libraries)
+    -   [Acknowledgments](#acknowledgments)
+
+fakedata
+========
+
+
 
 This library is a port of Ruby's
-[faker](https://github.com/stympy/faker). Note that it directly uses
-the source data from that library, so the quality of fake data is
-quite high!
+[faker](https://github.com/stympy/faker). Note that it directly uses the
+source data from that library, so the quality of fake data is quite
+high!
 
-## Tutorial
+Tutorial
+--------
 
 ### Generating address
 
-``` shellsession
+``` {.shellsession}
 ~/g/fakedata (master) $ stack ghci
 λ> import Faker.Address
 λ> address <- generate fullAddress
@@ -24,7 +43,7 @@ quite high!
 
 ### Generating name
 
-``` shellsession
+``` {.shellsession}
 λ> fullName <- generate name
 λ> fullName
 "Antony Langosh"
@@ -32,23 +51,20 @@ quite high!
 
 ### Generate quotes from the movie [Back to the Future](https://en.wikipedia.org/wiki/Back_to_the_Future)
 
-```
-λ> import Faker.Movie.BackToTheFuture
-λ> import Faker.Combinators
-λ> qs <- generate $ listOf 5 quote
-λ> qs
-[ "Yes. Yes. I'm George. George McFly. I'm your density. I mean, your destiny."
-, "Hello? Hello? Anybody home? Huh? Think, McFly. Think! I gotta have time to get them retyped. Do you realize what would happen if I hand in my reports in your handwriting? I'll get fired. You wouldn't want that to happen, would ya? Would ya?"
-, "Lorraine. My density has brought me to you."
-, "See you in about 30 years."
-, "You really think I ought to swear?"
-]
-
-```
+    λ> import Faker.Movie.BackToTheFuture
+    λ> import Faker.Combinators
+    λ> qs <- generate $ listOf 5 quote
+    λ> qs
+    [ "Yes. Yes. I'm George. George McFly. I'm your density. I mean, your destiny."
+    , "Hello? Hello? Anybody home? Huh? Think, McFly. Think! I gotta have time to get them retyped. Do you realize what would happen if I hand in my reports in your handwriting? I'll get fired. You wouldn't want that to happen, would ya? Would ya?"
+    , "Lorraine. My density has brought me to you."
+    , "See you in about 30 years."
+    , "You really think I ought to swear?"
+    ]
 
 ### Combining Fake datas
 
-```haskell
+``` {.haskell}
 {-#LANGUAGE RecordWildCards#-}
 
 import Faker
@@ -75,35 +91,31 @@ main = do
 
 And on executing them:
 
-```
-$ stack name.hs
-Person {personName = "Antony Langosh", personAddress = "Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"}
-```
+    $ stack name.hs
+    Person {personName = "Antony Langosh", personAddress = "Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"}
 
-You would have noticed in the above output that the name and address
-are the same as generated before in the GHCi REPL. That's because, by
+You would have noticed in the above output that the name and address are
+the same as generated before in the GHCi REPL. That's because, by
 default all the generated data are deterministic. If you want a
 different set of ouput each time, you would have to modify the random
 generator output:
 
-```
-main :: IO ()
-main = do
-    gen <- newStdGen
-    let settings = setRandomGen gen defaultFakerSettings
-    person <- generateWithSettings settings fakePerson
-    print person
-```
+    main :: IO ()
+    main = do
+        gen <- newStdGen
+        let settings = setRandomGen gen defaultFakerSettings
+        person <- generateWithSettings settings fakePerson
+        print person
 
 And on executing the program, you will get a different output:
 
-``` shellsession
+``` {.shellsession}
 Person {personName = "Ned Effertz Sr.", personAddress = "Suite 158 1580 Schulist Mall, Schulistburgh, NY 15804-3392"}
 ```
 
 The above program can be even minimized like this:
 
-``` haskell
+``` {.haskell}
 main :: IO ()
 main = do
     let settings = setNonDeterministic defaultFakerSettings
@@ -115,7 +127,7 @@ main = do
 
 #### listOf
 
-``` haskell
+``` {.haskell}
 λ> import Faker.Address
 λ> item <- generate $ listOf 5 country
 λ> item
@@ -124,7 +136,7 @@ main = do
 
 #### oneOf
 
-``` haskell
+``` {.haskell}
 λ> item <- generate $ oneof [country, fullAddress]
 λ> item
 "Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"
@@ -132,7 +144,7 @@ main = do
 
 #### suchThat
 
-``` shellsession
+``` {.shellsession}
 λ> import qualified Faker.Address as AD
 λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 5))
 λ> item
@@ -142,37 +154,40 @@ main = do
 "French Guiana"
 ```
 
-For seeing the full list of combinators, see the module documentation
-of `Faker.Combinators`.
+For seeing the full list of combinators, see the module documentation of
+`Faker.Combinators`.
 
-## Reading Haddock Documentation
+Reading Haddock Documentation
+-----------------------------
 
 There are two kind of modules provided by the library:
 
-* Faker.Provider.* : You most likely don't want to use them or read
-  them. They are internally used by the library.
-* Faker.<Entity> : Here Entity refers to an generic object like Book,
-  Movie etc. This is the module you should be interested to look upon.
+-   Faker.Provider.\* : You most likely don't want to use them or read
+    them. They are internally used by the library.
+-   Faker.<Entity> : Here Entity refers to an generic object like Book,
+    Movie etc. This is the module you should be interested to look upon.
 
-## Comparision with other libraries
+Comparision with other libraries
+--------------------------------
 
 There are two other libraries in the Hackage providing fake data:
 
-* [faker](https://hackage.haskell.org/package/faker-0.0.0.2)
-* [fake](https://hackage.haskell.org/package/fake-0.1.1.1)
+-   [faker](https://hackage.haskell.org/package/faker-0.0.0.2)
+-   [fake](https://hackage.haskell.org/package/fake-0.1.1.1)
 
 The problem (for me) with both the above libraries is that the library
-covers only a very small amount of fake data source. I wanted to have
-an equivalent functionality with something like
-[faker](https://github.com/stympy/faker). Also, most of the
-combinators in this packages has been inspired (read as taken) from
-the `fake` library.
+covers only a very small amount of fake data source. I wanted to have an
+equivalent functionality with something like
+[faker](https://github.com/stympy/faker). Also, most of the combinators
+in this packages has been inspired (read as taken) from the `fake`
+library.
 
-## Acknowledgments
+Acknowledgments
+---------------
 
 Benjamin Curtis for his [Ruby faker
-  library](https://github.com/stympy/faker) from which the data source
-  is taken from.
+library](https://github.com/stympy/faker) from which the data source is
+taken from.
 
 Icons made by [Freepik](https://www.flaticon.com/authors/freepik) from
 [Flaticon](https://www.flaticon.com/).
