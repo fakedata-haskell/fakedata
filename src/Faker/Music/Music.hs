@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Music.Music where
+module Faker.Music where
 
 import Data.Text
 import Faker
