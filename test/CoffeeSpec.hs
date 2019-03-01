@@ -12,14 +12,14 @@ import qualified Data.Text as T
 import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Faker
+import Faker.Book.Dune
 import Faker.Coffee
 import Faker.Commerce
-import Faker.Dota
-import qualified Faker.DumbAndDumber as DD
-import Faker.Dune
 import Faker.Educator
+import Faker.Game.Dota
 import Faker.Internal
 import Faker.Provider.Coffee
+import qualified Faker.TvShow.DumbAndDumber as DD
 import Test.Hspec
 
 spec :: Spec

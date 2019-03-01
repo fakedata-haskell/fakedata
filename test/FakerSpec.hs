@@ -17,21 +17,21 @@ import Faker.Combinators
 import Faker.Company
 import Faker.Compass
 import Faker.Educator
-import qualified Faker.ElderScrolls as ES
 import Faker.ElectricalComponents
 import Faker.Esport
-import Faker.Fallout
-import qualified Faker.FamilyGuy as FG
 import Faker.File
 import Faker.Food
+import qualified Faker.Game.ElderScrolls as ES
+import Faker.Game.Fallout
 import Faker.Internal
 import Faker.Job (field)
+import Faker.Movie.StarWars
 import Faker.Nation (flagEmoji)
 import Faker.PhoneNumber
 import Faker.Provider.Educator
 import qualified Faker.Restaurant as FR
 import qualified Faker.Science as FS
-import Faker.StarWars
+import qualified Faker.TvShow.FamilyGuy as FG
 import qualified Faker.University as FU
 import qualified Faker.Vehicle as FV
 import Faker.WorldCup
