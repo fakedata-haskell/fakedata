@@ -1,5 +1,6 @@
 # fakedata
 
+[!fakedata](https://user-images.githubusercontent.com/737477/53659015-620cd780-3c80-11e9-9212-1bff1f854526.png)
 [![Build Status](https://dev.azure.com/psibi2000/fakedata/_apis/build/status/psibi.fakedata?branchName=master)](https://dev.azure.com/psibi2000/fakedata/_build/latest?definitionId=5?branchName=master)
 
 [![Hackage](https://img.shields.io/hackage/v/fakedata.svg)](https://hackage.haskell.org/package/fakedata)
@@ -169,8 +170,11 @@ an equivalent functionality with something like
 combinators in this packages has been inspired (read as taken) from
 the `fake` library.
 
-## Credits
+## Acknowledgments
 
 Benjamin Curtis for his [Ruby faker
   library](https://github.com/stympy/faker) from which the data source
   is taken from.
+
+Icons made by [Freepik](https://www.flaticon.com/authors/freepik) from
+[Flaticon](https://www.flaticon.com/).
