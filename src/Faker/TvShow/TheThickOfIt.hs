@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.TvShows.TheThickOfIt where
+module Faker.TvShow.TheThickOfIt where
 
 import Data.Text
 import Faker

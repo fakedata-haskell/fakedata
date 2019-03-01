@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.TvShows.TwinPeaks where
+module Faker.TvShow.TwinPeaks where
 
 import Data.Text
 import Faker

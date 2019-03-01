@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.TvShows.VentureBros where
+module Faker.TvShow.VentureBros where
 
 import Data.Text
 import Faker
