@@ -124,6 +124,6 @@ spec = do
       it "bs" $ do
         item <- generate bs
         item `shouldBe` "visualize efficient supply-chains"
-      -- it "buzzwords" $ do
-      --   item <- generate buzzwords
-      --   item `shouldBe` "hello"
+      it "buzzwords" $ do
+        item <- generate buzzword
+        item `shouldBe` "info-mediaries"
