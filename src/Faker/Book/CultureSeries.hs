@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.CultureSeries where
+module Faker.Book.CultureSeries where
 
 import Data.Text
 import Faker

@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Dune where
+module Faker.Book.Dune where
 
 import Data.Text
 import Faker
