@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.DragonBall where
+module Faker.JapaneseMedia.DragonBall where
 
 import Data.Text
 import Faker
