@@ -19,7 +19,8 @@ parsePokemon :: FromJSON a => FakerSettings -> Value -> Parser a
 parsePokemon settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  pokemon <- faker .: "pokemon"
+  games <- faker .: "games"
+  pokemon <- games .: "pokemon"
   pure pokemon
 parsePokemon settings val = fail $ "expected Object, but got " <> (show val)
 
@@ -43,30 +44,14 @@ parsePokemonFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "pokemon" "names")
 
 $(genProvider "pokemon" "names")
-
 
 $(genParser "pokemon" "locations")
 
 $(genProvider "pokemon" "locations")
 
-
 $(genParser "pokemon" "moves")
 
 $(genProvider "pokemon" "moves")
-
-
-
-
-
-
-
-
-
-
-

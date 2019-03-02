@@ -19,9 +19,11 @@ parseSonicTheHedgehog :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSonicTheHedgehog settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  sonicTheHedgehog <- faker .: "sonic_the_hedgehog"
+  games <- faker .: "games"
+  sonicTheHedgehog <- games .: "sonic_the_hedgehog"
   pure sonicTheHedgehog
-parseSonicTheHedgehog settings val = fail $ "expected Object, but got " <> (show val)
+parseSonicTheHedgehog settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseSonicTheHedgehogField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,30 +45,14 @@ parseSonicTheHedgehogFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "sonicTheHedgehog" "zone")
 
 $(genProvider "sonicTheHedgehog" "zone")
-
 
 $(genParser "sonicTheHedgehog" "character")
 
 $(genProvider "sonicTheHedgehog" "character")
 
-
 $(genParser "sonicTheHedgehog" "game")
 
 $(genProvider "sonicTheHedgehog" "game")
-
-
-
-
-
-
-
-
-
-
-

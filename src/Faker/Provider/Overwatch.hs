@@ -19,7 +19,8 @@ parseOverwatch :: FromJSON a => FakerSettings -> Value -> Parser a
 parseOverwatch settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  overwatch <- faker .: "overwatch"
+  games <- faker .: "games"
+  overwatch <- games .: "overwatch"
   pure overwatch
 parseOverwatch settings val = fail $ "expected Object, but got " <> (show val)
 
@@ -43,30 +44,14 @@ parseOverwatchFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "overwatch" "heroes")
 
 $(genProvider "overwatch" "heroes")
-
 
 $(genParser "overwatch" "locations")
 
 $(genProvider "overwatch" "locations")
 
-
 $(genParser "overwatch" "quotes")
 
 $(genProvider "overwatch" "quotes")
-
-
-
-
-
-
-
-
-
-
-

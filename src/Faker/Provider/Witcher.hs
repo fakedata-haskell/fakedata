@@ -19,7 +19,8 @@ parseWitcher :: FromJSON a => FakerSettings -> Value -> Parser a
 parseWitcher settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  witcher <- faker .: "witcher"
+  games <- faker .: "games"
+  witcher <- games .: "witcher"
   pure witcher
 parseWitcher settings val = fail $ "expected Object, but got " <> (show val)
 
@@ -43,45 +44,26 @@ parseWitcherFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "witcher" "characters")
 
 $(genProvider "witcher" "characters")
-
 
 $(genParser "witcher" "witchers")
 
 $(genProvider "witcher" "witchers")
 
-
 $(genParser "witcher" "schools")
 
 $(genProvider "witcher" "schools")
-
 
 $(genParser "witcher" "locations")
 
 $(genProvider "witcher" "locations")
 
-
 $(genParser "witcher" "quotes")
 
 $(genProvider "witcher" "quotes")
 
-
 $(genParser "witcher" "monsters")
 
 $(genProvider "witcher" "monsters")
-
-
-
-
-
-
-
-
-
-
-

@@ -19,9 +19,11 @@ parseSuperSmashBros :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSuperSmashBros settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  superSmashBros <- faker .: "super_smash_bros"
+  games <- faker .: "games"
+  superSmashBros <- games .: "super_smash_bros"
   pure superSmashBros
-parseSuperSmashBros settings val = fail $ "expected Object, but got " <> (show val)
+parseSuperSmashBros settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseSuperSmashBrosField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,25 +45,10 @@ parseSuperSmashBrosFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "superSmashBros" "fighter")
 
 $(genProvider "superSmashBros" "fighter")
 
-
 $(genParser "superSmashBros" "stage")
 
 $(genProvider "superSmashBros" "stage")
-
-
-
-
-
-
-
-
-
-
-

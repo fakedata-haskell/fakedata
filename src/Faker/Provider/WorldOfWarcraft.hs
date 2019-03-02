@@ -19,9 +19,11 @@ parseWorldOfWarcraft :: FromJSON a => FakerSettings -> Value -> Parser a
 parseWorldOfWarcraft settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  worldOfWarcraft <- faker .: "world_of_warcraft"
+  games <- faker .: "games"
+  worldOfWarcraft <- games .: "world_of_warcraft"
   pure worldOfWarcraft
-parseWorldOfWarcraft settings val = fail $ "expected Object, but got " <> (show val)
+parseWorldOfWarcraft settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseWorldOfWarcraftField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,25 +45,10 @@ parseWorldOfWarcraftFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "worldOfWarcraft" "hero")
 
 $(genProvider "worldOfWarcraft" "hero")
 
-
 $(genParser "worldOfWarcraft" "quotes")
 
 $(genProvider "worldOfWarcraft" "quotes")
-
-
-
-
-
-
-
-
-
-
-
