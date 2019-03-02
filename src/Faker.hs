@@ -26,14 +26,10 @@ module Faker
 
 import Control.Exception (Exception)
 import Control.Monad (ap)
-import Control.Monad.Catch
 import Control.Monad.IO.Class
-import Data.Text (Text, strip)
-import qualified Data.Text as T
+import Data.Text (Text)
 import Data.Typeable
-import Data.Vector (Vector, (!))
-import qualified Data.Vector as V
-import System.Random (StdGen, mkStdGen, newStdGen, randomR, split)
+import System.Random (StdGen, mkStdGen, newStdGen, split)
 
 data FakerSettings = FakerSettings
   { fslocale :: Text -- ^ Locale settings for your fake data source.
@@ -147,7 +143,7 @@ instance Monad Fake where
 
 instance MonadIO Fake where
   liftIO :: IO a -> Fake a
-  liftIO xs = Fake (\settings -> xs >>= pure)
+  liftIO xs = Fake (\_ -> xs >>= pure)
 
 -- | Generate fake value with 'defaultFakerSettings'
 --

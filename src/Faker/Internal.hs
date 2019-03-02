@@ -2,6 +2,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DeriveFunctor #-}
 
+-- | Internal module
 module Faker.Internal where
 
 import Control.Monad.Catch
@@ -54,9 +55,9 @@ randomUnresolvedVec ::
   -> (FakerSettings -> m (Unresolved (Vector Text)))
   -> (FakerSettings -> Text -> m Text)
   -> m Text
-randomUnresolvedVec settings provider resolver = do
+randomUnresolvedVec settings provider resolverFn = do
   items <- provider settings
-  resolveUnresolved settings items resolver
+  resolveUnresolved settings items resolverFn
 
 resolveUnresolved ::
      (MonadThrow m, MonadIO m)
@@ -64,7 +65,7 @@ resolveUnresolved ::
   -> Unresolved (Vector Text)
   -> (FakerSettings -> Text -> m Text)
   -> m Text
-resolveUnresolved settings (Unresolved unres) resolver =
+resolveUnresolved settings (Unresolved unres) resolverFn =
   let unresLen = V.length unres
       stdGen = getRandomGen settings
       (index, _) = randomR (0, unresLen - 1) stdGen
@@ -75,7 +76,7 @@ resolveUnresolved settings (Unresolved unres) resolver =
                interpolateString
                  settings
                  (interpolateNumbers settings randomItem)
-          else resolver settings randomItem
+          else resolverFn settings randomItem
    in if unresLen == 0
         then throwM $ NoDataFound settings
         else resolve
@@ -92,16 +93,16 @@ operateField :: Text -> Text -> Text
 operateField origWord word = helper origWord word []
   where
     helper :: Text -> Text -> String -> Text
-    helper txt word acc =
+    helper txt word' acc =
       case uncons2 txt of
         Nothing -> origWord
-        Just (str, rem) ->
+        Just (str, rem') ->
           if str == "#{"
-            then let actualRem = dropTillBrace rem
-                  in (T.pack acc) <> word <> actualRem
+            then let actualRem = dropTillBrace rem'
+                  in (T.pack acc) <> word' <> actualRem
             else case T.uncons txt of
                    Nothing -> origWord
-                   Just (c, rem2) -> helper rem2 word (acc <> [c])
+                   Just (c, rem2) -> helper rem2 word' (acc <> [c])
 
 operateFields :: Text -> [Text] -> Text
 operateFields origWord [] = origWord
@@ -146,23 +147,23 @@ isHash c = c == '#'
 -- >> interpolateNumbers "ab-##"
 -- >> ab-32
 interpolateNumbers :: FakerSettings -> Text -> Text
-interpolateNumbers settings txt = helper settings [] txt
+interpolateNumbers fsettings txt = helper fsettings [] txt
   where
-    helper settings acc txt =
-      case T.null txt of
+    helper settings acc text =
+      case T.null text of
         True -> T.pack acc
         False ->
-          case T.uncons txt of
+          case T.uncons text of
             Nothing -> T.pack acc
-            Just (c, rem) ->
+            Just (c, rem') ->
               if isHash c
                 then let stdGen = getRandomGen settings
                          (int, gen) = randomR (0, 9) stdGen
                       in helper
                            (setRandomGen gen settings)
                            (acc ++ [digitToChar int])
-                           rem
-                else helper settings (acc ++ [c]) rem
+                           rem'
+                else helper settings (acc ++ [c]) rem'
 
 isQues :: Char -> Bool
 isQues c = c == '?'
@@ -172,7 +173,7 @@ isQues c = c == '?'
 -- >> interpolateString "32-##"
 -- >> 32-ZF
 interpolateString :: FakerSettings -> Text -> Text
-interpolateString settings txt = helper settings [] txt
+interpolateString fsettings text = helper fsettings [] text
   where
     helper settings acc txt =
       case T.null txt of
@@ -180,12 +181,15 @@ interpolateString settings txt = helper settings [] txt
         False ->
           case T.uncons txt of
             Nothing -> T.pack acc
-            Just (c, rem) ->
+            Just (c, remTxt) ->
               if isQues c
                 then let stdGen = getRandomGen settings
                          (int, gen) = randomR ('A', 'Z') stdGen
-                      in helper (setRandomGen gen settings) (acc ++ [int]) rem
-                else helper settings (acc ++ [c]) rem
+                      in helper
+                           (setRandomGen gen settings)
+                           (acc ++ [int])
+                           remTxt
+                else helper settings (acc ++ [c]) remTxt
 
 resolver ::
      (MonadThrow m, MonadIO m)
@@ -199,8 +203,8 @@ unresolvedResolver ::
   => (FakerSettings -> m (Unresolved (Vector Text)))
   -> (FakerSettings -> Text -> m Text)
   -> (FakerSettings -> m Text)
-unresolvedResolver provider resolver =
-  \settings -> randomUnresolvedVec settings provider resolver
+unresolvedResolver provider resolverFn =
+  \settings -> randomUnresolvedVec settings provider resolverFn
 
 uprStr :: String -> String
 uprStr [] = []
@@ -212,12 +216,12 @@ refinedString xs = aux xs []
     whiteListChars :: [Char] = ['-', '_', ' ']
     aux :: String -> String -> String
     aux [] acc = acc
-    aux (x:rem) acc =
+    aux (x:remTxt) acc =
       if x `elem` whiteListChars
-        then if null rem
-               then aux rem acc
-               else aux (uprStr rem) acc
-        else aux rem (acc ++ [x])
+        then if null remTxt
+               then aux remTxt acc
+               else aux (uprStr remTxt) acc
+        else aux remTxt (acc ++ [x])
 
 refinedText :: Text -> Text
 refinedText = T.pack . refinedString . T.unpack
