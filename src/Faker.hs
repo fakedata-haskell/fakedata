@@ -34,14 +34,21 @@ import System.Random (StdGen, mkStdGen, newStdGen, split)
 data FakerSettings = FakerSettings
   { fslocale :: Text -- ^ Locale settings for your fake data source.
   , fsrandomGen :: StdGen -- ^ Standard random generator
-  , fsDeterministic :: Bool -- ^ Controls whether you want deterministic out. This overrides fsrandomGen.
+  , fsDeterministic :: Bool -- ^ Controls whether you want
+                            -- deterministic out. This overrides
+                            -- fsrandomGen.
   } deriving (Show)
 
 data FakerException
-  = InvalidLocale String -- ^ This is thrown when it is not able to find the fake data source for your localization.
-  | InvalidField String -- ^ The field it is trying to resolve
-                 Text -- ^ The invalid field you passed on
-  | NoDataFound FakerSettings -- ^ This is thrown when you have no data. This may likely happen for locales other than `en`.
+  = InvalidLocale String -- ^ This is thrown when it is not able to
+                         -- find the fake data source for your
+                         -- localization.
+  | InvalidField String Text -- ^ The 'String' represents the field is
+                             -- trying to resolve and the 'Text' field
+                             -- is something you passed on.
+  | NoDataFound FakerSettings -- ^ This is thrown when you have no
+                              -- data. This may likely happen for
+                              -- locales other than `en`.
   deriving (Typeable, Show)
 
 instance Exception FakerException
