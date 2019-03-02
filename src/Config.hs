@@ -13,6 +13,7 @@ module Config
 import Control.Monad (filterM)
 import Control.Monad.Catch
 import Control.Monad.IO.Class
+import Data.Monoid ((<>))
 import Data.Text (Text, pack, unpack)
 import Data.Yaml
 import Faker

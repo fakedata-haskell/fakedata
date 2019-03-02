@@ -9,12 +9,14 @@ copyright:           "Sibi Prabakaran"
 extra-source-files:
 - README.md
 - ChangeLog.md
+
+data-files:
 - faker/lib/locales/*yml
 - faker/lib/locales/en/*yml
 
 # Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
+synopsis:            Library for producing fake data
+category:            Random, Fake, FakeData
 
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is

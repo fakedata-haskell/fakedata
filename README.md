@@ -4,6 +4,7 @@
 Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.org/nightly/package/fakedata)
 [![Stackage
 LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
+[![Build Status](https://dev.azure.com/psibi2000/fakedata/_apis/build/status/psibi.fakedata?branchName=master)](https://dev.azure.com/psibi2000/fakedata/_build/latest?definitionId=7&branchName=master)
 
 -   [Fakedata](#fakedata)
     -   [Tutorial](#tutorial)
@@ -20,12 +21,11 @@ LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/pa
 fakedata
 ========
 
-
-
 This library is a port of Ruby's
-[faker](https://github.com/stympy/faker). Note that it directly uses the
-source data from that library, so the quality of fake data is quite
-high!
+[faker](https://github.com/stympy/faker). It's a library for producing
+fake data such as names, addressess and phone numbers. Note that it
+directly uses the source data from that library, so the quality of
+fake data is quite high!
 
 Tutorial
 --------

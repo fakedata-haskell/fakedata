@@ -8,6 +8,7 @@ module Faker.Internal where
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Char (toUpper)
+import Data.Monoid ((<>))
 import qualified Data.Text as T
 import Data.Text (Text, strip)
 import qualified Data.Vector as V
