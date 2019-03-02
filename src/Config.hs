@@ -18,6 +18,7 @@ import Data.Text (Text, pack, unpack)
 import Data.Yaml
 import Faker
 import Language.Haskell.TH (Name)
+import Paths_fakedata (getDataFileName)
 import System.Directory (doesFileExist, listDirectory)
 import System.FilePath (takeExtension, takeFileName)
 import System.FilePath
@@ -488,10 +489,11 @@ guessSourceFile sdata sysloc =
 
 getSourceFile :: (MonadThrow m, MonadIO m) => FilePath -> m FilePath
 getSourceFile fname = do
-  exist <- liftIO $ doesFileExist fname
+  fname' <- liftIO $ getDataFileName fname
+  exist <- liftIO $ doesFileExist fname'
   if exist
-    then pure fname
-    else throwM $ InvalidLocale fname
+    then pure fname'
+    else throwM $ InvalidLocale fname'
 
 fetchData ::
      (MonadThrow m, MonadIO m)
