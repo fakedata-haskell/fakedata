@@ -4,16 +4,22 @@
 {-# LANGUAGE InstanceSigs #-}
 
 module Faker
-  ( Fake(..)
+  (
+    -- * Types
+    Fake(..)
   , FakerSettings
+  , FakerException(..)
   , defaultFakerSettings
+    -- * Setters
   , setLocale
   , setRandomGen
-  , getRandomGen
   , setDeterministic
   , setNonDeterministic
-  , FakerException(..)
+    -- * Getters
+  , getRandomGen
   , getLocale
+  , getDeterministic
+    -- * Generators
   , generate
   , generateWithSettings
   ) where
@@ -31,7 +37,7 @@ import System.Random (StdGen, mkStdGen, newStdGen, randomR, split)
 
 data FakerSettings = FakerSettings
   { fslocale :: Text -- ^ Locale settings for your fake data source.
-  , fsrandomGen :: StdGen -- ^ Standord random generator
+  , fsrandomGen :: StdGen -- ^ Standard random generator
   , fsDeterministic :: Bool -- ^ Controls whether you want deterministic out. This overrides fsrandomGen.
   } deriving (Show)
 
@@ -44,32 +50,69 @@ data FakerException
 
 instance Exception FakerException
 
+-- | Default faker settings with locale of \"en\" and Deterministic output.
 defaultFakerSettings :: FakerSettings
 defaultFakerSettings =
   FakerSettings
     {fslocale = "en", fsrandomGen = (mkStdGen 10000), fsDeterministic = True}
 
+-- | Sets the locale. Note that for any other locale apart from
+-- \"en\", you need to make sure that the data is acutally present. In
+-- case no data is found, 'NoDataFound' exception will be thrown. You
+-- can check the presence of the data in a particular locale by
+-- inspecting the `yml` file of the corresponding locale. The file
+-- would be bundled along with the particular Hackage release.
 setLocale :: Text -> FakerSettings -> FakerSettings
 setLocale localeTxt fs = fs {fslocale = localeTxt}
 
+-- | Sets the random generator
 setRandomGen :: StdGen -> FakerSettings -> FakerSettings
 setRandomGen gen fs = fs {fsrandomGen = gen}
 
+-- | Get the random generator
 getRandomGen :: FakerSettings -> StdGen
 getRandomGen settings = fsrandomGen settings
 
+-- | Get the Locale settings for your fake data source
 getLocale :: FakerSettings -> Text
 getLocale FakerSettings {..} = fslocale
+
+-- | Set the output of fakedata to be deterministic. With this you
+-- will get the same ouput for the functions every time.
+--
+-- @
+-- λ> import qualified Faker.Name as FN
+-- λ> :t FN.name
+-- FN.name :: Fake Text
+-- λ> generateWithSettings (setDeterministic defaultFakerSettings) FN.name
+-- "Antony Langosh"
+-- λ> generateWithSettings (setDeterministic defaultFakerSettings) FN.name
+-- "Antony Langosh"
+-- @
 
 setDeterministic :: FakerSettings -> FakerSettings
 setDeterministic fs = fs {fsDeterministic = True}
 
+-- | Set the output of fakedata to be non deterministic. With this you
+-- will get different ouput for the fake functions.
+--
+-- @
+-- λ> generateWithSettings (setNonDeterministic defaultFakerSettings) FN.name
+-- "Macy Shanahan"
+-- λ> generateWithSettings (setNonDeterministic defaultFakerSettings) FN.name
+-- "Rudy Dickinson II"
+-- @
+
 setNonDeterministic :: FakerSettings -> FakerSettings
 setNonDeterministic fs = fs {fsDeterministic = False}
 
+-- | Check if the fake data output is deterministic or not. A True
+-- value indicates that it is deterministic.
 getDeterministic :: FakerSettings -> Bool
 getDeterministic FakerSettings {..} = fsDeterministic
 
+-- | Fake data type. This is the type you will be using to produce
+-- fake values.
 newtype Fake a = Fake
   { unFake :: FakerSettings -> IO a
   }
@@ -106,9 +149,22 @@ instance MonadIO Fake where
   liftIO :: IO a -> Fake a
   liftIO xs = Fake (\settings -> xs >>= pure)
 
+-- | Generate fake value with 'defaultFakerSettings'
+--
+-- @
+-- λ> import qualified Faker.Name as FN
+-- λ> generate FN.name
+-- "Antony Langosh"
+-- @
 generate :: Fake a -> IO a
 generate (Fake f) = f defaultFakerSettings
 
+-- | Generate fake value with supplied 'FakerSettings'
+--
+-- @
+-- λ> generateWithSettings defaultFakerSettings FN.name
+-- "Antony Langosh"
+-- @
 generateWithSettings :: FakerSettings -> Fake a -> IO a
 generateWithSettings settings (Fake f) = do
   let deterministic = getDeterministic settings

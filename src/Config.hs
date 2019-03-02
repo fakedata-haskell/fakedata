@@ -1,7 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskellQuotes #-}
 
-module Config where
+-- | Internal module used for configuration purposes. You don't likely
+-- have to use it.
+module Config
+  ( SourceData(..)
+  , fetchData
+  , mapSource
+  ) where
 
 import Control.Monad (filterM)
 import Control.Monad.Catch
