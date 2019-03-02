@@ -96,7 +96,7 @@ And on executing them:
 You would have noticed in the above output that the name and address are
 the same as generated before in the GHCi REPL. That's because, by
 default all the generated data are deterministic. If you want a
-different set of ouput each time, you would have to modify the random
+different set of output each time, you would have to modify the random
 generator output:
 
     main :: IO ()
