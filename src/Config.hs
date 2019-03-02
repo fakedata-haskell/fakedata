@@ -7,6 +7,7 @@ module Config
   ( SourceData(..)
   , fetchData
   , mapSource
+  , populateLocales
   ) where
 
 import Control.Monad (filterM)
