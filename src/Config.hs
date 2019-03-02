@@ -21,9 +21,6 @@ import System.Directory (doesFileExist, listDirectory)
 import System.FilePath (takeExtension, takeFileName)
 import System.FilePath
 
-defaultEnDirectory :: FilePath
-defaultEnDirectory = "faker/lib/locales/en"
-
 localesDirectory :: FilePath
 localesDirectory = "faker/lib/locales"
 
@@ -336,7 +333,6 @@ sourceFile WorldOfWarcraft = "world_of_warcraft"
 sourceFile Yoda = "yoda"
 sourceFile Zelda = "zelda"
 
--- todo
 mapSource :: Text -> Name
 mapSource "address" = 'Address
 mapSource "name" = 'Name
@@ -481,6 +477,7 @@ mapSource "worldOfWarcraft" = 'WorldOfWarcraft
 mapSource "yoda" = 'Yoda
 mapSource "zelda" = 'Zelda
 mapSource "measurement" = 'Measurement
+mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
