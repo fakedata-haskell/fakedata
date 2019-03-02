@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseRelationship settings (Object obj) = do
   faker <- en .: "faker"
   relationship <- faker .: "relationship"
   pure relationship
-parseRelationship settings val = fail $ "expected Object, but got " <> (show val)
+parseRelationship settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseRelationshipField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,45 +45,26 @@ parseRelationshipFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "relationship" "in_law")
 
 $(genProvider "relationship" "in_law")
-
 
 $(genParser "relationship" "spouse")
 
 $(genProvider "relationship" "spouse")
 
-
 $(genParser "relationship" "parent")
 
 $(genProvider "relationship" "parent")
-
 
 $(genParser "relationship" "sibling")
 
 $(genProvider "relationship" "sibling")
 
+$(genParsers "relationship" ["familial", "direct"])
 
+$(genProviders "relationship" ["familial", "direct"])
 
+$(genParsers "relationship" ["familial", "extended"])
 
-
-
-
-
-$(genParsers "relationship" ["familial","direct"])
-
-$(genProviders "relationship" ["familial","direct"])
-
-
-$(genParsers "relationship" ["familial","extended"])
-
-$(genProviders "relationship" ["familial","extended"])
-
-
-
-
-
+$(genProviders "relationship" ["familial", "extended"])

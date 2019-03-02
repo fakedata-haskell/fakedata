@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseRickAndMorty settings (Object obj) = do
   faker <- en .: "faker"
   rickAndMorty <- faker .: "rick_and_morty"
   pure rickAndMorty
-parseRickAndMorty settings val = fail $ "expected Object, but got " <> (show val)
+parseRickAndMorty settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseRickAndMortyField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,30 +45,14 @@ parseRickAndMortyFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "rickAndMorty" "characters")
 
 $(genProvider "rickAndMorty" "characters")
-
 
 $(genParser "rickAndMorty" "locations")
 
 $(genProvider "rickAndMorty" "locations")
 
-
 $(genParser "rickAndMorty" "quotes")
 
 $(genProvider "rickAndMorty" "quotes")
-
-
-
-
-
-
-
-
-
-
-

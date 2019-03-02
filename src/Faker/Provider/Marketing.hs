@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,20 +44,6 @@ parseMarketingFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "marketing" "buzzwords")
 
 $(genProvider "marketing" "buzzwords")
-
-
-
-
-
-
-
-
-
-
-

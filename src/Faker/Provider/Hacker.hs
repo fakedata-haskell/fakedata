@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,40 +44,22 @@ parseHackerFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "hacker" "abbreviation")
 
 $(genProvider "hacker" "abbreviation")
-
 
 $(genParser "hacker" "adjective")
 
 $(genProvider "hacker" "adjective")
 
-
 $(genParser "hacker" "noun")
 
 $(genProvider "hacker" "noun")
-
 
 $(genParser "hacker" "verb")
 
 $(genProvider "hacker" "verb")
 
-
 $(genParser "hacker" "ingverb")
 
 $(genProvider "hacker" "ingverb")
-
-
-
-
-
-
-
-
-
-
-

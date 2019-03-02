@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,40 +44,22 @@ parseMilitaryFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "military" "army_rank")
 
 $(genProvider "military" "army_rank")
-
 
 $(genParser "military" "marines_rank")
 
 $(genProvider "military" "marines_rank")
 
-
 $(genParser "military" "navy_rank")
 
 $(genProvider "military" "navy_rank")
-
 
 $(genParser "military" "air_force_rank")
 
 $(genProvider "military" "air_force_rank")
 
-
 $(genParser "military" "dod_paygrade")
 
 $(genProvider "military" "dod_paygrade")
-
-
-
-
-
-
-
-
-
-
-

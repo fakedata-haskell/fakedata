@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parsePrincessBride settings (Object obj) = do
   faker <- en .: "faker"
   princessBride <- faker .: "princess_bride"
   pure princessBride
-parsePrincessBride settings val = fail $ "expected Object, but got " <> (show val)
+parsePrincessBride settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parsePrincessBrideField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,25 +45,10 @@ parsePrincessBrideFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "princessBride" "characters")
 
 $(genProvider "princessBride" "characters")
 
-
 $(genParser "princessBride" "quotes")
 
 $(genProvider "princessBride" "quotes")
-
-
-
-
-
-
-
-
-
-
-

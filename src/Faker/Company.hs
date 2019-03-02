@@ -4,6 +4,7 @@
 
 module Faker.Company where
 
+import Data.Monoid ((<>))
 import Data.Text
 import qualified Data.Vector as V
 import Faker

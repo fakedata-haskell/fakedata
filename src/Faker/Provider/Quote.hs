@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,45 +44,26 @@ parseQuoteFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "quote" "famous_last_words")
 
 $(genProvider "quote" "famous_last_words")
-
 
 $(genParser "quote" "matz")
 
 $(genProvider "quote" "matz")
 
-
 $(genParser "quote" "most_interesting_man_in_the_world")
 
 $(genProvider "quote" "most_interesting_man_in_the_world")
-
 
 $(genParser "quote" "robin")
 
 $(genProvider "quote" "robin")
 
-
 $(genParser "quote" "singular_siegler")
 
 $(genProvider "quote" "singular_siegler")
 
-
 $(genParser "quote" "yoda")
 
 $(genProvider "quote" "yoda")
-
-
-
-
-
-
-
-
-
-
-

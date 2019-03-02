@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,45 +44,26 @@ parseSourceFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
+$(genParsers "source" ["hello_world", "ruby"])
 
+$(genProviders "source" ["hello_world", "ruby"])
 
+$(genParsers "source" ["hello_world", "javascript"])
 
+$(genProviders "source" ["hello_world", "javascript"])
 
+$(genParsers "source" ["print", "ruby"])
 
+$(genProviders "source" ["print", "ruby"])
 
+$(genParsers "source" ["print", "javascript"])
 
+$(genProviders "source" ["print", "javascript"])
 
+$(genParsers "source" ["print_1_to_10", "ruby"])
 
-$(genParsers "source" ["hello_world","ruby"])
+$(genProviders "source" ["print_1_to_10", "ruby"])
 
-$(genProviders "source" ["hello_world","ruby"])
+$(genParsers "source" ["print_1_to_10", "javascript"])
 
-
-$(genParsers "source" ["hello_world","javascript"])
-
-$(genProviders "source" ["hello_world","javascript"])
-
-
-$(genParsers "source" ["print","ruby"])
-
-$(genProviders "source" ["print","ruby"])
-
-
-$(genParsers "source" ["print","javascript"])
-
-$(genProviders "source" ["print","javascript"])
-
-
-$(genParsers "source" ["print_1_to_10","ruby"])
-
-$(genProviders "source" ["print_1_to_10","ruby"])
-
-
-$(genParsers "source" ["print_1_to_10","javascript"])
-
-$(genProviders "source" ["print_1_to_10","javascript"])
-
-
-
-
-
+$(genProviders "source" ["print_1_to_10", "javascript"])

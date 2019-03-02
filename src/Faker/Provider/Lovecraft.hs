@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,40 +44,22 @@ parseLovecraftFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "lovecraft" "fhtagn")
 
 $(genProvider "lovecraft" "fhtagn")
-
 
 $(genParser "lovecraft" "deity")
 
 $(genProvider "lovecraft" "deity")
 
-
 $(genParser "lovecraft" "location")
 
 $(genProvider "lovecraft" "location")
-
 
 $(genParser "lovecraft" "tome")
 
 $(genProvider "lovecraft" "tome")
 
-
 $(genParser "lovecraft" "words")
 
 $(genProvider "lovecraft" "words")
-
-
-
-
-
-
-
-
-
-
-

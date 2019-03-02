@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,45 +44,26 @@ parseOnePieceFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "onePiece" "characters")
 
 $(genProvider "onePiece" "characters")
-
 
 $(genParser "onePiece" "seas")
 
 $(genProvider "onePiece" "seas")
 
-
 $(genParser "onePiece" "islands")
 
 $(genProvider "onePiece" "islands")
-
 
 $(genParser "onePiece" "locations")
 
 $(genProvider "onePiece" "locations")
 
-
 $(genParser "onePiece" "quotes")
 
 $(genProvider "onePiece" "quotes")
 
-
 $(genParser "onePiece" "akumas_no_mi")
 
 $(genProvider "onePiece" "akumas_no_mi")
-
-
-
-
-
-
-
-
-
-
-

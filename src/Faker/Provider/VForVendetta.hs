@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseVForVendetta settings (Object obj) = do
   faker <- en .: "faker"
   vForVendetta <- faker .: "v_for_vendetta"
   pure vForVendetta
-parseVForVendetta settings val = fail $ "expected Object, but got " <> (show val)
+parseVForVendetta settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseVForVendettaField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,30 +45,14 @@ parseVForVendettaFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "vForVendetta" "characters")
 
 $(genProvider "vForVendetta" "characters")
-
 
 $(genParser "vForVendetta" "speeches")
 
 $(genProvider "vForVendetta" "speeches")
 
-
 $(genParser "vForVendetta" "quotes")
 
 $(genProvider "vForVendetta" "quotes")
-
-
-
-
-
-
-
-
-
-
-

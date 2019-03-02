@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseNatoPhoneticAlphabet settings (Object obj) = do
   faker <- en .: "faker"
   natoPhoneticAlphabet <- faker .: "nato_phonetic_alphabet"
   pure natoPhoneticAlphabet
-parseNatoPhoneticAlphabet settings val = fail $ "expected Object, but got " <> (show val)
+parseNatoPhoneticAlphabet settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseNatoPhoneticAlphabetField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,20 +45,6 @@ parseNatoPhoneticAlphabetFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "natoPhoneticAlphabet" "code_word")
 
 $(genProvider "natoPhoneticAlphabet" "code_word")
-
-
-
-
-
-
-
-
-
-
-

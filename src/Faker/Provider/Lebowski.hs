@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,30 +44,14 @@ parseLebowskiFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "lebowski" "actors")
 
 $(genProvider "lebowski" "actors")
-
 
 $(genParser "lebowski" "characters")
 
 $(genProvider "lebowski" "characters")
 
-
 $(genParser "lebowski" "quotes")
 
 $(genProvider "lebowski" "quotes")
-
-
-
-
-
-
-
-
-
-
-

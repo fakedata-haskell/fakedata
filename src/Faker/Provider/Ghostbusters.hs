@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseGhostbusters settings (Object obj) = do
   faker <- en .: "faker"
   ghostbusters <- faker .: "ghostbusters"
   pure ghostbusters
-parseGhostbusters settings val = fail $ "expected Object, but got " <> (show val)
+parseGhostbusters settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseGhostbustersField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,30 +45,14 @@ parseGhostbustersFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "ghostbusters" "actors")
 
 $(genProvider "ghostbusters" "actors")
-
 
 $(genParser "ghostbusters" "characters")
 
 $(genProvider "ghostbusters" "characters")
 
-
 $(genParser "ghostbusters" "quotes")
 
 $(genProvider "ghostbusters" "quotes")
-
-
-
-
-
-
-
-
-
-
-

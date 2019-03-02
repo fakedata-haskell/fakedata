@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseHeroesOfTheStorm settings (Object obj) = do
   faker <- en .: "faker"
   heroesOfTheStorm <- faker .: "heroes_of_the_storm"
   pure heroesOfTheStorm
-parseHeroesOfTheStorm settings val = fail $ "expected Object, but got " <> (show val)
+parseHeroesOfTheStorm settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseHeroesOfTheStormField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,35 +45,18 @@ parseHeroesOfTheStormFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "heroesOfTheStorm" "battlegrounds")
 
 $(genProvider "heroesOfTheStorm" "battlegrounds")
-
 
 $(genParser "heroesOfTheStorm" "classes")
 
 $(genProvider "heroesOfTheStorm" "classes")
 
-
 $(genParser "heroesOfTheStorm" "heroes")
 
 $(genProvider "heroesOfTheStorm" "heroes")
 
-
 $(genParser "heroesOfTheStorm" "quotes")
 
 $(genProvider "heroesOfTheStorm" "quotes")
-
-
-
-
-
-
-
-
-
-
-

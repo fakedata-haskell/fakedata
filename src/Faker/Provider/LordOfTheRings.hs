@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseLordOfTheRings settings (Object obj) = do
   faker <- en .: "faker"
   lordOfTheRings <- faker .: "lord_of_the_rings"
   pure lordOfTheRings
-parseLordOfTheRings settings val = fail $ "expected Object, but got " <> (show val)
+parseLordOfTheRings settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseLordOfTheRingsField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,30 +45,14 @@ parseLordOfTheRingsFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "lordOfTheRings" "characters")
 
 $(genProvider "lordOfTheRings" "characters")
-
 
 $(genParser "lordOfTheRings" "locations")
 
 $(genProvider "lordOfTheRings" "locations")
 
-
 $(genParser "lordOfTheRings" "quotes")
 
 $(genProvider "lordOfTheRings" "quotes")
-
-
-
-
-
-
-
-
-
-
-

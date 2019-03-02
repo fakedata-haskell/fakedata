@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseIndustrySegments settings (Object obj) = do
   faker <- en .: "faker"
   industrySegments <- faker .: "industry_segments"
   pure industrySegments
-parseIndustrySegments settings val = fail $ "expected Object, but got " <> (show val)
+parseIndustrySegments settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseIndustrySegmentsField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,35 +45,18 @@ parseIndustrySegmentsFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "industrySegments" "industry")
 
 $(genProvider "industrySegments" "industry")
-
 
 $(genParser "industrySegments" "super_sector")
 
 $(genProvider "industrySegments" "super_sector")
 
-
 $(genParser "industrySegments" "sector")
 
 $(genProvider "industrySegments" "sector")
 
-
 $(genParser "industrySegments" "sub_sector")
 
 $(genProvider "industrySegments" "sub_sector")
-
-
-
-
-
-
-
-
-
-
-

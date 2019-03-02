@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseUmphreysMcgee settings (Object obj) = do
   faker <- en .: "faker"
   umphreysMcgee <- faker .: "umphreys_mcgee"
   pure umphreysMcgee
-parseUmphreysMcgee settings val = fail $ "expected Object, but got " <> (show val)
+parseUmphreysMcgee settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseUmphreysMcgeeField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,20 +45,6 @@ parseUmphreysMcgeeFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "umphreysMcgee" "song")
 
 $(genProvider "umphreysMcgee" "song")
-
-
-
-
-
-
-
-
-
-
-

@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseGameOfThrones settings (Object obj) = do
   faker <- en .: "faker"
   gameOfThrones <- faker .: "game_of_thrones"
   pure gameOfThrones
-parseGameOfThrones settings val = fail $ "expected Object, but got " <> (show val)
+parseGameOfThrones settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseGameOfThronesField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,40 +45,22 @@ parseGameOfThronesFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "gameOfThrones" "characters")
 
 $(genProvider "gameOfThrones" "characters")
-
 
 $(genParser "gameOfThrones" "houses")
 
 $(genProvider "gameOfThrones" "houses")
 
-
 $(genParser "gameOfThrones" "cities")
 
 $(genProvider "gameOfThrones" "cities")
-
 
 $(genParser "gameOfThrones" "quotes")
 
 $(genProvider "gameOfThrones" "quotes")
 
-
 $(genParser "gameOfThrones" "dragons")
 
 $(genProvider "gameOfThrones" "dragons")
-
-
-
-
-
-
-
-
-
-
-

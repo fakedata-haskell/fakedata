@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,40 +44,22 @@ parseVerbsFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "verbs" "base")
 
 $(genProvider "verbs" "base")
-
 
 $(genParser "verbs" "past")
 
 $(genProvider "verbs" "past")
 
-
 $(genParser "verbs" "past_participle")
 
 $(genProvider "verbs" "past_participle")
-
 
 $(genParser "verbs" "simple_present")
 
 $(genProvider "verbs" "simple_present")
 
-
 $(genParser "verbs" "ing_form")
 
 $(genProvider "verbs" "ing_form")
-
-
-
-
-
-
-
-
-
-
-

@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseTheThickOfIt settings (Object obj) = do
   faker <- en .: "faker"
   theThickOfIt <- faker .: "the_thick_of_it"
   pure theThickOfIt
-parseTheThickOfIt settings val = fail $ "expected Object, but got " <> (show val)
+parseTheThickOfIt settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseTheThickOfItField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,30 +45,14 @@ parseTheThickOfItFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "theThickOfIt" "characters")
 
 $(genProvider "theThickOfIt" "characters")
-
 
 $(genParser "theThickOfIt" "positions")
 
 $(genProvider "theThickOfIt" "positions")
 
-
 $(genParser "theThickOfIt" "departments")
 
 $(genProvider "theThickOfIt" "departments")
-
-
-
-
-
-
-
-
-
-
-

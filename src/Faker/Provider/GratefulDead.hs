@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseGratefulDead settings (Object obj) = do
   faker <- en .: "faker"
   gratefulDead <- faker .: "grateteful_dead"
   pure gratefulDead
-parseGratefulDead settings val = fail $ "expected Object, but got " <> (show val)
+parseGratefulDead settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseGratefulDeadField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,25 +45,10 @@ parseGratefulDeadFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "gratefulDead" "players")
 
 $(genProvider "gratefulDead" "players")
 
-
 $(genParser "gratefulDead" "songs")
 
 $(genProvider "gratefulDead" "songs")
-
-
-
-
-
-
-
-
-
-
-

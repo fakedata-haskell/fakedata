@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,35 +44,18 @@ parseShakespeareFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "shakespeare" "hamlet")
 
 $(genProvider "shakespeare" "hamlet")
-
 
 $(genParser "shakespeare" "as_you_like_it")
 
 $(genProvider "shakespeare" "as_you_like_it")
 
-
 $(genParser "shakespeare" "king_richard_iii")
 
 $(genProvider "shakespeare" "king_richard_iii")
 
-
 $(genParser "shakespeare" "romeo_and_juliet")
 
 $(genProvider "shakespeare" "romeo_and_juliet")
-
-
-
-
-
-
-
-
-
-
-

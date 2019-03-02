@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseSiliconValley settings (Object obj) = do
   faker <- en .: "faker"
   siliconValley <- faker .: "silicon_valley"
   pure siliconValley
-parseSiliconValley settings val = fail $ "expected Object, but got " <> (show val)
+parseSiliconValley settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseSiliconValleyField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,55 +45,34 @@ parseSiliconValleyFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "siliconValley" "characters")
 
 $(genProvider "siliconValley" "characters")
-
 
 $(genParser "siliconValley" "companies")
 
 $(genProvider "siliconValley" "companies")
 
-
 $(genParser "siliconValley" "quotes")
 
 $(genProvider "siliconValley" "quotes")
-
 
 $(genParser "siliconValley" "apps")
 
 $(genProvider "siliconValley" "apps")
 
-
 $(genParser "siliconValley" "inventions")
 
 $(genProvider "siliconValley" "inventions")
-
 
 $(genParser "siliconValley" "mottos")
 
 $(genProvider "siliconValley" "mottos")
 
-
 $(genParser "siliconValley" "urls")
 
 $(genProvider "siliconValley" "urls")
 
-
 $(genParser "siliconValley" "email")
 
 $(genProvider "siliconValley" "email")
-
-
-
-
-
-
-
-
-
-
-

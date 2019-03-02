@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,35 +44,18 @@ parseMusicFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "music" "instruments")
 
 $(genProvider "music" "instruments")
-
 
 $(genParser "music" "bands")
 
 $(genProvider "music" "bands")
 
-
 $(genParser "music" "albums")
 
 $(genProvider "music" "albums")
 
-
 $(genParser "music" "genres")
 
 $(genProvider "music" "genres")
-
-
-
-
-
-
-
-
-
-
-

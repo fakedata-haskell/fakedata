@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,55 +44,34 @@ parseMeasurementFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "measurement" "height")
 
 $(genProvider "measurement" "height")
-
 
 $(genParser "measurement" "length")
 
 $(genProvider "measurement" "length")
 
-
 $(genParser "measurement" "volume")
 
 $(genProvider "measurement" "volume")
-
 
 $(genParser "measurement" "weight")
 
 $(genProvider "measurement" "weight")
 
-
 $(genParser "measurement" "metric_height")
 
 $(genProvider "measurement" "metric_height")
-
 
 $(genParser "measurement" "metric_length")
 
 $(genProvider "measurement" "metric_length")
 
-
 $(genParser "measurement" "metric_volume")
 
 $(genProvider "measurement" "metric_volume")
 
-
 $(genParser "measurement" "metric_weight")
 
 $(genProvider "measurement" "metric_weight")
-
-
-
-
-
-
-
-
-
-
-

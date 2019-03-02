@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseHowIMetYourMother settings (Object obj) = do
   faker <- en .: "faker"
   howIMetYourMother <- faker .: "how_i_met_your_mother"
   pure howIMetYourMother
-parseHowIMetYourMother settings val = fail $ "expected Object, but got " <> (show val)
+parseHowIMetYourMother settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseHowIMetYourMotherField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,35 +45,18 @@ parseHowIMetYourMotherFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "howIMetYourMother" "character")
 
 $(genProvider "howIMetYourMother" "character")
-
 
 $(genParser "howIMetYourMother" "catch_phrase")
 
 $(genProvider "howIMetYourMother" "catch_phrase")
 
-
 $(genParser "howIMetYourMother" "high_five")
 
 $(genProvider "howIMetYourMother" "high_five")
 
-
 $(genParser "howIMetYourMother" "quote")
 
 $(genProvider "howIMetYourMother" "quote")
-
-
-
-
-
-
-
-
-
-
-

@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,30 +44,14 @@ parseScienceFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "science" "element")
 
 $(genProvider "science" "element")
-
 
 $(genParser "science" "element_symbol")
 
 $(genProvider "science" "element_symbol")
 
-
 $(genParser "science" "scientist")
 
 $(genProvider "science" "scientist")
-
-
-
-
-
-
-
-
-
-
-

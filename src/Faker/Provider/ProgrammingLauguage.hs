@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseProgrammingLauguage settings (Object obj) = do
   faker <- en .: "faker"
   programmingLauguage <- faker .: "programming_language"
   pure programmingLauguage
-parseProgrammingLauguage settings val = fail $ "expected Object, but got " <> (show val)
+parseProgrammingLauguage settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseProgrammingLauguageField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,25 +45,10 @@ parseProgrammingLauguageFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "programmingLauguage" "name")
 
 $(genProvider "programmingLauguage" "name")
 
-
 $(genParser "programmingLauguage" "creator")
 
 $(genProvider "programmingLauguage" "creator")
-
-
-
-
-
-
-
-
-
-
-

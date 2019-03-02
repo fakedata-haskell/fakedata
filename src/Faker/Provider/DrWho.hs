@@ -6,6 +6,7 @@ module Faker.Provider.DrWho where
 import Config
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml

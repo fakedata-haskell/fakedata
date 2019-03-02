@@ -9,6 +9,7 @@ import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Char (toLower, toUpper)
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text, unpack)
 import Data.Vector (Vector)
 import Data.Yaml

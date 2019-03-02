@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,45 +44,26 @@ parseKpopFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "kpop" "i_groups")
 
 $(genProvider "kpop" "i_groups")
-
 
 $(genParser "kpop" "ii_groups")
 
 $(genProvider "kpop" "ii_groups")
 
-
 $(genParser "kpop" "iii_groups")
 
 $(genProvider "kpop" "iii_groups")
-
 
 $(genParser "kpop" "girl_groups")
 
 $(genProvider "kpop" "girl_groups")
 
-
 $(genParser "kpop" "boy_bands")
 
 $(genProvider "kpop" "boy_bands")
 
-
 $(genParser "kpop" "solo")
 
 $(genProvider "kpop" "solo")
-
-
-
-
-
-
-
-
-
-
-

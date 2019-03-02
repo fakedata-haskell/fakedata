@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -21,7 +22,8 @@ parseSwordArtOnline settings (Object obj) = do
   faker <- en .: "faker"
   swordArtOnline <- faker .: "sword_art_online"
   pure swordArtOnline
-parseSwordArtOnline settings val = fail $ "expected Object, but got " <> (show val)
+parseSwordArtOnline settings val =
+  fail $ "expected Object, but got " <> (show val)
 
 parseSwordArtOnlineField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
@@ -43,35 +45,18 @@ parseSwordArtOnlineFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "swordArtOnline" "real_name")
 
 $(genProvider "swordArtOnline" "real_name")
-
 
 $(genParser "swordArtOnline" "game_name")
 
 $(genProvider "swordArtOnline" "game_name")
 
-
 $(genParser "swordArtOnline" "location")
 
 $(genProvider "swordArtOnline" "location")
 
-
 $(genParser "swordArtOnline" "item")
 
 $(genProvider "swordArtOnline" "item")
-
-
-
-
-
-
-
-
-
-
-

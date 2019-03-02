@@ -7,6 +7,7 @@ import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Map.Strict (Map)
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
@@ -43,60 +44,38 @@ parseInternetFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "internet" "free_email")
 
 $(genProvider "internet" "free_email")
-
 
 $(genParser "internet" "domain_suffix")
 
 $(genProvider "internet" "domain_suffix")
 
+$(genParsers "internet" ["user_agent", "aol"])
 
+$(genProviders "internet" ["user_agent", "aol"])
 
+$(genParsers "internet" ["user_agent", "chrome"])
 
+$(genProviders "internet" ["user_agent", "chrome"])
 
+$(genParsers "internet" ["user_agent", "firefox"])
 
+$(genProviders "internet" ["user_agent", "firefox"])
 
+$(genParsers "internet" ["user_agent", "internet_explorer"])
 
-$(genParsers "internet" ["user_agent","aol"])
+$(genProviders "internet" ["user_agent", "internet_explorer"])
 
-$(genProviders "internet" ["user_agent","aol"])
+$(genParsers "internet" ["user_agent", "netscape"])
 
+$(genProviders "internet" ["user_agent", "netscape"])
 
-$(genParsers "internet" ["user_agent","chrome"])
+$(genParsers "internet" ["user_agent", "opera"])
 
-$(genProviders "internet" ["user_agent","chrome"])
+$(genProviders "internet" ["user_agent", "opera"])
 
+$(genParsers "internet" ["user_agent", "safari"])
 
-$(genParsers "internet" ["user_agent","firefox"])
-
-$(genProviders "internet" ["user_agent","firefox"])
-
-
-$(genParsers "internet" ["user_agent","internet_explorer"])
-
-$(genProviders "internet" ["user_agent","internet_explorer"])
-
-
-$(genParsers "internet" ["user_agent","netscape"])
-
-$(genProviders "internet" ["user_agent","netscape"])
-
-
-$(genParsers "internet" ["user_agent","opera"])
-
-$(genProviders "internet" ["user_agent","opera"])
-
-
-$(genParsers "internet" ["user_agent","safari"])
-
-$(genProviders "internet" ["user_agent","safari"])
-
-
-
-
-
+$(genProviders "internet" ["user_agent", "safari"])
