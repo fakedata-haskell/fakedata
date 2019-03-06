@@ -1,14 +1,15 @@
 module Faker.DateTime where
 
-import Control.Monad.IO.Class (liftIO)
-
 -- | @since 0.2.0
+import Control.Monad.IO.Class (liftIO)
 import Data.Text
 import Data.Time
 import Faker
 import Faker.Combinators
 
--- | Fake 'UTCTime' between 17-11-1858 and the current time
+-- | Fake 'UTCTime' between 17-11-1858 and the current time. Note that
+-- this function is not deterministic as the current time is not
+-- constant. If you want deterministic output, use 'utcBetween'.
 utc :: Fake UTCTime
 utc = do
   now <- liftIO getCurrentTime
@@ -19,7 +20,9 @@ utc = do
        })
     now
 
--- | Fake 'Day' between 17-11-1858 and the current day
+-- | Fake 'Day' between 17-11-1858 and the current day. Note that
+-- this function is not deterministic as the current time is not
+-- constant. If you want deterministic output, use 'dayBetween'.
 day :: Fake Day
 day = do
   now <- liftIO getCurrentTime
@@ -42,6 +45,7 @@ dayBetweenYears :: Integer -> Integer -> Fake Day
 dayBetweenYears ystart yend =
   fakeEnumFromTo (fromGregorian ystart 1 1) (fromGregorian yend 12 31)
 
+-- | Generates a random 'DiffTime' between hour range [from, to].
 timeBetweenHours :: Int -> Int -> Fake DiffTime
 timeBetweenHours hstart hend =
   secondsToDiffTime <$> fromRange (fromIntegral from, fromIntegral to)
@@ -49,6 +53,7 @@ timeBetweenHours hstart hend =
     from = hstart * 3600
     to = hend * 3599
 
+-- | Generate a random 'UTCTime' between year range [from, to].
 utcBetweenYears :: Integer -> Integer -> Fake UTCTime
 utcBetweenYears ystart yend =
   UTCTime <$> dayBetweenYears ystart yend <*> timeBetweenHours 0 24
