@@ -16,6 +16,7 @@ import Faker
 import Faker.Combinators
 import Faker.Company
 import Faker.Compass
+import Faker.Construction
 import Faker.Educator
 import Faker.ElectricalComponents
 import Faker.Esport
@@ -119,6 +120,11 @@ spec = do
     describe "Vehicle" $ do
       it "license" $ do
         item <- generate FV.licensePlate
+        item `shouldSatisfy` isText
+    describe "Construction" $ do
+      it "roles" $ do
+        item <- generate roles
+        print item
         item `shouldSatisfy` isText
     describe "Company" $ do
       it "bs" $ do

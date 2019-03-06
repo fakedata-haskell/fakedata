@@ -38,3 +38,19 @@ $(genProvider "construction" "materials")
 $(genParser "construction" "subcontract_categories")
 
 $(genProvider "construction" "subcontract_categories")
+
+$(genParser "construction" "heavy_equipment")
+
+$(genProvider "construction" "heavy_equipment")
+
+$(genParser "construction" "roles")
+
+$(genProvider "construction" "roles")
+
+$(genParser "construction" "trades")
+
+$(genProvider "construction" "trades")
+
+$(genParser "construction" "standard_cost_codes")
+
+$(genProvider "construction" "standard_cost_codes")
