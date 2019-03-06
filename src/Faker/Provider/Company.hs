@@ -76,6 +76,10 @@ $(genParser "company" "type")
 
 $(genProvider "company" "type")
 
+$(genParser "company" "sic_code")
+
+$(genProvider "company" "sic_code")
+
 resolveCompanyText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveCompanyText settings txt = do
