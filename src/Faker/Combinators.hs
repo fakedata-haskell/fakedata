@@ -82,3 +82,15 @@ frequency xs0 = fromRange (1, tot) >>= (`pick` xs0)
       | n <= k = x
       | otherwise = pick (n - k) xs
     pick _ _ = error "Fake.pick used with empty list"
+
+-- | Generate a value of an enumeration in the range [from, to].
+-- @since 0.2.0
+--
+-- @
+-- λ> data Animal = Cat | Dog | Zebra | Elephant | Giarfee deriving (Eq,Ord,Enum, Show)
+-- λ> generate (fakeEnumFromTo Cat Zebra)
+-- Zebra
+-- @
+--
+fakeEnumFromTo :: Enum a => a -> a -> Fake a
+fakeEnumFromTo from to = toEnum <$> fromRange (fromEnum from, fromEnum to)
