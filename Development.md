@@ -74,6 +74,11 @@ An easy way of generating those modules is by editing the
 module isn't perfect and you may have to do some alterations (but it
 get's 90% of the job done!).
 
-# Custom support for yml file
+# Custom Fake source support with yml file
 
-TODO: Probably add for finance.yml ?
+You can see the example of `finance.yml` which has been added. Things
+that needs to be done:
+* Add the yml file into the `customFakeSource` directory.
+* Change `Config.hs` appropriately.
+* Generate Provider and Faker module
+* Profit!
