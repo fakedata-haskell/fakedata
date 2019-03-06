@@ -29,6 +29,9 @@ localesDirectory = "faker/lib/locales"
 localesEnDirectory :: FilePath
 localesEnDirectory = "faker/lib/locales/en"
 
+localesCustomEnDirectory :: FilePath
+localesCustomEnDirectory = "customFakeSource/en"
+
 isLocaleFile :: FilePath -> IO Bool
 isLocaleFile fname = do
   exist <- doesFileExist fname
@@ -191,6 +194,7 @@ data SourceData
   | WorldOfWarcraft
   | Yoda
   | Zelda
+  | CustomSourceEnglish String
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -490,7 +494,10 @@ mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 guessSourceFile :: SourceData -> Text -> FilePath
 guessSourceFile sdata sysloc =
   case sysloc of
-    "en" -> localesEnDirectory </> (sourceFile sdata) <.> "yml"
+    "en" ->
+      case sdata of
+        Finance -> localesCustomEnDirectory </> (sourceFile sdata) <.> "yml"
+        sdata' -> localesEnDirectory </> (sourceFile sdata') <.> "yml"
     oth -> localesDirectory </> (unpack oth <> ".yml")
 
 getSourceFile :: (MonadThrow m, MonadIO m) => FilePath -> m FilePath
