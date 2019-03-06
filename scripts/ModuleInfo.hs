@@ -1562,5 +1562,27 @@ vehicle =
     , unresolvedNestedFields = []
     }
 
+basketball :: ModuleInfo
+basketball =
+  ModuleInfo
+    { moduleName = "basketball"
+    , jsonField = "basketball"
+    , fields = ["teams", "players", "coaches", "positions"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+horse :: ModuleInfo
+horse =
+  ModuleInfo
+    { moduleName = "horse"
+    , jsonField = "horse"
+    , fields = ["name", "breed"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = vehicle
+currentOne = horse

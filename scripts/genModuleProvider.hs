@@ -21,8 +21,6 @@ module Faker.Provider.#{capModname} where
 
 import Config
 import Control.Monad.Catch
-import Control.Monad.IO.Class
-import Data.Map.Strict (Map)
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
