@@ -34,7 +34,6 @@ bs =
        let txt = V.foldl1' (\a b -> a <> " " <> b) items
        pure txt)
 
--- $(generateFakeField "company" "bs")
 $(generateFakeFieldUnresolved "company" "name")
 
 $(generateFakeField "company" "industry")
@@ -42,3 +41,7 @@ $(generateFakeField "company" "industry")
 $(generateFakeField "company" "profession")
 
 $(generateFakeField "company" "type")
+
+-- | SIC code for classifying industries.
+-- @since 0.1.1
+$(generateFakeField "company" "sic_code")
