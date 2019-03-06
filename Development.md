@@ -17,7 +17,8 @@ Now update the submodule (probably best to do it in a new branch)
 $ git submodule update --remote --merge
 $ cd scripts
 $ ./changes.sh > now.dat
-$ diff current.dat now.dat | more
+$ diff current.dat now.dat > diff.dat
+$ more diff.dat
 ```
 
 A sample output from the above `diff` command:
@@ -33,7 +34,46 @@ $ diff current.dat now.dat | more
 19c18
 ```
 
-This shows that `arm.yml` file has been deleted and `animal.yml` file has been modified. These are the rules for knowing what happened:
-* Only the presence of `<` for a particular file indicates that it has been deleted.
-* Only the presence of `>` for a particular file indicates that it has been added.
-* Presence of both `<` & `>` for a particular file indicates that it has been modified.
+This shows that `arm.yml` file has been deleted and `animal.yml` file
+has been modified. These are the rules for knowing what happened:
+* Only the presence of `<` for a particular file indicates that it has
+  been deleted.
+* Only the presence of `>` for a particular file indicates that it has
+  been added.
+* Presence of both `<` & `>` for a particular file indicates that it
+  has been modified.
+
+In the above output, you know that `animal.yml` has been modified. To
+know exactly what has changed since the last release, follow these:
+
+``` shellsession
+$ cd scripts
+$ stack unpack fakedata-0.1.0.0
+```
+
+Now you may want to change the `ymlDiff.sh`'s `OLD_FAKER_DIR` variable.
+
+``` shellsession
+$ ./ymlDiff.sh en/animal.yml
+```
+
+# Adding support for new yml file
+
+Each Entity (like Book, Address etc.) when added as a new yml file in
+the Ruby's faker project as to be exposed in the fakedata
+library. There are two modules which needs to be exposed:
+
+* Faker.Provider.\<Entity\>: This module will contain the parsing
+  logic of that yaml file.
+* Faker.\<Entity\>: This module will actually expose the function
+  which will be consumed by the end user.
+
+An easy way of generating those modules is by editing the
+[ModuleInfo.hs](./scripts/ModuleInfo.hs) module and then running
+`run.sh` script. This will generate the two modules. Note that this
+module isn't perfect and you may have to do some alterations (but it
+get's 90% of the job done!).
+
+# Custom support for yml file
+
+TODO: Probably add for finance.yml ?
