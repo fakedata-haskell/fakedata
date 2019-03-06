@@ -53,3 +53,4 @@ tests:
     - hspec
     - vector
     - hspec-discover
+    - time

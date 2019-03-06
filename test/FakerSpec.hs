@@ -10,6 +10,7 @@ import qualified Data.Map as M
 import Data.Text hiding (all, map)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
+import Data.Time
 import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Faker
@@ -18,6 +19,7 @@ import Faker.Company
 import Faker.Compass
 import Faker.Construction
 import Faker.Creature.Horse
+import Faker.DateTime
 import Faker.Educator
 import Faker.ElectricalComponents
 import Faker.Esport
@@ -154,4 +156,4 @@ spec = do
     describe "DateTime" $ do
       it "day" $ do
         item <- generate day
-        item `shouldSatisfy` isDate
+        item `shouldSatisfy` isDay
