@@ -24,6 +24,7 @@ import Faker.Educator
 import Faker.ElectricalComponents
 import Faker.Esport
 import Faker.File
+import Faker.Finance
 import Faker.Food
 import qualified Faker.Game.ElderScrolls as ES
 import Faker.Game.Fallout
@@ -157,3 +158,12 @@ spec = do
       it "day" $ do
         item <- generate day
         item `shouldSatisfy` isDay
+    describe "Finance" $ do
+      it "visa" $ do
+        item <- generate visa
+        print item
+        item `shouldSatisfy` isText
+      it "mastercard" $ do
+        item <- generate mastercard
+        print item
+        item `shouldSatisfy` isText

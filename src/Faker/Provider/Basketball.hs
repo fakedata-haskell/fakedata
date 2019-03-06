@@ -41,35 +41,18 @@ parseBasketballFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-
-
-
 $(genParser "basketball" "teams")
 
 $(genProvider "basketball" "teams")
-
 
 $(genParser "basketball" "players")
 
 $(genProvider "basketball" "players")
 
-
 $(genParser "basketball" "coaches")
 
 $(genProvider "basketball" "coaches")
 
-
 $(genParser "basketball" "positions")
 
 $(genProvider "basketball" "positions")
-
-
-
-
-
-
-
-
-
-
-
