@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 
--- | @since 0.1.1
+-- | @since 0.2.0
 module Faker.Construction where
 
 import Data.Text

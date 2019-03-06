@@ -19,7 +19,8 @@ parseDog :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDog settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  dog <- faker .: "dog"
+  creature <- faker .: "creature"
+  dog <- creature .: "dog"
   pure dog
 parseDog settings val = fail $ "expected Object, but got " <> (show val)
 

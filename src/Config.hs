@@ -54,6 +54,7 @@ data SourceData
   | Appliance
   | ATHF
   | Artist
+  | Basketball
   | BTTF
   | Bank
   | Beer
@@ -141,6 +142,7 @@ data SourceData
   | NatoPhoneticAlphabet
   | NewGirl
   | OnePiece
+  | Horse
   | OverWatch
   | ParksAndRec
   | Phish
@@ -215,6 +217,7 @@ sourceFile Code = "code"
 sourceFile Coffee = "coffee"
 sourceFile Coin = "coin"
 sourceFile Color = "color"
+sourceFile Horse = "horse"
 sourceFile Commerce = "commerce"
 sourceFile Community = "community"
 sourceFile Compass = "compass"
@@ -334,9 +337,12 @@ sourceFile WorldCup = "world_cup"
 sourceFile WorldOfWarcraft = "world_of_warcraft"
 sourceFile Yoda = "yoda"
 sourceFile Zelda = "zelda"
+sourceFile Basketball = "basketball"
 
 mapSource :: Text -> Name
+mapSource "horse" = 'Horse
 mapSource "address" = 'Address
+mapSource "basketball" = 'Basketball
 mapSource "name" = 'Name
 mapSource "ancient" = 'Ancient
 mapSource "animal" = 'Animal

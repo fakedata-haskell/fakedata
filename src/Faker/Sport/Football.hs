@@ -1,7 +1,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 
 -- | @since 0.2.0
-module Faker.Football where
+module Faker.Sport.Football where
 
 import Data.Text
 import Faker
