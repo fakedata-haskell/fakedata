@@ -91,7 +91,10 @@ main = do
 And on executing them:
 
     $ stack name.hs
-    Person {personName = "Antony Langosh", personAddress = "Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"}
+    Person
+      { personName = "Antony Langosh"
+      , personAddress = "Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"
+      }
 
 You would have noticed in the above output that the name and address are
 the same as generated before in the GHCi REPL. That's because, by
@@ -109,7 +112,10 @@ generator output:
 And on executing the program, you will get a different output:
 
 ``` {.shellsession}
-Person {personName = "Ned Effertz Sr.", personAddress = "Suite 158 1580 Schulist Mall, Schulistburgh, NY 15804-3392"}
+Person
+  { personName = "Ned Effertz Sr."
+  , personAddress = "Suite 158 1580 Schulist Mall, Schulistburgh, NY 15804-3392"
+  }
 ```
 
 The above program can be even minimized like this:

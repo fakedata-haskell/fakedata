@@ -13,6 +13,7 @@ extra-source-files:
 data-files:
 - faker/lib/locales/*yml
 - faker/lib/locales/en/*yml
+- customFakeSource/en/*yml
 
 # Metadata used when publishing your package
 synopsis:            Library for producing fake data
