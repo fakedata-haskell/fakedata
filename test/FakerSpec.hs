@@ -17,6 +17,7 @@ import Faker.Combinators
 import Faker.Company
 import Faker.Compass
 import Faker.Construction
+import Faker.Creature.Horse
 import Faker.Educator
 import Faker.ElectricalComponents
 import Faker.Esport
@@ -32,6 +33,7 @@ import Faker.PhoneNumber
 import Faker.Provider.Educator
 import qualified Faker.Restaurant as FR
 import qualified Faker.Science as FS
+import qualified Faker.Sport.Basketball as FB
 import qualified Faker.TvShow.FamilyGuy as FG
 import qualified Faker.University as FU
 import qualified Faker.Vehicle as FV
@@ -124,7 +126,10 @@ spec = do
     describe "Construction" $ do
       it "roles" $ do
         item <- generate roles
-        print item
+        item `shouldSatisfy` isText
+    describe "Basketball" $ do
+      it "roles" $ do
+        item <- generate FB.coaches
         item `shouldSatisfy` isText
     describe "Company" $ do
       it "bs" $ do
@@ -135,4 +140,8 @@ spec = do
         item `shouldBe` "info-mediaries"
       it "sicCode" $ do
         item <- generate sicCode
+        item `shouldSatisfy` isText
+    describe "Creatures" $ do
+      it "horse" $ do
+        item <- generate breed
         item `shouldSatisfy` isText
