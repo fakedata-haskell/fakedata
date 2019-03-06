@@ -1584,5 +1584,29 @@ horse =
     , unresolvedNestedFields = []
     }
 
+finance :: ModuleInfo
+finance =
+  ModuleInfo
+    { moduleName = "finance"
+    , jsonField = "finance"
+    , fields = []
+    , unresolvedFields =
+        [ "visa"
+        , "mastercard"
+        , "discover"
+        , "american_express"
+        , "diners_club"
+        , "jcb"
+        , "switch"
+        , "solo"
+        , "dankort"
+        , "maestro"
+        , "forbrugsforeningen"
+        , "laser"
+        ]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = horse
+currentOne = finance
