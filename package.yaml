@@ -35,6 +35,7 @@ dependencies:
 - containers
 - template-haskell
 - bytestring
+- time
 
 library:
   source-dirs: src
