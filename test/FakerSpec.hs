@@ -127,3 +127,6 @@ spec = do
       it "buzzwords" $ do
         item <- generate buzzword
         item `shouldBe` "info-mediaries"
+      it "sicCode" $ do
+        item <- generate sicCode
+        item `shouldSatisfy` isText
