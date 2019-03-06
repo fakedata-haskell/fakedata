@@ -43,6 +43,12 @@ import Test.Hspec
 isText :: Text -> Bool
 isText x = T.length x >= 1
 
+isDay :: Day -> Bool
+isDay _ = True
+
+isUTCTime :: UTCTime -> Bool
+isUTCTime _ = True
+
 spec :: Spec
 spec = do
   describe "Faker Generate" $ do
@@ -145,3 +151,7 @@ spec = do
       it "horse" $ do
         item <- generate breed
         item `shouldSatisfy` isText
+    describe "DateTime" $ do
+      it "day" $ do
+        item <- generate day
+        item `shouldSatisfy` isDate
