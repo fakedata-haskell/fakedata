@@ -1,6 +1,6 @@
+-- | @since 0.2.0
 module Faker.DateTime where
 
--- | @since 0.2.0
 import Control.Monad.IO.Class (liftIO)
 import Data.Text
 import Data.Time
