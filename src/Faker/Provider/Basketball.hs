@@ -5,6 +5,7 @@ module Faker.Provider.Basketball where
 
 import Config
 import Control.Monad.Catch
+import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
