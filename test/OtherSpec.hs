@@ -34,9 +34,9 @@ spec = do
           (setLocale "en-PAK" defaultFakerSettings)
           nameWithMiddle
       (ctries) `shouldBe` "Zia Ash Ash"
-    -- it "name with middle - au" $ do
-    --   ctries <-
-    --     generateWithSettings
-    --       (setLocale "en-AU" defaultFakerSettings)
-    --       nameWithMiddle
-    --   (ctries) `shouldBe` "Zia Ash Ash"
+    it "name with middle - au" $ do
+      ctries <-
+        generateWithSettings
+          (setLocale "en-AU" defaultFakerSettings)
+          nameWithMiddle
+      (ctries) `shouldBe` "Georgia Grady Grady"

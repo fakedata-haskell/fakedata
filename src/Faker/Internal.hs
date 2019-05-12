@@ -60,6 +60,16 @@ randomUnresolvedVec settings provider resolverFn = do
   items <- provider settings
   resolveUnresolved settings items resolverFn
 
+randomUnresolvedVecWithoutVector ::
+     (MonadThrow m, MonadIO m)
+  => FakerSettings
+  -> (FakerSettings -> m (Unresolved Text))
+  -> (FakerSettings -> Text -> m Text)
+  -> m Text
+randomUnresolvedVecWithoutVector settings provider resolverFn = do
+  items <- provider settings
+  resolveUnresolved settings (sequenceA $ pure items) resolverFn
+
 resolveUnresolved ::
      (MonadThrow m, MonadIO m)
   => FakerSettings
@@ -206,6 +216,14 @@ unresolvedResolver ::
   -> (FakerSettings -> m Text)
 unresolvedResolver provider resolverFn =
   \settings -> randomUnresolvedVec settings provider resolverFn
+
+unresolvedResolverWithoutVector ::
+     (MonadThrow m, MonadIO m)
+  => (FakerSettings -> m (Unresolved Text))
+  -> (FakerSettings -> Text -> m Text)
+  -> (FakerSettings -> m Text)
+unresolvedResolverWithoutVector provider resolverFn =
+  \settings -> randomUnresolvedVecWithoutVector settings provider resolverFn
 
 uprStr :: String -> String
 uprStr [] = []

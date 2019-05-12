@@ -13,7 +13,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Provider.Name (nameProvider, resolveNameText)
+import Faker.Provider.Name (nameProvider, resolveNameField, resolveNameText)
 import Faker.Provider.TH
 import Language.Haskell.TH
 
@@ -49,7 +49,9 @@ $(genProvider "book" "title")
 
 $(genParserUnresolved "book" "author")
 
-$(genProviderUnresolved "book" "author")
+bookAuthorProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved Text)
+bookAuthorProvider settings = fetchData settings Book parseBookAuthorUnresolved
 
 $(genParser "book" "publisher")
 

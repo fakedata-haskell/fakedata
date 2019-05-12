@@ -161,9 +161,7 @@ spec = do
     describe "Finance" $ do
       it "visa" $ do
         item <- generate visa
-        print item
         item `shouldSatisfy` isText
       it "mastercard" $ do
         item <- generate mastercard
-        print item
         item `shouldSatisfy` isText

@@ -10,7 +10,9 @@ import Faker.TH
 
 $(generateFakeField "book" "title")
 
-$(generateFakeFieldUnresolved "book" "author")
+author :: Fake Text
+author =
+  Fake (unresolvedResolverWithoutVector bookAuthorProvider resolveBookText)
 
 $(generateFakeField "book" "publisher")
 
