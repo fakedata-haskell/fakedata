@@ -1,5 +1,9 @@
 # Changelog for fakedata
 
+## 0.2.1
+
+* Fix bug in Book module
+
 ## 0.2.0
 
 * Add sicCode function in Company module
