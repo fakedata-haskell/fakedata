@@ -1,18 +1,20 @@
-module ModuleInfo where
+module FakeModuleInfo where
 
-data ModuleInfo = ModuleInfo
-  { moduleName :: String -- eg: buffy
-  , jsonField :: String
-  , fields :: [String]
-  , unresolvedFields :: [String]
-  , nestedFields :: [[String]]
-  , unresolvedNestedFields :: [[String]]
-  } deriving (Show, Eq, Ord)
+data ModuleInfo =
+  ModuleInfo
+    { mmoduleName :: String -- eg: buffy
+    , jsonField :: String -- ^ Field after en.faker
+    , fields :: [String]
+    , unresolvedFields :: [String]
+    , nestedFields :: [[String]]
+    , unresolvedNestedFields :: [[String]]
+    }
+  deriving (Show, Eq, Ord)
 
 commerce :: ModuleInfo
 commerce =
   ModuleInfo
-    { moduleName = "commerce"
+    { mmoduleName = "commerce"
     , jsonField = "commerce"
     , fields = ["department"]
     , unresolvedFields = []
@@ -29,7 +31,7 @@ commerce =
 dune :: ModuleInfo
 dune =
   ModuleInfo
-    { moduleName = "dune"
+    { mmoduleName = "dune"
     , jsonField = "dune"
     , fields = ["characters", "titles", "planets"]
     , unresolvedFields = []
@@ -64,9 +66,9 @@ dune =
 dota :: ModuleInfo
 dota =
   ModuleInfo
-    { moduleName = "dota"
+    { mmoduleName = "dota"
     , jsonField = "dota"
-    , fields = ["hero", "iteam", "team", "player"]
+    , fields = ["hero", "item", "team", "player"]
     , nestedFields =
         [ ["abaddon", "quote"]
         , ["alchemist", "quote"]
@@ -104,6 +106,7 @@ dota =
         , ["underlord", "quote"]
         , ["undying", "quote"]
         , ["wraith_king", "quote"]
+        , ["meepo", "quote"]
         ]
     , unresolvedFields = []
     , unresolvedNestedFields = []
@@ -112,7 +115,7 @@ dota =
 compass :: ModuleInfo
 compass =
   ModuleInfo
-    { moduleName = "compass"
+    { mmoduleName = "compass"
     , jsonField = "compass"
     , fields = []
     , unresolvedFields = ["direction", "abbreviation", "azimuth"]
@@ -136,7 +139,7 @@ compass =
 electricalComponents :: ModuleInfo
 electricalComponents =
   ModuleInfo
-    { moduleName = "electricalComponents"
+    { mmoduleName = "electricalComponents"
     , jsonField = "electrical_components"
     , fields = ["active", "passive", "electromechanical"]
     , unresolvedFields = []
@@ -147,7 +150,7 @@ electricalComponents =
 esport :: ModuleInfo
 esport =
   ModuleInfo
-    { moduleName = "esport"
+    { mmoduleName = "esport"
     , jsonField = "esport"
     , fields = ["players", "teams", "events", "leagues", "games"]
     , unresolvedFields = []
@@ -158,7 +161,7 @@ esport =
 fallout :: ModuleInfo
 fallout =
   ModuleInfo
-    { moduleName = "fallout"
+    { mmoduleName = "fallout"
     , jsonField = "fallout"
     , fields = ["characters", "factions", "locations", "quotes"]
     , unresolvedFields = []
@@ -169,7 +172,7 @@ fallout =
 familyGuy :: ModuleInfo
 familyGuy =
   ModuleInfo
-    { moduleName = "familyGuy"
+    { mmoduleName = "familyGuy"
     , jsonField = "family_guy"
     , fields = ["character", "location", "quote"]
     , unresolvedFields = []
@@ -180,7 +183,7 @@ familyGuy =
 file :: ModuleInfo
 file =
   ModuleInfo
-    { moduleName = "file"
+    { mmoduleName = "file"
     , jsonField = "file"
     , fields = ["extension", "mime_type"]
     , unresolvedFields = []
@@ -191,7 +194,7 @@ file =
 food :: ModuleInfo
 food =
   ModuleInfo
-    { moduleName = "food"
+    { mmoduleName = "food"
     , jsonField = "food"
     , fields =
         [ "dish"
@@ -213,7 +216,7 @@ food =
 football :: ModuleInfo
 football =
   ModuleInfo
-    { moduleName = "football"
+    { mmoduleName = "football"
     , jsonField = "football"
     , fields = ["teams", "players", "coaches", "competitions", "positions"]
     , unresolvedFields = []
@@ -224,7 +227,7 @@ football =
 fpba :: ModuleInfo
 fpba =
   ModuleInfo
-    { moduleName = "freshPrinceOfBelAir"
+    { mmoduleName = "freshPrinceOfBelAir"
     , jsonField = "the_fresh_prince_of_bel_air"
     , fields = ["characters", "celebrities", "quotes"]
     , unresolvedFields = []
@@ -235,7 +238,7 @@ fpba =
 friends :: ModuleInfo
 friends =
   ModuleInfo
-    { moduleName = "friends"
+    { mmoduleName = "friends"
     , jsonField = "friends"
     , fields = ["characters", "locations", "quotes"]
     , unresolvedFields = []
@@ -246,7 +249,7 @@ friends =
 funnyName :: ModuleInfo
 funnyName =
   ModuleInfo
-    { moduleName = "funnyName"
+    { mmoduleName = "funnyName"
     , jsonField = "funny_name"
     , fields = ["name"]
     , unresolvedFields = []
@@ -257,7 +260,7 @@ funnyName =
 cofee :: ModuleInfo
 cofee =
   ModuleInfo
-    { moduleName = "coffee"
+    { mmoduleName = "coffee"
     , jsonField = "coffee"
     , fields = ["country"]
     , unresolvedFields = []
@@ -287,7 +290,7 @@ cofee =
 elderScrolls :: ModuleInfo
 elderScrolls =
   ModuleInfo
-    { moduleName = "elderScrolls"
+    { mmoduleName = "elderScrolls"
     , jsonField = "elder_scrolls"
     , fields =
         [ "race"
@@ -306,7 +309,7 @@ elderScrolls =
 got :: ModuleInfo
 got =
   ModuleInfo
-    { moduleName = "gameOfThrones"
+    { mmoduleName = "gameOfThrones"
     , jsonField = "game_of_thrones"
     , fields = ["characters", "houses", "cities", "quotes", "dragons"]
     , unresolvedFields = []
@@ -317,7 +320,7 @@ got =
 hacker :: ModuleInfo
 hacker =
   ModuleInfo
-    { moduleName = "hacker"
+    { mmoduleName = "hacker"
     , jsonField = "hacker"
     , fields = ["abbreviation", "adjective", "noun", "verb", "ingverb"]
     , unresolvedFields = []
@@ -328,7 +331,7 @@ hacker =
 gender :: ModuleInfo
 gender =
   ModuleInfo
-    { moduleName = "gender"
+    { mmoduleName = "gender"
     , jsonField = "gender"
     , fields = ["types", "binary_types"]
     , unresolvedFields = []
@@ -339,7 +342,7 @@ gender =
 gbusters :: ModuleInfo
 gbusters =
   ModuleInfo
-    { moduleName = "ghostbusters"
+    { mmoduleName = "ghostbusters"
     , jsonField = "ghostbusters"
     , fields = ["actors", "characters", "quotes"]
     , unresolvedFields = []
@@ -350,7 +353,7 @@ gbusters =
 gdead :: ModuleInfo
 gdead =
   ModuleInfo
-    { moduleName = "gratefulDead"
+    { mmoduleName = "gratefulDead"
     , jsonField = "grateteful_dead"
     , fields = ["players", "songs"]
     , unresolvedFields = []
@@ -361,7 +364,7 @@ gdead =
 gphilosophers :: ModuleInfo
 gphilosophers =
   ModuleInfo
-    { moduleName = "greekPhilosophers"
+    { mmoduleName = "greekPhilosophers"
     , jsonField = "greek_philosophers"
     , fields = ["names", "quotes"]
     , unresolvedFields = []
@@ -372,7 +375,7 @@ gphilosophers =
 halfLife :: ModuleInfo
 halfLife =
   ModuleInfo
-    { moduleName = "halfLife"
+    { mmoduleName = "halfLife"
     , jsonField = "half_life"
     , fields = ["character", "enemy", "location"]
     , unresolvedFields = []
@@ -383,7 +386,7 @@ halfLife =
 harryPotter :: ModuleInfo
 harryPotter =
   ModuleInfo
-    { moduleName = "harryPotter"
+    { mmoduleName = "harryPotter"
     , jsonField = "harry_potter"
     , fields =
         ["characters", "locations", "quotes", "books", "houses", "spells"]
@@ -395,7 +398,7 @@ harryPotter =
 heroes :: ModuleInfo
 heroes =
   ModuleInfo
-    { moduleName = "heroes"
+    { mmoduleName = "heroes"
     , jsonField = "heroes"
     , fields = ["names", "specialties", "klasses"]
     , unresolvedFields = []
@@ -406,7 +409,7 @@ heroes =
 hofs :: ModuleInfo
 hofs =
   ModuleInfo
-    { moduleName = "heroesOfTheStorm"
+    { mmoduleName = "heroesOfTheStorm"
     , jsonField = "heroes_of_the_storm"
     , fields = ["battlegrounds", "classes", "heroes", "quotes"]
     , unresolvedFields = []
@@ -417,7 +420,7 @@ hofs =
 heyArnold :: ModuleInfo
 heyArnold =
   ModuleInfo
-    { moduleName = "heyArnold"
+    { mmoduleName = "heyArnold"
     , jsonField = "hey_arnold"
     , fields = ["characters", "locations", "quotes"]
     , unresolvedFields = []
@@ -428,7 +431,7 @@ heyArnold =
 hgtg :: ModuleInfo
 hgtg =
   ModuleInfo
-    { moduleName = "hitchhikersGuideToTheGalaxy"
+    { mmoduleName = "hitchhikersGuideToTheGalaxy"
     , jsonField = "hitchhikers_guide_to_the_galaxy"
     , fields =
         [ "characters"
@@ -447,7 +450,7 @@ hgtg =
 house :: ModuleInfo
 house =
   ModuleInfo
-    { moduleName = "house"
+    { mmoduleName = "house"
     , jsonField = "house"
     , fields = ["furniture", "rooms"]
     , unresolvedFields = []
@@ -458,7 +461,7 @@ house =
 hwmym :: ModuleInfo
 hwmym =
   ModuleInfo
-    { moduleName = "howIMetYourMother"
+    { mmoduleName = "howIMetYourMother"
     , jsonField = "how_i_met_your_mother"
     , fields = ["character", "catch_phrase", "high_five", "quote"]
     , unresolvedFields = []
@@ -469,7 +472,7 @@ hwmym =
 isegments :: ModuleInfo
 isegments =
   ModuleInfo
-    { moduleName = "industrySegments"
+    { mmoduleName = "industrySegments"
     , jsonField = "industry_segments"
     , fields = ["industry", "super_sector", "sector", "sub_sector"]
     , unresolvedFields = []
@@ -480,7 +483,7 @@ isegments =
 internet :: ModuleInfo
 internet =
   ModuleInfo
-    { moduleName = "internet"
+    { mmoduleName = "internet"
     , jsonField = "internet"
     , fields = ["free_email", "domain_suffix"]
     , unresolvedFields = []
@@ -499,7 +502,7 @@ internet =
 job :: ModuleInfo
 job =
   ModuleInfo
-    { moduleName = "job"
+    { mmoduleName = "job"
     , jsonField = "job"
     , fields =
         [ "field"
@@ -517,7 +520,7 @@ job =
 kpop :: ModuleInfo
 kpop =
   ModuleInfo
-    { moduleName = "kpop"
+    { mmoduleName = "kpop"
     , jsonField = "kpop"
     , fields =
         [ "i_groups"
@@ -535,7 +538,7 @@ kpop =
 lol :: ModuleInfo
 lol =
   ModuleInfo
-    { moduleName = "leagueOfLegends"
+    { mmoduleName = "leagueOfLegends"
     , jsonField = "league_of_legends"
     , fields =
         ["champion", "location", "quote", "summoner_spell", "masteries", "rank"]
@@ -547,7 +550,7 @@ lol =
 lebowski :: ModuleInfo
 lebowski =
   ModuleInfo
-    { moduleName = "lebowski"
+    { mmoduleName = "lebowski"
     , jsonField = "lebowski"
     , fields = ["actors", "characters", "quotes"]
     , unresolvedFields = []
@@ -558,7 +561,7 @@ lebowski =
 lofr :: ModuleInfo
 lofr =
   ModuleInfo
-    { moduleName = "lordOfTheRings"
+    { mmoduleName = "lordOfTheRings"
     , jsonField = "lord_of_the_rings"
     , fields = ["characters", "locations", "quotes"]
     , unresolvedFields = []
@@ -569,7 +572,7 @@ lofr =
 lorem :: ModuleInfo
 lorem =
   ModuleInfo
-    { moduleName = "lorem"
+    { mmoduleName = "lorem"
     , jsonField = "lorem"
     , fields = ["words", "supplemental"]
     , unresolvedFields = []
@@ -580,7 +583,7 @@ lorem =
 lovecraft :: ModuleInfo
 lovecraft =
   ModuleInfo
-    { moduleName = "lovecraft"
+    { mmoduleName = "lovecraft"
     , jsonField = "lovecraft"
     , fields = ["fhtagn", "deity", "location", "tome", "words"]
     , unresolvedFields = []
@@ -591,7 +594,7 @@ lovecraft =
 markdown :: ModuleInfo
 markdown =
   ModuleInfo
-    { moduleName = "markdown"
+    { mmoduleName = "markdown"
     , jsonField = "markdown"
     , fields = ["headers", "emphasis"]
     , unresolvedFields = []
@@ -602,7 +605,7 @@ markdown =
 marketing :: ModuleInfo
 marketing =
   ModuleInfo
-    { moduleName = "marketing"
+    { mmoduleName = "marketing"
     , jsonField = "marketing"
     , fields = ["buzzwords"]
     , unresolvedFields = []
@@ -613,7 +616,7 @@ marketing =
 measurement :: ModuleInfo
 measurement =
   ModuleInfo
-    { moduleName = "measurement"
+    { mmoduleName = "measurement"
     , jsonField = "measurement"
     , fields =
         [ "height"
@@ -633,7 +636,7 @@ measurement =
 michaelScott :: ModuleInfo
 michaelScott =
   ModuleInfo
-    { moduleName = "michaelScott"
+    { mmoduleName = "michaelScott"
     , jsonField = "michael_scott"
     , fields = ["quotes"]
     , unresolvedFields = []
@@ -644,7 +647,7 @@ michaelScott =
 military :: ModuleInfo
 military =
   ModuleInfo
-    { moduleName = "military"
+    { mmoduleName = "military"
     , jsonField = "military"
     , fields =
         [ "army_rank"
@@ -661,7 +664,7 @@ military =
 movie :: ModuleInfo
 movie =
   ModuleInfo
-    { moduleName = "movie"
+    { mmoduleName = "movie"
     , jsonField = "movie"
     , fields = ["quote"]
     , unresolvedFields = []
@@ -672,7 +675,7 @@ movie =
 music :: ModuleInfo
 music =
   ModuleInfo
-    { moduleName = "music"
+    { mmoduleName = "music"
     , jsonField = "music"
     , fields = ["instruments", "bands", "albums", "genres"]
     , unresolvedFields = []
@@ -683,7 +686,7 @@ music =
 myst :: ModuleInfo
 myst =
   ModuleInfo
-    { moduleName = "myst"
+    { mmoduleName = "myst"
     , jsonField = "myst"
     , fields = ["games", "creatures", "characters", "ages", "quotes"]
     , unresolvedFields = []
@@ -694,7 +697,7 @@ myst =
 nation :: ModuleInfo
 nation =
   ModuleInfo
-    { moduleName = "nation"
+    { mmoduleName = "nation"
     , jsonField = "nation"
     , fields = ["nationality", "language", "capital_city"]
     , unresolvedFields = []
@@ -705,7 +708,7 @@ nation =
 npa :: ModuleInfo
 npa =
   ModuleInfo
-    { moduleName = "natoPhoneticAlphabet"
+    { mmoduleName = "natoPhoneticAlphabet"
     , jsonField = "nato_phonetic_alphabet"
     , fields = ["code_word"]
     , unresolvedFields = []
@@ -716,7 +719,7 @@ npa =
 newGirl :: ModuleInfo
 newGirl =
   ModuleInfo
-    { moduleName = "newGirl"
+    { mmoduleName = "newGirl"
     , jsonField = "new_girl"
     , fields = ["characters", "quotes"]
     , unresolvedFields = []
@@ -727,7 +730,7 @@ newGirl =
 onePiece :: ModuleInfo
 onePiece =
   ModuleInfo
-    { moduleName = "onePiece"
+    { mmoduleName = "onePiece"
     , jsonField = "one_piece"
     , fields =
         ["characters", "seas", "islands", "locations", "quotes", "akumas_no_mi"]
@@ -739,7 +742,7 @@ onePiece =
 parksAndRec :: ModuleInfo
 parksAndRec =
   ModuleInfo
-    { moduleName = "parksAndRec"
+    { mmoduleName = "parksAndRec"
     , jsonField = "parks_and_rec"
     , fields = ["characters", "cities"]
     , unresolvedFields = []
@@ -750,7 +753,7 @@ parksAndRec =
 phish :: ModuleInfo
 phish =
   ModuleInfo
-    { moduleName = "phish"
+    { mmoduleName = "phish"
     , jsonField = "phish"
     , fields = ["song"]
     , unresolvedFields = []
@@ -761,7 +764,7 @@ phish =
 pokemon :: ModuleInfo
 pokemon =
   ModuleInfo
-    { moduleName = "pokemon"
+    { mmoduleName = "pokemon"
     , jsonField = "pokemon"
     , fields = ["names", "locations", "moves"]
     , unresolvedFields = []
@@ -772,7 +775,7 @@ pokemon =
 pbride :: ModuleInfo
 pbride =
   ModuleInfo
-    { moduleName = "princessBride"
+    { mmoduleName = "princessBride"
     , jsonField = "princess_bride"
     , fields = ["characters", "quotes"]
     , unresolvedFields = []
@@ -783,7 +786,7 @@ pbride =
 pl :: ModuleInfo
 pl =
   ModuleInfo
-    { moduleName = "programmingLauguage"
+    { mmoduleName = "programmingLauguage"
     , jsonField = "programming_language"
     , fields = ["name", "creator"]
     , unresolvedFields = []
@@ -794,7 +797,7 @@ pl =
 quote :: ModuleInfo
 quote =
   ModuleInfo
-    { moduleName = "quote"
+    { mmoduleName = "quote"
     , jsonField = "quote"
     , fields =
         [ "famous_last_words"
@@ -812,7 +815,7 @@ quote =
 relationship :: ModuleInfo
 relationship =
   ModuleInfo
-    { moduleName = "relationship"
+    { mmoduleName = "relationship"
     , jsonField = "relationship"
     , fields = ["in_law", "spouse", "parent", "sibling"]
     , unresolvedFields = []
@@ -823,7 +826,7 @@ relationship =
 ram :: ModuleInfo
 ram =
   ModuleInfo
-    { moduleName = "rickAndMorty"
+    { mmoduleName = "rickAndMorty"
     , jsonField = "rick_and_morty"
     , fields = ["characters", "locations", "quotes"]
     , unresolvedFields = []
@@ -834,7 +837,7 @@ ram =
 rockBand :: ModuleInfo
 rockBand =
   ModuleInfo
-    { moduleName = "rockBand"
+    { mmoduleName = "rockBand"
     , jsonField = "rock_band"
     , fields = ["name"]
     , unresolvedFields = []
@@ -845,7 +848,7 @@ rockBand =
 rupaul :: ModuleInfo
 rupaul =
   ModuleInfo
-    { moduleName = "rupaul"
+    { mmoduleName = "rupaul"
     , jsonField = "rupaul"
     , fields = ["queens", "quotes"]
     , unresolvedFields = []
@@ -856,7 +859,7 @@ rupaul =
 science :: ModuleInfo
 science =
   ModuleInfo
-    { moduleName = "science"
+    { mmoduleName = "science"
     , jsonField = "science"
     , fields = ["element", "element_symbol", "scientist"]
     , unresolvedFields = []
@@ -867,7 +870,7 @@ science =
 seinfeld :: ModuleInfo
 seinfeld =
   ModuleInfo
-    { moduleName = "seinfeld"
+    { mmoduleName = "seinfeld"
     , jsonField = "seinfeld"
     , fields = ["character", "quote", "business"]
     , unresolvedFields = []
@@ -878,7 +881,7 @@ seinfeld =
 shakespeare :: ModuleInfo
 shakespeare =
   ModuleInfo
-    { moduleName = "shakespeare"
+    { mmoduleName = "shakespeare"
     , jsonField = "shakespeare"
     , fields =
         ["hamlet", "as_you_like_it", "king_richard_iii", "romeo_and_juliet"]
@@ -890,7 +893,7 @@ shakespeare =
 siliconValley :: ModuleInfo
 siliconValley =
   ModuleInfo
-    { moduleName = "siliconValley"
+    { mmoduleName = "siliconValley"
     , jsonField = "silicon_valley"
     , fields =
         [ "characters"
@@ -910,7 +913,7 @@ siliconValley =
 simpsons :: ModuleInfo
 simpsons =
   ModuleInfo
-    { moduleName = "simpsons"
+    { mmoduleName = "simpsons"
     , jsonField = "simpsons"
     , fields = ["characters", "locations", "quotes"]
     , unresolvedFields = []
@@ -921,7 +924,7 @@ simpsons =
 slackEmoji :: ModuleInfo
 slackEmoji =
   ModuleInfo
-    { moduleName = "slackEmoji"
+    { mmoduleName = "slackEmoji"
     , jsonField = "slack_emoji"
     , fields =
         [ "people"
@@ -941,7 +944,7 @@ slackEmoji =
 snh :: ModuleInfo
 snh =
   ModuleInfo
-    { moduleName = "sonicTheHedgehog"
+    { mmoduleName = "sonicTheHedgehog"
     , jsonField = "sonic_the_hedgehog"
     , fields = ["zone", "character", "game"]
     , unresolvedFields = []
@@ -952,7 +955,7 @@ snh =
 source :: ModuleInfo
 source =
   ModuleInfo
-    { moduleName = "source"
+    { mmoduleName = "source"
     , jsonField = "source"
     , fields = []
     , unresolvedFields = []
@@ -970,7 +973,7 @@ source =
 southPark :: ModuleInfo
 southPark =
   ModuleInfo
-    { moduleName = "southPark"
+    { mmoduleName = "southPark"
     , jsonField = "south_park"
     , fields = ["characters", "quotes"]
     , unresolvedFields = []
@@ -981,7 +984,7 @@ southPark =
 space :: ModuleInfo
 space =
   ModuleInfo
-    { moduleName = "space"
+    { mmoduleName = "space"
     , jsonField = "space"
     , fields =
         [ "planet"
@@ -1007,7 +1010,7 @@ space =
 strek :: ModuleInfo
 strek =
   ModuleInfo
-    { moduleName = "starTrek"
+    { mmoduleName = "starTrek"
     , jsonField = "star_trek"
     , fields = ["character", "location", "specie", "villain"]
     , unresolvedFields = []
@@ -1018,7 +1021,7 @@ strek =
 swars :: ModuleInfo
 swars =
   ModuleInfo
-    { moduleName = "starWars"
+    { mmoduleName = "starWars"
     , jsonField = "star_wars"
     , fields =
         [ "characters"
@@ -1101,7 +1104,7 @@ swars =
 stargate :: ModuleInfo
 stargate =
   ModuleInfo
-    { moduleName = "stargate"
+    { mmoduleName = "stargate"
     , jsonField = "stargate"
     , fields = ["characters", "planets", "quotes"]
     , unresolvedFields = []
@@ -1112,7 +1115,7 @@ stargate =
 strangerThings :: ModuleInfo
 strangerThings =
   ModuleInfo
-    { moduleName = "strangerThings"
+    { mmoduleName = "strangerThings"
     , jsonField = "stranger_things"
     , fields = ["characters", "quote"]
     , unresolvedFields = []
@@ -1123,7 +1126,7 @@ strangerThings =
 subscription :: ModuleInfo
 subscription =
   ModuleInfo
-    { moduleName = "subscription"
+    { mmoduleName = "subscription"
     , jsonField = "subscription"
     , fields =
         [ "plans"
@@ -1140,7 +1143,7 @@ subscription =
 ssb :: ModuleInfo
 ssb =
   ModuleInfo
-    { moduleName = "superSmashBros"
+    { mmoduleName = "superSmashBros"
     , jsonField = "super_smash_bros"
     , fields = ["fighter", "stage"]
     , unresolvedFields = []
@@ -1151,7 +1154,7 @@ ssb =
 superhero :: ModuleInfo
 superhero =
   ModuleInfo
-    { moduleName = "superhero"
+    { mmoduleName = "superhero"
     , jsonField = "superhero"
     , fields = ["power", "prefix", "suffix", "descriptor"]
     , unresolvedFields = ["name"]
@@ -1162,7 +1165,7 @@ superhero =
 sao :: ModuleInfo
 sao =
   ModuleInfo
-    { moduleName = "swordArtOnline"
+    { mmoduleName = "swordArtOnline"
     , jsonField = "sword_art_online"
     , fields = ["real_name", "game_name", "location", "item"]
     , unresolvedFields = []
@@ -1173,7 +1176,7 @@ sao =
 team :: ModuleInfo
 team =
   ModuleInfo
-    { moduleName = "team"
+    { mmoduleName = "team"
     , jsonField = "team"
     , fields = ["creature", "sport", "mascot"]
     , unresolvedFields = ["name"]
@@ -1184,7 +1187,7 @@ team =
 theExpanse :: ModuleInfo
 theExpanse =
   ModuleInfo
-    { moduleName = "theExpanse"
+    { mmoduleName = "theExpanse"
     , jsonField = "the_expanse"
     , fields = ["characters", "locations", "ships", "quotes"]
     , unresolvedFields = []
@@ -1195,7 +1198,7 @@ theExpanse =
 tic :: ModuleInfo
 tic =
   ModuleInfo
-    { moduleName = "theItCrowd"
+    { mmoduleName = "theItCrowd"
     , jsonField = "the_it_crowd"
     , fields = ["actors", "characters", "emails", "quotes"]
     , unresolvedFields = []
@@ -1206,7 +1209,7 @@ tic =
 ttoi :: ModuleInfo
 ttoi =
   ModuleInfo
-    { moduleName = "theThickOfIt"
+    { mmoduleName = "theThickOfIt"
     , jsonField = "the_thick_of_it"
     , fields = ["characters", "positions", "departments"]
     , unresolvedFields = []
@@ -1217,7 +1220,7 @@ ttoi =
 twinPeaks :: ModuleInfo
 twinPeaks =
   ModuleInfo
-    { moduleName = "twinPeaks"
+    { mmoduleName = "twinPeaks"
     , jsonField = "twin_peaks"
     , fields = ["characters", "locations", "quotes"]
     , unresolvedFields = []
@@ -1228,7 +1231,7 @@ twinPeaks =
 umphreysMcgee :: ModuleInfo
 umphreysMcgee =
   ModuleInfo
-    { moduleName = "umphreysMcgee"
+    { mmoduleName = "umphreysMcgee"
     , jsonField = "umphreys_mcgee"
     , fields = ["song"]
     , unresolvedFields = []
@@ -1239,7 +1242,7 @@ umphreysMcgee =
 university :: ModuleInfo
 university =
   ModuleInfo
-    { moduleName = "university"
+    { mmoduleName = "university"
     , jsonField = "university"
     , fields = ["prefix", "suffix"]
     , unresolvedFields = ["name"]
@@ -1250,7 +1253,7 @@ university =
 vfv :: ModuleInfo
 vfv =
   ModuleInfo
-    { moduleName = "vForVendetta"
+    { mmoduleName = "vForVendetta"
     , jsonField = "v_for_vendetta"
     , fields = ["characters", "speeches", "quotes"]
     , unresolvedFields = []
@@ -1261,7 +1264,7 @@ vfv =
 ventureBros :: ModuleInfo
 ventureBros =
   ModuleInfo
-    { moduleName = "ventureBros"
+    { mmoduleName = "ventureBros"
     , jsonField = "venture_bros"
     , fields = ["character", "organization", "vehicle", "quote"]
     , unresolvedFields = []
@@ -1272,7 +1275,7 @@ ventureBros =
 verbs :: ModuleInfo
 verbs =
   ModuleInfo
-    { moduleName = "verbs"
+    { mmoduleName = "verbs"
     , jsonField = "verbs"
     , fields = ["base", "past", "past_participle", "simple_present", "ing_form"]
     , unresolvedFields = []
@@ -1283,7 +1286,7 @@ verbs =
 witcher :: ModuleInfo
 witcher =
   ModuleInfo
-    { moduleName = "witcher"
+    { mmoduleName = "witcher"
     , jsonField = "witcher"
     , fields =
         ["characters", "witchers", "schools", "locations", "quotes", "monsters"]
@@ -1295,7 +1298,7 @@ witcher =
 wow :: ModuleInfo
 wow =
   ModuleInfo
-    { moduleName = "worldOfWarcraft"
+    { mmoduleName = "worldOfWarcraft"
     , jsonField = "world_of_warcraft"
     , fields = ["hero", "quotes"]
     , unresolvedFields = []
@@ -1306,7 +1309,7 @@ wow =
 yoda :: ModuleInfo
 yoda =
   ModuleInfo
-    { moduleName = "yoda"
+    { mmoduleName = "yoda"
     , jsonField = "yoda"
     , fields = ["quotes"]
     , unresolvedFields = []
@@ -1317,7 +1320,7 @@ yoda =
 zelda :: ModuleInfo
 zelda =
   ModuleInfo
-    { moduleName = "zelda"
+    { mmoduleName = "zelda"
     , jsonField = "zelda"
     , fields = ["games", "characters", "locations", "items"]
     , unresolvedFields = []
@@ -1328,7 +1331,7 @@ zelda =
 phoneNumber :: ModuleInfo
 phoneNumber =
   ModuleInfo
-    { moduleName = "phoneNumber"
+    { mmoduleName = "phoneNumber"
     , jsonField = "phone_number"
     , fields = []
     , unresolvedFields = ["formats"]
@@ -1339,7 +1342,7 @@ phoneNumber =
 wcup :: ModuleInfo
 wcup =
   ModuleInfo
-    { moduleName = "worldCup"
+    { mmoduleName = "worldCup"
     , jsonField = "world_cup"
     , fields = ["teams", "stadiums", "cities"]
     , unresolvedFields = []
@@ -1519,7 +1522,7 @@ wcup =
 restaurant :: ModuleInfo
 restaurant =
   ModuleInfo
-    { moduleName = "restaurant"
+    { mmoduleName = "restaurant"
     , jsonField = "restaurant"
     , fields = ["name_suffix", "type", "description", "review"]
     , unresolvedFields = ["name_prefix", "name"]
@@ -1530,7 +1533,7 @@ restaurant =
 vehicle :: ModuleInfo
 vehicle =
   ModuleInfo
-    { moduleName = "vehicle"
+    { mmoduleName = "vehicle"
     , jsonField = "vehicle"
     , fields =
         [ "manufacture"
@@ -1565,7 +1568,7 @@ vehicle =
 basketball :: ModuleInfo
 basketball =
   ModuleInfo
-    { moduleName = "basketball"
+    { mmoduleName = "basketball"
     , jsonField = "basketball"
     , fields = ["teams", "players", "coaches", "positions"]
     , unresolvedFields = []
@@ -1576,7 +1579,7 @@ basketball =
 horse :: ModuleInfo
 horse =
   ModuleInfo
-    { moduleName = "horse"
+    { mmoduleName = "horse"
     , jsonField = "horse"
     , fields = ["name", "breed"]
     , unresolvedFields = []
@@ -1587,7 +1590,7 @@ horse =
 finance :: ModuleInfo
 finance =
   ModuleInfo
-    { moduleName = "finance"
+    { mmoduleName = "finance"
     , jsonField = "finance"
     , fields = []
     , unresolvedFields =
@@ -1608,5 +1611,21 @@ finance =
     , unresolvedNestedFields = []
     }
 
+opera :: ModuleInfo
+opera =
+  ModuleInfo
+    { mmoduleName = "opera"
+    , jsonField = "opera"
+    , fields = []
+    , unresolvedFields = []
+    , nestedFields =
+        [ ["italian", "by_giuseppe_verdi"]
+        , ["italian", "by_gioacchino_rossini"]
+        , ["italian", "by_gaetano_donizetti"]
+        , ["italian", "by_vincenzo_bellini"]
+        ]
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = finance
+currentOne = opera

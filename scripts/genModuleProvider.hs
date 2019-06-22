@@ -5,7 +5,7 @@
 
 import Data.Char (toUpper)
 import Data.String.Interpolate
-import ModuleInfo
+import FakeModuleInfo
 import System.FilePath ((<.>))
 
 capitalize :: String -> String
@@ -34,22 +34,22 @@ parse#{capModname} :: FromJSON a => FakerSettings -> Value -> Parser a
 parse#{capModname} settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  #{moduleName} <- faker .: "#{jsonField}"
-  pure #{moduleName}
+  #{mmoduleName} <- faker .: "#{jsonField}"
+  pure #{mmoduleName}
 parse#{capModname} settings val = fail $ "expected Object, but got " <> (show val)
 
 parse#{capModname}Field ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
 parse#{capModname}Field settings txt val = do
-  #{moduleName} <- parse#{capModname} settings val
-  field <- #{moduleName} .:? txt .!= mempty
+  #{mmoduleName} <- parse#{capModname} settings val
+  field <- #{mmoduleName} .:? txt .!= mempty
   pure field
 
 parse#{capModname}Fields ::
      (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
 parse#{capModname}Fields settings txts val = do
-  #{moduleName} <- parse#{capModname} settings val
-  helper #{moduleName} txts
+  #{mmoduleName} <- parse#{capModname} settings val
+  helper #{mmoduleName} txts
   where
     helper :: (FromJSON a) => Value -> [Text] -> Parser a
     helper a [] = parseJSON a
@@ -82,8 +82,8 @@ parseUnresolved#{capModname}Fields ::
   -> Value
   -> Parser (Unresolved a)
 parseUnresolved#{capModname}Fields settings txts val = do
-  #{moduleName} <- parse#{capModname} settings val
-  helper #{moduleName} txts
+  #{mmoduleName} <- parse#{capModname} settings val
+  helper #{mmoduleName} txts
   where
     helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
     helper a [] = do
@@ -101,9 +101,9 @@ parseUnresolved#{capModname}Fields settings txts val = do
     unresolvedFn :: [String] -> String
     unresolvedFn field =
       [i|
-$(genParserUnresolveds "#{moduleName}" "#{show field}")
+$(genParserUnresolveds "#{mmoduleName}" "#{show field}")
 
-$(genProviderUnresolveds "#{moduleName}" "#{show field}")
+$(genProviderUnresolveds "#{mmoduleName}" "#{show field}")
 
 |]
     unresolvedFns :: [String]
@@ -116,13 +116,13 @@ $(genProviderUnresolveds "#{moduleName}" "#{show field}")
         then mempty
         else unresolvedFns1
     capModname :: String
-    capModname = capitalize moduleName
+    capModname = capitalize mmoduleName
     genField :: String -> String
     genField field =
       [i|
-$(genParser "#{moduleName}" "#{field}")
+$(genParser "#{mmoduleName}" "#{field}")
 
-$(genProvider "#{moduleName}" "#{field}")
+$(genProvider "#{mmoduleName}" "#{field}")
 
 |]
     genFields :: [String]
@@ -132,9 +132,9 @@ $(genProvider "#{moduleName}" "#{field}")
     unresolvedField :: String -> String
     unresolvedField field =
       [i|
-$(genParserUnresolved "#{moduleName}" "#{field}")
+$(genParserUnresolved "#{mmoduleName}" "#{field}")
 
-$(genProviderUnresolved "#{moduleName}" "#{field}")
+$(genProviderUnresolved "#{mmoduleName}" "#{field}")
 |]
     unres :: [String]
     unres = map unresolvedField unresolvedFields
@@ -151,12 +151,12 @@ $(genProviderUnresolved "#{moduleName}" "#{field}")
 resolve#{capModname}Text :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolve#{capModname}Text settings txt = do
   let fields = resolveFields txt
-  #{moduleName}Fields <- mapM (resolve#{capModname}Field settings) fields
-  pure $ operateFields txt #{moduleName}Fields
+  #{mmoduleName}Fields <- mapM (resolve#{capModname}Field settings) fields
+  pure $ operateFields txt #{mmoduleName}Fields
 
 resolve#{capModname}Field :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 #{generateresolveFieldFns}
-resolve#{capModname}Field settings str = throwM $ InvalidField "#{moduleName}" str
+resolve#{capModname}Field settings str = throwM $ InvalidField "#{mmoduleName}" str
 |]
     generateresolveFieldFn :: String -> String
     generateresolveFieldFn field =
@@ -169,9 +169,9 @@ resolve#{capModname}Field settings undefined =
     generateNestedField :: [String] -> String
     generateNestedField field =
       [i|
-$(genParsers "#{moduleName}" #{show field})
+$(genParsers "#{mmoduleName}" #{show field})
 
-$(genProviders "#{moduleName}" #{show field})
+$(genProviders "#{mmoduleName}" #{show field})
 
 |]
     generateresolveFieldFnsString :: String
@@ -193,14 +193,14 @@ parseUnresolved#{capModname}Field ::
   -> Value
   -> Parser (Unresolved a)
 parseUnresolved#{capModname}Field settings txt val = do
-  #{moduleName} <- parse#{capModname} settings val
-  field <- #{moduleName} .:? txt .!= mempty
+  #{mmoduleName} <- parse#{capModname} settings val
+  field <- #{mmoduleName} .:? txt .!= mempty
   pure $ pure field
 |]
 
 generateModule :: ModuleInfo -> IO ()
 generateModule m@ModuleInfo {..} = do
-  let fname = (capitalize moduleName) <.> "hs"
+  let fname = (capitalize mmoduleName) <.> "hs"
       dat = moduleData m
   writeFile ("../src/Faker/Provider/" <> fname) dat
 

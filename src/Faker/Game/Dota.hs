@@ -87,3 +87,5 @@ $(generateFakeFields "dota" ["underlord", "quote"])
 $(generateFakeFields "dota" ["undying", "quote"])
 
 $(generateFakeFields "dota" ["wraith_king", "quote"])
+
+$(generateFakeFields "dota" ["meepo", "quote"])
