@@ -38,6 +38,9 @@ spec = do
     it "Dota" $ do
       item <- generate GD.hero
       item `shouldSatisfy` isText
+    it "Dota Quote" $ do
+      item <- generate GD.meepoQuote
+      item `shouldSatisfy` isText
     it "ElderScrolls" $ do
       item <- generate GE.race
       item `shouldSatisfy` isText

@@ -203,3 +203,7 @@ $(genProviders "dota" ["undying", "quote"])
 $(genParsers "dota" ["wraith_king", "quote"])
 
 $(genProviders "dota" ["wraith_king", "quote"])
+
+$(genParsers "dota" ["meepo", "quote"])
+
+$(genProviders "dota" ["meepo", "quote"])
