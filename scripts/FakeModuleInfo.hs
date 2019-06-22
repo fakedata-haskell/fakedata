@@ -3,7 +3,7 @@ module FakeModuleInfo where
 data ModuleInfo =
   ModuleInfo
     { mmoduleName :: String -- eg: buffy
-    , jsonField :: String
+    , jsonField :: String -- ^ Field after en.faker
     , fields :: [String]
     , unresolvedFields :: [String]
     , nestedFields :: [[String]]
@@ -1611,5 +1611,21 @@ finance =
     , unresolvedNestedFields = []
     }
 
+opera :: ModuleInfo
+opera =
+  ModuleInfo
+    { mmoduleName = "opera"
+    , jsonField = "opera"
+    , fields = []
+    , unresolvedFields = []
+    , nestedFields =
+        [ ["italian", "by_giuseppe_verdi"]
+        , ["italian", "by_gioacchino_rossini"]
+        , ["italian", "by_gaetano_donizetti"]
+        , ["italian", "by_vincenzo_bellini"]
+        ]
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = dota
+currentOne = opera

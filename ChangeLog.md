@@ -3,6 +3,7 @@
 ## 0.2.2
 
 * Add meepoQuote function to the module Faker.Game.Dota
+* Add Faker.Music.Opera module
 
 ## 0.2.1
 

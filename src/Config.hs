@@ -194,6 +194,7 @@ data SourceData
   | WorldOfWarcraft
   | Yoda
   | Zelda
+  | Opera
   | CustomSourceEnglish String
 
 sourceFile :: SourceData -> FilePath
@@ -342,6 +343,7 @@ sourceFile WorldOfWarcraft = "world_of_warcraft"
 sourceFile Yoda = "yoda"
 sourceFile Zelda = "zelda"
 sourceFile Basketball = "basketball"
+sourceFile Opera = "opera"
 
 mapSource :: Text -> Name
 mapSource "horse" = 'Horse
@@ -489,6 +491,7 @@ mapSource "worldOfWarcraft" = 'WorldOfWarcraft
 mapSource "yoda" = 'Yoda
 mapSource "zelda" = 'Zelda
 mapSource "measurement" = 'Measurement
+mapSource "opera" = 'Opera
 mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath
