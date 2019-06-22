@@ -4,6 +4,7 @@
 
 * Add meepoQuote function to the module Faker.Game.Dota
 * Add Faker.Music.Opera module
+* Update fake data source
 
 ## 0.2.1
 
