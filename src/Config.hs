@@ -196,6 +196,7 @@ data SourceData
   | Zelda
   | Opera
   | CustomSourceEnglish String
+  deriving (Show)
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"

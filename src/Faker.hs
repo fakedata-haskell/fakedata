@@ -19,6 +19,8 @@ module Faker
   , getRandomGen
   , getLocale
   , getDeterministic
+  , getCache
+  , setCache
     -- * Generators
   , generate
   , generateWithSettings
@@ -27,17 +29,25 @@ module Faker
 import Control.Exception (Exception)
 import Control.Monad (ap)
 import Control.Monad.IO.Class
+import qualified Data.HashMap.Strict as HM
+import Data.IORef
 import Data.Text (Text)
 import Data.Typeable
+import Data.Vector (Vector)
 import System.Random (StdGen, mkStdGen, newStdGen, split)
 
-data FakerSettings = FakerSettings
-  { fslocale :: Text -- ^ Locale settings for your fake data source.
-  , fsrandomGen :: StdGen -- ^ Standard random generator
-  , fsDeterministic :: Bool -- ^ Controls whether you want
+data FakerSettings =
+  FakerSettings
+    { fslocale :: Text -- ^ Locale settings for your fake data source.
+    , fsrandomGen :: StdGen -- ^ Standard random generator
+    , fsDeterministic :: Bool -- ^ Controls whether you want
                             -- deterministic out. This overrides
                             -- fsrandomGen.
-  } deriving (Show)
+    , fsCache :: IORef (HM.HashMap (String, String, Text) (Vector Text)) -- String corresponds to Show instance of sourceData
+    }
+
+instance Show FakerSettings where
+  show _ = "fs"
 
 data FakerException
   = InvalidLocale String -- ^ This is thrown when it is not able to
@@ -57,7 +67,11 @@ instance Exception FakerException
 defaultFakerSettings :: FakerSettings
 defaultFakerSettings =
   FakerSettings
-    {fslocale = "en", fsrandomGen = (mkStdGen 10000), fsDeterministic = True}
+    { fslocale = "en"
+    , fsrandomGen = (mkStdGen 10000)
+    , fsDeterministic = True
+    , fsCache = error "defaultFakerSettings: Cache not initialized"
+    }
 
 -- | Sets the locale. Note that for any other locale apart from
 -- \"en\", you need to make sure that the data is acutally present. In
@@ -92,7 +106,6 @@ getLocale FakerSettings {..} = fslocale
 -- λ> generateWithSettings (setDeterministic defaultFakerSettings) FN.name
 -- "Antony Langosh"
 -- @
-
 setDeterministic :: FakerSettings -> FakerSettings
 setDeterministic fs = fs {fsDeterministic = True}
 
@@ -105,7 +118,6 @@ setDeterministic fs = fs {fsDeterministic = True}
 -- λ> generateWithSettings (setNonDeterministic defaultFakerSettings) FN.name
 -- "Rudy Dickinson II"
 -- @
-
 setNonDeterministic :: FakerSettings -> FakerSettings
 setNonDeterministic fs = fs {fsDeterministic = False}
 
@@ -114,11 +126,20 @@ setNonDeterministic fs = fs {fsDeterministic = False}
 getDeterministic :: FakerSettings -> Bool
 getDeterministic FakerSettings {..} = fsDeterministic
 
+getCache ::
+     FakerSettings -> IO (HM.HashMap (String, String, Text) (Vector Text))
+getCache FakerSettings {..} = readIORef fsCache
+
+setCache ::
+     HM.HashMap (String, String, Text) (Vector Text) -> FakerSettings -> IO ()
+setCache cache fs = writeIORef (fsCache fs) cache
+
 -- | Fake data type. This is the type you will be using to produce
 -- fake values.
-newtype Fake a = Fake
-  { unFake :: FakerSettings -> IO a
-  }
+newtype Fake a =
+  Fake
+    { unFake :: FakerSettings -> IO a
+    }
 
 instance Functor Fake where
   fmap :: (a -> b) -> Fake a -> Fake b
@@ -160,7 +181,9 @@ instance MonadIO Fake where
 -- "Antony Langosh"
 -- @
 generate :: Fake a -> IO a
-generate (Fake f) = f defaultFakerSettings
+generate (Fake f) = do
+  cache <- newIORef HM.empty
+  f $ defaultFakerSettings {fsCache = cache}
 
 -- | Generate fake value with supplied 'FakerSettings'
 --

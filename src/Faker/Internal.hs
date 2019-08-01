@@ -5,9 +5,11 @@
 -- | Internal module
 module Faker.Internal where
 
+import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Char (toUpper)
+import qualified Data.HashMap.Strict as HM
 import Data.Monoid ((<>))
 import qualified Data.Text as T
 import Data.Text (Text, strip)
@@ -16,9 +18,11 @@ import Data.Vector (Vector, (!))
 import Faker
 import System.Random
 
-newtype Unresolved a = Unresolved
-  { unresolvedField :: a
-  } deriving (Functor)
+newtype Unresolved a =
+  Unresolved
+    { unresolvedField :: a
+    }
+  deriving (Functor)
 
 instance Applicative Unresolved where
   pure = Unresolved
@@ -43,6 +47,17 @@ randomVec ::
   -> m a
 randomVec settings provider = do
   items <- provider settings
+  let itemsLen = V.length items
+      stdGen = getRandomGen settings
+      (index, _) = randomR (0, itemsLen - 1) stdGen
+  if itemsLen == 0
+    then throwM $ NoDataFound settings
+    else pure $ items ! index
+
+randomVecM ::
+     (MonadThrow m) => FakerSettings -> (FakerSettings -> Vector a) -> m a
+randomVecM settings provider = do
+  let items = provider settings
   let itemsLen = V.length items
       stdGen = getRandomGen settings
       (index, _) = randomR (0, itemsLen - 1) stdGen
@@ -244,3 +259,17 @@ refinedString xs = aux xs []
 
 refinedText :: Text -> Text
 refinedText = T.pack . refinedString . T.unpack
+
+presentInCache ::
+     SourceData -> String -> FakerSettings -> IO (Maybe (Vector Text))
+presentInCache sdata field settings = do
+  let key = (show sdata, field, getLocale settings)
+  hmap <- getCache settings
+  pure $ HM.lookup key hmap
+
+insertToCache :: SourceData -> String -> FakerSettings -> (Vector Text) -> IO ()
+insertToCache sdata field settings vec = do
+  let key = (show sdata, field, getLocale settings)
+  hmap <- getCache settings
+  let hmap2 = HM.insert key vec hmap
+  setCache hmap2 settings
