@@ -82,3 +82,33 @@ that needs to be done:
 * Change `Config.hs` appropriately.
 * Generate Provider and Faker module
 * Profit!
+
+## Benchmark
+
+### fakedata version: 0.2.2
+
+benchmarked God benchmark/single god
+time                 160.7 μs   (160.1 μs .. 161.4 μs)
+                     1.000 R²   (0.999 R² .. 1.000 R²)
+mean                 159.9 μs   (159.4 μs .. 160.6 μs)
+std dev              1.951 μs   (1.444 μs .. 2.706 μs)
+
+benchmarking God benchmark/thousand gods ... took 9.288 s, total 56 iterations
+benchmarked God benchmark/thousand gods
+time                 171.1 ms   (166.1 ms .. 174.5 ms)
+                     0.999 R²   (0.998 R² .. 1.000 R²)
+mean                 168.3 ms   (166.9 ms .. 169.7 ms)
+std dev              2.200 ms   (1.445 ms .. 3.662 ms)
+
+benchmarked Person benchmark/single person
+time                 75.17 ms   (74.04 ms .. 76.01 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 77.05 ms   (76.34 ms .. 78.35 ms)
+std dev              1.610 ms   (794.0 μs .. 2.732 ms)
+
+benchmarking Person benchmark/10 persons ... took 49.42 s, total 56 iterations
+benchmarked Person benchmark/10 persons
+time                 905.0 ms   (884.2 ms .. 921.1 ms)
+                     0.999 R²   (0.998 R² .. 1.000 R²)
+mean                 897.7 ms   (892.4 ms .. 904.5 ms)
+std dev              10.22 ms   (7.192 ms .. 13.69 ms)

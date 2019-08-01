@@ -33,6 +33,7 @@ dependencies:
 - yaml
 - directory
 - filepath
+- unordered-containers
 - containers
 - template-haskell
 - bytestring
@@ -55,3 +56,14 @@ tests:
     - vector
     - hspec-discover
     - time
+
+benchmarks:
+  fakebench:
+    main: main.hs
+    source-dirs: bench
+    dependencies:
+    - fakedata
+    - gauge
+    - deepseq
+    ghc-options:
+    - -O2
