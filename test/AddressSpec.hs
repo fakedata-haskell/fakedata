@@ -22,7 +22,7 @@ spec :: Spec
 spec = do
   describe "Address" $ do
     it "parses countries for defaultSettings" $ do
-      ctries <- countriesProvider defaultFakerSettings
+      ctries <- countryProvider defaultFakerSettings
       ctries `shouldSatisfy` (\x -> V.length x >= 40)
     it "parses countryByCode for defaultSettings" $ do
       ctries <- countryByCodeProvider defaultFakerSettings
@@ -31,7 +31,7 @@ spec = do
       locales <- populateLocales
       let settings :: [FakerSettings] =
             map (\l -> setLocale l defaultFakerSettings) locales
-          ctries :: IO [V.Vector Text] = mapM countriesProvider settings
+          ctries :: IO [V.Vector Text] = mapM countryProvider settings
       ctries' :: [V.Vector Text] <- ctries
       let exp :: [Bool] = map (\x -> V.length x >= 10) ctries'
       True `shouldBe` (all (\x -> x == True) exp)
@@ -199,7 +199,7 @@ spec = do
         c1 `shouldNotBe` c2
     describe "Empty data sources" $ do
       it "For ee locale, countries is empty" $ do
-        ctries <- countriesProvider (setLocale "ee" defaultFakerSettings)
+        ctries <- countryProvider (setLocale "ee" defaultFakerSettings)
         ctries `shouldSatisfy` (\x -> V.length x == 0)
       it "For ee locale, throws exception" $ do
         let action =

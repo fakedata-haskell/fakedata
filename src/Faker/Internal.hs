@@ -68,7 +68,7 @@ rvec settings vec =
 
 cachedRandomVec ::
      (MonadThrow m, MonadIO m)
-  => SourceData
+  => Text
   -> Text
   -> (FakerSettings -> m (Vector Text))
   -> FakerSettings
@@ -98,7 +98,7 @@ randomVec settings provider = do
 
 cachedRandomUnresolvedVec ::
      (MonadThrow m, MonadIO m)
-  => SourceData
+  => Text
   -> Text
   -> (FakerSettings -> m (Unresolved (Vector Text)))
   -> (FakerSettings -> Text -> m Text)
@@ -310,8 +310,7 @@ refinedString xs = aux xs []
 refinedText :: Text -> Text
 refinedText = T.pack . refinedString . T.unpack
 
-presentInCache ::
-     SourceData -> Text -> FakerSettings -> IO (Maybe (Vector Text))
+presentInCache :: Text -> Text -> FakerSettings -> IO (Maybe (Vector Text))
 presentInCache sdata field settings = do
   let key =
         CacheFieldKey
@@ -319,7 +318,7 @@ presentInCache sdata field settings = do
   hmap <- getCacheField settings
   pure $ HM.lookup key hmap
 
-insertToCache :: SourceData -> Text -> FakerSettings -> (Vector Text) -> IO ()
+insertToCache :: Text -> Text -> FakerSettings -> (Vector Text) -> IO ()
 insertToCache sdata field settings vec = do
   let key =
         CacheFieldKey

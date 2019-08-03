@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Faker.Address where
 
@@ -7,58 +8,58 @@ import Faker
 import Faker.Internal
 import Faker.Internal.Types (SourceData(..))
 import Faker.Provider.Address
+import Faker.TH
 
 country :: Fake Text
-country = Fake (cachedRandomVec Address "country" countriesProvider)
+country = Fake (cachedRandomVec "address" "country" countryProvider)
 
-cityPrefix :: Fake Text
-cityPrefix = Fake (cachedRandomVec Address "cityPrefix" cityPrefixProvider)
+$(generateFakeField2 "address" "cityPrefix")
 
 citySuffix :: Fake Text
-citySuffix = Fake (cachedRandomVec Address "citySuffix" citySuffixProvider)
+citySuffix = Fake (cachedRandomVec "address" "citySuffix" citySuffixProvider)
 
 countryCode :: Fake Text
-countryCode = Fake (cachedRandomVec Address "citySuffix" countryCodeProvider)
+countryCode = Fake (cachedRandomVec "address" "citySuffix" countryCodeProvider)
 
 countryCodeLong :: Fake Text
 countryCodeLong =
-  Fake (cachedRandomVec Address "citySuffix" countryCodeLongProvider)
+  Fake (cachedRandomVec "address" "citySuffix" countryCodeLongProvider)
 
 buildingNumber :: Fake Text
 buildingNumber =
   Fake
     (cachedRandomUnresolvedVec
-       Address
+       "address"
        "buildingNumber"
        buildingNumberProvider
        resolveAddressText)
 
 communityPrefix :: Fake Text
 communityPrefix =
-  Fake (cachedRandomVec Address "communityPrefix" communityPrefixProvider)
+  Fake (cachedRandomVec "address" "communityPrefix" communityPrefixProvider)
 
 communitySuffix :: Fake Text
 communitySuffix =
-  Fake (cachedRandomVec Address "communitySuffix" communitySuffixProvider)
+  Fake (cachedRandomVec "address" "communitySuffix" communitySuffixProvider)
 
 community :: Fake Text
 community =
   Fake
     (cachedRandomUnresolvedVec
-       Address
+       "address"
        "community"
        communityProvider
        resolveAddressText)
 
 streetSuffix :: Fake Text
 streetSuffix =
-  Fake (cachedRandomVec Address "streetSuffix" streetSuffixProvider)
+  Fake (cachedRandomVec "address" "streetSuffix" streetSuffixProvider)
 
 secondaryAddress :: Fake Text
 secondaryAddress =
   Fake
     (cachedRandomUnresolvedVec
-       Address
+       "address"
        "secondaryAddress"
        secondaryAddressProvider
        resolveAddressText)
@@ -67,30 +68,30 @@ postcode :: Fake Text
 postcode =
   Fake
     (cachedRandomUnresolvedVec
-       Address
+       "address"
        "postcode"
        postcodeProvider
        resolveAddressText)
 
 state :: Fake Text
-state = Fake (cachedRandomVec Address "state" stateProvider)
+state = Fake (cachedRandomVec "address" "state" stateProvider)
 
 stateAbbr :: Fake Text
-stateAbbr = Fake (cachedRandomVec Address "stateAbbr" stateAbbrProvider)
+stateAbbr = Fake (cachedRandomVec "address" "stateAbbr" stateAbbrProvider)
 
 timeZone :: Fake Text
-timeZone = Fake (cachedRandomVec Address "timeZone" timeZoneProvider)
+timeZone = Fake (cachedRandomVec "address" "timeZone" timeZoneProvider)
 
 city :: Fake Text
 city =
   Fake
-    (cachedRandomUnresolvedVec Address "city" cityProvider resolveAddressText)
+    (cachedRandomUnresolvedVec "address" "city" cityProvider resolveAddressText)
 
 streetName :: Fake Text
 streetName =
   Fake
     (cachedRandomUnresolvedVec
-       Address
+       "address"
        "streetName"
        streetNameProvider
        resolveAddressText)
@@ -99,7 +100,7 @@ streetAddress :: Fake Text
 streetAddress =
   Fake
     (cachedRandomUnresolvedVec
-       Address
+       "address"
        "streetAddress"
        streetAddressProvider
        resolveAddressText)
@@ -108,7 +109,7 @@ fullAddress :: Fake Text
 fullAddress =
   Fake
     (cachedRandomUnresolvedVec
-       Address
+       "address"
        "fullAddress"
        fullAddressProvider
        resolveAddressText)

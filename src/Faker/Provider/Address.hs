@@ -126,13 +126,12 @@ parseFullAddress ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
 parseFullAddress settings = parseUnresolvedAddressField settings "full_address"
 
-countriesProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-countriesProvider settings = fetchData settings Address parseCountry
+countryProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+countryProvider settings = fetchData settings Address parseCountry
 
-cityPrefixProvider ::
+addressCityPrefixProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-cityPrefixProvider settings = fetchData settings Address parseCityPrefix
+addressCityPrefixProvider settings = fetchData settings Address parseCityPrefix
 
 citySuffixProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
@@ -233,59 +232,59 @@ resolveAddressText settings txt = do
 resolveAddressField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveAddressField settings field@"community_suffix" =
-  cachedRandomVec Address field communitySuffixProvider settings
+  cachedRandomVec "address" field communitySuffixProvider settings
 resolveAddressField settings field@"community_prefix" =
-  cachedRandomVec Address field communityPrefixProvider settings
+  cachedRandomVec "address" field communityPrefixProvider settings
 resolveAddressField settings field@"city_prefix" =
-  cachedRandomVec Address field cityPrefixProvider settings
+  cachedRandomVec "address" field addressCityPrefixProvider settings
 resolveAddressField settings field@"Name.first_name" =
   resolveNameField settings "first_name"
 resolveAddressField settings field@"city_suffix" =
-  cachedRandomVec Address field citySuffixProvider settings
+  cachedRandomVec "address" field citySuffixProvider settings
 resolveAddressField settings field@"Name.last_name" =
   resolveNameField settings "last_name"
 resolveAddressField settings field@"street_suffix" =
-  cachedRandomVec Address field streetSuffixProvider settings
+  cachedRandomVec "address" field streetSuffixProvider settings
 resolveAddressField settings field@"building_number" =
   cachedRandomUnresolvedVec
-    Address
+    "address"
     field
     buildingNumberProvider
     resolveAddressText
     settings
 resolveAddressField settings field@"street_name" =
   cachedRandomUnresolvedVec
-    Address
+    "address"
     field
     streetNameProvider
     resolveAddressText
     settings
 resolveAddressField settings field@"street_address" =
   cachedRandomUnresolvedVec
-    Address
+    "address"
     field
     streetAddressProvider
     resolveAddressText
     settings
 resolveAddressField settings field@"city" =
   cachedRandomUnresolvedVec
-    Address
+    "address"
     field
     cityProvider
     resolveAddressText
     settings
 resolveAddressField settings field@"state_abbr" =
-  cachedRandomVec Address field stateAbbrProvider settings
+  cachedRandomVec "address" field stateAbbrProvider settings
 resolveAddressField settings field@"zip_code" =
   cachedRandomUnresolvedVec
-    Address
+    "address"
     field
     postcodeProvider
     resolveAddressText
     settings
 resolveAddressField settings field@"secondary_address" =
   cachedRandomUnresolvedVec
-    Address
+    "address"
     field
     secondaryAddressProvider
     resolveAddressText

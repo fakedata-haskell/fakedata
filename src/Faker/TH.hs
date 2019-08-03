@@ -2,7 +2,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Faker.TH where
+module Faker.TH
+  ( generateFakeField
+  , generateFakeFields
+  , generateFakeFieldUnresolved
+  , generateFakeFieldUnresolveds
+  -- , generateFakeField2
+  ) where
 
 import Config
 import Control.Monad.Catch
@@ -30,6 +36,27 @@ lowerTitle (x:xs) = (toLower x) : xs
 -- $(genrateFakeField "address" "state")
 -- The above splice will generate a function named state
 -- Assumes the presence of the function named "addressStateProvider"
+-- generateFakeField :: String -> String -> Q [Dec]
+-- generateFakeField entityName fieldName = do
+--   let funName =
+--         mkName $
+--         case refinedString fieldName of
+--           "type" -> "type'"
+--           other -> other
+--       pfn = refinedString $ entityName <> (stringTitle fieldName) <> "Provider"
+--   providerName <- lookupValueName pfn
+--   providerFn <-
+--     case providerName of
+--       Nothing ->
+--         fail $ "generateFakefield: Function " <> pfn <> " not found in scope"
+--       Just fn -> return fn
+--   return $
+--     [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))
+--     , ValD
+--         (VarP funName)
+--         (NormalB (AppE (ConE 'Fake) (AppE (VarE 'resolver) (VarE providerFn))))
+--         []
+--     ]
 generateFakeField :: String -> String -> Q [Dec]
 generateFakeField entityName fieldName = do
   let funName =
@@ -48,7 +75,14 @@ generateFakeField entityName fieldName = do
     [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))
     , ValD
         (VarP funName)
-        (NormalB (AppE (ConE 'Fake) (AppE (VarE 'resolver) (VarE providerFn))))
+        (NormalB
+           (AppE
+              (ConE 'Fake)
+              (AppE
+                 (AppE
+                    (AppE (VarE 'cachedRandomVec) (LitE (StringL entityName)))
+                    (LitE (StringL fieldName)))
+                 (VarE providerFn))))
         []
     ]
 

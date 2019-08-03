@@ -19,3 +19,6 @@ spec = do
       it "proper case conversion" $ do
         let str = "hello_world"
         (refinedString str) `shouldBe` "helloWorld"
+      -- it "Starting case check" $ do
+      --   let str = "HelloWorld"
+      --   (refinedString str) `shouldBe` "helloWorld"
