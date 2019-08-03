@@ -7,18 +7,20 @@ import Faker.Internal
 import Faker.Provider.Ancient
 
 god :: Fake Text
-god =
-  Fake
-    (\settings -> do
-       val <- presentInCache Ancient "god" settings
-       case val of
-         Nothing -> do
-           dat <- ancientGodProvider settings
-           insertToCache Ancient "god" settings dat
-           randomVec settings (\_ -> pure dat)
-         Just vec -> do
-           randomVec settings (\_ -> pure vec))
+god = Fake (\settings -> randomVec settings ancientGodProvider)
 
+-- god :: Fake Text
+-- god =
+--   Fake
+--     (\settings -> do
+--        val <- presentInCache Ancient "god" settings
+--        case val of
+--          Nothing -> do
+--            dat <- ancientGodProvider settings
+--            insertToCache Ancient "god" settings dat
+--            randomVec settings (\_ -> pure dat)
+--          Just vec -> do
+--            randomVec settings (\_ -> pure vec))
 primordial :: Fake Text
 primordial = Fake (\settings -> randomVec settings ancientPrimordialProvider)
 

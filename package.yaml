@@ -34,6 +34,7 @@ dependencies:
 - directory
 - filepath
 - unordered-containers
+- hashable
 - containers
 - template-haskell
 - bytestring

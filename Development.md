@@ -112,3 +112,22 @@ time                 905.0 ms   (884.2 ms .. 921.1 ms)
                      0.999 R²   (0.998 R² .. 1.000 R²)
 mean                 897.7 ms   (892.4 ms .. 904.5 ms)
 std dev              10.22 ms   (7.192 ms .. 13.69 ms)
+
+----------------------------------
+
+Only doing file bytestring benchmarks:
+
+benchmarked God benchmark/single god
+time                 170.0 μs   (169.4 μs .. 171.0 μs)
+                     1.000 R²   (0.999 R² .. 1.000 R²)
+mean                 168.6 μs   (168.2 μs .. 169.3 μs)
+std dev              1.691 μs   (1.275 μs .. 2.420 μs)
+
+benchmarking God benchmark/thousand gods ... took 6.836 s, total 56 iterations
+benchmarked God benchmark/thousand gods
+time                 124.6 ms   (124.4 ms .. 124.8 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 124.1 ms   (124.0 ms .. 124.3 ms)
+std dev              285.5 μs   (228.8 μs .. 362.9 μs)
+
+Only doing file yaml  benchmarks:

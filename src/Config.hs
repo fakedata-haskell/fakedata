@@ -13,15 +13,17 @@ module Config
 import Control.Monad (filterM)
 import Control.Monad.Catch
 import Control.Monad.IO.Class
+import qualified Data.ByteString as BS
+import qualified Data.HashMap.Strict as HM
 import Data.Monoid ((<>))
 import Data.Text (Text, pack, unpack)
 import Data.Yaml
 import Faker
+import Faker.Internal.Types (CacheFileKey(..), SourceData(..))
 import Language.Haskell.TH (Name)
 import Paths_fakedata (getDataFileName)
 import System.Directory (doesFileExist, listDirectory)
-import System.FilePath (takeExtension, takeFileName)
-import System.FilePath
+import System.FilePath ((<.>), (</>), takeExtension, takeFileName)
 
 localesDirectory :: FilePath
 localesDirectory = "faker/lib/locales"
@@ -47,156 +49,6 @@ populateLocales = do
   files <- listLocaleFiles localesDirectory
   let files' = map (pack . takeFileName) files
   pure files'
-
-data SourceData
-  = Address
-  | Name
-  | Ancient
-  | Animal
-  | App
-  | Appliance
-  | ATHF
-  | Artist
-  | Basketball
-  | BTTF
-  | Bank
-  | Beer
-  | BoJackHorseman
-  | Book
-  | BossaNova
-  | BreakingBad
-  | Buffy
-  | Business
-  | Cannabis
-  | Cat
-  | ChuckNorris
-  | Code
-  | Coffee
-  | Coin
-  | Color
-  | Commerce
-  | Community
-  | Company
-  | Construction
-  | Cosmere
-  | Compass
-  | CryptoCoin
-  | CultureSeries
-  | Currency
-  | DcComics
-  | Demographic
-  | Dessert
-  | Device
-  | Dog
-  | Dota
-  | DrWho
-  | DragonBall
-  | DumbAndDumber
-  | Dune
-  | Educator
-  | ElderScrolls
-  | ElectricalComponents
-  | Esport
-  | Fallout
-  | FamilyGuy
-  | File
-  | Finance
-  | Food
-  | Football
-  | FreshPrinceOfBelAir
-  | Friends
-  | FunnyName
-  | GameOfThrones
-  | Gender
-  | GhostBusters
-  | GratefulDead
-  | GreekPhilosophers
-  | Hacker
-  | HalfLife
-  | HarryPotter
-  | Heroes
-  | HeroesOfTheStorm
-  | HeyArnold
-  | Hipster
-  | HitchhikersGuideToTheGalaxy
-  | Hobbit
-  | House
-  | HowIMetYourMother
-  | IdNumber
-  | IndustrySegments
-  | Internet
-  | Invoice
-  | Job
-  | Kpop
-  | LeagueOfLegends
-  | Lebowski
-  | LordOfTheRings
-  | Lorem
-  | LoveCraft
-  | Markdown
-  | Marketing
-  | Measurement
-  | MichaelScott
-  | Military
-  | Movie
-  | Music
-  | Myst
-  | Nation
-  | NatoPhoneticAlphabet
-  | NewGirl
-  | OnePiece
-  | Horse
-  | OverWatch
-  | ParksAndRec
-  | Phish
-  | PhoneNumber
-  | Pokemon
-  | PrincessBride
-  | ProgrammingLanguage
-  | Quote
-  | Relationship
-  | Restaurant
-  | RickAndMorty
-  | RockBand
-  | Rupaul
-  | Science
-  | Seinfeld
-  | Shakespeare
-  | SiliconValley
-  | Simpsons
-  | SlackEmoji
-  | SonicTheHedgehog
-  | Source
-  | SouthPark
-  | Space
-  | StarTrek
-  | StarWars
-  | StarGate
-  | StrangerThings
-  | Stripe
-  | Subscription
-  | SuperSmashBros
-  | SuperHero
-  | SwordArtOnline
-  | Team
-  | TheExpanse
-  | TheItCrowd
-  | TheThickOfIt
-  | TwinPeaks
-  | UmphreysMcgee
-  | University
-  | VForVendetta
-  | Vehicle
-  | VentureBros
-  | Verbs
-  | Witcher
-  | WorldCup
-  | WorldOfWarcraft
-  | Yoda
-  | Zelda
-  | Opera
-  | CustomSourceEnglish String
-  deriving (Show)
 
 sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
@@ -519,7 +371,16 @@ fetchData ::
   -> (FakerSettings -> Value -> Parser a)
   -> m a
 fetchData settings sdata parser = do
-  let fname = guessSourceFile sdata (getLocale settings)
-  afile <- getSourceFile fname
-  yaml <- decodeFileThrow afile
-  parseMonad (parser settings) yaml
+  let locale = getLocale settings
+      fname = guessSourceFile sdata locale
+      ckey = CacheFileKey {cfkSource = sdata, cfkLocale = locale}
+  cache <- liftIO $ getCacheFile settings
+  case (HM.lookup ckey cache) of
+    Nothing -> do
+      afile <- getSourceFile fname
+      bs <- liftIO $ BS.readFile afile
+      yaml <- decodeThrow bs
+      let nhash = HM.insert ckey yaml cache
+      liftIO $ setCacheFile nhash settings
+      parseMonad (parser settings) yaml
+    Just yaml -> parseMonad (parser settings) yaml
