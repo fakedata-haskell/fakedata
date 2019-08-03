@@ -18,10 +18,10 @@ module Faker.Internal
   , refinedText
   , operateFields
   , resolveFields
+  , cachedRandomVec
+  , cachedRandomUnresolvedVec
   ) where
 
--- this needs to be cached
--- this neesd to be cached
 import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
@@ -50,6 +50,8 @@ instance Monad Unresolved where
   return = pure
   (Unresolved f) >>= f1 = f1 f
 
+-- These are the functions which needs to be remodified
+-- rvec, randomVec, randomUnresolvedvec, randomUnresolvedVecwithoutvector, unresolvedResolver, unresolfvedResolverWithoutVector
 rvec :: (MonadThrow m, MonadIO m) => FakerSettings -> Vector a -> m a
 rvec settings vec =
   let itemsLen = V.length vec
@@ -57,6 +59,22 @@ rvec settings vec =
    in if itemsLen == 0
         then throwM $ NoDataFound settings
         else pure $ vec ! index
+
+cachedRandomVec ::
+     (MonadThrow m, MonadIO m)
+  => SourceData
+  -> Text
+  -> (FakerSettings -> m (Vector Text))
+  -> FakerSettings
+  -> m Text
+cachedRandomVec sdata field provider settings = do
+  val <- liftIO $ presentInCache sdata field settings
+  case val of
+    Nothing -> do
+      dat <- provider settings
+      liftIO $ insertToCache sdata field settings dat
+      randomVec settings (\_ -> pure dat)
+    Just vec -> randomVec settings (\_ -> pure vec)
 
 randomVec ::
      (MonadThrow m, MonadIO m)
@@ -71,6 +89,25 @@ randomVec settings provider = do
   if itemsLen == 0
     then throwM $ NoDataFound settings
     else pure $ items ! index
+
+cachedRandomUnresolvedVec ::
+     (MonadThrow m, MonadIO m)
+  => SourceData
+  -> Text
+  -> (FakerSettings -> m (Unresolved (Vector Text)))
+  -> (FakerSettings -> Text -> m Text)
+  -> FakerSettings
+  -> m Text
+cachedRandomUnresolvedVec sdata field provider resolverFn settings = do
+  val <- liftIO $ presentInCache sdata field settings
+  case val of
+    Nothing -> do
+      dat <- provider settings
+      liftIO $ insertToCache sdata field settings (unresolvedField dat)
+      resolveUnresolved settings dat resolverFn
+    Just vec -> do
+      let unres = Unresolved {unresolvedField = vec}
+      randomUnresolvedVec settings provider resolverFn
 
 randomUnresolvedVec ::
      (MonadThrow m, MonadIO m)
@@ -268,7 +305,7 @@ refinedText :: Text -> Text
 refinedText = T.pack . refinedString . T.unpack
 
 presentInCache ::
-     SourceData -> String -> FakerSettings -> IO (Maybe (Vector Text))
+     SourceData -> Text -> FakerSettings -> IO (Maybe (Vector Text))
 presentInCache sdata field settings = do
   let key =
         CacheFieldKey
@@ -276,7 +313,7 @@ presentInCache sdata field settings = do
   hmap <- getCacheField settings
   pure $ HM.lookup key hmap
 
-insertToCache :: SourceData -> String -> FakerSettings -> (Vector Text) -> IO ()
+insertToCache :: SourceData -> Text -> FakerSettings -> (Vector Text) -> IO ()
 insertToCache sdata field settings vec = do
   let key =
         CacheFieldKey

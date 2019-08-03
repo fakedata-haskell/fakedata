@@ -39,11 +39,11 @@ main = defaultMain benchs
           [ bench "single god" $ nfIO (generate singleGod)
           , bench "thousand gods" $ nfIO (generate thousandGod)
           ]
-      -- , bgroup
-      --     "Person benchmark"
-      --     [ bench "single person" $ nfIO (generate fakePerson)
-      --     , bench "10 persons" $ nfIO (generate $ listOf 10 fakePerson)
-      --     ]
+      , bgroup
+          "Person benchmark"
+          [ bench "single person" $ nfIO (generate fakePerson)
+          , bench "10 persons" $ nfIO (generate $ listOf 10 fakePerson)
+          ]
       ]
       where
         singleGod :: Fake Text

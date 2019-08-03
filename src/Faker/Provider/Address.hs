@@ -232,31 +232,62 @@ resolveAddressText settings txt = do
 
 resolveAddressField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveAddressField settings "community_suffix" =
-  randomVec settings communitySuffixProvider
-resolveAddressField settings "community_prefix" =
-  randomVec settings communityPrefixProvider
-resolveAddressField settings "city_prefix" =
-  randomVec settings cityPrefixProvider
-resolveAddressField settings "Name.first_name" =
+resolveAddressField settings field@"community_suffix" =
+  cachedRandomVec Address field communitySuffixProvider settings
+resolveAddressField settings field@"community_prefix" =
+  cachedRandomVec Address field communityPrefixProvider settings
+resolveAddressField settings field@"city_prefix" =
+  cachedRandomVec Address field cityPrefixProvider settings
+resolveAddressField settings field@"Name.first_name" =
   resolveNameField settings "first_name"
-resolveAddressField settings "city_suffix" =
-  randomVec settings citySuffixProvider
-resolveAddressField settings "Name.last_name" =
+resolveAddressField settings field@"city_suffix" =
+  cachedRandomVec Address field citySuffixProvider settings
+resolveAddressField settings field@"Name.last_name" =
   resolveNameField settings "last_name"
-resolveAddressField settings "street_suffix" =
-  randomVec settings streetSuffixProvider
-resolveAddressField settings "building_number" =
-  randomUnresolvedVec settings buildingNumberProvider resolveAddressText
-resolveAddressField settings "street_name" =
-  randomUnresolvedVec settings streetNameProvider resolveAddressText
-resolveAddressField settings "street_address" =
-  randomUnresolvedVec settings streetAddressProvider resolveAddressText
-resolveAddressField settings "city" =
-  randomUnresolvedVec settings cityProvider resolveAddressText
-resolveAddressField settings "state_abbr" = randomVec settings stateAbbrProvider
-resolveAddressField settings "zip_code" =
-  randomUnresolvedVec settings postcodeProvider resolveAddressText
-resolveAddressField settings "secondary_address" =
-  randomUnresolvedVec settings secondaryAddressProvider resolveAddressText
+resolveAddressField settings field@"street_suffix" =
+  cachedRandomVec Address field streetSuffixProvider settings
+resolveAddressField settings field@"building_number" =
+  cachedRandomUnresolvedVec
+    Address
+    field
+    buildingNumberProvider
+    resolveAddressText
+    settings
+resolveAddressField settings field@"street_name" =
+  cachedRandomUnresolvedVec
+    Address
+    field
+    streetNameProvider
+    resolveAddressText
+    settings
+resolveAddressField settings field@"street_address" =
+  cachedRandomUnresolvedVec
+    Address
+    field
+    streetAddressProvider
+    resolveAddressText
+    settings
+resolveAddressField settings field@"city" =
+  cachedRandomUnresolvedVec
+    Address
+    field
+    cityProvider
+    resolveAddressText
+    settings
+resolveAddressField settings field@"state_abbr" =
+  cachedRandomVec Address field stateAbbrProvider settings
+resolveAddressField settings field@"zip_code" =
+  cachedRandomUnresolvedVec
+    Address
+    field
+    postcodeProvider
+    resolveAddressText
+    settings
+resolveAddressField settings field@"secondary_address" =
+  cachedRandomUnresolvedVec
+    Address
+    field
+    secondaryAddressProvider
+    resolveAddressText
+    settings
 resolveAddressField settings str = throwM $ InvalidField "address" str
