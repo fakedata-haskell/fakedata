@@ -8,11 +8,12 @@ import qualified Data.Map as M
 import Data.Text hiding (all, map)
 import qualified Data.Text as T
 import qualified Data.Vector as V
-import Faker
+import Faker hiding (defaultFakerSettings)
 import Faker.Address
 import Faker.Internal
 import Faker.Provider.Address
 import Test.Hspec
+import TestImport
 
 fakerException :: Selector FakerException
 fakerException = const True

@@ -12,9 +12,10 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Data.Vector (Vector)
 import qualified Data.Vector as V
-import Faker
+import Faker hiding (defaultFakerSettings)
 import Faker.Name
 import Test.Hspec
+import TestImport
 
 isText :: Text -> Bool
 isText x = T.length x >= 1

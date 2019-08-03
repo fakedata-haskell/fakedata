@@ -33,5 +33,4 @@ spec = do
       item `shouldSatisfy` isText
     it "italianByVincenzoBellini" $ do
       item <- generate italianByVincenzoBellini
-      print item
       item `shouldSatisfy` isText

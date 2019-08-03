@@ -11,10 +11,11 @@ import Data.Text hiding (all, map)
 import qualified Data.Text as T
 import Data.Vector (Vector)
 import qualified Data.Vector as V
-import Faker
+import Faker hiding (defaultFakerSettings)
 import Faker.Internal
 import Faker.Provider.Beer
 import Test.Hspec
+import TestImport
 
 spec :: Spec
 spec = do

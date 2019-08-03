@@ -11,7 +11,7 @@ import Data.Text hiding (all, map)
 import qualified Data.Text as T
 import Data.Vector (Vector)
 import qualified Data.Vector as V
-import Faker
+import Faker hiding (defaultFakerSettings)
 import Faker.Book.Dune
 import Faker.Coffee
 import Faker.Commerce
@@ -21,6 +21,7 @@ import Faker.Internal
 import Faker.Provider.Coffee
 import qualified Faker.TvShow.DumbAndDumber as DD
 import Test.Hspec
+import TestImport
 
 spec :: Spec
 spec = do

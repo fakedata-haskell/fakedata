@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Faker.Ancient where
 
 import Config
@@ -7,7 +9,7 @@ import Faker.Internal
 import Faker.Provider.Ancient
 
 god :: Fake Text
-god = Fake (\settings -> randomVec settings ancientGodProvider)
+god = Fake (cachedRandomVec Ancient "god" ancientGodProvider)
 
 -- god :: Fake Text
 -- god =

@@ -21,8 +21,10 @@ module Faker
   , getDeterministic
   , getCacheField
   , setCacheField
+  , replaceCacheField
   , getCacheFile
   , setCacheFile
+  , replaceCacheFile
     -- * Generators
   , generate
   , generateWithSettings
@@ -137,13 +139,26 @@ getCacheField FakerSettings {..} = readIORef fsCacheField
 
 setCacheField ::
      HM.HashMap CacheFieldKey (Vector Text) -> FakerSettings -> IO ()
-setCacheField cache fs = writeIORef (fsCacheField fs) cache
+setCacheField cache fs = do
+  writeIORef (fsCacheField fs) cache
+
+replaceCacheField ::
+     HM.HashMap CacheFieldKey (Vector Text) -> FakerSettings -> IO FakerSettings
+replaceCacheField cache fs = do
+  ref <- newIORef cache
+  pure $ fs {fsCacheField = ref}
 
 getCacheFile :: FakerSettings -> IO (HM.HashMap CacheFileKey Value)
 getCacheFile FakerSettings {..} = readIORef fsCacheFile
 
 setCacheFile :: HM.HashMap CacheFileKey Value -> FakerSettings -> IO ()
 setCacheFile cache fs = writeIORef (fsCacheFile fs) cache
+
+replaceCacheFile ::
+     HM.HashMap CacheFileKey Value -> FakerSettings -> IO FakerSettings
+replaceCacheFile cache fs = do
+  ref <- newIORef cache
+  pure $ fs {fsCacheFile = ref}
 
 -- | Fake data type. This is the type you will be using to produce
 -- fake values.
