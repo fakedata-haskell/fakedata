@@ -64,7 +64,12 @@ resolveAppText settings txt = do
 
 resolveAppField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveAppField settings "Name.name" =
-  randomUnresolvedVec settings nameProvider resolveNameText
+  cachedRandomUnresolvedVec "name" "name" nameProvider resolveNameText settings
 resolveAppField settings "Company.name" =
-  randomUnresolvedVec settings companyNameProvider resolveCompanyText
+  cachedRandomUnresolvedVec
+    "company"
+    "name"
+    companyNameProvider
+    resolveCompanyText
+    settings
 resolveAppField settings str = throwM $ InvalidField "app" str

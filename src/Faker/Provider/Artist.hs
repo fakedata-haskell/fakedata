@@ -31,6 +31,6 @@ parseArtistField settings txt val = do
 parseArtistNames :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseArtistNames settings = parseArtistField settings "names"
 
-artistNameProvider ::
+artistNamesProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-artistNameProvider settings = fetchData settings Artist parseArtistNames
+artistNamesProvider settings = fetchData settings Artist parseArtistNames

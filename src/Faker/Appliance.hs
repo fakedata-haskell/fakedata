@@ -1,12 +1,13 @@
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 module Faker.Appliance where
 
-import Data.Text
-import Faker
-import Faker.Internal
+import Data.Text (Text)
+import Faker (Fake(..))
 import Faker.Provider.Appliance
+import Faker.TH
 
-brand :: Fake Text
-brand = Fake $ resolver applianceBrandProvider
+$(generateFakeField "appliance" "brand")
 
-appliance :: Fake Text
-appliance = Fake $ resolver applianceBrandProvider
+$(generateFakeField "appliance" "equipment")
