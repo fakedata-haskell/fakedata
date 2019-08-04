@@ -1627,5 +1627,60 @@ opera =
     , unresolvedNestedFields = []
     }
 
+ancient :: ModuleInfo
+ancient =
+  ModuleInfo
+    { mmoduleName = "ancient"
+    , jsonField = "ancient"
+    , fields = ["god", "primordial", "hero", "titan"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+appliance :: ModuleInfo
+appliance =
+  ModuleInfo
+    { mmoduleName = "appliance"
+    , jsonField = "appliance"
+    , fields = ["brand", "equipment"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+artist :: ModuleInfo
+artist =
+  ModuleInfo
+    { mmoduleName = "artist"
+    , jsonField = "artist"
+    , fields = ["names"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+bank :: ModuleInfo
+bank =
+  ModuleInfo
+    { mmoduleName = "bank"
+    , jsonField = "bank"
+    , fields = ["name", "swift_bic"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+beer :: ModuleInfo
+beer =
+  ModuleInfo
+    { mmoduleName = "beer"
+    , jsonField = "beer"
+    , fields = ["name", "brand", "hop", "yeast", "malt", "style"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = opera
+currentOne = beer
