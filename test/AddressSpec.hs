@@ -152,6 +152,29 @@ spec = do
       it "basic check" $ do
         fakeCountry <- generate country
         fakeCountry `shouldBe` "Ecuador"
+      it "check community equality" $ do
+        let community1 :: Fake Text
+            community1 =
+              Fake
+                (cachedRandomUnresolvedVec
+                   "address"
+                   "community"
+                   communityProvider
+                   resolveAddressText)
+        c1 <- generate community1
+        c2 <- generate community
+        c1 `shouldBe` c2
+      it "check city prefix equality" $ do
+        let cityPrefix1 :: Fake Text
+            cityPrefix1 =
+              Fake
+                (cachedRandomVec
+                   "address"
+                   "cityPrefix"
+                   addressCityPrefixProvider)
+        c1 <- generate cityPrefix1
+        c2 <- generate cityPrefix
+        c1 `shouldBe` c2
       it "Monad instance of Fake" $ do
         let someCountry :: Fake Text
             someCountry = do

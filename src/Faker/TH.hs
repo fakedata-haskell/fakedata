@@ -8,6 +8,7 @@ module Faker.TH
   , generateFakeFieldUnresolved
   , generateFakeFieldUnresolveds
   , generateFakeField2
+  , generateFakeFieldUnresolved2
   ) where
 
 import Config
@@ -136,9 +137,9 @@ generateFakeFields entityName fieldName = do
         []
     ]
 
--- λ> runQ [d|city2 :: Fake Text;city2 = Fake (unresolvedResolver streetNameProvider resolveAddressText)|]
--- [SigD city2_0 (AppT (ConT Faker.Fake) (ConT Data.Text.Internal.Text)),ValD (VarP city2_0) (NormalB (AppE (ConE Faker.Fake) (AppE (AppE (VarE Faker.Internal.unresolvedResolver) (VarE Faker.Provider.Address.streetNameProvider)) (VarE Faker.Provider.Address.resolveAddressText)))) []]
--- $(genrateFakeField "address" "state")
+-- λ> runQ runQ [d|community :: Fake Text; community = Fake (cachedRandomUnresolvedVec "address" "community" communityProvider resolveAddressField)|]
+-- [SigD community_1 (AppT (ConT Faker.Fake) (ConT Data.Text.Internal.Text)),ValD (VarP community_1) (NormalB (AppE (ConE Faker.Fake) (AppE (AppE (AppE (AppE (VarE Faker.Internal.cachedRandomUnresolvedVec) (LitE (StringL "address"))) (LitE (StringL "community"))) (VarE Faker.Provider.Address.communityProvider)) (VarE Faker.Provider.Address.resolveAddressField)))) []]
+-- $(genrateFakeFieldUnresolved "address" "comunity")
 -- The above splice will generate a function named state
 -- Assumes the presence of the function named "addressStateProvider" and "resolveAddressText"
 generateFakeFieldUnresolved :: String -> String -> Q [Dec]
@@ -169,6 +170,44 @@ generateFakeFieldUnresolved entityName fieldName = do
               (ConE 'Fake)
               (AppE
                  (AppE (VarE 'unresolvedResolver) (VarE providerFn))
+                 (VarE resolverFn))))
+        []
+    ]
+
+generateFakeFieldUnresolved2 :: String -> String -> Q [Dec]
+generateFakeFieldUnresolved2 entityName fieldName = do
+  let funName = mkName $ refinedString fieldName
+      pfn = refinedString $ entityName <> (stringTitle fieldName) <> "Provider"
+      rfn = "resolve" <> (refinedString $ stringTitle entityName) <> "Text"
+  providerName <- lookupValueName pfn
+  resolverName <- lookupValueName rfn
+  providerFn <-
+    case providerName of
+      Nothing ->
+        fail $
+        "generateFakeFieldUnresolved: Function " <> pfn <> " not found in scope"
+      Just fn -> return fn
+  resolverFn <-
+    case resolverName of
+      Nothing ->
+        fail $
+        "generateFakeFieldUnresolved: Function " <> rfn <> " not found in scope"
+      Just fn -> return fn
+  return $
+    [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))
+    , ValD
+        (VarP funName)
+        (NormalB
+           (AppE
+              (ConE 'Fake)
+              (AppE
+                 (AppE
+                    (AppE
+                       (AppE
+                          (VarE 'cachedRandomUnresolvedVec)
+                          (LitE (StringL entityName)))
+                       (LitE (StringL fieldName)))
+                    (VarE providerFn))
                  (VarE resolverFn))))
         []
     ]

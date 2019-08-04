@@ -42,14 +42,7 @@ communitySuffix :: Fake Text
 communitySuffix =
   Fake (cachedRandomVec "address" "communitySuffix" communitySuffixProvider)
 
-community :: Fake Text
-community =
-  Fake
-    (cachedRandomUnresolvedVec
-       "address"
-       "community"
-       communityProvider
-       resolveAddressText)
+$(generateFakeFieldUnresolved2 "address" "community")
 
 streetSuffix :: Fake Text
 streetSuffix =
