@@ -13,7 +13,9 @@ import qualified Data.Text.IO as TIO
 import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Faker hiding (defaultFakerSettings)
+import qualified Faker.Educator as ED
 import Faker.Name
+import qualified Faker.WorldCup as WC
 import Test.Hspec
 import TestImport
 
@@ -41,3 +43,9 @@ spec = do
           (setLocale "en-AU" defaultFakerSettings)
           nameWithMiddle
       (ctries) `shouldBe` "Georgia Grady Grady"
+    it "group A - WC" $ do
+      ga <- generate WC.groupsGroupA
+      ga `shouldBe` "Russia"
+    it "courseNumber - Edu" $ do
+      ga <- generate ED.tertiaryCourseNumber
+      ga `shouldBe` "215"

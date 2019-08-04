@@ -15,7 +15,7 @@ $(generateFakeField "worldCup" "stadiums")
 
 $(generateFakeField "worldCup" "cities")
 
-$(generateFakeFields "worldCup" ["groups", "group_A"])
+$(generateFakeFields2 "worldCup" ["groups", "group_A"])
 
 $(generateFakeFields "worldCup" ["groups", "group_B"])
 

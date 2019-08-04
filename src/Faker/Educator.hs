@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Faker.Educator where
 
@@ -18,4 +19,4 @@ $(generateFakeFields "educator" ["tertiary", "degree", "subject"])
 
 $(generateFakeFields "educator" ["tertiary", "degree", "type"])
 
-$(generateFakeFieldUnresolveds "educator" ["tertiary", "course_number"])
+$(generateFakeFieldUnresolveds2 "educator" ["tertiary", "course_number"])
