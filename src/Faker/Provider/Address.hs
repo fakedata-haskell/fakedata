@@ -172,6 +172,10 @@ communityProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
 communityProvider settings = fetchData settings Address parseCommunity
 
+addressCommunityProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
+addressCommunityProvider = communityProvider
+
 streetSuffixProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 streetSuffixProvider settings = fetchData settings Address parseStreetSuffix
