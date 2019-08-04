@@ -4,12 +4,11 @@
 
 module Faker.TH
   ( generateFakeField
+  , generateFakeField2
   , generateFakeFields
   , generateFakeFields2
   , generateFakeFieldUnresolved
   , generateFakeFieldUnresolveds
-  , generateFakeFieldUnresolveds2
-  , generateFakeField2
   ) where
 
 import Config
@@ -183,41 +182,6 @@ generateFakeFieldUnresolved entityName fieldName = do
 
 generateFakeFieldUnresolveds :: String -> [String] -> Q [Dec]
 generateFakeFieldUnresolveds entityName fieldNames = do
-  let fieldName' = refinedString $ concat $ map stringTitle fieldNames
-      funName = mkName $ lowerTitle fieldName'
-      pfn = refinedString $ entityName <> fieldName' <> "Provider"
-      rfn = "resolve" <> (refinedString $ stringTitle entityName) <> "Text"
-  providerName <- lookupValueName pfn
-  resolverName <- lookupValueName rfn
-  providerFn <-
-    case providerName of
-      Nothing ->
-        fail $
-        "generateFakeFieldUnresolveds: Function " <> pfn <>
-        " not found in scope"
-      Just fn -> return fn
-  resolverFn <-
-    case resolverName of
-      Nothing ->
-        fail $
-        "generateFakeFieldUnresolveds: Function " <> rfn <>
-        " not found in scope"
-      Just fn -> return fn
-  return $
-    [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))
-    , ValD
-        (VarP funName)
-        (NormalB
-           (AppE
-              (ConE 'Fake)
-              (AppE
-                 (AppE (VarE 'unresolvedResolver) (VarE providerFn))
-                 (VarE resolverFn))))
-        []
-    ]
-
-generateFakeFieldUnresolveds2 :: String -> [String] -> Q [Dec]
-generateFakeFieldUnresolveds2 entityName fieldNames = do
   let fieldName' = refinedString $ concat $ map stringTitle fieldNames
       funNameString = lowerTitle fieldName'
       funName = mkName funNameString
