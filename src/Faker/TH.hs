@@ -6,7 +6,6 @@ module Faker.TH
   ( generateFakeField
   , generateFakeField2
   , generateFakeFields
-  , generateFakeFields2
   , generateFakeFieldUnresolved
   , generateFakeFieldUnresolveds
   ) where
@@ -89,8 +88,8 @@ generateFakeField2 entityName fieldName = do
         []
     ]
 
-generateFakeFields2 :: String -> [String] -> Q [Dec]
-generateFakeFields2 entityName fieldName = do
+generateFakeFields :: String -> [String] -> Q [Dec]
+generateFakeFields entityName fieldName = do
   let fieldName' = map stringTitle fieldName
       fieldName'' = concat fieldName'
       pfn = refinedString $ entityName <> fieldName'' <> "Provider"
@@ -114,26 +113,6 @@ generateFakeFields2 entityName fieldName = do
                     (AppE (VarE 'cachedRandomVec) (LitE (StringL entityName)))
                     (LitE (StringL funNameString)))
                  (VarE providerFn))))
-        []
-    ]
-
-generateFakeFields :: String -> [String] -> Q [Dec]
-generateFakeFields entityName fieldName = do
-  let fieldName' = map stringTitle fieldName
-      fieldName'' = concat fieldName'
-      pfn = refinedString $ entityName <> fieldName'' <> "Provider"
-      funName = mkName $ lowerTitle $ refinedString fieldName''
-  providerName <- lookupValueName pfn
-  providerFn <-
-    case providerName of
-      Nothing ->
-        fail $ "generateFakefield: Function " <> pfn <> " not found in scope"
-      Just fn -> return fn
-  return $
-    [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))
-    , ValD
-        (VarP funName)
-        (NormalB (AppE (ConE 'Fake) (AppE (VarE 'resolver) (VarE providerFn))))
         []
     ]
 
