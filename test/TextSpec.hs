@@ -11,6 +11,9 @@ import qualified Faker.App as AP
 import qualified Faker.Appliance as AP
 import qualified Faker.Artist as AR
 import qualified Faker.Bank as BA
+import qualified Faker.Beer as BE
+import qualified Faker.Book.CultureSeries as CE
+
 import Test.Hspec
 import TestImport
 
@@ -68,5 +71,21 @@ spec = do
       (and bools) `shouldBe` True
     it "Bank" $ do
       let functions :: [Fake Text] = [BA.name, BA.swiftBic]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Beer" $ do
+      let functions :: [Fake Text] =
+            [BE.name, BE.brand, BE.hop, BE.yeast, BE.malt, BE.style]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Book.CultureSeries" $ do
+      let functions :: [Fake Text] =
+            [ CE.books
+            , CE.cultureShips
+            , CE.cultureShipClasses
+            , CE.cultureShipClassAbvs
+            , CE.civs
+            , CE.planets
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

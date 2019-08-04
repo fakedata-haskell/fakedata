@@ -1,24 +1,21 @@
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 module Faker.Beer where
 
-import Data.Text
-import Faker
-import Faker.Internal
+import Data.Text (Text)
+import Faker (Fake(..))
 import Faker.Provider.Beer
+import Faker.TH
 
-name :: Fake Text
-name = Fake $ resolver beerNameProvider
+$(generateFakeField "beer" "name")
 
-brand :: Fake Text
-brand = Fake $ resolver beerBrandProvider
+$(generateFakeField "beer" "brand")
 
-hop :: Fake Text
-hop = Fake $ resolver beerHopProvider
+$(generateFakeField "beer" "hop")
 
-yeast :: Fake Text
-yeast = Fake $ resolver beerYeastProvider
+$(generateFakeField "beer" "yeast")
 
-malt :: Fake Text
-malt = Fake $ resolver beerMaltProvider
+$(generateFakeField "beer" "malt")
 
-style :: Fake Text
-style = Fake $ resolver beerStyleProvider
+$(generateFakeField "beer" "style")

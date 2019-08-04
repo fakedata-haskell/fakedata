@@ -19,7 +19,7 @@ parseCultureSeries :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCultureSeries settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  cultureSeries <- faker .: "cultureSeries"
+  cultureSeries <- faker .: "culture_series"
   pure cultureSeries
 parseCultureSeries settings val =
   fail $ "expected Object, but got " <> (show val)
