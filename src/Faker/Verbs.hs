@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Faker.Verbs where
 
@@ -7,7 +8,6 @@ import Faker
 import Faker.Internal
 import Faker.Provider.Verbs
 import Faker.TH
-
 
 $(generateFakeField "verbs" "base")
 
@@ -18,9 +18,3 @@ $(generateFakeField "verbs" "past_participle")
 $(generateFakeField "verbs" "simple_present")
 
 $(generateFakeField "verbs" "ing_form")
-
-
-
-
-
-

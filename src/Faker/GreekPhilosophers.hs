@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Faker.GreekPhilosophers where
 
@@ -8,13 +9,6 @@ import Faker.Internal
 import Faker.Provider.GreekPhilosophers
 import Faker.TH
 
-
 $(generateFakeField "greekPhilosophers" "names")
 
 $(generateFakeField "greekPhilosophers" "quotes")
-
-
-
-
-
-

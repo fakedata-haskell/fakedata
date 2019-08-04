@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Faker.Hacker where
 
@@ -7,7 +8,6 @@ import Faker
 import Faker.Internal
 import Faker.Provider.Hacker
 import Faker.TH
-
 
 $(generateFakeField "hacker" "abbreviation")
 
@@ -18,9 +18,3 @@ $(generateFakeField "hacker" "noun")
 $(generateFakeField "hacker" "verb")
 
 $(generateFakeField "hacker" "ingverb")
-
-
-
-
-
-

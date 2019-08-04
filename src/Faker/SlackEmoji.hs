@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Faker.SlackEmoji where
 
@@ -7,7 +8,6 @@ import Faker
 import Faker.Internal
 import Faker.Provider.SlackEmoji
 import Faker.TH
-
 
 $(generateFakeField "slackEmoji" "people")
 
@@ -25,10 +25,4 @@ $(generateFakeField "slackEmoji" "objects_and_symbols")
 
 $(generateFakeField "slackEmoji" "custom")
 
-
-
 $(generateFakeFieldUnresolved "slackEmoji" "emoji")
-
-
-
-

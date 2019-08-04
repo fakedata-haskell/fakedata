@@ -20,7 +20,6 @@ module Faker.Internal
   , resolveFields
   , cachedRandomVec
   , cachedRandomUnresolvedVec
-  -- * Internal functions (exposed for testing)
   , interpolateNumbers
   , interpolateString
   , resolveUnresolved

@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Faker.ProgrammingLauguage where
 
@@ -8,13 +9,6 @@ import Faker.Internal
 import Faker.Provider.ProgrammingLauguage
 import Faker.TH
 
-
 $(generateFakeField "programmingLauguage" "name")
 
 $(generateFakeField "programmingLauguage" "creator")
-
-
-
-
-
-

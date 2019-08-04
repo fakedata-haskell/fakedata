@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Faker.Space where
 
@@ -7,7 +8,6 @@ import Faker
 import Faker.Internal
 import Faker.Provider.Space
 import Faker.TH
-
 
 $(generateFakeField "space" "planet")
 
@@ -36,9 +36,3 @@ $(generateFakeField "space" "distance_measurement")
 $(generateFakeField "space" "meteorite")
 
 $(generateFakeField "space" "launch_vehicule")
-
-
-
-
-
-

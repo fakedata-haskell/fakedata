@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Faker.Relationship where
 
@@ -8,7 +9,6 @@ import Faker.Internal
 import Faker.Provider.Relationship
 import Faker.TH
 
-
 $(generateFakeField "relationship" "in_law")
 
 $(generateFakeField "relationship" "spouse")
@@ -17,12 +17,6 @@ $(generateFakeField "relationship" "parent")
 
 $(generateFakeField "relationship" "sibling")
 
+$(generateFakeFields "relationship" ["familial", "direct"])
 
-
-
-
-$(generateFakeFields "relationship" ["familial","direct"])
-
-$(generateFakeFields "relationship" ["familial","extended"])
-
-
+$(generateFakeFields "relationship" ["familial", "extended"])
