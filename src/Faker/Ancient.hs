@@ -1,21 +1,20 @@
+{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Faker.Ancient where
 
-import Config
-import Data.Text
-import Faker
-import Faker.Internal
+import Data.Text (Text)
+import Faker (Fake(..))
 import Faker.Provider.Ancient
+import Faker.TH
 
-god :: Fake Text
-god = Fake (cachedRandomVec "ancient" "god" ancientGodProvider)
+$(generateFakeField "ancient" "god")
 
-primordial :: Fake Text
-primordial = Fake (\settings -> randomVec settings ancientPrimordialProvider)
+$(generateFakeField "ancient" "primordial")
 
-titan :: Fake Text
-titan = Fake (\settings -> randomVec settings ancientTitanProvider)
+$(generateFakeField "ancient" "hero")
 
-hero :: Fake Text
-hero = Fake (\settings -> randomVec settings ancientHeroProvider)
+$(generateFakeField "ancient" "titan")
+
+
+

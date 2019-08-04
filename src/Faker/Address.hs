@@ -3,10 +3,9 @@
 
 module Faker.Address where
 
-import Data.Text
-import Faker
-import Faker.Internal
-import Faker.Internal.Types (SourceData(..))
+import Data.Text (Text)
+import Faker (Fake(..))
+import Faker.Internal (cachedRandomUnresolvedVec, cachedRandomVec)
 import Faker.Provider.Address
 import Faker.TH
 

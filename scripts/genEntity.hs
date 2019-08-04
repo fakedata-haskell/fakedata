@@ -39,10 +39,12 @@ $(generateFakeFields "#{mmoduleName}" #{show str})
       importLine :: String
       importLine = [i|import Faker.Provider.#{capModname}|]
    in [i|{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 module Faker.#{capModname} where
-import Data.Text
-import Faker
-import Faker.Internal
+
+import Data.Text (Text)
+import Faker (Fake(..))
 #{importLine}
 import Faker.TH
 #{fakeFields}
