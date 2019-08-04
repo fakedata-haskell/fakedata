@@ -13,7 +13,7 @@ import Faker.TH
 country :: Fake Text
 country = Fake (cachedRandomVec "address" "country" countryProvider)
 
-$(generateFakeField2 "address" "cityPrefix")
+$(generateFakeField "address" "cityPrefix")
 
 citySuffix :: Fake Text
 citySuffix = Fake (cachedRandomVec "address" "citySuffix" citySuffixProvider)

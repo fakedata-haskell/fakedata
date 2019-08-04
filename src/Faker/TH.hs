@@ -4,7 +4,6 @@
 
 module Faker.TH
   ( generateFakeField
-  , generateFakeField2
   , generateFakeFields
   , generateFakeFieldUnresolved
   , generateFakeFieldUnresolveds
@@ -38,29 +37,6 @@ lowerTitle (x:xs) = (toLower x) : xs
 -- Assumes the presence of the function named "addressStateProvider"
 generateFakeField :: String -> String -> Q [Dec]
 generateFakeField entityName fieldName = do
-  let funName =
-        mkName $
-        case refinedString fieldName of
-          "type" -> "type'"
-          other -> other
-      pfn = refinedString $ entityName <> (stringTitle fieldName) <> "Provider"
-  providerName <- lookupValueName pfn
-  providerFn <-
-    case providerName of
-      Nothing ->
-        fail $ "generateFakefield: Function " <> pfn <> " not found in scope"
-      Just fn -> return fn
-  return $
-    [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))
-    , ValD
-        (VarP funName)
-        (NormalB (AppE (ConE 'Fake) (AppE (VarE 'resolver) (VarE providerFn))))
-        []
-    ]
-
--- todo: replace this with above one
-generateFakeField2 :: String -> String -> Q [Dec]
-generateFakeField2 entityName fieldName = do
   let funName =
         mkName $
         case refinedString fieldName of
