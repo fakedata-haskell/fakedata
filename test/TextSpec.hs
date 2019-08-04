@@ -8,6 +8,9 @@ import Faker hiding (defaultFakerSettings)
 import qualified Faker.Address as FA
 import qualified Faker.Ancient as AN
 import qualified Faker.App as AP
+import qualified Faker.Appliance as AP
+import qualified Faker.Artist as AR
+import qualified Faker.Bank as BA
 import Test.Hspec
 import TestImport
 
@@ -53,5 +56,17 @@ spec = do
       (and bools) `shouldBe` True
     it "App" $ do
       let functions :: [Fake Text] = [AP.name, AP.version]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Appliance" $ do
+      let functions :: [Fake Text] = [AP.brand, AP.equipment]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Artist" $ do
+      let functions :: [Fake Text] = [AR.names]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Bank" $ do
+      let functions :: [Fake Text] = [BA.name, BA.swiftBic]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

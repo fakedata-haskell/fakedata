@@ -39,6 +39,6 @@ bankNameProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 bankNameProvider settings = fetchData settings Bank parseBankName
 
-swiftBicProvider ::
+bankSwiftBicProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-swiftBicProvider settings = fetchData settings Bank parseBankName
+bankSwiftBicProvider settings = fetchData settings Bank parseBankName

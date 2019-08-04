@@ -1,12 +1,13 @@
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 module Faker.Bank where
 
-import Data.Text
-import Faker
-import Faker.Internal
+import Data.Text (Text)
+import Faker (Fake(..))
 import Faker.Provider.Bank
+import Faker.TH
 
-name :: Fake Text
-name = Fake $ resolver bankNameProvider
+$(generateFakeField "bank" "name")
 
-swiftBic :: Fake Text
-swiftBic = Fake $ resolver swiftBicProvider
+$(generateFakeField "bank" "swift_bic")
