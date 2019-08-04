@@ -13,6 +13,7 @@ import qualified Data.Text.IO as TIO
 import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Faker hiding (defaultFakerSettings)
+import qualified Faker.App as AP
 import qualified Faker.Educator as ED
 import Faker.Name
 import qualified Faker.WorldCup as WC
@@ -49,3 +50,7 @@ spec = do
     it "courseNumber - Edu" $ do
       ga <- generate ED.tertiaryCourseNumber
       ga `shouldBe` "215"
+    it "App author" $ do
+      ga <-
+        generateWithSettings (setDeterministic defaultFakerSettings) AP.author
+      ga `shouldBe` "Breitenberg, Prosacco and Gusikowski"

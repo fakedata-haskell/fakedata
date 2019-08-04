@@ -3,8 +3,8 @@
 
 module Faker.App where
 
-import Data.Text
-import Faker
+import Data.Text (Text)
+import Faker (Fake(..))
 import Faker.Internal
 import Faker.Provider.App
 import Faker.TH

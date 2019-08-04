@@ -6,6 +6,8 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Faker hiding (defaultFakerSettings)
 import qualified Faker.Address as FA
+import qualified Faker.Ancient as AN
+import qualified Faker.App as AP
 import Test.Hspec
 import TestImport
 
@@ -43,5 +45,13 @@ spec = do
             , FA.streetAddress
             , FA.fullAddress
             ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Ancient" $ do
+      let functions :: [Fake Text] = [AN.god, AN.primordial, AN.hero, AN.titan]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "App" $ do
+      let functions :: [Fake Text] = [AP.name, AP.version]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

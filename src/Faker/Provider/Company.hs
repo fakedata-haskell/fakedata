@@ -16,6 +16,7 @@ import Faker.Internal
 import Faker.Provider.Name (lastNameProvider, resolveNameText)
 import Faker.Provider.TH
 import Language.Haskell.TH
+import System.Random (mkStdGen)
 
 parseCompany :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCompany settings (Object obj) = do
@@ -80,11 +81,19 @@ $(genParser "company" "sic_code")
 
 $(genProvider "company" "sic_code")
 
+randomizeSettings :: Int -> FakerSettings -> [FakerSettings]
+randomizeSettings 0 _ = []
+randomizeSettings n x =
+  map
+    (\(i, s) -> setRandomGen (mkStdGen (i + 10000)) s)
+    (zip [1 ..] (replicate n x))
+
 resolveCompanyText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveCompanyText settings txt = do
   let fields = resolveFields txt
-  companyFields <- mapM (resolveCompanyField settings) fields
+      sett = randomizeSettings (length fields) settings
+  companyFields <- mapM (\(f, s) -> resolveCompanyField s f) (zip fields sett)
   pure $ operateFields txt companyFields
 
 resolveCompanyField ::
