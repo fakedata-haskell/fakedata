@@ -19,17 +19,32 @@ $(generateFakeField "coffee" "body")
 
 $(generateFakeField "coffee" "descriptor")
 
-$(generateFakeField "coffee" "notes")
+notes :: Fake Text
+notes =
+  Fake
+    (cachedRandomUnresolvedVecWithoutVector
+       "coffee"
+       "notes"
+       coffeeNotesProvider
+       resolveCoffeeText)
 
 $(generateFakeField "coffee" "name_1")
 
 $(generateFakeField "coffee" "name_2")
 
-$(generateFakeFieldUnresolved "coffee" "blend_name")
+blendName :: Fake Text
+blendName =
+  Fake
+    (cachedRandomUnresolvedVecWithoutVector
+       "coffee"
+       "blendName"
+       coffeeBlendNameProvider
+       resolveCoffeeText)
 
 regionsColombia :: Fake Text
 regionsColombia =
-  Fake (\settings -> randomVec settings coffeeRegionsColombiaProvider)
+  Fake
+    (cachedRandomVec "coffee" "regionsColumbia" coffeeRegionsColombiaProvider)
 
 $(generateFakeFields "coffee" ["regions", "brazil"])
 

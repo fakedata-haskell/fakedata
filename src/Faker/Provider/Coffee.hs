@@ -85,9 +85,12 @@ $(genParser "coffee" "descriptor")
 
 $(genProvider "coffee" "descriptor")
 
-$(genParser "coffee" "notes")
+parseCoffeeNotes :: FakerSettings -> Value -> Parser (Unresolved Text)
+parseCoffeeNotes settings = parseUnresolvedCoffeeField settings "notes"
 
-$(genProvider "coffee" "notes")
+coffeeNotesProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved Text)
+coffeeNotesProvider settings = fetchData settings Coffee parseCoffeeNotes
 
 $(genParser "coffee" "name_1")
 
@@ -97,9 +100,13 @@ $(genParser "coffee" "name_2")
 
 $(genProvider "coffee" "name_2")
 
-$(genParserUnresolved "coffee" "blend_name")
+parseCoffeeBlendName :: FakerSettings -> Value -> Parser (Unresolved Text)
+parseCoffeeBlendName settings = parseUnresolvedCoffeeField settings "blend_name"
 
-$(genProviderUnresolved "coffee" "blend_name")
+coffeeBlendNameProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved Text)
+coffeeBlendNameProvider settings =
+  fetchData settings Coffee parseCoffeeBlendName
 
 $(genParsers "coffee" ["regions", "colombia"])
 
@@ -180,4 +187,9 @@ resolveCoffeeField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveCoffeeField settings "name_1" = randomVec settings coffeeName1Provider
 resolveCoffeeField settings "name_2" = randomVec settings coffeeName2Provider
+resolveCoffeeField settings "intensifier" =
+  randomVec settings coffeeIntensifierProvider
+resolveCoffeeField settings "body" = randomVec settings coffeeBodyProvider
+resolveCoffeeField settings "descriptor" =
+  randomVec settings coffeeDescriptorProvider
 resolveCoffeeField settings str = throwM $ InvalidField "coffee" str

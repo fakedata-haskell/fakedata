@@ -12,7 +12,16 @@ import qualified Faker.Appliance as AP
 import qualified Faker.Artist as AR
 import qualified Faker.Bank as BA
 import qualified Faker.Beer as BE
+import qualified Faker.Book as BO
 import qualified Faker.Book.CultureSeries as CE
+import qualified Faker.Book.Dune as DU
+import qualified Faker.Book.Lovecraft as LO
+import qualified Faker.BossaNova as BO
+import qualified Faker.Business as BU
+import qualified Faker.Cannabis as CA
+import qualified Faker.ChuckNorris as CH
+import qualified Faker.Code as CO
+import qualified Faker.Coffee as CO
 
 import Test.Hspec
 import TestImport
@@ -86,6 +95,99 @@ spec = do
             , CE.cultureShipClassAbvs
             , CE.civs
             , CE.planets
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Book.Dune" $ do
+      let functions :: [Fake Text] =
+            [ DU.characters
+            , DU.titles
+            , DU.planets
+            , DU.quotesGuildNavigator
+            , DU.quotesEmperor
+            , DU.quotesPaul
+            , DU.quotesThufir
+            , DU.quotesJessica
+            , DU.quotesIrulan
+            , DU.quotesMohiam
+            , DU.quotesGurney
+            , DU.quotesLeto
+            , DU.quotesStilgar
+            , DU.quotesLietKynes
+            , DU.quotesPardotKynes
+            , DU.quotesBaronHarkonnen
+            , DU.quotesPiter
+            , DU.quotesAlia
+            , DU.quotesMapes
+            , DU.quotesDuncan
+            , DU.quotesYueh
+            , DU.sayingsBeneGesserit
+            , DU.sayingsFremen
+            , DU.sayingsMentat
+            , DU.sayingsMuaddib
+            , DU.sayingsOrangeCatholicBible
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Book.LoveCraft" $ do
+      let functions :: [Fake Text] =
+            [LO.fhtagn, LO.deity, LO.location, LO.tome, LO.words]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Book" $ do
+      let functions :: [Fake Text] =
+            [BO.author, BO.title, BO.publisher, BO.genre]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "BossaNova" $ do
+      let functions :: [Fake Text] = [BO.artists, BO.songs]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Business" $ do
+      let functions :: [Fake Text] = [BU.creditCardNumbers, BU.creditCardTypes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Cannabis" $ do
+      let functions :: [Fake Text] =
+            [ CA.strains
+            , CA.cannabinoidAbbreviations
+            , CA.cannabinoids
+            , CA.terpenes
+            , CA.medicalUses
+            , CA.healthBenefits
+            , CA.categories
+            , CA.types
+            , CA.buzzwords
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "ChuckNorris" $ do
+      let functions :: [Fake Text] = [CH.fact]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Code" $ do
+      let functions :: [Fake Text] = [CO.asin]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Coffee" $ do
+      let functions :: [Fake Text] =
+            [ CO.country
+            , CO.variety
+            , CO.intensifier
+            , CO.body
+            , CO.descriptor
+            , CO.name1
+            , CO.name2
+            , CO.notes
+            , CO.blendName
+            -- , CO.regionsColombia
+            -- , CO.regionsBrazil
+            -- , CO.regionsSumatra
+            -- , CO.regionsEthiopia
+            -- , CO.regionsHonduras
+            -- , CO.regionsUganda
+            -- , CO.regionsMexico
+              -- you still need to add and fix regionsColombia
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

@@ -20,6 +20,7 @@ module Faker.Internal
   , resolveFields
   , cachedRandomVec
   , cachedRandomUnresolvedVec
+  , cachedRandomUnresolvedVecWithoutVector
   , interpolateNumbers
   , interpolateString
   , resolveUnresolved
@@ -112,7 +113,7 @@ cachedRandomUnresolvedVec sdata field provider resolverFn settings = do
       resolveUnresolved settings dat resolverFn
     Just vec -> do
       let unres = Unresolved {unresolvedField = vec}
-      randomUnresolvedVec settings provider resolverFn
+      randomUnresolvedVec settings (\_ -> pure unres) resolverFn
 
 randomUnresolvedVec ::
      (MonadThrow m, MonadIO m)
@@ -123,6 +124,25 @@ randomUnresolvedVec ::
 randomUnresolvedVec settings provider resolverFn = do
   items <- provider settings
   resolveUnresolved settings items resolverFn
+
+cachedRandomUnresolvedVecWithoutVector ::
+     (MonadThrow m, MonadIO m)
+  => Text
+  -> Text
+  -> (FakerSettings -> m (Unresolved Text))
+  -> (FakerSettings -> Text -> m Text)
+  -> FakerSettings
+  -> m Text
+cachedRandomUnresolvedVecWithoutVector sdata field provider resolverFn settings = do
+  val <- liftIO $ presentInCache sdata field settings
+  case val of
+    Nothing -> do
+      dat <- provider settings
+      liftIO $ insertToCache sdata field settings (pure $ unresolvedField dat)
+      resolveUnresolved settings (sequenceA $ pure dat) resolverFn
+    Just vec -> do
+      let unres = Unresolved {unresolvedField = vec}
+      randomUnresolvedVec settings (\_ -> pure unres) resolverFn
 
 randomUnresolvedVecWithoutVector ::
      (MonadThrow m, MonadIO m)
