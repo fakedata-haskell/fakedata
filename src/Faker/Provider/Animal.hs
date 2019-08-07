@@ -18,7 +18,8 @@ parseAnimal :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAnimal settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  animal <- faker .: "animal"
+  creature <- faker .: "creature"
+  animal <- creature .: "animal"
   pure animal
 parseAnimal settings val = fail $ "expected Object, but got " <> (show val)
 
@@ -32,5 +33,6 @@ parseAnimalField settings txt val = do
 parseAnimalName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseAnimalName settings = parseAnimalField settings "name"
 
-animalProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-animalProvider settings = fetchData settings Animal parseAnimalName
+animalNameProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+animalNameProvider settings = fetchData settings Animal parseAnimalName

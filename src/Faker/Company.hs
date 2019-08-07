@@ -28,7 +28,7 @@ bs :: Fake Text
 bs =
   Fake
     (\settings -> do
-       vec <- companyBsProvider settings
+       vec :: V.Vector (V.Vector Text) <- companyBsProvider settings
        let item :: V.Vector (IO Text) = V.map (\v -> rvec settings v) vec
            item' :: IO (V.Vector Text) = sequence item
        items <- item'

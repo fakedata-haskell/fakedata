@@ -22,6 +22,14 @@ import qualified Faker.Cannabis as CA
 import qualified Faker.ChuckNorris as CH
 import qualified Faker.Code as CO
 import qualified Faker.Coffee as CO
+import qualified Faker.Coin as CO
+import qualified Faker.Color as CO
+import qualified Faker.Commerce as CO
+import qualified Faker.Company as CM
+import qualified Faker.Compass as CO
+import qualified Faker.Construction as CO
+import qualified Faker.Cosmere as CO
+import qualified Faker.Creature.Animal as AN
 
 import Test.Hspec
 import TestImport
@@ -180,14 +188,107 @@ spec = do
             , CO.name2
             , CO.notes
             , CO.blendName
-            -- , CO.regionsColombia
-            -- , CO.regionsBrazil
-            -- , CO.regionsSumatra
-            -- , CO.regionsEthiopia
-            -- , CO.regionsHonduras
-            -- , CO.regionsUganda
-            -- , CO.regionsMexico
-              -- you still need to add and fix regionsColombia
+            , CO.regionsColombia
+            , CO.regionsBrazil
+            , CO.regionsSumatra
+            , CO.regionsEthiopia
+            , CO.regionsHonduras
+            , CO.regionsKenya
+            , CO.regionsUganda
+            , CO.regionsMexico
+            , CO.regionsGuatemala
+            , CO.regionsNicaragua
+            , CO.regionsCostaRica
+            , CO.regionsTanzania
+            , CO.regionsElSalvador
+            , CO.regionsRwanda
+            , CO.regionsBurundi
+            , CO.regionsPanama
+            , CO.regionsYemen
+            , CO.regionsIndia
             ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Coin" $ do
+      let functions :: [Fake Text] = [CO.flip]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Color" $ do
+      let functions :: [Fake Text] = [CO.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Commerce" $ do
+      let functions :: [Fake Text] =
+            [ CO.department
+            , CO.productNameAdjective
+            , CO.productNameMaterial
+            , CO.productNameProduct
+            , CO.promotionCodeAdjective
+            , CO.promotionCodeNoun
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Company" $ do
+      let functions :: [Fake Text] =
+            [ CM.suffix
+            , CM.buzzword
+            , CM.bs
+            , CM.name
+            , CM.industry
+            , CM.profession
+            , CM.type'
+            , CM.sicCode
+              -- Fix buzzword and bs TOD
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Company" $ do
+      let functions :: [Fake Text] =
+            [ CO.direction
+            , CO.abbreviation
+            , CO.azimuth
+            , CO.cardinalWord
+            , CO.cardinalAbbreviation
+            , CO.cardinalAzimuth
+            , CO.ordinalWord
+            , CO.ordinalAbbreviation
+            , CO.ordinalAzimuth
+            , CO.halfWindWord
+            , CO.halfWindAbbreviation
+            , CO.halfWindAzimuth
+            , CO.quarterWindWord
+            , CO.quarterWindAbbreviation
+            , CO.quarterWindAzimuth
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Construction" $ do
+      let functions :: [Fake Text] =
+            [ CO.materials
+            , CO.subcontractCategories
+            , CO.heavyEquipment
+            , CO.roles
+            , CO.trades
+            , CO.standardCostCodes
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Cosmere" $ do
+      let functions :: [Fake Text] =
+            [ CO.aons
+            , CO.shardWorlds
+            , CO.shards
+            , CO.surges
+            , CO.knightsRadiant
+            , CO.metals
+            , CO.allomancers
+            , CO.feruchemists
+            , CO.heralds
+            , CO.sprens
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Creature.Animal" $ do
+      let functions :: [Fake Text] = [AN.name]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
