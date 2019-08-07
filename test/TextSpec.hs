@@ -30,6 +30,12 @@ import qualified Faker.Compass as CO
 import qualified Faker.Construction as CO
 import qualified Faker.Cosmere as CO
 import qualified Faker.Creature.Animal as AN
+import qualified Faker.Creature.Cat as CA
+import qualified Faker.Creature.Dog as DO
+import qualified Faker.Creature.Horse as HO
+import qualified Faker.CryptoCoin as CO
+import qualified Faker.Currency as CU
+import qualified Faker.DcComics as DC
 
 import Test.Hspec
 import TestImport
@@ -290,5 +296,38 @@ spec = do
       (and bools) `shouldBe` True
     it "Creature.Animal" $ do
       let functions :: [Fake Text] = [AN.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Creature.Cat" $ do
+      let functions :: [Fake Text] = [CA.name, CA.breed, CA.registry]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Creature.Dog" $ do
+      let functions :: [Fake Text] =
+            [ DO.name
+            , DO.breed
+            , DO.sound
+            , DO.memePhrase
+            , DO.age
+            , DO.coatLength
+            , DO.size
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Creature.Horuse" $ do
+      let functions :: [Fake Text] = [HO.name, HO.breed]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Cryptocoin" $ do
+      let functions :: [Fake Text] = [CO.coin]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Currency" $ do
+      let functions :: [Fake Text] = [CU.name, CU.code, CU.symbol]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "DcComics" $ do
+      let functions :: [Fake Text] =
+            [DC.hero, DC.heroine, DC.villain, DC.name, DC.title]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

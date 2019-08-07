@@ -19,7 +19,7 @@ parseDcComics :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDcComics settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  dcComics <- faker .: "dcComics"
+  dcComics <- faker .: "dc_comics"
   pure dcComics
 parseDcComics settings val = fail $ "expected Object, but got " <> (show val)
 
