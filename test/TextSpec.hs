@@ -36,6 +36,17 @@ import qualified Faker.Creature.Horse as HO
 import qualified Faker.CryptoCoin as CO
 import qualified Faker.Currency as CU
 import qualified Faker.DcComics as DC
+import qualified Faker.Demographic as DE
+import qualified Faker.Dessert as DE
+import qualified Faker.Educator as ED
+import qualified Faker.ElectricalComponents as EC
+import qualified Faker.Esport as ES
+import qualified Faker.File as FI
+import qualified Faker.Finance as FI
+import qualified Faker.Food as FO
+import qualified Faker.Football as FO
+import qualified Faker.FunnyName as FU
+import qualified Faker.Game.Dota as DO
 
 import Test.Hspec
 import TestImport
@@ -329,5 +340,130 @@ spec = do
     it "DcComics" $ do
       let functions :: [Fake Text] =
             [DC.hero, DC.heroine, DC.villain, DC.name, DC.title]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Demographic" $ do
+      let functions :: [Fake Text] =
+            [ DE.race
+            , DE.sex
+            , DE.demonym
+            , DE.educationalAttainment
+            , DE.maritalStatus
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Dessert" $ do
+      let functions :: [Fake Text] = [DE.variety, DE.topping, DE.flavor]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Educator" $ do
+      let functions :: [Fake Text] =
+            [ ED.name
+            , ED.secondary
+            , ED.tertiaryType
+            , ED.tertiaryDegreeSubject
+            , ED.tertiaryDegreeType
+            , ED.tertiaryCourseNumber
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "ElectricalComponents" $ do
+      let functions :: [Fake Text] =
+            [EC.active, EC.passive, EC.electromechanical]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Esport" $ do
+      let functions :: [Fake Text] =
+            [ES.players, ES.teams, ES.events, ES.leagues, ES.games]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "File" $ do
+      let functions :: [Fake Text] = [FI.extension, FI.mimeType]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Finance" $ do
+      let functions :: [Fake Text] =
+            [ FI.visa
+            , FI.mastercard
+            , FI.discover
+            , FI.dinersClub
+            , FI.jcb
+            , FI.switch
+            , FI.solo
+            , FI.dankort
+            , FI.maestro
+            , FI.forbrugsforeningen
+            , FI.laser
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Food" $ do
+      let functions :: [Fake Text] =
+            [ FO.dish
+            , FO.descriptions
+            , FO.ingredients
+            , FO.fruits
+            , FO.vegetables
+            , FO.spices
+            , FO.measurements
+            , FO.measurementSizes
+            , FO.metricMeasurements
+            , FO.sushi
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Football" $ do
+      let functions :: [Fake Text] =
+            [FO.teams, FO.players, FO.coaches, FO.competitions, FO.positions]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "FunnyName" $ do
+      let functions :: [Fake Text] = [FU.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Dota" $ do
+      let functions :: [Fake Text] =
+            [ DO.hero
+            , DO.item
+            , DO.team
+            , DO.player
+            , DO.abaddonQuote
+            , DO.alchemistQuote
+            , DO.axeQuote
+            , DO.beastmasterQuote
+            , DO.brewmasterQuote
+            , DO.bristlebackQuote
+            , DO.centaurQuote
+            , DO.chaosKnightQuote
+            , DO.clockwerkQuote
+            , DO.doomQuote
+            , DO.dragonKnightQuote
+            , DO.earthSpiritQuote
+            , DO.earthshakerQuote
+            , DO.elderTitanQuote
+            , DO.huskarQuote
+            , DO.ioQuote
+            , DO.kunkkaQuote
+            , DO.legionCommanderQuote
+            , DO.lifestealerQuote
+            , DO.lycanQuote
+            , DO.magnusQuote
+            , DO.nightStalkerQuote
+            , DO.omniknightQuote
+            , DO.phoenixQuote
+            , DO.pudgeQuote
+            , DO.sandKingQuote
+            , DO.slardarQuote
+            , DO.spiritBreakerQuote
+            , DO.svenQuote
+            , DO.tidehunterQuote
+            , DO.timbersawQuote
+            , DO.tinyQuote
+            , DO.tuskQuote
+            , DO.underlordQuote
+            , DO.undyingQuote
+            , DO.wraithKingQuote
+            , DO.meepoQuote
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

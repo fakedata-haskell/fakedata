@@ -39,7 +39,7 @@ $(generateFakeFields "dota" ["doom", "quote"])
 
 $(generateFakeFields "dota" ["dragon_knight", "quote"])
 
-$(generateFakeFields "dota" ["earth_knight", "quote"])
+$(generateFakeFields "dota" ["earth_spirit", "quote"])
 
 $(generateFakeFields "dota" ["earthshaker", "quote"])
 

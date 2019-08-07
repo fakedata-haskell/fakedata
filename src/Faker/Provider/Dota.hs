@@ -104,9 +104,9 @@ $(genParsers "dota" ["dragon_knight", "quote"])
 
 $(genProviders "dota" ["dragon_knight", "quote"])
 
-$(genParsers "dota" ["earth_knight", "quote"])
+$(genParsers "dota" ["earth_spirit", "quote"])
 
-$(genProviders "dota" ["earth_knight", "quote"])
+$(genProviders "dota" ["earth_spirit", "quote"])
 
 $(genParsers "dota" ["earthshaker", "quote"])
 

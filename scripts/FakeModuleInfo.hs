@@ -81,7 +81,7 @@ dota =
         , ["clockwerk", "quote"]
         , ["doom", "quote"]
         , ["dragon_knight", "quote"]
-        , ["earth_knight", "quote"]
+        , ["earth_spirit", "quote"]
         , ["earthshaker", "quote"]
         , ["elder_titan", "quote"]
         , ["huskar", "quote"]
