@@ -196,3 +196,7 @@ taken from.
 
 Icons made by [Freepik](https://www.flaticon.com/authors/freepik) from
 [Flaticon](https://www.flaticon.com/).
+
+
+todo:
+* write a note on caching

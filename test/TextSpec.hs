@@ -47,6 +47,7 @@ import qualified Faker.Food as FO
 import qualified Faker.Football as FO
 import qualified Faker.FunnyName as FU
 import qualified Faker.Game.Dota as DO
+import qualified Faker.Game.ElderScrolls as EL
 
 import Test.Hspec
 import TestImport
@@ -54,9 +55,12 @@ import TestImport
 isText :: Text -> Bool
 isText x = T.length x >= 1
 
+fakerSettings :: FakerSettings
+fakerSettings = defaultFakerSettings
+
 verifyFakes :: [Fake Text] -> IO [Bool]
 verifyFakes funs = do
-  let fs :: [IO Text] = map generate funs
+  let fs :: [IO Text] = map (generateWithSettings fakerSettings) funs
       gs :: [IO Bool] = map (\f -> isText <$> f) fs
   sequence gs
 
@@ -464,6 +468,18 @@ spec = do
             , DO.undyingQuote
             , DO.wraithKingQuote
             , DO.meepoQuote
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.ElderScrolls" $ do
+      let functions :: [Fake Text] =
+            [ EL.race
+            , EL.creature
+            , EL.region
+            , EL.dragon
+            , EL.city
+            , EL.firstName
+            , EL.lastName
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

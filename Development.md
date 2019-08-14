@@ -83,6 +83,12 @@ that needs to be done:
 * Generate Provider and Faker module
 * Profit!
 
+## Template Haskell code
+
+fakedata uses TH extensively to reduce code duplication. To understand
+the TH based code, you can read the plain haskell code equivalent. I
+have the module `Faker.Address` for easy understanding.
+
 ## Benchmark
 
 ### fakedata version: 0.2.2
@@ -118,16 +124,68 @@ std dev              10.22 ms   (7.192 ms .. 13.69 ms)
 Only doing file bytestring benchmarks:
 
 benchmarked God benchmark/single god
-time                 170.0 μs   (169.4 μs .. 171.0 μs)
-                     1.000 R²   (0.999 R² .. 1.000 R²)
-mean                 168.6 μs   (168.2 μs .. 169.3 μs)
-std dev              1.691 μs   (1.275 μs .. 2.420 μs)
+time                 173.9 μs   (172.4 μs .. 175.9 μs)
+                     0.999 R²   (0.999 R² .. 1.000 R²)
+mean                 170.7 μs   (170.1 μs .. 171.6 μs)
+std dev              2.573 μs   (2.061 μs .. 3.303 μs)
 
-benchmarking God benchmark/thousand gods ... took 6.836 s, total 56 iterations
+benchmarking God benchmark/thousand gods ... took 6.991 s, total 56 iterations
 benchmarked God benchmark/thousand gods
-time                 124.6 ms   (124.4 ms .. 124.8 ms)
+time                 127.4 ms   (126.8 ms .. 127.9 ms)
                      1.000 R²   (1.000 R² .. 1.000 R²)
-mean                 124.1 ms   (124.0 ms .. 124.3 ms)
-std dev              285.5 μs   (228.8 μs .. 362.9 μs)
+mean                 127.0 ms   (126.7 ms .. 127.2 ms)
+std dev              472.1 μs   (331.2 μs .. 697.7 μs)
 
+benchmarked Person benchmark/single person
+time                 77.99 ms   (76.92 ms .. 79.74 ms)
+                     0.999 R²   (0.999 R² .. 1.000 R²)
+mean                 74.97 ms   (73.67 ms .. 76.18 ms)
+std dev              2.299 ms   (1.859 ms .. 2.717 ms)
+
+benchmarking Person benchmark/10 persons ... took 48.28 s, total 56 iterations
+benchmarked Person benchmark/10 persons
+time                 878.0 ms   (861.7 ms .. 913.2 ms)
+                     0.998 R²   (0.996 R² .. 1.000 R²)
+mean                 877.1 ms   (870.4 ms .. 887.8 ms)
+std dev              15.08 ms   (9.567 ms .. 23.57 ms)
+
+--------------------------------------------
 Only doing file yaml  benchmarks:
+
+benchmarked God benchmark/single god
+time                 166.0 μs   (165.7 μs .. 166.3 μs)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 164.4 μs   (164.1 μs .. 164.7 μs)
+std dev              1.134 μs   (950.7 ns .. 1.449 μs)
+
+benchmarked God benchmark/thousand gods
+time                 1.345 ms   (1.342 ms .. 1.347 ms)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.337 ms   (1.335 ms .. 1.339 ms)
+std dev              6.066 μs   (5.098 μs .. 7.473 μs)
+
+benchmarked Person benchmark/single person
+time                 13.13 ms   (12.73 ms .. 13.56 ms)
+                     0.997 R²   (0.995 R² .. 1.000 R²)
+mean                 12.75 ms   (12.69 ms .. 12.89 ms)
+std dev              235.8 μs   (70.84 μs .. 386.1 μs)
+
+benchmarked Person benchmark/10 persons
+time                 24.07 ms   (23.76 ms .. 24.45 ms)
+                     0.999 R²   (0.998 R² .. 1.000 R²)
+mean                 24.61 ms   (24.46 ms .. 24.78 ms)
+std dev              371.9 μs   (270.4 μs .. 507.5 μs)
+
+-----------------------------------------
+
+Doing both yaml and field based caching
+
+
+todo:
+* Finish TextSpec
+* Change all the functions to use TH functions (apart from Address)
+* In provider functions, change allt he resolve*Field function to use cached version.
+* Also In provider functions, make the resolve*Text functions spread out stdgen.
+* Write test for all other modules
+* Cleanup Faker module and it's haddock
+
