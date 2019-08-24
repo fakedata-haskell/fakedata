@@ -48,6 +48,29 @@ import qualified Faker.Football as FO
 import qualified Faker.FunnyName as FU
 import qualified Faker.Game.Dota as DO
 import qualified Faker.Game.ElderScrolls as EL
+import qualified Faker.Game.Fallout as FA
+import qualified Faker.Game.HalfLife as HA
+import qualified Faker.Game.Heroes as HE
+import qualified Faker.Game.HeroesOfTheStorm as HS
+import qualified Faker.Game.Myst as MY
+import qualified Faker.Game.Overwatch as OV
+import qualified Faker.Game.Pokemon as PO
+import qualified Faker.Game.SonicTheHedgehog as SO
+import qualified Faker.Game.SuperSmashBros as SU
+import qualified Faker.Game.Witcher as WI
+import qualified Faker.Game.Witcher as WI
+import qualified Faker.Game.WorldOfWarcraft as WO
+import qualified Faker.Game.Zelda as ZE
+import qualified Faker.Gender as GE
+import qualified Faker.GreekPhilosophers as GR
+import qualified Faker.Hacker as HA
+import qualified Faker.Hipster as HI
+import qualified Faker.House as HO
+import qualified Faker.IndustrySegments as IN
+import qualified Faker.Internet as IN
+import qualified Faker.JapaneseMedia.DragonBall as DR
+import qualified Faker.JapaneseMedia.OnePiece as ON
+import qualified Faker.JapaneseMedia.SwordArtOnline as SW
 
 import Test.Hspec
 import TestImport
@@ -259,7 +282,7 @@ spec = do
             , CM.profession
             , CM.type'
             , CM.sicCode
-              -- Fix buzzword and bs TOD
+              -- Fix buzzword and bs TODO
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -481,5 +504,128 @@ spec = do
             , EL.firstName
             , EL.lastName
             ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Fallout" $ do
+      let functions :: [Fake Text] =
+            [FA.characters, FA.factions, FA.locations, FA.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.HalfLife" $ do
+      let functions :: [Fake Text] = [HA.character, HA.enemy, HA.location]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Heroes" $ do
+      let functions :: [Fake Text] = [HE.names, HE.specialties, HE.klasses]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.HeroesOfTheStorm" $ do
+      let functions :: [Fake Text] =
+            [HS.battlegrounds, HS.classes, HS.heroes, HS.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Myst" $ do
+      let functions :: [Fake Text] =
+            [MY.games, MY.creatures, MY.characters, MY.ages, MY.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Overwatch" $ do
+      let functions :: [Fake Text] = [OV.heroes, OV.locations, OV.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Pokemon" $ do
+      let functions :: [Fake Text] = [PO.names, PO.locations, PO.moves]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.SonicTheHedgehog" $ do
+      let functions :: [Fake Text] = [SO.zone, SO.character, SO.game]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.SonicTheHedgehog" $ do
+      let functions :: [Fake Text] = [SO.zone, SO.character, SO.game]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.SuperSmashBros" $ do
+      let functions :: [Fake Text] = [SU.fighter, SU.stage]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Witcher" $ do
+      let functions :: [Fake Text] =
+            [ WI.characters
+            , WI.witchers
+            , WI.schools
+            , WI.locations
+            , WI.quotes
+            , WI.monsters
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.WorldOfwarcraft" $ do
+      let functions :: [Fake Text] = [WO.hero, WO.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Zelda" $ do
+      let functions :: [Fake Text] =
+            [ZE.games, ZE.characters, ZE.locations, ZE.items]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Gender" $ do
+      let functions :: [Fake Text] = [GE.types, GE.binaryTypes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "GreekPhilosophers" $ do
+      let functions :: [Fake Text] = [GR.names, GR.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Hacker" $ do
+      let functions :: [Fake Text] =
+            [HA.abbreviation, HA.adjective, HA.noun, HA.verb, HA.ingverb]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Hipster" $ do
+      let functions :: [Fake Text] = [HI.words]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "House" $ do
+      let functions :: [Fake Text] = [HO.furniture, HO.rooms]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Industry" $ do
+      let functions :: [Fake Text] =
+            [IN.industry, IN.superSector, IN.sector, IN.subSector]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Internet" $ do
+      let functions :: [Fake Text] =
+            [ IN.freeEmail
+            , IN.domainSuffix
+            , IN.userAgentAol
+            , IN.userAgentChrome
+            , IN.userAgentFirefox
+            , IN.userAgentInternetExplorer
+            , IN.userAgentNetscape
+            , IN.userAgentOpera
+            , IN.userAgentSafari
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "JapaneseMedia.DragonBall" $ do
+      let functions :: [Fake Text] = [DR.characters]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "JapaneseMedia.OnePiece" $ do
+      let functions :: [Fake Text] =
+            [ ON.characters
+            , ON.seas
+            , ON.islands
+            , ON.locations
+            , ON.quotes
+            , ON.akumasNoMi
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "JapaneseMedia.SwordArtOnline" $ do
+      let functions :: [Fake Text] =
+            [SW.realName, SW.gameName, SW.location, SW.item]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
