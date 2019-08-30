@@ -71,6 +71,36 @@ import qualified Faker.Internet as IN
 import qualified Faker.JapaneseMedia.DragonBall as DR
 import qualified Faker.JapaneseMedia.OnePiece as ON
 import qualified Faker.JapaneseMedia.SwordArtOnline as SW
+import qualified Faker.Job as JO
+import qualified Faker.Kpop as KP
+import qualified Faker.LeagueOfLegends as LE
+import qualified Faker.Lorem as LM
+import qualified Faker.Markdown as MA
+import qualified Faker.Marketing as MA
+import qualified Faker.Measurement as ME
+import qualified Faker.Military as MI
+import qualified Faker.Movie as MO
+import qualified Faker.Movie.BackToTheFuture as BA
+import qualified Faker.Movie.Ghostbusters as GH
+import qualified Faker.Movie.GratefulDead as GR
+import qualified Faker.Movie.HarryPotter as HA
+import qualified Faker.Movie.HitchhikersGuideToTheGalaxy as HI
+import qualified Faker.Movie.Hobbit as HO
+import qualified Faker.Movie.Lebowski as LE
+import qualified Faker.Movie.LordOfTheRings as LO
+import qualified Faker.Movie.PrincessBride as PR
+import qualified Faker.Movie.StarWars as ST
+import qualified Faker.Movie.VForVendetta as VF
+import qualified Faker.Music as MU
+import qualified Faker.Music.Opera as OP
+import qualified Faker.Music.Phish as PH
+import qualified Faker.Music.RockBand as RO
+import qualified Faker.Music.UmphreysMcgee as UM
+import qualified Faker.Name as NA
+import qualified Faker.Nation as NA
+import qualified Faker.NatoPhoneticAlphabet as NA
+import qualified Faker.PhoneNumber as PH
+import qualified Faker.ProgrammingLanguage as PR
 
 import Test.Hspec
 import TestImport
@@ -627,5 +657,236 @@ spec = do
     it "JapaneseMedia.SwordArtOnline" $ do
       let functions :: [Fake Text] =
             [SW.realName, SW.gameName, SW.location, SW.item]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Job" $ do
+      let functions :: [Fake Text] =
+            [ JO.field -- TODO: Make it cached
+            , JO.seniority
+            , JO.position
+            , JO.keySkills
+            , JO.employmentType
+            , JO.educationLevel
+            , JO.title
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Kpop" $ do
+      let functions :: [Fake Text] =
+            [ KP.iGroups
+            , KP.iiGroups
+            , KP.iiiGroups
+            , KP.girlGroups
+            , KP.boyBands
+            , KP.solo
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "LeagueOfLegends" $ do
+      let functions :: [Fake Text] =
+            [ LE.champion
+            , LE.location
+            , LE.quote
+            , LE.summonerSpell
+            , LE.masteries
+            , LE.rank
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Lorem" $ do
+      let functions :: [Fake Text] = [LM.words, LM.supplemental]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Markdown" $ do
+      let functions :: [Fake Text] = [MA.headers, MA.emphasis]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Marketing" $ do
+      let functions :: [Fake Text] = [MA.buzzwords]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Measurement" $ do
+      let functions :: [Fake Text] =
+            [ ME.height
+            , ME.length
+            , ME.volume
+            , ME.weight
+            , ME.metricHeight
+            , ME.metricLength
+            , ME.metricVolume
+            , ME.metricWeight
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Military" $ do
+      let functions :: [Fake Text] =
+            [ MI.armyRank
+            , MI.marinesRank
+            , MI.navyRank
+            , MI.airForceRank
+            , MI.dodPaygrade
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.BackToTheFuture" $ do
+      let functions :: [Fake Text] = [BA.dates, BA.characters, BA.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.Ghostbusters" $ do
+      let functions :: [Fake Text] = [GH.actors, GH.characters, GH.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.GratefulDead" $ do
+      let functions :: [Fake Text] = [GR.players, GR.songs]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.HarryPotter" $ do
+      let functions :: [Fake Text] =
+            [ HA.characters
+            , HA.locations
+            , HA.quotes
+            , HA.books
+            , HA.houses
+            , HA.spells
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.HitchhikersGuideToTheGalaxy" $ do
+      let functions :: [Fake Text] =
+            [ HI.characters
+            , HI.locations
+            , HI.marvinQuote
+            , HI.planets
+            , HI.quotes
+            , HI.species
+            , HI.starships
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.Hobbit" $ do
+      let functions :: [Fake Text] =
+            [HO.character, HO.thorinsCompany, HO.quote, HO.location]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.Lebowski" $ do
+      let functions :: [Fake Text] = [LE.actors, LE.characters, LE.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.LordOfTheRings" $ do
+      let functions :: [Fake Text] = [LO.characters, LO.locations, LO.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.PrincessBride" $ do
+      let functions :: [Fake Text] = [PR.characters, PR.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.StarWars" $ do
+      let functions :: [Fake Text] =
+            [ ST.characters
+            , ST.callSquadrons
+            , ST.droids
+            , ST.planets
+            , ST.species
+            , ST.vehicles
+            , ST.wookieeWords
+            , ST.callNumbers
+            , ST.callSign
+            , ST.quotesAdmiralAckbar
+            , ST.quotesAhsokaTano
+            , ST.quotesAsajjVentress
+            , ST.quotesBendu
+            , ST.quotesBobaFett
+            , ST.quotesC3po
+            , ST.quotesCountDooku
+            , ST.quotesDarthCaedus
+            , ST.quotesDarthVader
+            , ST.quotesEmperorPalpatine
+            , ST.quotesFinn
+            , ST.quotesGrandAdmiralThrawn
+            , ST.quotesGrandMoffTarkin
+            , ST.quotesGreedo
+            , ST.quotesHanSolo
+            , ST.quotesJabbaTheHutt
+            , ST.quotesJarJarBinks
+            , ST.quotesK2so
+            , ST.quotesKyloRen
+            , ST.quotesLandoCalrissian
+            , ST.quotesLeiaOrgana
+            , ST.quotesLukeSkywalker
+            , ST.quotesMaceWindu
+            , ST.quotesMazKanata
+            , ST.quotesObiWanKenobi
+            , ST.quotesPadmeAmidala
+            , ST.quotesQuiGonJinn
+            , ST.quotesRey
+            , ST.quotesShmiSkywalker
+            , ST.quotesYoda
+            , ST.alternateCharacterSpellingsAdmiralAckbar
+            , ST.alternateCharacterSpellingsAhsokaTano
+            , ST.alternateCharacterSpellingsAnakinSkywalker
+            , ST.alternateCharacterSpellingsAsajjVentress
+            , ST.alternateCharacterSpellingsBendu
+            , ST.alternateCharacterSpellingsBobaFett
+            , ST.alternateCharacterSpellingsC3po
+            , ST.alternateCharacterSpellingsCountDooku
+            , ST.alternateCharacterSpellingsDarthCaedus
+            , ST.alternateCharacterSpellingsDarthVader
+            , ST.alternateCharacterSpellingsEmperorPalpatine
+            , ST.alternateCharacterSpellingsFinn
+            , ST.alternateCharacterSpellingsGeneralHux
+            , ST.alternateCharacterSpellingsGrandAdmiralThrawn
+            , ST.alternateCharacterSpellingsGrandMoffTarkin
+            , ST.alternateCharacterSpellingsGreedo
+            , ST.alternateCharacterSpellingsHanSolo
+            , ST.alternateCharacterSpellingsJabbaTheHutt
+            , ST.alternateCharacterSpellingsJarJarBinks
+            , ST.alternateCharacterSpellingsK2so
+            , ST.alternateCharacterSpellingsKyloRen
+            , ST.alternateCharacterSpellingsLandoCalrissian
+            , ST.alternateCharacterSpellingsLeiaOrgana
+            , ST.alternateCharacterSpellingsLukeSkywalker
+            , ST.alternateCharacterSpellingsMaceWindu
+            , ST.alternateCharacterSpellingsMazKanata
+            , ST.alternateCharacterSpellingsObiWanKenobi
+            , ST.alternateCharacterSpellingsPadmeAmidala
+            , ST.alternateCharacterSpellingsQuiGonJinn
+            , ST.alternateCharacterSpellingsRey
+            , ST.alternateCharacterSpellingsShmiSkywalker
+            , ST.alternateCharacterSpellingsYoda
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.VForVendetta" $ do
+      let functions :: [Fake Text] = [VF.characters, VF.speeches, VF.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie" $ do
+      let functions :: [Fake Text] = [MO.quote]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Music.Opera" $ do
+      let functions :: [Fake Text] =
+            [ OP.italianByGiuseppeVerdi
+            , OP.italianByGioacchinoRossini
+            , OP.italianByGaetanoDonizetti
+            , OP.italianByVincenzoBellini
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Music.Phish" $ do
+      let functions :: [Fake Text] = [PH.song]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Music.RockBand" $ do
+      let functions :: [Fake Text] = [RO.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Music.UmphreysMcgee" $ do
+      let functions :: [Fake Text] = [UM.song]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Music" $ do
+      let functions :: [Fake Text] =
+            [MU.instruments, MU.bands, MU.albums, MU.genres]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

@@ -1,51 +1,56 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Faker.Provider.BackToTheFuture where
 
 import Config
 import Control.Monad.Catch
-import Control.Monad.IO.Class
-import Data.Map.Strict (Map)
 import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
+import Faker.Provider.TH
+import Language.Haskell.TH
 
-parseBttf :: FromJSON a => FakerSettings -> Value -> Parser a
-parseBttf settings (Object obj) = do
+parseBackToTheFuture :: FromJSON a => FakerSettings -> Value -> Parser a
+parseBackToTheFuture settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  bttf <- faker .: "back_to_the_future"
-  pure bttf
-parseBttf settings val = fail $ "expected Object, but got " <> (show val)
+  backToTheFuture <- faker .: "back_to_the_future"
+  pure backToTheFuture
+parseBackToTheFuture settings val =
+  fail $ "expected Object, but got " <> (show val)
 
-parseBttfField ::
+parseBackToTheFutureField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
-parseBttfField settings txt val = do
-  bttf <- parseBttf settings val
-  field <- bttf .:? txt .!= mempty
+parseBackToTheFutureField settings txt val = do
+  backToTheFuture <- parseBackToTheFuture settings val
+  field <- backToTheFuture .:? txt .!= mempty
   pure field
 
-parseBttfCharacter ::
-     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseBttfCharacter settings = parseBttfField settings "characters"
+parseBackToTheFutureFields ::
+     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+parseBackToTheFutureFields settings txts val = do
+  backToTheFuture <- parseBackToTheFuture settings val
+  helper backToTheFuture txts
+  where
+    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper a [] = parseJSON a
+    helper (Object a) (x:xs) = do
+      field <- a .: x
+      helper field xs
+    helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-bttfCharacterProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-bttfCharacterProvider settings = fetchData settings BTTF parseBttfCharacter
+$(genParser "backToTheFuture" "dates")
 
-parseBttfDates :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseBttfDates settings = parseBttfField settings "dates"
+$(genProvider "backToTheFuture" "dates")
 
-bttfDatesProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-bttfDatesProvider settings = fetchData settings BTTF parseBttfDates
+$(genParser "backToTheFuture" "characters")
 
-parseBttfQuote :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseBttfQuote settings = parseBttfField settings "quotes"
+$(genProvider "backToTheFuture" "characters")
 
-bttfQuoteProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-bttfQuoteProvider settings = fetchData settings BTTF parseBttfQuote
+$(genParser "backToTheFuture" "quotes")
+
+$(genProvider "backToTheFuture" "quotes")

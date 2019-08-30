@@ -13,7 +13,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Provider.Name (nameProvider, resolveNameField, resolveNameText)
+import Faker.Provider.Name (nameNameProvider, resolveNameField, resolveNameText)
 import Faker.Provider.TH
 import Language.Haskell.TH
 
@@ -69,5 +69,5 @@ resolveBookText settings txt = do
 
 resolveBookField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveBookField settings "Name.name" =
-  randomUnresolvedVec settings nameProvider resolveNameText
+  randomUnresolvedVec settings nameNameProvider resolveNameText
 resolveBookField settings str = throwM $ InvalidField "book" str

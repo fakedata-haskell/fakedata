@@ -1,15 +1,15 @@
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 module Faker.Movie.BackToTheFuture where
 
-import Data.Text
-import Faker
-import Faker.Internal
+import Data.Text (Text)
+import Faker (Fake(..))
 import Faker.Provider.BackToTheFuture
+import Faker.TH
 
-character :: Fake Text
-character = Fake (\settings -> randomVec settings bttfCharacterProvider)
+$(generateFakeField "backToTheFuture" "dates")
 
-date :: Fake Text
-date = Fake (\settings -> randomVec settings bttfDatesProvider)
+$(generateFakeField "backToTheFuture" "characters")
 
-quote :: Fake Text
-quote = Fake (\settings -> randomVec settings bttfQuoteProvider)
+$(generateFakeField "backToTheFuture" "quotes")

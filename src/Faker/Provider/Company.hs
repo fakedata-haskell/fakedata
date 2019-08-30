@@ -13,7 +13,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Provider.Name (lastNameProvider, resolveNameText)
+import Faker.Provider.Name (nameLastNameProvider, resolveNameText)
 import Faker.Provider.TH
 import Language.Haskell.TH
 import System.Random (mkStdGen)
@@ -99,6 +99,6 @@ resolveCompanyText settings txt = do
 resolveCompanyField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveCompanyField settings "Name.last_name" =
-  randomVec settings lastNameProvider
+  randomVec settings nameLastNameProvider
 resolveCompanyField settings "suffix" = randomVec settings companySuffixProvider
 resolveCompanyField settings str = throwM $ InvalidField "company" str

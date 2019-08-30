@@ -14,7 +14,7 @@ import Data.Yaml
 import Faker
 import Faker.Internal
 import Faker.Provider.Address (stateProvider)
-import Faker.Provider.Name (lastNameProvider)
+import Faker.Provider.Name (nameLastNameProvider)
 import Faker.Provider.TH
 import Language.Haskell.TH
 
@@ -83,7 +83,7 @@ resolveUniversityField settings "University.prefix" =
 resolveUniversityField settings "University.suffix" =
   randomVec settings universitySuffixProvider
 resolveUniversityField settings "Name.last_name" =
-  randomVec settings lastNameProvider
+  randomVec settings nameLastNameProvider
 resolveUniversityField settings "Address.state" =
   randomVec settings stateProvider
 resolveUniversityField settings str = throwM $ InvalidField "university" str

@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Provider.ProgrammingLauguage where
+module Faker.Provider.ProgrammingLanguage where
 
 import Config
 import Control.Monad.Catch

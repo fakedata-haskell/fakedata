@@ -14,7 +14,7 @@ import Data.Yaml
 import Faker
 import Faker.Internal
 import Faker.Provider.Company (companyNameProvider, resolveCompanyText)
-import Faker.Provider.Name (nameProvider, resolveNameText)
+import Faker.Provider.Name (nameNameProvider, resolveNameText)
 import Faker.Provider.TH
 import Language.Haskell.TH
 
@@ -64,7 +64,12 @@ resolveAppText settings txt = do
 
 resolveAppField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveAppField settings "Name.name" =
-  cachedRandomUnresolvedVec "name" "name" nameProvider resolveNameText settings
+  cachedRandomUnresolvedVec
+    "name"
+    "name"
+    nameNameProvider
+    resolveNameText
+    settings
 resolveAppField settings "Company.name" =
   cachedRandomUnresolvedVec
     "company"

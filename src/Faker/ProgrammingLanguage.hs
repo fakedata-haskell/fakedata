@@ -1,12 +1,12 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Faker.ProgrammingLauguage where
+module Faker.ProgrammingLanguage where
 
 import Data.Text
 import Faker
 import Faker.Internal
-import Faker.Provider.ProgrammingLauguage
+import Faker.Provider.ProgrammingLanguage
 import Faker.TH
 
 $(generateFakeField "programmingLauguage" "name")

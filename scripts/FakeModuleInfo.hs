@@ -350,6 +350,17 @@ gbusters =
     , unresolvedNestedFields = []
     }
 
+backToTheFuture :: ModuleInfo
+backToTheFuture =
+  ModuleInfo
+    { mmoduleName = "backToTheFuture"
+    , jsonField = "back_to_the_future"
+    , fields = ["dates", "characters", "quotes"]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 gdead :: ModuleInfo
 gdead =
   ModuleInfo
@@ -1682,5 +1693,22 @@ beer =
     , unresolvedNestedFields = []
     }
 
+name :: ModuleInfo
+name =
+  ModuleInfo
+    { mmoduleName = "name"
+    , jsonField = "name"
+    , fields =
+        [ "male_first_name"
+        , "female_first_name"
+        , "prefix"
+        , "suffix"
+        , "last_name"
+        ]
+    , unresolvedFields = ["name", "name_with_middle", "first_name"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = beer
+currentOne = name

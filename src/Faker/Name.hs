@@ -1,24 +1,25 @@
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 module Faker.Name where
 
-import Data.Text
-import Faker
-import Faker.Internal
+import Data.Text (Text)
+import Faker (Fake(..))
 import Faker.Provider.Name
+import Faker.TH
 
-maleFirstName :: Fake Text
-maleFirstName = Fake (\settings -> randomVec settings maleFirstNameProvider)
+$(generateFakeField "name" "male_first_name")
 
-femaleFirstName :: Fake Text
-femaleFirstName = Fake (\settings -> randomVec settings femaleFirstNameProvider)
+$(generateFakeField "name" "female_first_name")
 
-prefix :: Fake Text
-prefix = Fake (\settings -> randomVec settings prefixProvider)
+$(generateFakeField "name" "prefix")
 
-suffix :: Fake Text
-suffix = Fake (\settings -> randomVec settings suffixProvider)
+$(generateFakeField "name" "suffix")
 
-name :: Fake Text
-name = Fake (\settings -> randomUnresolvedVec settings nameProvider resolveNameText)
+$(generateFakeField "name" "last_name")
 
-nameWithMiddle :: Fake Text
-nameWithMiddle = Fake (\settings -> randomUnresolvedVec settings nameWithMiddleProvider resolveNameText)
+$(generateFakeFieldUnresolved "name" "name")
+
+$(generateFakeFieldUnresolved "name" "name_with_middle")
+
+$(generateFakeFieldUnresolved "name" "first_name")

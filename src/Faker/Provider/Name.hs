@@ -1,17 +1,19 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Faker.Provider.Name where
 
 import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
-import Data.Map.Strict (Map)
 import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
+import Faker.Provider.TH
+import Language.Haskell.TH
 
 parseName :: FromJSON a => FakerSettings -> Value -> Parser a
 parseName settings (Object obj) = do
@@ -28,6 +30,19 @@ parseNameField settings txt val = do
   field <- name .:? txt .!= mempty
   pure field
 
+parseNameFields ::
+     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+parseNameFields settings txts val = do
+  name <- parseName settings val
+  helper name txts
+  where
+    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper a [] = parseJSON a
+    helper (Object a) (x:xs) = do
+      field <- a .: x
+      helper field xs
+    helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
+
 parseUnresolvedNameField ::
      (FromJSON a, Monoid a)
   => FakerSettings
@@ -39,67 +54,39 @@ parseUnresolvedNameField settings txt val = do
   field <- name .:? txt .!= mempty
   pure $ pure field
 
-parseMaleFirstName ::
-     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseMaleFirstName settings = parseNameField settings "male_first_name"
+$(genParser "name" "male_first_name")
 
-parseFemaleFirstName ::
-     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseFemaleFirstName settings = parseNameField settings "female_first_name"
+$(genProvider "name" "male_first_name")
 
-parseFirstName ::
-     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
-parseFirstName settings = parseUnresolvedNameField settings "first_name"
+$(genParser "name" "female_first_name")
 
-parseLastName :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseLastName settings = parseNameField settings "last_name"
+$(genProvider "name" "female_first_name")
 
-parsePrefix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parsePrefix settings = parseNameField settings "prefix"
+$(genParser "name" "prefix")
 
-parseSuffix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-parseSuffix settings = parseNameField settings "suffix"
+$(genProvider "name" "prefix")
 
-parseFieldName ::
-     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
-parseFieldName settings = parseUnresolvedNameField settings "name"
+$(genParser "name" "suffix")
 
-parseNameWithMiddle ::
-     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
-parseNameWithMiddle settings =
-  parseUnresolvedNameField settings "name_with_middle"
+$(genProvider "name" "suffix")
 
-maleFirstNameProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-maleFirstNameProvider settings = fetchData settings Name parseMaleFirstName
+$(genParser "name" "last_name")
 
-femaleFirstNameProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-femaleFirstNameProvider settings = fetchData settings Name parseFemaleFirstName
+$(genProvider "name" "last_name")
 
-firstNameProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
-firstNameProvider settings = fetchData settings Name parseFirstName
+$(genParserUnresolved "name" "name")
 
-lastNameProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-lastNameProvider settings = fetchData settings Name parseLastName
+$(genProviderUnresolved "name" "name")
 
-prefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-prefixProvider settings = fetchData settings Name parsePrefix
+$(genParserUnresolved "name" "name_with_middle")
 
-suffixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
-suffixProvider settings = fetchData settings Name parseSuffix
+$(genProviderUnresolved "name" "name_with_middle")
 
-nameProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
-nameProvider settings = fetchData settings Name parseFieldName
+$(genParserUnresolved "name" "first_name")
 
-nameWithMiddleProvider ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
-nameWithMiddleProvider settings = fetchData settings Name parseNameWithMiddle
+$(genProviderUnresolved "name" "first_name")
 
-resolveNameText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolveNameText :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveNameText settings txt = do
   let fields = resolveFields txt
   nameFields <- mapM (resolveNameField settings) fields
@@ -107,12 +94,12 @@ resolveNameText settings txt = do
 
 resolveNameField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveNameField settings "female_first_name" =
-  randomVec settings femaleFirstNameProvider
+  randomVec settings nameFemaleFirstNameProvider
 resolveNameField settings "male_first_name" =
-  randomVec settings maleFirstNameProvider
-resolveNameField settings "prefix" = randomVec settings prefixProvider
-resolveNameField settings "suffix" = randomVec settings suffixProvider
+  randomVec settings nameMaleFirstNameProvider
+resolveNameField settings "prefix" = randomVec settings namePrefixProvider
+resolveNameField settings "suffix" = randomVec settings nameSuffixProvider
 resolveNameField settings "first_name" =
-  randomUnresolvedVec settings firstNameProvider resolveNameText
-resolveNameField settings "last_name" = randomVec settings lastNameProvider
+  randomUnresolvedVec settings nameFirstNameProvider resolveNameText
+resolveNameField settings "last_name" = randomVec settings nameLastNameProvider
 resolveNameField settings str = throwM $ InvalidField "name" str

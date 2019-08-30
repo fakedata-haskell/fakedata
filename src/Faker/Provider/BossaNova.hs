@@ -13,7 +13,6 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Provider.Name (nameProvider, resolveNameText)
 import Faker.Provider.TH
 import Language.Haskell.TH
 

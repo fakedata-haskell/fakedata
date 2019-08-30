@@ -25,3 +25,18 @@ spec = do
     it "name" $ do
       item <- generate name
       item `shouldSatisfy` isText
+    it "first_name" $ do
+      item <- generate firstName
+      item `shouldSatisfy` isText
+    it "last_name" $ do
+      item <- generate lastName
+      item `shouldSatisfy` isText
+    it "name_with_middle" $ do
+      item <- generate nameWithMiddle
+      item `shouldSatisfy` isText
+    it "male_first_name" $ do
+      item <- generate maleFirstName
+      item `shouldSatisfy` isText
+    it "female_first_name" $ do
+      item <- generate femaleFirstName
+      item `shouldSatisfy` isText

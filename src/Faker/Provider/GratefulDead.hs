@@ -20,7 +20,7 @@ parseGratefulDead :: FromJSON a => FakerSettings -> Value -> Parser a
 parseGratefulDead settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  gratefulDead <- faker .: "grateteful_dead"
+  gratefulDead <- faker .: "grateful_dead"
   pure gratefulDead
 parseGratefulDead settings val =
   fail $ "expected Object, but got " <> (show val)

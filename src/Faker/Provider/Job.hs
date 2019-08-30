@@ -94,7 +94,7 @@ resolveJobText settings txt = do
 
 resolveJobField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveJobField settings "seniority" = randomVec settings jobSeniorityProvider
--- resolveJobField settings "field" = randomVec settings jobFieldProvider
+resolveJobField settings "field" = randomVec settings jobField2Provider
 resolveJobField settings "position" = randomVec settings jobPositionProvider
 resolveJobField settings "title" =
   randomUnresolvedVec settings jobTitleProvider resolveJobText
