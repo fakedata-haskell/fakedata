@@ -44,7 +44,6 @@ import qualified Faker.Esport as ES
 import qualified Faker.File as FI
 import qualified Faker.Finance as FI
 import qualified Faker.Food as FO
-import qualified Faker.Football as FO
 import qualified Faker.FunnyName as FU
 import qualified Faker.Game.Dota as DO
 import qualified Faker.Game.ElderScrolls as EL
@@ -101,6 +100,54 @@ import qualified Faker.Nation as NA
 import qualified Faker.NatoPhoneticAlphabet as NA
 import qualified Faker.PhoneNumber as PH
 import qualified Faker.ProgrammingLanguage as PR
+import qualified Faker.Quote as QU
+import qualified Faker.Quote.Shakespeare as SH
+import qualified Faker.Relationship as RE
+import qualified Faker.Restaurant as RE
+import qualified Faker.Science as SC
+import qualified Faker.SlackEmoji as SL
+import qualified Faker.Source as SO
+import qualified Faker.Space as SP
+import qualified Faker.Sport.Basketball as BA
+import qualified Faker.Sport.Football as FO
+import qualified Faker.Subscription as SU
+import qualified Faker.Superhero as SU
+import qualified Faker.Team as TE
+import qualified Faker.TvShow.AquaTeenHungerForce as AQ
+import qualified Faker.TvShow.BoJackHorseman as BO
+import qualified Faker.TvShow.BreakingBad as BR
+import qualified Faker.TvShow.Buffy as BU
+import qualified Faker.TvShow.Community as CO
+import qualified Faker.TvShow.DrWho as DR
+import qualified Faker.TvShow.DumbAndDumber as DD
+import qualified Faker.TvShow.FamilyGuy as FA
+import qualified Faker.TvShow.FreshPrinceOfBelAir as FR
+import qualified Faker.TvShow.Friends as FI
+import qualified Faker.TvShow.GameOfThrones as GA
+import qualified Faker.TvShow.HeyArnold as HE
+import qualified Faker.TvShow.HowIMetYourMother as HI
+import qualified Faker.TvShow.MichaelScott as MI
+import qualified Faker.TvShow.NewGirl as NE
+import qualified Faker.TvShow.ParksAndRec as PA
+import qualified Faker.TvShow.RickAndMorty as RI
+import qualified Faker.TvShow.Rupaul as RU
+import qualified Faker.TvShow.Seinfeld as SE
+import qualified Faker.TvShow.SiliconValley as SI
+import qualified Faker.TvShow.Simpsons as SS
+import qualified Faker.TvShow.SouthPark as SO
+import qualified Faker.TvShow.StarTrek as SR
+import qualified Faker.TvShow.Stargate as SG
+import qualified Faker.TvShow.StrangerThings as SH
+import qualified Faker.TvShow.TheExpanse as TH
+import qualified Faker.TvShow.TheItCrowd as TI
+import qualified Faker.TvShow.TheThickOfIt as TO
+import qualified Faker.TvShow.TwinPeaks as TW
+import qualified Faker.TvShow.VentureBros as VE
+import qualified Faker.University as UN
+import qualified Faker.Vehicle as VE
+import qualified Faker.Verbs as VE
+import qualified Faker.WorldCup as WO
+import qualified Faker.Yoda as YO
 
 import Test.Hspec
 import TestImport
@@ -467,11 +514,6 @@ spec = do
             , FO.metricMeasurements
             , FO.sushi
             ]
-      bools <- verifyFakes functions
-      (and bools) `shouldBe` True
-    it "Football" $ do
-      let functions :: [Fake Text] =
-            [FO.teams, FO.players, FO.coaches, FO.competitions, FO.positions]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "FunnyName" $ do
@@ -888,5 +930,528 @@ spec = do
     it "Music" $ do
       let functions :: [Fake Text] =
             [MU.instruments, MU.bands, MU.albums, MU.genres]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Name" $ do
+      let functions :: [Fake Text] =
+            [ NA.maleFirstName
+            , NA.femaleFirstName
+            , NA.prefix
+            , NA.suffix
+            , NA.lastName
+            , NA.name
+            , NA.nameWithMiddle
+            , NA.firstName
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Nation" $ do
+      let functions :: [Fake Text] =
+            [ NA.nationality
+            , NA.language
+            , NA.capitalCity
+            , NA.flagEmoji -- TODO
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "NatoPhoneticAlphabet" $ do
+      let functions :: [Fake Text] = [NA.codeWord]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "PhoneNumber" $ do
+      let functions :: [Fake Text] = [] -- TODO
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "ProgrammingLanguage" $ do
+      let functions :: [Fake Text] = [PR.name, PR.creator]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Quote.Shakespeare" $ do
+      let functions :: [Fake Text] =
+            [SH.hamlet, SH.asYouLikeIt, SH.kingRichardIii, SH.romeoAndJuliet]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Quote" $ do
+      let functions :: [Fake Text] =
+            [ QU.famousLastWords
+            , QU.matz
+            , QU.mostInterestingManInTheWorld
+            , QU.robin
+            , QU.singularSiegler
+            , QU.yoda
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Relationship" $ do
+      let functions :: [Fake Text] =
+            [ RE.inLaw
+            , RE.spouse
+            , RE.parent
+            , RE.sibling
+            , RE.familialDirect
+            , RE.familialExtended
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Restaurant" $ do
+      let functions :: [Fake Text] =
+            [ RE.nameSuffix
+            , RE.type'
+            , RE.description
+            , RE.review
+            , RE.namePrefix
+            , RE.name
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Science" $ do
+      let functions :: [Fake Text] =
+            [ SC.element
+               -- SC.elementSymbol, -- TODO
+            , SC.scientist
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "SlackEmoji" $ do
+      let functions :: [Fake Text] =
+            [ SL.people
+            , SL.nature
+            , SL.foodAndDrink
+            , SL.celebration
+            , SL.activity
+            , SL.travelAndPlaces
+            , SL.objectsAndSymbols
+            , SL.custom
+            , SL.emoji
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Source" $ do
+      let functions :: [Fake Text]
+            --  SO.helloWorldRuby -- TODO
+            -- , SO.helloWorldJavascript
+            -- , SO.printRuby
+            -- , SO.printJavascript
+            -- , SO.print1To10Ruby
+            -- , SO.print1To10Javascript
+           = []
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Space" $ do
+      let functions :: [Fake Text] =
+            [ SP.planet
+            , SP.moon
+            , SP.galaxy
+            , SP.nebula
+            , SP.starCluster
+            , SP.constellation
+            , SP.star
+            , SP.agency
+            , SP.agencyAbv
+            , SP.nasaSpaceCraft
+            , SP.company
+            , SP.distanceMeasurement
+            , SP.meteorite
+            , SP.launchVehicule
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Sport.Basketball" $ do
+      let functions :: [Fake Text] =
+            [BA.teams, BA.players, BA.coaches, BA.positions]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Sport.Football" $ do
+      let functions :: [Fake Text] =
+            [FO.teams, FO.players, FO.coaches, FO.competitions, FO.positions]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Subscription" $ do
+      let functions :: [Fake Text] =
+            [ SU.plans
+            , SU.statuses
+            , SU.paymentMethods
+            , SU.subscriptionTerms
+            , SU.paymentTerms
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Superhero" $ do
+      let functions :: [Fake Text] =
+            [SU.power, SU.prefix, SU.suffix, SU.descriptor, SU.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Team" $ do
+      let functions :: [Fake Text] = [TE.creature, TE.sport, TE.mascot, TE.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "University" $ do
+      let functions :: [Fake Text] = [UN.prefix, UN.suffix, UN.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Vehicle" $ do
+      let functions :: [Fake Text] =
+            [ VE.manufacture
+            , VE.makes
+            , VE.colors
+            , VE.transmissions
+            , VE.driveTypes
+            , VE.fuelTypes
+            , VE.styles
+            , VE.carTypes
+            , VE.carOptions
+            , VE.standardSpecs
+            -- , VE.doors -- TODO
+            -- , VE.engineSizes
+            , VE.licensePlate
+            , VE.modelsByMakeBMW
+            , VE.modelsByMakeAudi
+            , VE.modelsByMakeToyota
+            , VE.modelsByMakeChevy
+            , VE.modelsByMakeFord
+            , VE.modelsByMakeDodge
+            , VE.modelsByMakeLincoln
+            , VE.modelsByMakeBuick
+            , VE.modelsByMakeHonda
+            , VE.modelsByMakeNissan
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Verbs" $ do
+      let functions :: [Fake Text] =
+            [VE.base, VE.past, VE.pastParticiple, VE.simplePresent, VE.ingForm]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "WorldCup" $ do
+      let functions :: [Fake Text] =
+            [ WO.teams
+            , WO.stadiums
+            , WO.cities
+            , WO.groupsGroupA
+            , WO.groupsGroupB
+            , WO.groupsGroupC
+            , WO.groupsGroupD
+            , WO.groupsGroupE
+            , WO.groupsGroupF
+            , WO.groupsGroupG
+            , WO.groupsGroupH
+            , WO.rostersEgyptCoach
+            , WO.rostersEgyptGoalkeepers
+            , WO.rostersEgyptDefenders
+            , WO.rostersEgyptMidfielders
+            , WO.rostersEgyptForwards
+            , WO.rostersRussiaCoach
+            , WO.rostersRussiaGoalkeepers
+            , WO.rostersRussiaDefenders
+            , WO.rostersRussiaMidfielders
+            , WO.rostersRussiaForwards
+            , WO.rostersSaudiArabiaCoach
+            , WO.rostersSaudiArabiaGoalkeepers
+            , WO.rostersSaudiArabiaDefenders
+            , WO.rostersSaudiArabiaMidfielders
+            , WO.rostersSaudiArabiaForwards
+            , WO.rostersUruguayCoach
+            , WO.rostersUruguayGoalkeepers
+            , WO.rostersUruguayDefenders
+            , WO.rostersUruguayMidfielders
+            , WO.rostersUruguayForwards
+            , WO.rostersIranCoach
+            , WO.rostersIranGoalkeepers
+            , WO.rostersIranDefenders
+            , WO.rostersIranMidfielders
+            , WO.rostersIranForwards
+            , WO.rostersMoroccoCoach
+            , WO.rostersMoroccoGoalkeepers
+            , WO.rostersMoroccoDefenders
+            , WO.rostersMoroccoMidfielders
+            , WO.rostersMoroccoForwards
+            , WO.rostersPortugalCoach
+            , WO.rostersPortugalGoalkeepers
+            , WO.rostersPortugalDefenders
+            , WO.rostersPortugalMidfielders
+            , WO.rostersPortugalForwards
+            , WO.rostersSpainCoach
+            , WO.rostersSpainGoalkeepers
+            , WO.rostersSpainDefenders
+            , WO.rostersSpainMidfielders
+            , WO.rostersSpainForwards
+            , WO.rostersAustraliaCoach
+            , WO.rostersAustraliaGoalkeepers
+            , WO.rostersAustraliaDefenders
+            , WO.rostersAustraliaMidfielders
+            , WO.rostersAustraliaForwards
+            , WO.rostersDenmarkCoach
+            , WO.rostersDenmarkGoalkeepers
+            , WO.rostersDenmarkDefenders
+            , WO.rostersDenmarkMidfielders
+            , WO.rostersDenmarkForwards
+            , WO.rostersFranceCoach
+            , WO.rostersFranceGoalkeepers
+            , WO.rostersFranceDefenders
+            , WO.rostersFranceMidfielders
+            , WO.rostersFranceForwards
+            , WO.rostersPeruCoach
+            , WO.rostersPeruGoalkeepers
+            , WO.rostersPeruDefenders
+            , WO.rostersPeruMidfielders
+            , WO.rostersPeruForwards
+            , WO.rostersArgentinaCoach
+            , WO.rostersArgentinaGoalkeepers
+            , WO.rostersArgentinaDefenders
+            , WO.rostersArgentinaMidfielders
+            , WO.rostersArgentinaForwards
+            , WO.rostersCroatiaCoach
+            , WO.rostersCroatiaGoalkeepers
+            , WO.rostersCroatiaDefenders
+            , WO.rostersCroatiaMidfielders
+            , WO.rostersCroatiaForwards
+            , WO.rostersIcelandCoach
+            , WO.rostersIcelandGoalkeepers
+            , WO.rostersIcelandDefenders
+            , WO.rostersIcelandMidfielders
+            , WO.rostersIcelandForwards
+            , WO.rostersNigeriaCoach
+            , WO.rostersNigeriaGoalkeepers
+            , WO.rostersNigeriaDefenders
+            , WO.rostersNigeriaMidfielders
+            , WO.rostersNigeriaForwards
+            , WO.rostersBrazilCoach
+            , WO.rostersBrazilGoalkeepers
+            , WO.rostersBrazilDefenders
+            , WO.rostersBrazilMidfielders
+            , WO.rostersBrazilForwards
+            , WO.rostersCostaRicaCoach
+            , WO.rostersCostaRicaGoalkeepers
+            , WO.rostersCostaRicaDefenders
+            , WO.rostersCostaRicaMidfielders
+            , WO.rostersCostaRicaForwards
+            , WO.rostersSerbiaCoach
+            , WO.rostersSerbiaGoalkeepers
+            , WO.rostersSerbiaDefenders
+            , WO.rostersSerbiaMidfielders
+            , WO.rostersSerbiaForwards
+            , WO.rostersSwitzerlandCoach
+            , WO.rostersSwitzerlandGoalkeepers
+            , WO.rostersSwitzerlandDefenders
+            , WO.rostersSwitzerlandMidfielders
+            , WO.rostersSwitzerlandForwards
+            , WO.rostersGermanyCoach
+            , WO.rostersGermanyGoalkeepers
+            , WO.rostersGermanyDefenders
+            , WO.rostersGermanyMidfielders
+            , WO.rostersGermanyForwards
+            , WO.rostersMexicoCoach
+            , WO.rostersMexicoGoalkeepers
+            , WO.rostersMexicoDefenders
+            , WO.rostersMexicoMidfielders
+            , WO.rostersMexicoForwards
+            , WO.rostersSouthKoreaCoach
+            , WO.rostersSouthKoreaGoalkeepers
+            , WO.rostersSouthKoreaDefenders
+            , WO.rostersSouthKoreaMidfielders
+            , WO.rostersSouthKoreaForwards
+            , WO.rostersSwedenCoach
+            , WO.rostersSwedenGoalkeepers
+            , WO.rostersSwedenDefenders
+            , WO.rostersSwedenMidfielders
+            , WO.rostersSwedenForwards
+            , WO.rostersBelgiumCoach
+            , WO.rostersBelgiumGoalkeepers
+            , WO.rostersBelgiumDefenders
+            , WO.rostersBelgiumMidfielders
+            , WO.rostersBelgiumForwards
+            , WO.rostersEnglandCoach
+            , WO.rostersEnglandGoalkeepers
+            , WO.rostersEnglandDefenders
+            , WO.rostersEnglandMidfielders
+            , WO.rostersEnglandForwards
+            , WO.rostersPanamaCoach
+            , WO.rostersPanamaGoalkeepers
+            , WO.rostersPanamaDefenders
+            , WO.rostersPanamaMidfielders
+            , WO.rostersPanamaForwards
+            , WO.rostersTunisiaCoach
+            , WO.rostersTunisiaGoalkeepers
+            , WO.rostersTunisiaDefenders
+            , WO.rostersTunisiaMidfielders
+            , WO.rostersTunisiaForwards
+            , WO.rostersColumbiaCoach
+            , WO.rostersColumbiaGoalkeepers
+            , WO.rostersColumbiaDefenders
+            , WO.rostersColumbiaMidfielders
+            , WO.rostersColumbiaForwards
+            , WO.rostersJapanCoach
+            , WO.rostersJapanGoalkeepers
+            , WO.rostersJapanDefenders
+            , WO.rostersJapanMidfielders
+            , WO.rostersJapanForwards
+            , WO.rostersPolandCoach
+            , WO.rostersPolandGoalkeepers
+            , WO.rostersPolandDefenders
+            , WO.rostersPolandMidfielders
+            , WO.rostersPolandForwards
+            , WO.rostersSenegalCoach
+            , WO.rostersSenegalGoalkeepers
+            , WO.rostersSenegalDefenders
+            , WO.rostersSenegalMidfielders
+            , WO.rostersSenegalForwards
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Yoda" $ do
+      let functions :: [Fake Text] = [YO.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.AquaTeenHungerForce" $ do
+      let functions :: [Fake Text] = [AQ.character] -- TODO
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.BoJackHorseman" $ do
+      let functions :: [Fake Text] = [BO.character, BO.quote, BO.tongueTwister] -- TODO
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.BreakingBad" $ do
+      let functions :: [Fake Text] = [BR.character, BR.episode]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Buffy" $ do
+      let functions :: [Fake Text] =
+            [BU.characters, BU.quotes, BU.celebrities, BU.bigBads, BU.episodes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Community" $ do
+      let functions :: [Fake Text] = [CO.characters, CO.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.DrWho" $ do
+      let functions :: [Fake Text] =
+            [ DR.character
+            , DR.theDoctors
+            , DR.actors
+            , DR.catchPhrases
+            , DR.quotes
+            , DR.villians
+            , DR.species
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.DumbAndDumber" $ do
+      let functions :: [Fake Text] = [DD.actors, DD.characters, DD.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.FamilyGuy" $ do
+      let functions :: [Fake Text] = [FA.character, FA.location, FA.quote]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.FreshPrinceOfBelAir" $ do
+      let functions :: [Fake Text] = [FR.characters, FR.celebrities, FR.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Friends" $ do
+      let functions :: [Fake Text] = [FI.characters, FI.locations, FI.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Friends" $ do
+      let functions :: [Fake Text] = [FI.characters, FI.locations, FI.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.GameOfThrones" $ do
+      let functions :: [Fake Text] =
+            [GA.characters, GA.houses, GA.cities, GA.quotes, GA.dragons]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.HeyArnold" $ do
+      let functions :: [Fake Text] = [HE.characters, HE.locations, HE.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.HowIMetYourMother" $ do
+      let functions :: [Fake Text] =
+            [HI.character, HI.catchPhrase, HI.highFive, HI.quote]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.MichaelScott" $ do
+      let functions :: [Fake Text] = [MI.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.NewGirl" $ do
+      let functions :: [Fake Text] = [NE.characters, NE.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.ParksAndRec" $ do
+      let functions :: [Fake Text] = [PA.characters, PA.cities]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.RickAndMorty" $ do
+      let functions :: [Fake Text] = [RI.characters, RI.locations, RI.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Rupaul" $ do
+      let functions :: [Fake Text] = [RU.queens, RU.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Seinfeld" $ do
+      let functions :: [Fake Text] = [SE.character, SE.quote, SE.business]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Seinfeld" $ do
+      let functions :: [Fake Text] = [SE.character, SE.quote, SE.business]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.SiliconValley" $ do
+      let functions :: [Fake Text] =
+            [ SI.characters
+            , SI.companies
+            , SI.quotes
+            , SI.apps
+            , SI.inventions
+            , SI.mottos
+            , SI.urls
+            , SI.email
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Simpsons" $ do
+      let functions :: [Fake Text] = [SS.characters, SS.locations, SS.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.SouthPark" $ do
+      let functions :: [Fake Text] = [SO.characters, SO.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.StarTrek" $ do
+      let functions :: [Fake Text] =
+            [SR.character, SR.location, SR.specie, SR.villain]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.StarGate" $ do
+      let functions :: [Fake Text] = [SG.characters, SG.planets, SG.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.StrangerThings" $ do
+      let functions :: [Fake Text] = [SH.character, SH.quote]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.TheExpanse" $ do
+      let functions :: [Fake Text] =
+            [TH.characters, TH.locations, TH.ships, TH.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.TheItCrowd" $ do
+      let functions :: [Fake Text] =
+            [TI.actors, TI.characters, TI.emails, TI.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.TheThickOfIt" $ do
+      let functions :: [Fake Text] =
+            [TO.characters, TO.positions, TO.departments]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.TwinPeaks" $ do
+      let functions :: [Fake Text] = [TW.characters, TW.locations, TW.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.VentureBros" $ do
+      let functions :: [Fake Text] =
+            [VE.character, VE.organization, VE.vehicle, VE.quote]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

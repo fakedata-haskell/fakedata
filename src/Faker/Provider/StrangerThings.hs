@@ -45,9 +45,9 @@ parseStrangerThingsFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-$(genParser "strangerThings" "characters")
+$(genParser "strangerThings" "character")
 
-$(genProvider "strangerThings" "characters")
+$(genProvider "strangerThings" "character")
 
 $(genParser "strangerThings" "quote")
 

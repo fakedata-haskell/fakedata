@@ -1128,7 +1128,7 @@ strangerThings =
   ModuleInfo
     { mmoduleName = "strangerThings"
     , jsonField = "stranger_things"
-    , fields = ["characters", "quote"]
+    , fields = ["character", "quote"]
     , unresolvedFields = []
     , nestedFields = []
     , unresolvedNestedFields = []
