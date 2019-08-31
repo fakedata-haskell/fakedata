@@ -181,11 +181,9 @@ std dev              371.9 μs   (270.4 μs .. 507.5 μs)
 Doing both yaml and field based caching
 
 
-todo:
-* Finish TextSpec
-* Change all the functions to use TH functions (apart from Address)
-* In provider functions, change allt he resolve*Field function to use cached version.
+# Todo
+
+* In provider functions, change all the resolve*Field function to use cached version.
 * Also In provider functions, make the resolve*Text functions spread out stdgen.
-* Write test for all other modules
 * Cleanup Faker module and it's haddock
 

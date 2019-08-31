@@ -5,8 +5,9 @@
 {-# LANGUAGE BangPatterns #-}
 
 module Faker
+  ( 
     -- * Types
-  ( Fake(..)
+    Fake(..)
   , FakerSettings
   , FakerException(..)
   , defaultFakerSettings
