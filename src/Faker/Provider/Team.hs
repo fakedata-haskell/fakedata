@@ -79,8 +79,15 @@ resolveTeamText settings txt = do
   pure $ operateFields txt teamFields
 
 resolveTeamField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveTeamField settings "creature" = randomVec settings teamCreatureProvider
-resolveTeamField settings "Address.state" = randomVec settings stateProvider
-resolveTeamField settings "name" =
-  randomUnresolvedVec settings teamNameProvider resolveTeamText
+resolveTeamField settings field@"creature" =
+  cachedRandomVec "team" field teamCreatureProvider settings
+resolveTeamField settings "Address.state" =
+  cachedRandomVec "address" "state" stateProvider settings
+resolveTeamField settings field@"name" =
+  cachedRandomUnresolvedVec
+    "team"
+    field
+    teamNameProvider
+    resolveTeamText
+    settings
 resolveTeamField settings str = throwM $ InvalidField "team" str

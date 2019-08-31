@@ -93,13 +93,21 @@ resolveNameText settings txt = do
   pure $ operateFields txt nameFields
 
 resolveNameField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveNameField settings "female_first_name" =
-  randomVec settings nameFemaleFirstNameProvider
-resolveNameField settings "male_first_name" =
-  randomVec settings nameMaleFirstNameProvider
-resolveNameField settings "prefix" = randomVec settings namePrefixProvider
-resolveNameField settings "suffix" = randomVec settings nameSuffixProvider
-resolveNameField settings "first_name" =
-  randomUnresolvedVec settings nameFirstNameProvider resolveNameText
-resolveNameField settings "last_name" = randomVec settings nameLastNameProvider
+resolveNameField settings field@"female_first_name" =
+  cachedRandomVec "name" field nameFemaleFirstNameProvider settings
+resolveNameField settings field@"male_first_name" =
+  cachedRandomVec "name" field nameMaleFirstNameProvider settings
+resolveNameField settings field@"prefix" =
+  cachedRandomVec "name" field namePrefixProvider settings
+resolveNameField settings field@"suffix" =
+  cachedRandomVec "name" field nameSuffixProvider settings
+resolveNameField settings field@"first_name" =
+  cachedRandomUnresolvedVec
+    "name"
+    field
+    nameFirstNameProvider
+    resolveNameText
+    settings
+resolveNameField settings field@"last_name" =
+  cachedRandomVec "name" field nameLastNameProvider settings
 resolveNameField settings str = throwM $ InvalidField "name" str

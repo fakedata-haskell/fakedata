@@ -69,5 +69,10 @@ resolveBookText settings txt = do
 
 resolveBookField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveBookField settings "Name.name" =
-  randomUnresolvedVec settings nameNameProvider resolveNameText
+  cachedRandomUnresolvedVec
+    "name"
+    "name"
+    nameNameProvider
+    resolveNameText
+    settings
 resolveBookField settings str = throwM $ InvalidField "book" str

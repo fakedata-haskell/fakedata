@@ -93,9 +93,12 @@ resolveJobText settings txt = do
   pure $ operateFields txt jobFields
 
 resolveJobField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveJobField settings "seniority" = randomVec settings jobSeniorityProvider
-resolveJobField settings "field" = randomVec settings jobField2Provider
-resolveJobField settings "position" = randomVec settings jobPositionProvider
-resolveJobField settings "title" =
-  randomUnresolvedVec settings jobTitleProvider resolveJobText
+resolveJobField settings field@"seniority" =
+  cachedRandomVec "job" field jobSeniorityProvider settings
+resolveJobField settings field@"field" =
+  cachedRandomVec "job" field jobField2Provider settings
+resolveJobField settings field@"position" =
+  cachedRandomVec "job" field jobPositionProvider settings
+resolveJobField settings field@"title" =
+  cachedRandomUnresolvedVec "job" field jobTitleProvider resolveJobText settings
 resolveJobField settings str = throwM $ InvalidField "job" str

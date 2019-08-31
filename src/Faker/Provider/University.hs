@@ -79,11 +79,11 @@ resolveUniversityText settings txt = do
 resolveUniversityField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveUniversityField settings "University.prefix" =
-  randomVec settings universityPrefixProvider
+  cachedRandomVec "university" "prefix" universityPrefixProvider settings
 resolveUniversityField settings "University.suffix" =
-  randomVec settings universitySuffixProvider
+  cachedRandomVec "university" "suffix" universitySuffixProvider settings
 resolveUniversityField settings "Name.last_name" =
-  randomVec settings nameLastNameProvider
+  cachedRandomVec "name" "last_name" nameLastNameProvider settings
 resolveUniversityField settings "Address.state" =
-  randomVec settings stateProvider
+  cachedRandomVec "address" "state" stateProvider settings
 resolveUniversityField settings str = throwM $ InvalidField "university" str

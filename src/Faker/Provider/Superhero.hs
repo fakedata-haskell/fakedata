@@ -84,10 +84,10 @@ resolveSuperheroText settings txt = do
 
 resolveSuperheroField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveSuperheroField settings "Superhero.prefix" =
-  randomVec settings superheroPrefixProvider
-resolveSuperheroField settings "Superhero.suffix" =
-  randomVec settings superheroSuffixProvider
-resolveSuperheroField settings "Superhero.descriptor" =
-  randomVec settings superheroDescriptorProvider
+resolveSuperheroField settings field@"Superhero.prefix" =
+  cachedRandomVec "superhero" field superheroPrefixProvider settings
+resolveSuperheroField settings field@"Superhero.suffix" =
+  cachedRandomVec "superhero" field superheroSuffixProvider settings
+resolveSuperheroField settings field@"Superhero.descriptor" =
+  cachedRandomVec "superhero" field superheroDescriptorProvider settings
 resolveSuperheroField settings str = throwM $ InvalidField "superhero" str

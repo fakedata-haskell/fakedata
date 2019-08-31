@@ -99,6 +99,7 @@ resolveCompanyText settings txt = do
 resolveCompanyField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveCompanyField settings "Name.last_name" =
-  randomVec settings nameLastNameProvider
-resolveCompanyField settings "suffix" = randomVec settings companySuffixProvider
+  cachedRandomVec "name" "last_name" nameLastNameProvider settings
+resolveCompanyField settings field@"suffix" =
+  cachedRandomVec "company" field companySuffixProvider settings
 resolveCompanyField settings str = throwM $ InvalidField "company" str

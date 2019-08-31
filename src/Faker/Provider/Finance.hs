@@ -112,34 +112,25 @@ resolveFinanceText settings txt = do
 
 resolveFinanceField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveFinanceField settings "visa" =
-  randomUnresolvedVec settings financeVisaProvider resolveFinanceField
-resolveFinanceField settings "mastercard" =
-  randomUnresolvedVec settings financeMastercardProvider resolveFinanceField
-resolveFinanceField settings "discover" =
-  randomUnresolvedVec settings financeDiscoverProvider resolveFinanceField
--- resolveFinanceField settings undefined =
---   randomUnresolvedVec
---     settings
---     american_expressProvider
---     resolveAmerican_expressText
--- resolveFinanceField settings undefined =
---   randomUnresolvedVec settings diners_clubProvider resolveDiners_clubText
--- resolveFinanceField settings undefined =
---   randomUnresolvedVec settings jcbProvider resolveJcbText
--- resolveFinanceField settings undefined =
---   randomUnresolvedVec settings switchProvider resolveSwitchText
--- resolveFinanceField settings undefined =
---   randomUnresolvedVec settings soloProvider resolveSoloText
--- resolveFinanceField settings undefined =
---   randomUnresolvedVec settings dankortProvider resolveDankortText
--- resolveFinanceField settings undefined =
---   randomUnresolvedVec settings maestroProvider resolveMaestroText
--- resolveFinanceField settings undefined =
---   randomUnresolvedVec
---     settings
---     forbrugsforeningenProvider
---     resolveForbrugsforeningenText
--- resolveFinanceField settings undefined =
---   randomUnresolvedVec settings laserProvider resolveLaserText
+resolveFinanceField settings field@"visa" =
+  cachedRandomUnresolvedVec
+    "finance"
+    field
+    financeVisaProvider
+    resolveFinanceField
+    settings
+resolveFinanceField settings field@"mastercard" =
+  cachedRandomUnresolvedVec
+    "finance"
+    field
+    financeMastercardProvider
+    resolveFinanceField
+    settings
+resolveFinanceField settings field@"discover" =
+  cachedRandomUnresolvedVec
+    "finance"
+    field
+    financeDiscoverProvider
+    resolveFinanceField
+    settings
 resolveFinanceField settings str = throwM $ InvalidField "finance" str

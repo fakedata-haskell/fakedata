@@ -113,9 +113,11 @@ resolveEducatorText settings txt = do
 
 resolveEducatorField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveEducatorField settings "course_number" =
-  randomUnresolvedVec
-    settings
+resolveEducatorField settings field@"course_number" =
+  cachedRandomUnresolvedVec
+    "educator"
+    field
     educatorTertiaryCourseNumberProvider
     resolveEducatorText
+    settings
 resolveEducatorField settings str = throwM $ InvalidField "educator" str

@@ -100,20 +100,24 @@ resolveSlackEmojiText settings txt = do
 
 resolveSlackEmojiField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveSlackEmojiField settings "people" =
-  randomVec settings slackEmojiPeopleProvider
-resolveSlackEmojiField settings "nature" =
-  randomVec settings slackEmojiNatureProvider
-resolveSlackEmojiField settings "food_and_drink" =
-  randomVec settings slackEmojiFoodAndDrinkProvider
-resolveSlackEmojiField settings "celebration" =
-  randomVec settings slackEmojiCelebrationProvider
-resolveSlackEmojiField settings "activity" =
-  randomVec settings slackEmojiActivityProvider
-resolveSlackEmojiField settings "travel_and_places" =
-  randomVec settings slackEmojiTravelAndPlacesProvider
-resolveSlackEmojiField settings "objects_and_symbols" =
-  randomVec settings slackEmojiObjectsAndSymbolsProvider
-resolveSlackEmojiField settings "custom" =
-  randomVec settings slackEmojiCustomProvider
+resolveSlackEmojiField settings field@"people" =
+  cachedRandomVec "slackEmoji" field slackEmojiPeopleProvider settings
+resolveSlackEmojiField settings field@"nature" =
+  cachedRandomVec "slackEmoji" field slackEmojiNatureProvider settings
+resolveSlackEmojiField settings field@"food_and_drink" =
+  cachedRandomVec "slackEmoji" field slackEmojiFoodAndDrinkProvider settings
+resolveSlackEmojiField settings field@"celebration" =
+  cachedRandomVec "slackEmoji" field slackEmojiCelebrationProvider settings
+resolveSlackEmojiField settings field@"activity" =
+  cachedRandomVec "slackEmoji" field slackEmojiActivityProvider settings
+resolveSlackEmojiField settings field@"travel_and_places" =
+  cachedRandomVec "slackEmoji" field slackEmojiTravelAndPlacesProvider settings
+resolveSlackEmojiField settings field@"objects_and_symbols" =
+  cachedRandomVec
+    "slackEmoji"
+    field
+    slackEmojiObjectsAndSymbolsProvider
+    settings
+resolveSlackEmojiField settings field@"custom" =
+  cachedRandomVec "slackEmoji" field slackEmojiCustomProvider settings
 resolveSlackEmojiField settings str = throwM $ InvalidField "slackEmoji" str

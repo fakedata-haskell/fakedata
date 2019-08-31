@@ -164,31 +164,53 @@ abbreviationProvider settings = do
 
 resolveCompassField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveCompassField settings "cardinal" = randomVec settings cardinalProvider
-resolveCompassField settings "ordinal" = randomVec settings ordinalProvider
-resolveCompassField settings "half_wind" = randomVec settings halfWindProvider
-resolveCompassField settings "quarter_wind" =
-  randomVec settings quarterWindProvider
-resolveCompassField settings "cardinal_abbreviation" =
-  randomVec settings compassCardinalAbbreviationProvider
-resolveCompassField settings "ordinal_abbreviation" =
-  randomVec settings compassOrdinalAbbreviationProvider
-resolveCompassField settings "half_wind_abbreviation" =
-  randomVec settings compassHalfWindAbbreviationProvider
-resolveCompassField settings "quarter_wind_abbreviation" =
-  randomVec settings compassQuarterWindAbbreviationProvider
-resolveCompassField settings "cardinal_azimuth" =
-  randomVec settings compassCardinalAzimuthProvider
-resolveCompassField settings "ordinal_azimuth" =
-  randomVec settings compassOrdinalAzimuthProvider
-resolveCompassField settings "half_wind_azimuth" =
-  randomVec settings compassHalfWindAzimuthProvider
-resolveCompassField settings "quarter_wind_azimuth" =
-  randomVec settings compassQuarterWindAzimuthProvider
-resolveCompassField settings "direction" =
-  randomUnresolvedVec settings compassDirectionProvider resolveCompassText
-resolveCompassField settings "abbreviation" =
-  randomUnresolvedVec settings compassAbbreviationProvider resolveCompassText
-resolveCompassField settings "azimuth" =
-  randomUnresolvedVec settings compassAzimuthProvider resolveCompassText
+resolveCompassField settings field@"cardinal" =
+  cachedRandomVec "compass" field cardinalProvider settings
+resolveCompassField settings field@"ordinal" =
+  cachedRandomVec "compass" field ordinalProvider settings
+resolveCompassField settings field@"half_wind" =
+  cachedRandomVec "compass" field halfWindProvider settings
+resolveCompassField settings field@"quarter_wind" =
+  cachedRandomVec "compass" field quarterWindProvider settings
+resolveCompassField settings field@"cardinal_abbreviation" =
+  cachedRandomVec "compass" field compassCardinalAbbreviationProvider settings
+resolveCompassField settings field@"ordinal_abbreviation" =
+  cachedRandomVec "compass" field compassOrdinalAbbreviationProvider settings
+resolveCompassField settings field@"half_wind_abbreviation" =
+  cachedRandomVec "compass" field compassHalfWindAbbreviationProvider settings
+resolveCompassField settings field@"quarter_wind_abbreviation" =
+  cachedRandomVec
+    "compass"
+    field
+    compassQuarterWindAbbreviationProvider
+    settings
+resolveCompassField settings field@"cardinal_azimuth" =
+  cachedRandomVec "compass" field compassCardinalAzimuthProvider settings
+resolveCompassField settings field@"ordinal_azimuth" =
+  cachedRandomVec "compass" field compassOrdinalAzimuthProvider settings
+resolveCompassField settings field@"half_wind_azimuth" =
+  cachedRandomVec "compass" field compassHalfWindAzimuthProvider settings
+resolveCompassField settings field@"quarter_wind_azimuth" =
+  cachedRandomVec "compass" field compassQuarterWindAzimuthProvider settings
+resolveCompassField settings field@"direction" =
+  cachedRandomUnresolvedVec
+    "compass"
+    field
+    compassDirectionProvider
+    resolveCompassText
+    settings
+resolveCompassField settings field@"abbreviation" =
+  cachedRandomUnresolvedVec
+    "compass"
+    field
+    compassAbbreviationProvider
+    resolveCompassText
+    settings
+resolveCompassField settings field@"azimuth" =
+  cachedRandomUnresolvedVec
+    "compass"
+    field
+    compassAzimuthProvider
+    resolveCompassText
+    settings
 resolveCompassField settings str = throwM $ InvalidField "compass" str

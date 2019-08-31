@@ -88,13 +88,20 @@ resolveRestaurantText settings txt = do
 
 resolveRestaurantField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveRestaurantField settings "name_prefix" =
-  randomUnresolvedVec
-    settings
+resolveRestaurantField settings field@"name_prefix" =
+  cachedRandomUnresolvedVec
+    "restaurant"
+    field
     restaurantNamePrefixProvider
     resolveRestaurantText
-resolveRestaurantField settings "name_suffix" =
-  randomVec settings restaurantNameSuffixProvider
-resolveRestaurantField settings "name" =
-  randomUnresolvedVec settings restaurantNameProvider resolveRestaurantText
+    settings
+resolveRestaurantField settings field@"name_suffix" =
+  cachedRandomVec "restaurant" field restaurantNameSuffixProvider settings
+resolveRestaurantField settings field@"name" =
+  cachedRandomUnresolvedVec
+    "restaurant"
+    field
+    restaurantNameProvider
+    resolveRestaurantText
+    settings
 resolveRestaurantField settings str = throwM $ InvalidField "restaurant" str
