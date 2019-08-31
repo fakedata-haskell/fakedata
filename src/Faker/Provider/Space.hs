@@ -96,6 +96,6 @@ $(genParser "space" "meteorite")
 
 $(genProvider "space" "meteorite")
 
-$(genParser "space" "launch_vehicule")
+$(genParser "space" "launch_vehicle")
 
-$(genProvider "space" "launch_vehicule")
+$(genProvider "space" "launch_vehicle")

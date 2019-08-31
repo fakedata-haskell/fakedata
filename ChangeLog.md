@@ -1,5 +1,12 @@
 # Changelog for fakedata
 
+## 0.3.0
+
+* Update fake data source
+* Improve performance and add test coverage
+* Fix various bugs
+* Add `brands` function to the module Faker.Cannabis
+
 ## 0.2.2
 
 * Add meepoQuote function to the module Faker.Game.Dota

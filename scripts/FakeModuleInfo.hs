@@ -1011,7 +1011,7 @@ space =
         , "company"
         , "distance_measurement"
         , "meteorite"
-        , "launch_vehicule"
+        , "launch_vehicle"
         ]
     , unresolvedFields = []
     , nestedFields = []

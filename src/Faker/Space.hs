@@ -35,4 +35,4 @@ $(generateFakeField "space" "distance_measurement")
 
 $(generateFakeField "space" "meteorite")
 
-$(generateFakeField "space" "launch_vehicule")
+$(generateFakeField "space" "launch_vehicle")

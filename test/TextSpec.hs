@@ -293,6 +293,7 @@ spec = do
             , CA.categories
             , CA.types
             , CA.buzzwords
+            , CA.brands
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1056,7 +1057,7 @@ spec = do
             , SP.company
             , SP.distanceMeasurement
             , SP.meteorite
-            , SP.launchVehicule
+            , SP.launchVehicle
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

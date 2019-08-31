@@ -48,7 +48,7 @@ know exactly what has changed since the last release, follow these:
 
 ``` shellsession
 $ cd scripts
-$ stack unpack fakedata-0.1.0.0
+$ stack unpack fakedata-0.2.2
 ```
 
 Now you may want to change the `ymlDiff.sh`'s `OLD_FAKER_DIR` variable.

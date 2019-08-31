@@ -26,3 +26,6 @@ $(generateFakeField "cannabis" "categories")
 $(generateFakeField "cannabis" "types")
 
 $(generateFakeField "cannabis" "buzzwords")
+
+-- | @since 0.3.0
+$(generateFakeField "cannabis" "brands")

@@ -66,3 +66,7 @@ $(genProvider "cannabis" "types")
 $(genParser "cannabis" "buzzwords")
 
 $(genProvider "cannabis" "buzzwords")
+
+$(genParser "cannabis" "brands")
+
+$(genProvider "cannabis" "brands")
