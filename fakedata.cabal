@@ -1,0 +1,618 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 0ade219d7ffff4d179c28ee8af706b37de85416f6d925bd687c6a817b16905cd
+
+name:           fakedata
+version:        0.2.2
+synopsis:       Library for producing fake data
+description:    Please see the README on GitHub at <https://github.com/psibi/fakedata#readme>
+category:       Random, Fake, FakeData
+homepage:       https://github.com/psibi/fakedata#readme
+bug-reports:    https://github.com/psibi/fakedata/issues
+author:         Sibi Prabakaran
+maintainer:     sibi@psibi.in
+copyright:      Sibi Prabakaran
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+data-files:
+    faker/lib/locales/ar.yml
+    faker/lib/locales/bg.yml
+    faker/lib/locales/ca-CAT.yml
+    faker/lib/locales/ca.yml
+    faker/lib/locales/da-DK.yml
+    faker/lib/locales/de-AT.yml
+    faker/lib/locales/de-CH.yml
+    faker/lib/locales/de.yml
+    faker/lib/locales/ee.yml
+    faker/lib/locales/en-au-ocker.yml
+    faker/lib/locales/en-AU.yml
+    faker/lib/locales/en-BORK.yml
+    faker/lib/locales/en-CA.yml
+    faker/lib/locales/en-GB.yml
+    faker/lib/locales/en-IND.yml
+    faker/lib/locales/en-MS.yml
+    faker/lib/locales/en-NEP.yml
+    faker/lib/locales/en-NG.yml
+    faker/lib/locales/en-NZ.yml
+    faker/lib/locales/en-PAK.yml
+    faker/lib/locales/en-SG.yml
+    faker/lib/locales/en-UG.yml
+    faker/lib/locales/en-US.yml
+    faker/lib/locales/en-ZA.yml
+    faker/lib/locales/en.yml
+    faker/lib/locales/es-MX.yml
+    faker/lib/locales/es.yml
+    faker/lib/locales/fa.yml
+    faker/lib/locales/fi-FI.yml
+    faker/lib/locales/fr-CA.yml
+    faker/lib/locales/fr-CH.yml
+    faker/lib/locales/fr.yml
+    faker/lib/locales/he.yml
+    faker/lib/locales/hy.yml
+    faker/lib/locales/id.yml
+    faker/lib/locales/it.yml
+    faker/lib/locales/ja.yml
+    faker/lib/locales/ko.yml
+    faker/lib/locales/lv.yml
+    faker/lib/locales/nb-NO.yml
+    faker/lib/locales/nl.yml
+    faker/lib/locales/no.yml
+    faker/lib/locales/pl.yml
+    faker/lib/locales/pt-BR.yml
+    faker/lib/locales/pt.yml
+    faker/lib/locales/ru.yml
+    faker/lib/locales/sk.yml
+    faker/lib/locales/sv.yml
+    faker/lib/locales/tr.yml
+    faker/lib/locales/uk.yml
+    faker/lib/locales/vi.yml
+    faker/lib/locales/zh-CN.yml
+    faker/lib/locales/zh-TW.yml
+    faker/lib/locales/en/address.yml
+    faker/lib/locales/en/ancient.yml
+    faker/lib/locales/en/animal.yml
+    faker/lib/locales/en/app.yml
+    faker/lib/locales/en/appliance.yml
+    faker/lib/locales/en/aqua_teen_hunger_force.yml
+    faker/lib/locales/en/artist.yml
+    faker/lib/locales/en/back_to_the_future.yml
+    faker/lib/locales/en/bank.yml
+    faker/lib/locales/en/basketball.yml
+    faker/lib/locales/en/beer.yml
+    faker/lib/locales/en/bojack_horseman.yml
+    faker/lib/locales/en/book.yml
+    faker/lib/locales/en/bossa_nova.yml
+    faker/lib/locales/en/breaking_bad.yml
+    faker/lib/locales/en/buffy.yml
+    faker/lib/locales/en/business.yml
+    faker/lib/locales/en/cannabis.yml
+    faker/lib/locales/en/cat.yml
+    faker/lib/locales/en/chuck_norris.yml
+    faker/lib/locales/en/code.yml
+    faker/lib/locales/en/coffee.yml
+    faker/lib/locales/en/coin.yml
+    faker/lib/locales/en/color.yml
+    faker/lib/locales/en/commerce.yml
+    faker/lib/locales/en/community.yml
+    faker/lib/locales/en/company.yml
+    faker/lib/locales/en/compass.yml
+    faker/lib/locales/en/construction.yml
+    faker/lib/locales/en/cosmere.yml
+    faker/lib/locales/en/crypto_coin.yml
+    faker/lib/locales/en/culture_series.yml
+    faker/lib/locales/en/currency.yml
+    faker/lib/locales/en/dc_comics.yml
+    faker/lib/locales/en/demographic.yml
+    faker/lib/locales/en/dessert.yml
+    faker/lib/locales/en/device.yml
+    faker/lib/locales/en/dog.yml
+    faker/lib/locales/en/dota.yml
+    faker/lib/locales/en/dr_who.yml
+    faker/lib/locales/en/dragon_ball.yml
+    faker/lib/locales/en/dumb_and_dumber.yml
+    faker/lib/locales/en/dune.yml
+    faker/lib/locales/en/educator.yml
+    faker/lib/locales/en/elder_scrolls.yml
+    faker/lib/locales/en/electrical_components.yml
+    faker/lib/locales/en/esport.yml
+    faker/lib/locales/en/fallout.yml
+    faker/lib/locales/en/family_guy.yml
+    faker/lib/locales/en/file.yml
+    faker/lib/locales/en/finance.yml
+    faker/lib/locales/en/food.yml
+    faker/lib/locales/en/football.yml
+    faker/lib/locales/en/fresh_prince_of_bel_air.yml
+    faker/lib/locales/en/friends.yml
+    faker/lib/locales/en/funny_name.yml
+    faker/lib/locales/en/game.yml
+    faker/lib/locales/en/game_of_thrones.yml
+    faker/lib/locales/en/gender.yml
+    faker/lib/locales/en/ghostbusters.yml
+    faker/lib/locales/en/grateful_dead.yml
+    faker/lib/locales/en/greek_philosophers.yml
+    faker/lib/locales/en/hacker.yml
+    faker/lib/locales/en/half_life.yml
+    faker/lib/locales/en/harry_potter.yml
+    faker/lib/locales/en/heroes.yml
+    faker/lib/locales/en/heroes_of_the_storm.yml
+    faker/lib/locales/en/hey_arnold.yml
+    faker/lib/locales/en/hipster.yml
+    faker/lib/locales/en/hitchhikers_guide_to_the_galaxy.yml
+    faker/lib/locales/en/hobbit.yml
+    faker/lib/locales/en/horse.yml
+    faker/lib/locales/en/house.yml
+    faker/lib/locales/en/how_i_met_your_mother.yml
+    faker/lib/locales/en/id_number.yml
+    faker/lib/locales/en/industry_segments.yml
+    faker/lib/locales/en/internet.yml
+    faker/lib/locales/en/invoice.yml
+    faker/lib/locales/en/job.yml
+    faker/lib/locales/en/kpop.yml
+    faker/lib/locales/en/league_of_legends.yml
+    faker/lib/locales/en/lebowski.yml
+    faker/lib/locales/en/lord_of_the_rings.yml
+    faker/lib/locales/en/lorem.yml
+    faker/lib/locales/en/lovecraft.yml
+    faker/lib/locales/en/markdown.yml
+    faker/lib/locales/en/marketing.yml
+    faker/lib/locales/en/measurement.yml
+    faker/lib/locales/en/michael_scott.yml
+    faker/lib/locales/en/military.yml
+    faker/lib/locales/en/movie.yml
+    faker/lib/locales/en/music.yml
+    faker/lib/locales/en/myst.yml
+    faker/lib/locales/en/name.yml
+    faker/lib/locales/en/nation.yml
+    faker/lib/locales/en/nato_phonetic_alphabet.yml
+    faker/lib/locales/en/new_girl.yml
+    faker/lib/locales/en/one_piece.yml
+    faker/lib/locales/en/opera.yml
+    faker/lib/locales/en/overwatch.yml
+    faker/lib/locales/en/parks_and_rec.yml
+    faker/lib/locales/en/phish.yml
+    faker/lib/locales/en/phone_number.yml
+    faker/lib/locales/en/pokemon.yml
+    faker/lib/locales/en/princess_bride.yml
+    faker/lib/locales/en/programming_language.yml
+    faker/lib/locales/en/quote.yml
+    faker/lib/locales/en/relationship.yml
+    faker/lib/locales/en/restaurant.yml
+    faker/lib/locales/en/rick_and_morty.yml
+    faker/lib/locales/en/rock_band.yml
+    faker/lib/locales/en/rupaul.yml
+    faker/lib/locales/en/science.yml
+    faker/lib/locales/en/seinfeld.yml
+    faker/lib/locales/en/shakespeare.yml
+    faker/lib/locales/en/silicon_valley.yml
+    faker/lib/locales/en/simpsons.yml
+    faker/lib/locales/en/slack_emoji.yml
+    faker/lib/locales/en/sonic_the_hedgehog.yml
+    faker/lib/locales/en/source.yml
+    faker/lib/locales/en/south_park.yml
+    faker/lib/locales/en/space.yml
+    faker/lib/locales/en/star_trek.yml
+    faker/lib/locales/en/star_wars.yml
+    faker/lib/locales/en/stargate.yml
+    faker/lib/locales/en/stranger_thing.yml
+    faker/lib/locales/en/stripe.yml
+    faker/lib/locales/en/subscription.yml
+    faker/lib/locales/en/super_smash_bros.yml
+    faker/lib/locales/en/superhero.yml
+    faker/lib/locales/en/sword_art_online.yml
+    faker/lib/locales/en/team.yml
+    faker/lib/locales/en/the_expanse.yml
+    faker/lib/locales/en/the_it_crowd.yml
+    faker/lib/locales/en/the_thick_of_it.yml
+    faker/lib/locales/en/twin_peaks.yml
+    faker/lib/locales/en/umphreys_mcgee.yml
+    faker/lib/locales/en/university.yml
+    faker/lib/locales/en/v_for_vendetta.yml
+    faker/lib/locales/en/vehicle.yml
+    faker/lib/locales/en/venture_bros.yml
+    faker/lib/locales/en/verbs.yml
+    faker/lib/locales/en/witcher.yml
+    faker/lib/locales/en/world_cup.yml
+    faker/lib/locales/en/world_of_warcraft.yml
+    faker/lib/locales/en/yoda.yml
+    faker/lib/locales/en/zelda.yml
+    customFakeSource/en/finance.yml
+
+source-repository head
+  type: git
+  location: https://github.com/psibi/fakedata
+
+library
+  exposed-modules:
+      Config
+      Faker
+      Faker.Address
+      Faker.Ancient
+      Faker.App
+      Faker.Appliance
+      Faker.Artist
+      Faker.Bank
+      Faker.Beer
+      Faker.Book
+      Faker.Book.CultureSeries
+      Faker.Book.Dune
+      Faker.Book.Lovecraft
+      Faker.BossaNova
+      Faker.Business
+      Faker.Cannabis
+      Faker.ChuckNorris
+      Faker.Code
+      Faker.Coffee
+      Faker.Coin
+      Faker.Color
+      Faker.Combinators
+      Faker.Commerce
+      Faker.Company
+      Faker.Compass
+      Faker.Construction
+      Faker.Cosmere
+      Faker.Creature.Animal
+      Faker.Creature.Cat
+      Faker.Creature.Dog
+      Faker.Creature.Horse
+      Faker.CryptoCoin
+      Faker.Currency
+      Faker.DateTime
+      Faker.DcComics
+      Faker.Demographic
+      Faker.Dessert
+      Faker.Educator
+      Faker.ElectricalComponents
+      Faker.Esport
+      Faker.File
+      Faker.Finance
+      Faker.Food
+      Faker.FunnyName
+      Faker.Game.Dota
+      Faker.Game.ElderScrolls
+      Faker.Game.Fallout
+      Faker.Game.HalfLife
+      Faker.Game.Heroes
+      Faker.Game.HeroesOfTheStorm
+      Faker.Game.Myst
+      Faker.Game.Overwatch
+      Faker.Game.Pokemon
+      Faker.Game.SonicTheHedgehog
+      Faker.Game.SuperSmashBros
+      Faker.Game.Witcher
+      Faker.Game.WorldOfWarcraft
+      Faker.Game.Zelda
+      Faker.Gender
+      Faker.GreekPhilosophers
+      Faker.Hacker
+      Faker.Hipster
+      Faker.House
+      Faker.IndustrySegments
+      Faker.Internal
+      Faker.Internal.Types
+      Faker.Internet
+      Faker.JapaneseMedia.DragonBall
+      Faker.JapaneseMedia.OnePiece
+      Faker.JapaneseMedia.SwordArtOnline
+      Faker.Job
+      Faker.Kpop
+      Faker.LeagueOfLegends
+      Faker.Lorem
+      Faker.Markdown
+      Faker.Marketing
+      Faker.Measurement
+      Faker.Military
+      Faker.Movie
+      Faker.Movie.BackToTheFuture
+      Faker.Movie.Ghostbusters
+      Faker.Movie.GratefulDead
+      Faker.Movie.HarryPotter
+      Faker.Movie.HitchhikersGuideToTheGalaxy
+      Faker.Movie.Hobbit
+      Faker.Movie.Lebowski
+      Faker.Movie.LordOfTheRings
+      Faker.Movie.PrincessBride
+      Faker.Movie.StarWars
+      Faker.Movie.VForVendetta
+      Faker.Music
+      Faker.Music.Opera
+      Faker.Music.Phish
+      Faker.Music.RockBand
+      Faker.Music.UmphreysMcgee
+      Faker.Name
+      Faker.Nation
+      Faker.NatoPhoneticAlphabet
+      Faker.PhoneNumber
+      Faker.ProgrammingLanguage
+      Faker.Provider.Address
+      Faker.Provider.Ancient
+      Faker.Provider.Animal
+      Faker.Provider.App
+      Faker.Provider.Appliance
+      Faker.Provider.AquaTeenHungerForce
+      Faker.Provider.Artist
+      Faker.Provider.BackToTheFuture
+      Faker.Provider.Bank
+      Faker.Provider.Basketball
+      Faker.Provider.Beer
+      Faker.Provider.BoJackHorseman
+      Faker.Provider.Book
+      Faker.Provider.BossaNova
+      Faker.Provider.BreakingBad
+      Faker.Provider.Buffy
+      Faker.Provider.Business
+      Faker.Provider.Cannabis
+      Faker.Provider.Cat
+      Faker.Provider.ChuckNorris
+      Faker.Provider.Code
+      Faker.Provider.Coffee
+      Faker.Provider.Coin
+      Faker.Provider.Color
+      Faker.Provider.Commerce
+      Faker.Provider.Community
+      Faker.Provider.Company
+      Faker.Provider.Compass
+      Faker.Provider.Construction
+      Faker.Provider.Cosmere
+      Faker.Provider.CryptoCoin
+      Faker.Provider.CultureSeries
+      Faker.Provider.Currency
+      Faker.Provider.DcComics
+      Faker.Provider.Demographic
+      Faker.Provider.Dessert
+      Faker.Provider.Device
+      Faker.Provider.Dog
+      Faker.Provider.Dota
+      Faker.Provider.DragonBall
+      Faker.Provider.DrWho
+      Faker.Provider.DumbAndDumber
+      Faker.Provider.Dune
+      Faker.Provider.Educator
+      Faker.Provider.ElderScrolls
+      Faker.Provider.ElectricalComponents
+      Faker.Provider.Esport
+      Faker.Provider.Fallout
+      Faker.Provider.FamilyGuy
+      Faker.Provider.File
+      Faker.Provider.Finance
+      Faker.Provider.Food
+      Faker.Provider.Football
+      Faker.Provider.FreshPrinceOfBelAir
+      Faker.Provider.Friends
+      Faker.Provider.FunnyName
+      Faker.Provider.GameOfThrones
+      Faker.Provider.Gender
+      Faker.Provider.Ghostbusters
+      Faker.Provider.GratefulDead
+      Faker.Provider.GreekPhilosophers
+      Faker.Provider.Hacker
+      Faker.Provider.HalfLife
+      Faker.Provider.HarryPotter
+      Faker.Provider.Heroes
+      Faker.Provider.HeroesOfTheStorm
+      Faker.Provider.HeyArnold
+      Faker.Provider.Hipster
+      Faker.Provider.HitchhikersGuideToTheGalaxy
+      Faker.Provider.Hobbit
+      Faker.Provider.Horse
+      Faker.Provider.House
+      Faker.Provider.HowIMetYourMother
+      Faker.Provider.IndustrySegments
+      Faker.Provider.Internet
+      Faker.Provider.Job
+      Faker.Provider.Kpop
+      Faker.Provider.LeagueOfLegends
+      Faker.Provider.Lebowski
+      Faker.Provider.LordOfTheRings
+      Faker.Provider.Lorem
+      Faker.Provider.Lovecraft
+      Faker.Provider.Markdown
+      Faker.Provider.Marketing
+      Faker.Provider.Measurement
+      Faker.Provider.MichaelScott
+      Faker.Provider.Military
+      Faker.Provider.Movie
+      Faker.Provider.Music
+      Faker.Provider.Myst
+      Faker.Provider.Name
+      Faker.Provider.Nation
+      Faker.Provider.NatoPhoneticAlphabet
+      Faker.Provider.NewGirl
+      Faker.Provider.OnePiece
+      Faker.Provider.Opera
+      Faker.Provider.Overwatch
+      Faker.Provider.ParksAndRec
+      Faker.Provider.Phish
+      Faker.Provider.PhoneNumber
+      Faker.Provider.Pokemon
+      Faker.Provider.PrincessBride
+      Faker.Provider.ProgrammingLanguage
+      Faker.Provider.Quote
+      Faker.Provider.Relationship
+      Faker.Provider.Restaurant
+      Faker.Provider.RickAndMorty
+      Faker.Provider.RockBand
+      Faker.Provider.Rupaul
+      Faker.Provider.Science
+      Faker.Provider.Seinfeld
+      Faker.Provider.Shakespeare
+      Faker.Provider.SiliconValley
+      Faker.Provider.Simpsons
+      Faker.Provider.SlackEmoji
+      Faker.Provider.SonicTheHedgehog
+      Faker.Provider.Source
+      Faker.Provider.SouthPark
+      Faker.Provider.Space
+      Faker.Provider.Stargate
+      Faker.Provider.StarTrek
+      Faker.Provider.StarWars
+      Faker.Provider.StrangerThings
+      Faker.Provider.Subscription
+      Faker.Provider.Superhero
+      Faker.Provider.SuperSmashBros
+      Faker.Provider.SwordArtOnline
+      Faker.Provider.Team
+      Faker.Provider.TH
+      Faker.Provider.TheExpanse
+      Faker.Provider.TheItCrowd
+      Faker.Provider.TheThickOfIt
+      Faker.Provider.TwinPeaks
+      Faker.Provider.UmphreysMcgee
+      Faker.Provider.University
+      Faker.Provider.Vehicle
+      Faker.Provider.VentureBros
+      Faker.Provider.Verbs
+      Faker.Provider.VForVendetta
+      Faker.Provider.Witcher
+      Faker.Provider.WorldCup
+      Faker.Provider.WorldOfWarcraft
+      Faker.Provider.Yoda
+      Faker.Provider.Zelda
+      Faker.Quote
+      Faker.Quote.Shakespeare
+      Faker.Relationship
+      Faker.Restaurant
+      Faker.Science
+      Faker.SlackEmoji
+      Faker.Source
+      Faker.Space
+      Faker.Sport.Basketball
+      Faker.Sport.Football
+      Faker.Subscription
+      Faker.Superhero
+      Faker.Team
+      Faker.TH
+      Faker.TvShow.AquaTeenHungerForce
+      Faker.TvShow.BoJackHorseman
+      Faker.TvShow.BreakingBad
+      Faker.TvShow.Buffy
+      Faker.TvShow.Community
+      Faker.TvShow.DrWho
+      Faker.TvShow.DumbAndDumber
+      Faker.TvShow.FamilyGuy
+      Faker.TvShow.FreshPrinceOfBelAir
+      Faker.TvShow.Friends
+      Faker.TvShow.GameOfThrones
+      Faker.TvShow.HeyArnold
+      Faker.TvShow.HowIMetYourMother
+      Faker.TvShow.MichaelScott
+      Faker.TvShow.NewGirl
+      Faker.TvShow.ParksAndRec
+      Faker.TvShow.RickAndMorty
+      Faker.TvShow.Rupaul
+      Faker.TvShow.Seinfeld
+      Faker.TvShow.SiliconValley
+      Faker.TvShow.Simpsons
+      Faker.TvShow.SouthPark
+      Faker.TvShow.Stargate
+      Faker.TvShow.StarTrek
+      Faker.TvShow.StrangerThings
+      Faker.TvShow.TheExpanse
+      Faker.TvShow.TheItCrowd
+      Faker.TvShow.TheThickOfIt
+      Faker.TvShow.TwinPeaks
+      Faker.TvShow.VentureBros
+      Faker.University
+      Faker.Vehicle
+      Faker.Verbs
+      Faker.WorldCup
+      Faker.Yoda
+  other-modules:
+      Paths_fakedata
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , containers
+    , directory
+    , exceptions
+    , filepath
+    , hashable
+    , random
+    , template-haskell
+    , text
+    , time
+    , unordered-containers
+    , vector
+    , yaml
+  default-language: Haskell2010
+
+test-suite fakedata-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      AddressSpec
+      AppSpec
+      BeerSpec
+      BookSpec
+      BossaNovaSpec
+      CoffeeSpec
+      CombinatorsSpec
+      FakerSpec
+      GamesSpec
+      InternalSpec
+      NameSpec
+      OperaSpec
+      OtherSpec
+      ProviderSpec
+      TestImport
+      TextSpec
+      Paths_fakedata
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , containers
+    , directory
+    , exceptions
+    , fakedata
+    , filepath
+    , hashable
+    , hspec
+    , hspec-discover
+    , random
+    , template-haskell
+    , text
+    , time
+    , unordered-containers
+    , vector
+    , yaml
+  default-language: Haskell2010
+
+benchmark fakebench
+  type: exitcode-stdio-1.0
+  main-is: main.hs
+  other-modules:
+      Paths_fakedata
+  hs-source-dirs:
+      bench
+  ghc-options: -O2
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , containers
+    , deepseq
+    , directory
+    , exceptions
+    , fakedata
+    , filepath
+    , gauge
+    , hashable
+    , random
+    , template-haskell
+    , text
+    , time
+    , unordered-containers
+    , vector
+    , yaml
+  default-language: Haskell2010
