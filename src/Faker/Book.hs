@@ -13,7 +13,12 @@ $(generateFakeField "book" "title")
 
 author :: Fake Text
 author =
-  Fake (unresolvedResolverWithoutVector bookAuthorProvider resolveBookText)
+  Fake
+    (cachedRandomUnresolvedVecWithoutVector
+       "book"
+       "author"
+       bookAuthorProvider
+       resolveBookText)
 
 $(generateFakeField "book" "publisher")
 

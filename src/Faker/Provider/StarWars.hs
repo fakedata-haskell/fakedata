@@ -100,12 +100,22 @@ resolveStarWarsText settings txt = do
 
 resolveStarWarsField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveStarWarsField settings "call_number" =
-  randomUnresolvedVec settings starWarsCallNumbersProvider resolveStarWarsText
-resolveStarWarsField settings "call_sign" =
-  randomUnresolvedVec settings starWarsCallSignProvider resolveStarWarsText
-resolveStarWarsField settings "call_squadron" =
-  randomVec settings starWarsCallSquadronsProvider
+resolveStarWarsField settings field@"call_number" =
+  cachedRandomUnresolvedVec
+    "starWars"
+    field
+    starWarsCallNumbersProvider
+    resolveStarWarsText
+    settings
+resolveStarWarsField settings field@"call_sign" =
+  cachedRandomUnresolvedVec
+    "starWars"
+    field
+    starWarsCallSignProvider
+    resolveStarWarsText
+    settings
+resolveStarWarsField settings field@"call_squadron" =
+  cachedRandomVec "starWars" field starWarsCallSquadronsProvider settings
 resolveStarWarsField settings str = throwM $ InvalidField "starWars" str
 
 $(genParsers "starWars" ["quotes", "admiral_ackbar"])

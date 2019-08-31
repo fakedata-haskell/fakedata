@@ -12,13 +12,14 @@ import Faker.TH
 $(generateFakeFieldUnresolved "phoneNumber" "formats")
 
 countryCode :: Fake Text
-countryCode = Fake (\settings -> randomVec settings countryCodeProvider)
+countryCode =
+  Fake (cachedRandomVec "phoneNumber" "countryCode" countryCodeProvider)
 
 cellPhoneFormat :: Fake Text
 cellPhoneFormat =
   Fake
-    (\settings ->
-       randomUnresolvedVec
-         settings
-         cellPhoneFormatProvider
-         resolvePhoneNumberText)
+    (cachedRandomUnresolvedVec
+       "phoneNumber"
+       "cellPhoneFormat"
+       cellPhoneFormatProvider
+       resolvePhoneNumberText)

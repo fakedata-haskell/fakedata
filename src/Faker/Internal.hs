@@ -6,14 +6,9 @@
 module Faker.Internal
   ( Unresolved(..)
   , rvec
-  , randomVec
-  , randomUnresolvedVec
-  , randomUnresolvedVecWithoutVector
   , insertToCache
   , presentInCache
   , resolver
-  , unresolvedResolver
-  , unresolvedResolverWithoutVector
   , refinedString
   , refinedText
   , operateFields

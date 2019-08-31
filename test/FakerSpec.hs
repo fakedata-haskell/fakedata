@@ -31,7 +31,8 @@ import Faker.Game.Fallout
 import Faker.Internal
 import Faker.Job (field)
 import Faker.Movie.StarWars
-import Faker.Nation (flagEmoji)
+
+-- import Faker.Nation (flagEmoji)
 import Faker.PhoneNumber
 import Faker.Provider.Educator
 import qualified Faker.Restaurant as FR
@@ -108,9 +109,9 @@ spec = do
     it "University" $ do
       item <- generate FU.name
       item `shouldSatisfy` isText
-    it "Nation - flagEmoji" $ do
-      item <- generate flagEmoji
-      item `shouldSatisfy` isText
+    -- it "Nation - flagEmoji" $ do
+    --   item <- generate flagEmoji
+    --   item `shouldSatisfy` isText
     it "Job" $ do
       item <- generate field
       item `shouldSatisfy` isText
