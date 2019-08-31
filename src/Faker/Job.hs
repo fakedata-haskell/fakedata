@@ -10,7 +10,7 @@ import Faker.Provider.Job
 import Faker.TH
 
 field :: Fake Text
-field = Fake (resolver jobField2Provider)
+field = Fake (cachedRandomVec "job" "field" jobField2Provider)
 
 $(generateFakeField "job" "seniority")
 

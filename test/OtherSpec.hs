@@ -16,6 +16,7 @@ import Faker hiding (defaultFakerSettings)
 import qualified Faker.App as AP
 import qualified Faker.Educator as ED
 import Faker.Name
+import Faker.Source
 import qualified Faker.WorldCup as WC
 import Test.Hspec
 import TestImport
@@ -26,6 +27,9 @@ isText x = T.length x >= 1
 spec :: Spec
 spec = do
   describe "Faker Generate" $ do
+    it "ruby code" $ do
+      hworld <- generate helloWorldRuby
+      hworld `shouldSatisfy` isText
     it "name with middle - ee" $ do
       ctries <-
         generateWithSettings

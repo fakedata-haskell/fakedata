@@ -17,10 +17,11 @@ $(generateFakeField "nation" "nationality")
 $(generateFakeField "nation" "language")
 
 $(generateFakeField "nation" "capital_city")
--- flagEmoji :: Fake Text
--- flagEmoji =
---   Fake
---     (\settings -> do
---        vecword <- randomVec settings nationFlagEmojiProvider
---        let lword = V.toList vecword
---        pure $ TE.decodeUtf8 $ BS.pack lword)
+
+flagEmoji :: Fake Text
+flagEmoji =
+  Fake
+    (\settings -> do
+       vecword <- resolver nationFlagEmojiProvider settings
+       let lword = V.toList vecword
+       pure $ TE.decodeUtf8 $ BS.pack lword)

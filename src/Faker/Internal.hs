@@ -283,9 +283,9 @@ interpolateString fsettings text = helper fsettings [] text
 
 resolver ::
      (MonadThrow m, MonadIO m)
-  => (FakerSettings -> m (Vector Text))
+  => (FakerSettings -> m (Vector a))
   -> FakerSettings
-  -> m Text
+  -> m a
 resolver provider = \settings -> randomVec settings provider
 
 unresolvedResolver ::

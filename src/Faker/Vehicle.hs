@@ -30,9 +30,11 @@ $(generateFakeField "vehicle" "car_options")
 
 $(generateFakeField "vehicle" "standard_specs")
 
-$(generateFakeField "vehicle" "doors")
+doors :: Fake Int
+doors = Fake $ resolver vehicleDoorsProvider
 
-$(generateFakeField "vehicle" "engine_sizes")
+engineSizes :: Fake Int
+engineSizes = Fake $ resolver vehicleEngineSizesProvider
 
 $(generateFakeFieldUnresolved "vehicle" "license_plate")
 

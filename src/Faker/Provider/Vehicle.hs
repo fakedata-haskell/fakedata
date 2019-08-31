@@ -97,11 +97,16 @@ $(genProvider "vehicle" "standard_specs")
 
 $(genParser "vehicle" "doors")
 
-$(genProvider "vehicle" "doors")
+vehicleDoorsProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Int)
+vehicleDoorsProvider settings = fetchData settings Vehicle parseVehicleDoors
 
 $(genParser "vehicle" "engine_sizes")
 
-$(genProvider "vehicle" "engine_sizes")
+vehicleEngineSizesProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Int)
+vehicleEngineSizesProvider settings =
+  fetchData settings Vehicle parseVehicleEngineSizes
 
 $(genParserUnresolved "vehicle" "license_plate")
 

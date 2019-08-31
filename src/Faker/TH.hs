@@ -75,7 +75,7 @@ generateFakeFields entityName fieldName = do
   providerFn <-
     case providerName of
       Nothing ->
-        fail $ "generateFakefield: Function " <> pfn <> " not found in scope"
+        fail $ "generateFakefields: Function " <> pfn <> " not found in scope"
       Just fn -> return fn
   return $
     [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))

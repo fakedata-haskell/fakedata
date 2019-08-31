@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Faker.TvShow.BoJackHorseman where
 
 import Data.Text
@@ -6,10 +8,15 @@ import Faker.Internal
 import Faker.Provider.BoJackHorseman
 
 character :: Fake Text
-character = Fake $ resolver boJackHorsemanCharacterProvider
+character =
+  Fake $
+  cachedRandomVec "boJackHorseman" "character" boJackHorsemanCharacterProvider
 
 quote :: Fake Text
-quote = Fake $ resolver boJackHorsemanQuoteProvider
+quote =
+  Fake $ cachedRandomVec "boJackHorseman" "quote" boJackHorsemanQuoteProvider
 
 tongueTwister :: Fake Text
-tongueTwister = Fake $ resolver boJackHorsemanTongueTwisterProvider
+tongueTwister =
+  Fake $
+  cachedRandomVec "boJackHorseman" "quote" boJackHorsemanTongueTwisterProvider

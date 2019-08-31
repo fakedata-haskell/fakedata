@@ -164,6 +164,12 @@ verifyFakes funs = do
       gs :: [IO Bool] = map (\f -> isText <$> f) fs
   sequence gs
 
+verifyFakeInt :: [Fake Int] -> IO [Bool]
+verifyFakeInt funs = do
+  let fs :: [IO Int] = map (generateWithSettings fakerSettings) funs
+      gs :: [IO Bool] = map (\f -> (\x -> x >= 0) <$> f) fs
+  sequence gs
+
 spec :: Spec
 spec = do
   describe "TextSpec" $ do
@@ -359,7 +365,8 @@ spec = do
             , CM.profession
             , CM.type'
             , CM.sicCode
-              -- Fix buzzword and bs TODO
+            , CM.buzzword
+            , CM.bs
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -703,7 +710,7 @@ spec = do
       (and bools) `shouldBe` True
     it "Job" $ do
       let functions :: [Fake Text] =
-            [ JO.field -- TODO: Make it cached
+            [ JO.field
             , JO.seniority
             , JO.position
             , JO.keySkills
@@ -947,11 +954,7 @@ spec = do
       (and bools) `shouldBe` True
     it "Nation" $ do
       let functions :: [Fake Text] =
-            [ NA.nationality
-            , NA.language
-            , NA.capitalCity
-           -- , NA.flagEmoji -- TODO
-            ]
+            [NA.nationality, NA.language, NA.capitalCity, NA.flagEmoji]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "NatoPhoneticAlphabet" $ do
@@ -959,7 +962,8 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "PhoneNumber" $ do
-      let functions :: [Fake Text] = [] -- TODO
+      let functions :: [Fake Text] =
+            [PH.formats, PH.countryCode, PH.cellPhoneFormat]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "ProgrammingLanguage" $ do
@@ -1007,7 +1011,7 @@ spec = do
     it "Science" $ do
       let functions :: [Fake Text] =
             [ SC.element
-               -- SC.elementSymbol, -- TODO
+            , SC.elementSymbol -- TODO
             , SC.scientist
             ]
       bools <- verifyFakes functions
@@ -1027,14 +1031,14 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Source" $ do
-      let functions :: [Fake Text]
-            --  SO.helloWorldRuby -- TODO
-            -- , SO.helloWorldJavascript
-            -- , SO.printRuby
-            -- , SO.printJavascript
-            -- , SO.print1To10Ruby
-            -- , SO.print1To10Javascript
-           = []
+      let functions :: [Fake Text] =
+            [ SO.helloWorldRuby
+            , SO.helloWorldJavascript
+            , SO.printRuby
+            , SO.printJavascript
+            , SO.print1To10Ruby
+            , SO.print1To10Javascript
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Space" $ do
@@ -1101,8 +1105,6 @@ spec = do
             , VE.carTypes
             , VE.carOptions
             , VE.standardSpecs
-            -- , VE.doors -- TODO
-            -- , VE.engineSizes
             , VE.licensePlate
             , VE.modelsByMakeBMW
             , VE.modelsByMakeAudi
@@ -1116,6 +1118,9 @@ spec = do
             , VE.modelsByMakeNissan
             ]
       bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+      let ifunctions :: [Fake Int] = [VE.doors, VE.engineSizes]
+      bools <- verifyFakeInt ifunctions
       (and bools) `shouldBe` True
     it "Verbs" $ do
       let functions :: [Fake Text] =
@@ -1303,11 +1308,11 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.AquaTeenHungerForce" $ do
-      let functions :: [Fake Text] = [AQ.character] -- TODO
+      let functions :: [Fake Text] = [AQ.character]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.BoJackHorseman" $ do
-      let functions :: [Fake Text] = [BO.character, BO.quote, BO.tongueTwister] -- TODO
+      let functions :: [Fake Text] = [BO.character, BO.quote, BO.tongueTwister]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.BreakingBad" $ do

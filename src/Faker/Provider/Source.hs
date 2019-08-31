@@ -46,24 +46,24 @@ parseSourceFields settings txts val = do
 
 $(genParsers "source" ["hello_world", "ruby"])
 
-$(genProviders "source" ["hello_world", "ruby"])
+$(genProvidersSingle "source" ["hello_world", "ruby"])
 
 $(genParsers "source" ["hello_world", "javascript"])
 
-$(genProviders "source" ["hello_world", "javascript"])
+$(genProvidersSingle "source" ["hello_world", "javascript"])
 
 $(genParsers "source" ["print", "ruby"])
 
-$(genProviders "source" ["print", "ruby"])
+$(genProvidersSingle "source" ["print", "ruby"])
 
 $(genParsers "source" ["print", "javascript"])
 
-$(genProviders "source" ["print", "javascript"])
+$(genProvidersSingle "source" ["print", "javascript"])
 
 $(genParsers "source" ["print_1_to_10", "ruby"])
 
-$(genProviders "source" ["print_1_to_10", "ruby"])
+$(genProvidersSingle "source" ["print_1_to_10", "ruby"])
 
 $(genParsers "source" ["print_1_to_10", "javascript"])
 
-$(genProviders "source" ["print_1_to_10", "javascript"])
+$(genProvidersSingle "source" ["print_1_to_10", "javascript"])

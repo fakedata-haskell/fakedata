@@ -6,6 +6,7 @@
 module Config
   ( SourceData(..)
   , fetchData
+  , fetchDataSingle
   , mapSource
   , populateLocales
   ) where
@@ -17,6 +18,7 @@ import qualified Data.ByteString as BS
 import qualified Data.HashMap.Strict as HM
 import Data.Monoid ((<>))
 import Data.Text (Text, pack, unpack)
+import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal.Types (CacheFileKey(..), SourceData(..))
@@ -384,3 +386,24 @@ fetchData settings sdata parser = do
       liftIO $ setCacheFile nhash settings
       parseMonad (parser settings) yaml
     Just yaml -> parseMonad (parser settings) yaml
+
+fetchDataSingle ::
+     (MonadThrow m, MonadIO m)
+  => FakerSettings
+  -> SourceData
+  -> (FakerSettings -> Value -> Parser Text)
+  -> m (Vector Text)
+fetchDataSingle settings sdata parser = do
+  let locale = getLocale settings
+      fname = guessSourceFile sdata locale
+      ckey = CacheFileKey {cfkSource = sdata, cfkLocale = locale}
+  cache <- liftIO $ getCacheFile settings
+  case (HM.lookup ckey cache) of
+    Nothing -> do
+      afile <- getSourceFile fname
+      bs <- liftIO $ BS.readFile afile
+      yaml <- decodeThrow bs
+      let nhash = HM.insert ckey yaml cache
+      liftIO $ setCacheFile nhash settings
+      pure <$> parseMonad (parser settings) yaml
+    Just yaml -> pure <$> parseMonad (parser settings) yaml
