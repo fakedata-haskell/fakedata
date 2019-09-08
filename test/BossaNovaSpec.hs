@@ -20,4 +20,4 @@ spec = do
   describe "BossaNova" $ do
     it "generates BossaNova artist (sanity TH check)" $ do
       aname <- generate artists
-      aname `shouldBe` "Johnny Alf"
+      aname `shouldBe` "Bebel Gilberto"

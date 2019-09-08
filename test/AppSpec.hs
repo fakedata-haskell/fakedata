@@ -23,7 +23,7 @@ spec = do
       ctries `shouldSatisfy` (\x -> T.length x >= 0)
     it "generates App name (sanity TH check)" $ do
       aname <- generate name
-      aname `shouldBe` "Pannier"
+      aname `shouldBe` "Redhold"
     it "generates App name (TH check)" $ do
       let name2 :: Fake Text
           name2 = Fake $ resolver appNameProvider

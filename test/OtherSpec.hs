@@ -1,4 +1,4 @@
-n{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module OtherSpec where
@@ -35,26 +35,26 @@ spec = do
         generateWithSettings
           (setLocale "ee" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Kaido Leok Leok"
+      (ctries) `shouldBe` "Ando Mägi Kuusik"
     it "name with middle - pak" $ do
       ctries <-
         generateWithSettings
           (setLocale "en-PAK" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Zia Ash Ash"
+      (ctries) `shouldBe` "Sajjad Ahmed Badar"
     it "name with middle - au" $ do
       ctries <-
         generateWithSettings
           (setLocale "en-AU" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Georgia Grady Grady"
+      (ctries) `shouldBe` "Xavier Anderson Bergstrom"
     it "group A - WC" $ do
       ga <- generate WC.groupsGroupA
-      ga `shouldBe` "Russia"
+      ga `shouldBe` "Saudi Arabia"
     it "courseNumber - Edu" $ do
       ga <- generate ED.tertiaryCourseNumber
-      ga `shouldBe` "215"
+      ga `shouldBe` "547"
     it "App author" $ do
       ga <-
         generateWithSettings (setDeterministic defaultFakerSettings) AP.author
-      ga `shouldBe` "Breitenberg, Prosacco and Gusikowski"
+      ga `shouldBe` "Macie Swaniawski III"
