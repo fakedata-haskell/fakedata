@@ -2,3 +2,6 @@ resolver: lts-13.9
 
 packages:
 - .
+
+extra-deps:
+- splitmix-0.0.3
