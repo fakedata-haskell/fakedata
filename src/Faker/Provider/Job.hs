@@ -89,7 +89,10 @@ $(genProviderUnresolved "job" "title")
 resolveJobText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveJobText settings txt = do
   let fields = resolveFields txt
-  jobFields <- mapM (resolveJobField settings) fields
+  jobFields <-
+    mapM
+      (\(seed, field) -> resolveJobField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt jobFields
 
 resolveJobField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

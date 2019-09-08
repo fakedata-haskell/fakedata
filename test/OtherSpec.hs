@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+n{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module OtherSpec where

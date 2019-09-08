@@ -119,7 +119,11 @@ resolveCompassText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveCompassText settings txt = do
   let fields = resolveFields txt
-  compassFields <- mapM (resolveCompassField settings) fields
+  compassFields <-
+    mapM
+      (\(seed, field) ->
+         resolveCompassField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt compassFields
 
 cardinalProvider ::

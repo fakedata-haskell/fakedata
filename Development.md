@@ -183,7 +183,5 @@ Doing both yaml and field based caching
 
 # Todo
 
-* In provider functions, change all the resolve*Field function to use cached version.
 * Also In provider functions, make the resolve*Text functions spread out stdgen.
 * Cleanup Faker module and it's haddock
-

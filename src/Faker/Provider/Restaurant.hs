@@ -83,7 +83,11 @@ resolveRestaurantText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveRestaurantText settings txt = do
   let fields = resolveFields txt
-  restaurantFields <- mapM (resolveRestaurantField settings) fields
+  restaurantFields <-
+    mapM
+      (\(seed, field) ->
+         resolveRestaurantField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt restaurantFields
 
 resolveRestaurantField ::

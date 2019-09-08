@@ -64,7 +64,10 @@ $(genProvider "book" "genre")
 resolveBookText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveBookText settings txt = do
   let fields = resolveFields txt
-  bookFields <- mapM (resolveBookField settings) fields
+  bookFields <-
+    mapM
+      (\(seed, field) -> resolveBookField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt bookFields
 
 resolveBookField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

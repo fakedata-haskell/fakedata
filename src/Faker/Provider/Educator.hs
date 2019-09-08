@@ -108,7 +108,11 @@ resolveEducatorText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveEducatorText settings txt = do
   let fields = resolveFields txt
-  educatorFields <- mapM (resolveEducatorField settings) fields
+  educatorFields <-
+    mapM
+      (\(seed, field) ->
+         resolveEducatorField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt educatorFields
 
 resolveEducatorField ::

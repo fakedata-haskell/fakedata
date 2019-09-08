@@ -107,7 +107,11 @@ resolveFinanceText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveFinanceText settings txt = do
   let fields = resolveFields txt
-  financeFields <- mapM (resolveFinanceField settings) fields
+  financeFields <-
+    mapM
+      (\(seed, field) ->
+         resolveFinanceField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt financeFields
 
 resolveFinanceField ::

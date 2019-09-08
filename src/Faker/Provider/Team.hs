@@ -75,7 +75,10 @@ $(genProviderUnresolved "team" "name")
 resolveTeamText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveTeamText settings txt = do
   let fields = resolveFields txt
-  teamFields <- mapM (resolveTeamField settings) fields
+  teamFields <-
+    mapM
+      (\(seed, field) -> resolveTeamField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt teamFields
 
 resolveTeamField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

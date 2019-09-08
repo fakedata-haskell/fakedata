@@ -95,7 +95,11 @@ resolveSlackEmojiText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveSlackEmojiText settings txt = do
   let fields = resolveFields txt
-  slackEmojiFields <- mapM (resolveSlackEmojiField settings) fields
+  slackEmojiFields <-
+    mapM
+      (\(seed, field) ->
+         resolveSlackEmojiField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt slackEmojiFields
 
 resolveSlackEmojiField ::

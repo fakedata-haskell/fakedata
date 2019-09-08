@@ -59,7 +59,10 @@ $(genAppProviderUnresolved "author")
 resolveAppText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveAppText settings txt = do
   let fields = resolveFields txt
-  appFields <- mapM (resolveAppField settings) fields
+  appFields <-
+    mapM
+      (\(seed, field) -> resolveAppField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt appFields
 
 resolveAppField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

@@ -73,7 +73,11 @@ resolveUniversityText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveUniversityText settings txt = do
   let fields = resolveFields txt
-  universityFields <- mapM (resolveUniversityField settings) fields
+  universityFields <-
+    mapM
+      (\(seed, field) ->
+         resolveUniversityField (modifyRandomGen settings seed) field)
+      (zip [1 ..] fields)
   pure $ operateFields txt universityFields
 
 resolveUniversityField ::

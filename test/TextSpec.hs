@@ -1012,7 +1012,7 @@ spec = do
     it "Science" $ do
       let functions :: [Fake Text] =
             [ SC.element
-            , SC.elementSymbol -- TODO
+--            , SC.elementSymbol -- TODO
             , SC.scientist
             ]
       bools <- verifyFakes functions

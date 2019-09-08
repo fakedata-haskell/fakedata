@@ -21,6 +21,7 @@ module Faker.Internal
   , resolveUnresolved
   , uncons2
   , operateField
+  , modifyRandomGen
   ) where
 
 import Config
@@ -33,15 +34,15 @@ import qualified Data.Text as T
 import Data.Text (Text, strip)
 import qualified Data.Vector as V
 import Data.Vector (Vector, (!))
+import Data.Word (Word64)
 import Faker
 import Faker.Internal.Types (CacheFieldKey(..))
-import System.Random
+import System.Random (randomR)
+import System.Random.SplitMix (seedSMGen', unseedSMGen)
 
-newtype Unresolved a =
-  Unresolved
-    { unresolvedField :: a
-    }
-  deriving (Functor)
+newtype Unresolved a = Unresolved
+  { unresolvedField :: a
+  } deriving (Functor)
 
 instance Applicative Unresolved where
   pure = Unresolved
@@ -340,3 +341,10 @@ insertToCache sdata field settings vec = do
   hmap <- getCacheField settings
   let hmap2 = HM.insert key vec hmap
   setCacheField hmap2 settings
+
+modifyRandomGen :: FakerSettings -> Word64 -> FakerSettings
+modifyRandomGen settings seed =
+  let (currentSeed, currentGamma) = unseedSMGen (getRandomGen settings)
+   in setRandomGen
+        (seedSMGen' (currentSeed + seed, currentGamma + seed))
+        settings
