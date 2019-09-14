@@ -16,16 +16,16 @@ module Faker
   , setRandomGen
   , setDeterministic
   , setNonDeterministic
+  , setCacheField
+  , setCacheFile
+  , replaceCacheField
+  , replaceCacheFile
     -- * Getters
   , getRandomGen
   , getLocale
   , getDeterministic
   , getCacheField
-  , setCacheField
-  , replaceCacheField
   , getCacheFile
-  , setCacheFile
-  , replaceCacheFile
     -- * Generators
   , generate
   , generateWithSettings
@@ -42,7 +42,7 @@ import Data.Vector (Vector)
 import Data.Yaml (Value)
 import Data.Word (Word64)
 import Faker.Internal.Types (CacheFieldKey, CacheFileKey)
-import System.Random.SplitMix (SMGen, seedSMGen', splitSMGen, unseedSMGen, newSMGen)
+import System.Random.SplitMix (SMGen, seedSMGen', splitSMGen, newSMGen)
 
 data FakerSettings =
   FakerSettings

@@ -40,9 +40,11 @@ import Faker.Internal.Types (CacheFieldKey(..))
 import System.Random (randomR)
 import System.Random.SplitMix (seedSMGen', unseedSMGen)
 
-newtype Unresolved a = Unresolved
-  { unresolvedField :: a
-  } deriving (Functor)
+newtype Unresolved a =
+  Unresolved
+    { unresolvedField :: a
+    }
+  deriving (Functor)
 
 instance Applicative Unresolved where
   pure = Unresolved
@@ -266,6 +268,7 @@ isQues c = c == '?'
 interpolateString :: FakerSettings -> Text -> Text
 interpolateString fsettings text = helper fsettings [] text
   where
+    helper :: FakerSettings -> [Char] -> Text -> Text
     helper settings acc txt =
       case T.null txt of
         True -> T.pack acc
