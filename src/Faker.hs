@@ -42,18 +42,20 @@ import Data.Vector (Vector)
 import Data.Yaml (Value)
 import Data.Word (Word64)
 import Faker.Internal.Types (CacheFieldKey, CacheFileKey)
-import System.Random.SplitMix (SMGen, seedSMGen', splitSMGen, newSMGen)
+import System.Random (StdGen, newStdGen, split, mkStdGen)
 
 data FakerSettings =
   FakerSettings
     { fslocale :: !Text -- ^ Locale settings for your fake data source.
-    , fsrandomGen :: !SMGen -- ^ Seed to initialize random generator state
+    , fsrandomGen :: !StdGen -- ^ Seed to initialize random generator state
     , fsDeterministic :: !Bool -- ^ Controls whether you want
                             -- deterministic out. This overrides
                             -- 'fsrandomGen'.
     , fsCacheField :: (IORef (HM.HashMap CacheFieldKey (Vector Text)))
     , fsCacheFile :: (IORef (HM.HashMap CacheFileKey Value))
     }
+
+newtype FakerGen = FakerGen { unFakerGen :: (Int, StdGen)} deriving (Show)
 
 instance Show FakerSettings where
   show (FakerSettings {..}) =
@@ -63,7 +65,7 @@ data FakerException
   = InvalidLocale String -- ^ This is thrown when it is not able to
                          -- find the fake data source for your
                          -- localization.
-  | InvalidField String Text -- ^ The 'String' represents the field is
+  | InvalidField String Text -- ^ The 'String' represents the field it is
                              -- trying to resolve and the 'Text' field
                              -- is something you passed on.
   | NoDataFound FakerSettings -- ^ This is thrown when you have no
@@ -78,7 +80,7 @@ defaultFakerSettings :: FakerSettings
 defaultFakerSettings =
   FakerSettings
     { fslocale = "en"
-    , fsrandomGen = seedSMGen' (10000, 10000)
+    , fsrandomGen = mkStdGen 10000
     , fsDeterministic = True
     , fsCacheField = error "defaultFakerSettings: fsCacheField not initialized"
     , fsCacheFile = error "defaultFakerSettings: fsCacheFile not initialized"
@@ -94,11 +96,11 @@ setLocale :: Text -> FakerSettings -> FakerSettings
 setLocale localeTxt fs = fs {fslocale = localeTxt}
 
 -- | Sets the initial gen for random generator
-setRandomGen :: SMGen -> FakerSettings -> FakerSettings
+setRandomGen :: StdGen -> FakerSettings -> FakerSettings
 setRandomGen gen fs = fs {fsrandomGen = gen}
 
 -- | Get the initial gen for random generator
-getRandomGen :: FakerSettings -> SMGen
+getRandomGen :: FakerSettings -> StdGen
 getRandomGen settings = fsrandomGen settings
 
 -- | Get the Locale settings for your fake data source
@@ -191,7 +193,7 @@ instance Monad Fake where
     Fake
       (\settings ->
          let stdGen = getRandomGen settings
-             (r1, _) = splitSMGen stdGen
+             (r1, _) = split stdGen
              m = do
                (item :: a) <- h settings
                let (Fake k1) = k item
@@ -227,7 +229,7 @@ generateWithSettings settings (Fake f) = do
   stdGen <-
     if deterministic
       then pure $ getRandomGen settings
-      else newSMGen
+      else newStdGen
   let newSettings = setRandomGen stdGen settings
   cacheField <- newIORef HM.empty
   cacheFile <- newIORef HM.empty

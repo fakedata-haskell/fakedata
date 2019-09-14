@@ -16,7 +16,6 @@ import Faker.Internal
 import Faker.Provider.Name (nameLastNameProvider, resolveNameText)
 import Faker.Provider.TH
 import Language.Haskell.TH
-import System.Random.SplitMix (mkSMGen)
 
 parseCompany :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCompany settings (Object obj) = do

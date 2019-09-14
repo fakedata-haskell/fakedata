@@ -58,11 +58,11 @@ spec = do
   describe "Faker Generate" $ do
     it "Nested unresolved field" $ do
       ctries <- generate tertiaryCourseNumber
-      (ctries) `shouldBe` "547"
+      (ctries) `shouldBe` "215"
   describe "Faker Compass Generate" $ do
     it "Resolver check" $ do
       ctries <- generate direction
-      (ctries) `shouldBe` "east-northeast"
+      (ctries) `shouldBe` "southwest"
     it "Resolver check" $ do
       ctries <- generate $ listOf 5 direction
       (ctries) `shouldSatisfy` (\x -> Prelude.length x == 5)
@@ -122,13 +122,13 @@ spec = do
     describe "Restaurant" $ do
       it "name" $ do
         item <- generate FR.name
-        item `shouldBe` "5816 Sushi"
+        item `shouldBe` "Sweet House"
       it "name_suffix" $ do
         item <- generate FR.nameSuffix
         item `shouldSatisfy` isText
       it "type'" $ do
         item <- generate FR.type'
-        item `shouldBe` "Pizza"
+        item `shouldBe` "Bakery"
     describe "Vehicle" $ do
       it "license" $ do
         item <- generate FV.licensePlate
@@ -144,10 +144,10 @@ spec = do
     describe "Company" $ do
       it "bs" $ do
         item <- generate bs
-        item `shouldBe` "enhance bleeding-edge web services"
+        item `shouldBe` "visualize efficient supply-chains"
       it "buzzwords" $ do
         item <- generate buzzword
-        item `shouldBe` "groupware"
+        item `shouldBe` "info-mediaries"
       it "sicCode" $ do
         item <- generate sicCode
         item `shouldSatisfy` isText

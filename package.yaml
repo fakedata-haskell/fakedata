@@ -26,7 +26,6 @@ description:         Please see the README on GitHub at <https://github.com/psib
 
 dependencies:
 - base >= 4.7 && < 5
-- splitmix >= 0.0.3
 - random
 - text
 - exceptions

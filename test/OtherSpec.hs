@@ -35,26 +35,26 @@ spec = do
         generateWithSettings
           (setLocale "ee" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Ando Mägi Kuusik"
+      (ctries) `shouldBe` "Kajar Vaino Kõiv"
     it "name with middle - pak" $ do
       ctries <-
         generateWithSettings
           (setLocale "en-PAK" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Sajjad Ahmed Badar"
+      (ctries) `shouldBe` "Mian Khan Nambardar"
     it "name with middle - au" $ do
       ctries <-
         generateWithSettings
           (setLocale "en-AU" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Xavier Anderson Bergstrom"
+      (ctries) `shouldBe` "Sarah Kirlin Jenkins"
     it "group A - WC" $ do
       ga <- generate WC.groupsGroupA
-      ga `shouldBe` "Saudi Arabia"
+      ga `shouldBe` "Russia"
     it "courseNumber - Edu" $ do
       ga <- generate ED.tertiaryCourseNumber
-      ga `shouldBe` "547"
+      ga `shouldBe` "215"
     it "App author" $ do
       ga <-
         generateWithSettings (setDeterministic defaultFakerSettings) AP.author
-      ga `shouldBe` "Macie Swaniawski III"
+      ga `shouldBe` "Steuber, Donnelly and Goldner"

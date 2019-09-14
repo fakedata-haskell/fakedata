@@ -44,17 +44,17 @@ spec = do
       txt `shouldSatisfy` (\x -> T.length x == 5 && (T.take 3 x == "ab-"))
     it "produces random alphabets" $ do
       let txt = interpolateString defaultFakerSettings "????"
-      txt `shouldBe` "QHUH"
+      txt `shouldBe` "XJZS"
     it "preserves unwanted things" $ do
       let txt = interpolateString defaultFakerSettings "32-????"
-      txt `shouldBe` "32-QHUH"
+      txt `shouldBe` "32-XJZS"
     it "preserves unwanted things and works with numbers" $ do
       txt <-
         resolveUnresolved
           defaultFakerSettings
           (pure $ pure $ "32-????-####")
           (\s t -> pure t)
-      txt `shouldBe` "32-QHUH-4725"
+      txt `shouldBe` "32-XJZS-1534"
     it "doesn't get confused with garbage" $ do
       txt <-
         resolveUnresolved
@@ -151,7 +151,7 @@ spec = do
     describe "Address functions" $ do
       it "basic check" $ do
         fakeCountry <- generate country
-        fakeCountry `shouldBe` "Virgin Islands, U.S."
+        fakeCountry `shouldBe` "Ecuador"
       it "check community equality" $ do
         let community1 :: Fake Text
             community1 =
@@ -181,7 +181,7 @@ spec = do
               c1 <- country
               pure c1
         fakeCountry <- generate someCountry
-        fakeCountry `shouldBe` "Virgin Islands, U.S."
+        fakeCountry `shouldBe` "Ecuador"
       it "Equality of normal generation and Monad" $ do
         fakeCountry <- generate country
         let someCountry :: Fake Text
@@ -197,7 +197,7 @@ spec = do
               c2 <- country
               pure (c1, c2)
         fakeCountry <- generate someCountry
-        fakeCountry `shouldBe` ("Virgin Islands, U.S.", "Dominican Republic")
+        fakeCountry `shouldBe` ("Ecuador", "French Guiana")
       it "Non equality of sequence" $ do
         let someCountry :: Fake (Text, Text)
             someCountry = do
@@ -208,7 +208,7 @@ spec = do
         c1 `shouldNotBe` c2
       it "Resolver based function" $ do
         bno <- generate buildingNumber
-        bno `shouldBe` "472"
+        bno `shouldBe` "153"
       it "Resolver fullAddress" $ do
         bno <- generate fullAddress
         bno `shouldSatisfy` (\x -> T.length x > 25)

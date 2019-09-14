@@ -34,17 +34,17 @@ spec = do
       (ctries) `shouldSatisfy` (\x -> V.length x > 3)
     it "random region" $ do
       ctries <- generate regionsColombia
-      ctries `shouldBe` "Boyacá"
+      ctries `shouldBe` "Santander"
     it "brazil region (via TH)" $ do
       ctries <- generate regionsBrazil
       ctries `shouldBe` "Cerrado"
     it "India region (via TH)" $ do
       ctries <- generate regionsIndia
-      ctries `shouldBe` "Pulneys"
+      ctries `shouldBe` "Sheveroys"
   describe "Commerce" $ do
     it "Nested field" $ do
       ctries <- generate productNameAdjective
-      ctries `shouldBe` "Heavy Duty"
+      ctries `shouldBe` "Rustic"
   describe "Dota" $ do
     it "Nested field" $ do
       ctries <- generate spiritBreakerQuote
@@ -60,4 +60,4 @@ spec = do
   describe "Educator" $ do
     it "Nested field" $ do
       ctries <- generate tertiaryType
-      ctries `shouldBe` "Technical College"
+      ctries `shouldBe` "University"

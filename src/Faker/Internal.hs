@@ -37,8 +37,7 @@ import Data.Vector (Vector, (!))
 import Data.Word (Word64)
 import Faker
 import Faker.Internal.Types (CacheFieldKey(..))
-import System.Random (randomR)
-import System.Random.SplitMix (seedSMGen', unseedSMGen)
+import System.Random (StdGen, mkStdGen, randomR, split)
 
 newtype Unresolved a =
   Unresolved
@@ -345,9 +344,16 @@ insertToCache sdata field settings vec = do
   let hmap2 = HM.insert key vec hmap
   setCacheField hmap2 settings
 
+-- TODO: Not efficient. Better to switch to splitmax once this gets
+-- resolved: https://github.com/phadej/splitmix/issues/23
+incrementStdGen :: Word64 -> StdGen -> StdGen
+incrementStdGen 0 gen = gen
+incrementStdGen n gen =
+  let (_, newGen) = split gen
+   in incrementStdGen (n - 1) newGen
+
 modifyRandomGen :: FakerSettings -> Word64 -> FakerSettings
 modifyRandomGen settings seed =
-  let (currentSeed, currentGamma) = unseedSMGen (getRandomGen settings)
-   in setRandomGen
-        (seedSMGen' (currentSeed + seed, currentGamma + seed))
-        settings
+  let gen = getRandomGen settings
+      newGen = incrementStdGen seed gen
+   in setRandomGen newGen settings
