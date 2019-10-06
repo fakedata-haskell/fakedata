@@ -1,4 +1,4 @@
-resolver: lts-13.9
+resolver: nightly-2019-10-06
 
 packages:
 - .

@@ -39,23 +39,24 @@ import Data.IORef
 import Data.Text (Text)
 import Data.Typeable
 import Data.Vector (Vector)
-import Data.Yaml (Value)
 import Data.Word (Word64)
+import Data.Yaml (Value)
 import Faker.Internal.Types (CacheFieldKey, CacheFileKey)
-import System.Random (StdGen, newStdGen, split, mkStdGen)
+import System.Random (StdGen, mkStdGen, newStdGen, split)
 
-data FakerSettings =
-  FakerSettings
-    { fslocale :: !Text -- ^ Locale settings for your fake data source.
-    , fsrandomGen :: !StdGen -- ^ Seed to initialize random generator state
-    , fsDeterministic :: !Bool -- ^ Controls whether you want
+data FakerSettings = FakerSettings
+  { fslocale :: !Text -- ^ Locale settings for your fake data source.
+  , fsrandomGen :: !StdGen -- ^ Seed to initialize random generator state
+  , fsDeterministic :: !Bool -- ^ Controls whether you want
                             -- deterministic out. This overrides
                             -- 'fsrandomGen'.
-    , fsCacheField :: (IORef (HM.HashMap CacheFieldKey (Vector Text)))
-    , fsCacheFile :: (IORef (HM.HashMap CacheFileKey Value))
-    }
+  , fsCacheField :: (IORef (HM.HashMap CacheFieldKey (Vector Text)))
+  , fsCacheFile :: (IORef (HM.HashMap CacheFileKey Value))
+  }
 
-newtype FakerGen = FakerGen { unFakerGen :: (Int, StdGen)} deriving (Show)
+newtype FakerGen = FakerGen
+  { unFakerGen :: (Int, StdGen)
+  } deriving (Show)
 
 instance Show FakerSettings where
   show (FakerSettings {..}) =
@@ -65,12 +66,16 @@ data FakerException
   = InvalidLocale String -- ^ This is thrown when it is not able to
                          -- find the fake data source for your
                          -- localization.
-  | InvalidField String Text -- ^ The 'String' represents the field it is
+  | InvalidField String
+                 Text -- ^ The 'String' represents the field it is
                              -- trying to resolve and the 'Text' field
                              -- is something you passed on.
   | NoDataFound FakerSettings -- ^ This is thrown when you have no
                               -- data. This may likely happen for
                               -- locales other than `en`.
+  | ParseError String -- ^ This is thrown when the parsing step
+                      -- fails. The 'String' represents the error
+                      -- message.
   deriving (Typeable, Show)
 
 instance Exception FakerException
@@ -167,10 +172,9 @@ replaceCacheFile cache fs = do
 
 -- | Fake data type. This is the type you will be using to produce
 -- fake values.
-newtype Fake a =
-  Fake
-    { unFake :: FakerSettings -> IO a
-    }
+newtype Fake a = Fake
+  { unFake :: FakerSettings -> IO a
+  }
 
 instance Functor Fake where
   fmap :: (a -> b) -> Fake a -> Fake b

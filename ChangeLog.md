@@ -1,5 +1,9 @@
 # Changelog for fakedata
 
+## 0.3.1
+
+* Make it compatbile with ghc-8.8.1
+
 ## 0.3.0
 
 * Update fake data source
