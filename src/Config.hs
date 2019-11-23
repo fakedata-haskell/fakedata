@@ -384,8 +384,9 @@ fetchData settings sdata parser = do
       yaml <- decodeThrow bs
       let nhash = HM.insert ckey yaml cache
       liftIO $ setCacheFile nhash settings
-      parseMonad (parser settings) yaml
-    Just yaml -> parseMonad (parser settings) yaml
+      either (throwM . ParseError) pure (parseEither (parser settings) yaml)
+    Just yaml ->
+      either (throwM . ParseError) pure (parseEither (parser settings) yaml)
 
 fetchDataSingle ::
      (MonadThrow m, MonadIO m)
@@ -405,5 +406,8 @@ fetchDataSingle settings sdata parser = do
       yaml <- decodeThrow bs
       let nhash = HM.insert ckey yaml cache
       liftIO $ setCacheFile nhash settings
-      pure <$> parseMonad (parser settings) yaml
-    Just yaml -> pure <$> parseMonad (parser settings) yaml
+      pure <$>
+        either (throwM . ParseError) pure (parseEither (parser settings) yaml)
+    Just yaml ->
+      pure <$>
+      either (throwM . ParseError) pure (parseEither (parser settings) yaml)
