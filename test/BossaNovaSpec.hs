@@ -9,10 +9,7 @@ import Data.Text hiding (all, map)
 import qualified Data.Text as T
 import qualified Data.Vector as V
 import Faker
-
 import Faker.BossaNova
-import Faker.Internal
-import Faker.Provider.BossaNova
 import Test.Hspec
 
 spec :: Spec

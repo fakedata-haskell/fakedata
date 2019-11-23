@@ -31,10 +31,7 @@ import Faker.Game.Fallout
 import Faker.Internal
 import Faker.Job (field)
 import Faker.Movie.StarWars
-
--- import Faker.Nation (flagEmoji)
 import Faker.PhoneNumber
-import Faker.Provider.Educator
 import qualified Faker.Restaurant as FR
 import qualified Faker.Science as FS
 import qualified Faker.Sport.Basketball as FB

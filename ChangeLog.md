@@ -1,5 +1,14 @@
 # Changelog for fakedata
 
+## 0.4.0
+
+* Move Provider modules into other-modules. This makes the haddock
+  much more readable.
+* Update to various `en` data sources: color.yml, super_smash_bros.
+* Fix name of FakerTvShow.DrWho module: villains (from villians).
+* New locale addition: en-TH, th
+* Modification of other locales: fr-CA, ja
+
 ## 0.3.1
 
 * Make it compatbile with ghc-8.8.1

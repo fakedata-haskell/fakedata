@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b6a65970d5f1dbdf544a14cc669dc23f816ed4bf82309326c0e5f76a916409f1
+-- hash: be1b66f87465dd538daf55cddd125c8a8a12eb5b70b61d2150f99bf40a2c83fb
 
 name:           fakedata
-version:        0.3.1
+version:        0.4.0
 synopsis:       Library for producing fake data
 description:    Please see the README on GitHub at <https://github.com/psibi/fakedata#readme>
 category:       Random, Fake, FakeData
@@ -44,6 +44,7 @@ data-files:
     faker/lib/locales/en-NZ.yml
     faker/lib/locales/en-PAK.yml
     faker/lib/locales/en-SG.yml
+    faker/lib/locales/en-TH.yml
     faker/lib/locales/en-UG.yml
     faker/lib/locales/en-US.yml
     faker/lib/locales/en-ZA.yml
@@ -71,6 +72,7 @@ data-files:
     faker/lib/locales/ru.yml
     faker/lib/locales/sk.yml
     faker/lib/locales/sv.yml
+    faker/lib/locales/th.yml
     faker/lib/locales/tr.yml
     faker/lib/locales/uk.yml
     faker/lib/locales/vi.yml
@@ -331,6 +333,57 @@ library
       Faker.NatoPhoneticAlphabet
       Faker.PhoneNumber
       Faker.ProgrammingLanguage
+      Faker.Quote
+      Faker.Quote.Shakespeare
+      Faker.Relationship
+      Faker.Restaurant
+      Faker.Science
+      Faker.SlackEmoji
+      Faker.Source
+      Faker.Space
+      Faker.Sport.Basketball
+      Faker.Sport.Football
+      Faker.Subscription
+      Faker.Superhero
+      Faker.Team
+      Faker.TH
+      Faker.TvShow.AquaTeenHungerForce
+      Faker.TvShow.BoJackHorseman
+      Faker.TvShow.BreakingBad
+      Faker.TvShow.Buffy
+      Faker.TvShow.Community
+      Faker.TvShow.DrWho
+      Faker.TvShow.DumbAndDumber
+      Faker.TvShow.FamilyGuy
+      Faker.TvShow.FreshPrinceOfBelAir
+      Faker.TvShow.Friends
+      Faker.TvShow.GameOfThrones
+      Faker.TvShow.HeyArnold
+      Faker.TvShow.HowIMetYourMother
+      Faker.TvShow.MichaelScott
+      Faker.TvShow.NewGirl
+      Faker.TvShow.ParksAndRec
+      Faker.TvShow.RickAndMorty
+      Faker.TvShow.Rupaul
+      Faker.TvShow.Seinfeld
+      Faker.TvShow.SiliconValley
+      Faker.TvShow.Simpsons
+      Faker.TvShow.SouthPark
+      Faker.TvShow.Stargate
+      Faker.TvShow.StarTrek
+      Faker.TvShow.StrangerThings
+      Faker.TvShow.TheExpanse
+      Faker.TvShow.TheItCrowd
+      Faker.TvShow.TheThickOfIt
+      Faker.TvShow.TwinPeaks
+      Faker.TvShow.VentureBros
+      Faker.University
+      Faker.Vehicle
+      Faker.Verbs
+      Faker.WorldCup
+      Faker.Yoda
+  other-modules:
+      Paths_fakedata
       Faker.Provider.Address
       Faker.Provider.Ancient
       Faker.Provider.Animal
@@ -459,10 +512,10 @@ library
       Faker.Provider.SuperSmashBros
       Faker.Provider.SwordArtOnline
       Faker.Provider.Team
-      Faker.Provider.TH
       Faker.Provider.TheExpanse
       Faker.Provider.TheItCrowd
       Faker.Provider.TheThickOfIt
+      Faker.Provider.TH
       Faker.Provider.TwinPeaks
       Faker.Provider.UmphreysMcgee
       Faker.Provider.University
@@ -475,57 +528,6 @@ library
       Faker.Provider.WorldOfWarcraft
       Faker.Provider.Yoda
       Faker.Provider.Zelda
-      Faker.Quote
-      Faker.Quote.Shakespeare
-      Faker.Relationship
-      Faker.Restaurant
-      Faker.Science
-      Faker.SlackEmoji
-      Faker.Source
-      Faker.Space
-      Faker.Sport.Basketball
-      Faker.Sport.Football
-      Faker.Subscription
-      Faker.Superhero
-      Faker.Team
-      Faker.TH
-      Faker.TvShow.AquaTeenHungerForce
-      Faker.TvShow.BoJackHorseman
-      Faker.TvShow.BreakingBad
-      Faker.TvShow.Buffy
-      Faker.TvShow.Community
-      Faker.TvShow.DrWho
-      Faker.TvShow.DumbAndDumber
-      Faker.TvShow.FamilyGuy
-      Faker.TvShow.FreshPrinceOfBelAir
-      Faker.TvShow.Friends
-      Faker.TvShow.GameOfThrones
-      Faker.TvShow.HeyArnold
-      Faker.TvShow.HowIMetYourMother
-      Faker.TvShow.MichaelScott
-      Faker.TvShow.NewGirl
-      Faker.TvShow.ParksAndRec
-      Faker.TvShow.RickAndMorty
-      Faker.TvShow.Rupaul
-      Faker.TvShow.Seinfeld
-      Faker.TvShow.SiliconValley
-      Faker.TvShow.Simpsons
-      Faker.TvShow.SouthPark
-      Faker.TvShow.Stargate
-      Faker.TvShow.StarTrek
-      Faker.TvShow.StrangerThings
-      Faker.TvShow.TheExpanse
-      Faker.TvShow.TheItCrowd
-      Faker.TvShow.TheThickOfIt
-      Faker.TvShow.TwinPeaks
-      Faker.TvShow.VentureBros
-      Faker.University
-      Faker.Vehicle
-      Faker.Verbs
-      Faker.WorldCup
-      Faker.Yoda
-  other-modules:
-      Paths_fakedata
   hs-source-dirs:
       src
   build-depends:
@@ -550,8 +552,6 @@ test-suite fakedata-test
   main-is: Spec.hs
   other-modules:
       AddressSpec
-      AppSpec
-      BeerSpec
       BookSpec
       BossaNovaSpec
       CoffeeSpec
