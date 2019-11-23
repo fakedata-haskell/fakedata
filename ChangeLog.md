@@ -1,5 +1,10 @@
 # Changelog for fakedata
 
+## 0.4.0
+
+* Move Provider modules into other-modules. This makes the haddock
+  much more readable.
+
 ## 0.3.0
 
 * Update fake data source

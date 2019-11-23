@@ -83,6 +83,16 @@ that needs to be done:
 * Generate Provider and Faker module
 * Profit!
 
+## Populating other-modules in package.yaml
+
+Note that the below `sed` command didn't seem to work with `fish`
+shell (But works fine with `bash`).
+
+``` shellsession
+$ cd src/Faker/Provider
+$ ls | sed "s/^/- Faker.Provider./g" | sed "s/.hs//g"
+```
+
 ## Template Haskell code
 
 fakedata uses TH extensively to reduce code duplication. To understand

@@ -14,7 +14,6 @@ import qualified Data.Vector as V
 import Faker
 import Faker.Educator
 import Faker.Internal
-import Faker.Provider.Educator
 import Test.Hspec
 
 spec :: Spec
