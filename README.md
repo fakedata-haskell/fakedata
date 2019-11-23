@@ -162,16 +162,6 @@ main = do
 For seeing the full list of combinators, see the module documentation of
 `Faker.Combinators`.
 
-Reading Haddock Documentation
------------------------------
-
-There are two kind of modules provided by the library:
-
--   Faker.Provider.\* : You most likely don't want to use them or read
-    them. They are internally used by the library.
--   Faker.\<Entity\> : Here Entity refers to an generic object like Book,
-    Movie etc. This is the module you should be interested to look upon.
-
 Comparision with other libraries
 --------------------------------
 
@@ -180,7 +170,7 @@ There are two other libraries in the Hackage providing fake data:
 -   [faker](https://hackage.haskell.org/package/faker-0.0.0.2)
 -   [fake](https://hackage.haskell.org/package/fake-0.1.1.1)
 
-The problem (for me) with both the above libraries is that the library
+The problem with both the above libraries is that the library
 covers only a very small amount of fake data source. I wanted to have an
 equivalent functionality with something like
 [faker](https://github.com/stympy/faker). Also, most of the combinators
