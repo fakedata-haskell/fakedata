@@ -1333,7 +1333,7 @@ spec = do
             , DR.actors
             , DR.catchPhrases
             , DR.quotes
-            , DR.villians
+            , DR.villains
             , DR.species
             ]
       bools <- verifyFakes functions
