@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 380fdb9d3a427f2ed73d6f92deb46e54f4aef153fa1d597e427b4de3e0a21621
+-- hash: be1b66f87465dd538daf55cddd125c8a8a12eb5b70b61d2150f99bf40a2c83fb
 
 name:           fakedata
-version:        0.3.0
+version:        0.4.0
 synopsis:       Library for producing fake data
 description:    Please see the README on GitHub at <https://github.com/psibi/fakedata#readme>
 category:       Random, Fake, FakeData
@@ -44,6 +44,7 @@ data-files:
     faker/lib/locales/en-NZ.yml
     faker/lib/locales/en-PAK.yml
     faker/lib/locales/en-SG.yml
+    faker/lib/locales/en-TH.yml
     faker/lib/locales/en-UG.yml
     faker/lib/locales/en-US.yml
     faker/lib/locales/en-ZA.yml
@@ -71,6 +72,7 @@ data-files:
     faker/lib/locales/ru.yml
     faker/lib/locales/sk.yml
     faker/lib/locales/sv.yml
+    faker/lib/locales/th.yml
     faker/lib/locales/tr.yml
     faker/lib/locales/uk.yml
     faker/lib/locales/vi.yml

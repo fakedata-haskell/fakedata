@@ -19,6 +19,6 @@ $(generateFakeField "drWho" "catch_phrases")
 
 $(generateFakeField "drWho" "quotes")
 
-$(generateFakeField "drWho" "villians")
+$(generateFakeField "drWho" "villains")
 
 $(generateFakeField "drWho" "species")

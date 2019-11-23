@@ -4,6 +4,10 @@
 
 * Move Provider modules into other-modules. This makes the haddock
   much more readable.
+* Update to vaious `en` data sources: color.yml, super_smash_bros.
+* Fix name of FakerTvShow.DrWho module: villains (from villians).
+* New locale addition: en-TH, th
+* Modification of other locales: fr-CA, ja
 
 ## 0.3.0
 

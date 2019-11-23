@@ -50,9 +50,9 @@ $(genParser "drWho" "quotes")
 
 $(genProvider "drWho" "quotes")
 
-$(genParser "drWho" "villians")
+$(genParser "drWho" "villains")
 
-$(genProvider "drWho" "villians")
+$(genProvider "drWho" "villains")
 
 $(genParser "drWho" "species")
 
