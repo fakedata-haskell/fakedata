@@ -1,5 +1,9 @@
 # Changelog for fakedata
 
+## 0.5.0
+
+* Move remaining internal modules into other-module: Config, Faker.TH
+
 ## 0.4.0
 
 * Move Provider modules into other-modules. This makes the haddock

@@ -44,6 +44,8 @@ library:
   source-dirs: src
   other-modules: 
   - Paths_fakedata
+  - Config
+  - Faker.TH
   - Faker.Provider.Address
   - Faker.Provider.Ancient
   - Faker.Provider.Animal

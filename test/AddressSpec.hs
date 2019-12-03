@@ -3,7 +3,6 @@
 
 module AddressSpec where
 
-import Config
 import qualified Data.Map as M
 import Data.Text hiding (all, map)
 import qualified Data.Text as T
