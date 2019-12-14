@@ -3,7 +3,6 @@
 
 module CombinatorsSpec where
 
-import Config
 import Data.Text hiding (all, map)
 import qualified Data.Map as M
 import qualified Data.Text as T

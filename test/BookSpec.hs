@@ -3,7 +3,6 @@
 
 module BookSpec where
 
-import Config
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import qualified Data.Map as M
