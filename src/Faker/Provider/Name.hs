@@ -113,4 +113,40 @@ resolveNameField settings field@"first_name" =
     settings
 resolveNameField settings field@"last_name" =
   cachedRandomVec "name" field nameLastNameProvider settings
+resolveNameField settings field@"male_last_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"female_last_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"female_middle_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"male_middle_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"male_prefix" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"female_prefix" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
 resolveNameField settings str = throwM $ InvalidField "name" str

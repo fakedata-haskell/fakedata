@@ -303,7 +303,19 @@ resolveAddressField settings field@"city_name" = let
     parser settings = parseAddressField settings field
     provider settings = fetchData settings Address parser
     in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"street_title" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
 resolveAddressField settings field@"streets" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"country" = let
     parser ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
     parser settings = parseAddressField settings field

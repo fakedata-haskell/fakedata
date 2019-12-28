@@ -17,18 +17,12 @@ isText :: Text -> Bool
 isText x = T.length x >= 1
 
 fakerSettings :: FakerSettings
-fakerSettings = setLocale "bg" defaultFakerSettings
+fakerSettings = setNonDeterministic $ setLocale "bg" defaultFakerSettings
 
 verifyFakes :: [Fake Text] -> IO [Bool]
 verifyFakes funs = do
   let fs :: [IO Text] = map (generateWithSettings fakerSettings) funs
       gs :: [IO Bool] = map (\f -> isText <$> f) fs
-  sequence gs
-
-verifyFakeInt :: [Fake Int] -> IO [Bool]
-verifyFakeInt funs = do
-  let fs :: [IO Int] = map (generateWithSettings fakerSettings) funs
-      gs :: [IO Bool] = map (\f -> (\x -> x >= 0) <$> f) fs
   sequence gs
 
 spec :: Spec
@@ -40,13 +34,13 @@ spec = do
             , FA.buildingNumber
             , FA.streetSuffix
             , FA.postcode
-            -- , FA.city
-            -- , FA.streetName
-            -- , FA.streetAddress
+            , FA.city
+            , FA.streetName
+            , FA.streetAddress
             , NA.maleFirstName
             , NA.femaleFirstName
             , NA.firstName
-            -- , NA.name
+            , NA.name
             , IN.freeEmail
             , IN.domainSuffix
             ]
