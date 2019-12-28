@@ -1,5 +1,9 @@
 # Changelog for fakedata
 
+## 0.6.0
+
+* Fix API for "ar" locale. Add test coverage.
+
 ## 0.5.0
 
 * Move remaining internal modules into other-module: Config, Faker.TH

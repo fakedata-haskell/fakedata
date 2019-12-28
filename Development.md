@@ -98,3 +98,20 @@ $ ls | sed "s/^/- Faker.Provider./g" | sed "s/.hs//g"
 fakedata uses TH extensively to reduce code duplication. To understand
 the TH based code, you can read the plain haskell code equivalent. I
 have the module `Faker.Address` for easy understanding.
+
+## Debugging using the Ruby Program
+
+``` shellsession
+$ cd faker
+$ gem build faker.gemspec
+$ sudo gem install ./faker-2.3.0.gem
+$ irb
+irb(main):001:0> require 'faker'
+=> true
+irb(main):002:0> Faker::Address.city
+=> "East Audrea"
+irb(main):005:0> Faker::Config.locale = "ar"
+=> "ar"
+irb(main):006:0> Faker::Address.city
+=> "ميناء حاتم"
+```

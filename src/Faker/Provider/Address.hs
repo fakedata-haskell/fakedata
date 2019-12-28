@@ -297,4 +297,16 @@ resolveAddressField settings field@"secondary_address" =
     secondaryAddressProvider
     resolveAddressText
     settings
+resolveAddressField settings field@"city_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"streets" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
 resolveAddressField settings str = throwM $ InvalidField "address" str
