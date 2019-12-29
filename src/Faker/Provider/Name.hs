@@ -149,4 +149,10 @@ resolveNameField settings field@"female_prefix" = let
     parser settings = parseNameField settings field
     provider settings = fetchData settings Name parser
     in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"nobility_title_prefix" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
 resolveNameField settings str = throwM $ InvalidField "name" str

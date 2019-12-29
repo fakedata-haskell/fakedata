@@ -321,4 +321,22 @@ resolveAddressField settings field@"country" = let
     parser settings = parseAddressField settings field
     provider settings = fetchData settings Address parser
     in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"street_prefix" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"street_root" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"common_street_suffix" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
 resolveAddressField settings str = throwM $ InvalidField "address" str
