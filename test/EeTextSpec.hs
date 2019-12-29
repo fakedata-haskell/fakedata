@@ -1,7 +1,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module DeAtTextSpec where
+module EeTextSpec where
 
 import Data.Text (Text)
 import qualified Data.Text as T
@@ -27,7 +27,7 @@ isTexts :: [Text] -> Bool
 isTexts xs = and $ map isText xs
 
 fakerSettings :: FakerSettings
-fakerSettings = setLocale "de-AT" defaultFakerSettings
+fakerSettings = setLocale "ee" defaultFakerSettings
 
 verifyDistributeFakes :: [Fake Text] -> IO [Bool]
 verifyDistributeFakes funs = do
@@ -39,21 +39,21 @@ verifyDistributeFakes funs = do
 spec :: Spec
 spec = do
   describe "TextSpec" $ do
-    it "Address" $ do
+    it "validates ee locale" $ do
       let functions :: [Fake Text] =
             [ 
-             FA.country
-            , FA.countryCode
+              FA.postcode
             , FA.buildingNumber
-            , FA.secondaryAddress
-            , FA.postcode
+            , FA.streetSuffix
             , FA.state
-            , FA.stateAbbr
             , FA.city
             , FA.streetName
             , FA.streetAddress
 
             , CO.suffix
+            , CO.name
+            , CO.buzzword
+            , CO.bs
             , CO.name
               
             , IN.domainSuffix
@@ -61,7 +61,6 @@ spec = do
 
             , NA.firstName
             , NA.lastName
-            , NA.prefix
             , NA.name
             , NA.nameWithMiddle
               
