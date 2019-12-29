@@ -1,7 +1,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module DeAtTextSpec where
+module DeChTextSpec where
 
 import Data.Text (Text)
 import qualified Data.Text as T
@@ -27,7 +27,7 @@ isTexts :: [Text] -> Bool
 isTexts xs = and $ map isText xs
 
 fakerSettings :: FakerSettings
-fakerSettings = setLocale "de-AT" defaultFakerSettings
+fakerSettings = setLocale "de-CH" defaultFakerSettings
 
 verifyDistributeFakes :: [Fake Text] -> IO [Bool]
 verifyDistributeFakes funs = do
@@ -42,32 +42,15 @@ spec = do
     it "Address" $ do
       let functions :: [Fake Text] =
             [ 
-             FA.country
-            , FA.countryCode
-            , FA.buildingNumber
-            , FA.secondaryAddress
+             FA.countryCode
             , FA.postcode
-            , FA.state
-            , FA.stateAbbr
-            , FA.city
-            , FA.city
-            , FA.streetName
-            , FA.streetAddress
 
             , CO.suffix
-            , CO.name
+            -- , CO.name
               
             , IN.domainSuffix
-            , IN.freeEmail
 
-            , NA.firstName
-            , NA.lastName
-            , NA.prefix
-            , NA.name
-            , NA.nameWithMiddle
-              
             , PH.formats
-            , PH.cellPhoneFormat
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True
