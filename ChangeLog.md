@@ -3,6 +3,7 @@
 ## 0.6.0
 
 * Fix API for "ar" locale. Add test coverage.
+* Bug fixed in the following locales: `ca`
 
 ## 0.5.0
 

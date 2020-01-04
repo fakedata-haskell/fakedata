@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7f31b8d5f0cdc88a55892a55dc9c60b3cebfcfa0c5fc7a29d2afda961c30d70f
+-- hash: 3353f3efa01e50aaf90a1b627c626aac4cc35e2ce63353ff9ef01fed55f183ec
 
 name:           fakedata
 version:        0.5.0
@@ -556,8 +556,19 @@ test-suite fakedata-test
       BgTextSpec
       BookSpec
       BossaNovaSpec
+      CaCatTextSpec
+      CaTextSpec
       CoffeeSpec
       CombinatorsSpec
+      DaDkTextSpec
+      DeAtTextSpec
+      DeChTextSpec
+      DeTextSpec
+      EeTextSpec
+      EnAuTextSpec
+      EnCaTextSpec
+      EnGbTextSpec
+      EnInTextSpec
       FakerSpec
       GamesSpec
       InternalSpec
