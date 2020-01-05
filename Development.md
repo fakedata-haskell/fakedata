@@ -120,8 +120,7 @@ irb(main):006:0> Faker::Address.city
 
 These issues are best fixed in the upstream ruby library.
 
-* de-ch
-  - name (wrong/missing data)
+* de-ch: name (wrong/missing data)
 * en-ca
   - postcode (regex)
   - formats (wrong/missing data)
