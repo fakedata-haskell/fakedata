@@ -115,3 +115,42 @@ irb(main):005:0> Faker::Config.locale = "ar"
 irb(main):006:0> Faker::Address.city
 => "ميناء حاتم"
 ```
+
+Next to do:
+Continue writing test from he.yml
+
+## Locales issue
+
+de-ch
+- name (wrong/missing data)
+
+en-ca
+- postcode (regex)
+- formats (wrong/missing data)
+
+en-gb
+- postcode (regex)
+en-us
+- Whole thing is broken
+en-MX:
+- phone_number.formats, cell_phone.formats is broken
+fr-CA
+- postcode(regex)
+
+Fixes:
+
+en-NEP: Root key fix
+en-MS: name
+en-NG: fix cities
+en-sg: Fix name
+en-ug: Fix city
+en-za: Fix post_code, company, city
+en-MX: company.name, city, state
+es: company.name
+fr-ca: pokemon, phonenumber
+fr-ch: see why test is failing
+fr: pokemon, compas
+he: name, address
+hy: country_code, address, job, book.author
+id: name
+it: name.suffix
