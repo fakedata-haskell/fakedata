@@ -116,10 +116,7 @@ irb(main):006:0> Faker::Address.city
 => "ميناء حاتم"
 ```
 
-Next to do:
-Continue writing test from he.yml
-
-## Known locales issue
+## Known locale issues
 
 These issues are best fixed in the upstream ruby library.
 
@@ -140,7 +137,7 @@ These issues are best fixed in the upstream ruby library.
   - postcode (regex)
 * vi: postcode (regex)
 
-These are fixes which needs to be applied:
+These are fixes which might be just fixed by some code changes:
 
 * en-NEP: Root key fix
 * en-MS: name
