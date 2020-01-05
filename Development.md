@@ -136,6 +136,9 @@ en-MX:
 - phone_number.formats, cell_phone.formats is broken
 fr-CA
 - postcode(regex)
+nl
+- postcode (regex)
+vi: postcode (regex)
 
 Fixes:
 
@@ -154,3 +157,17 @@ he: name, address
 hy: country_code, address, job, book.author
 id: name
 it: name.suffix
+ja: company.category? should it exist, name
+ko: company
+nb-no: address
+nl: name
+pt-br: team, phonenumber, university
+pt: city
+ru: commerce.color ? address, company.name
+sk: name, address
+sk: commerce.color ? , team
+tr: delete safe_email
+uk: commerce.color ? and fix a few
+vi: company, city
+zh-cn: 
+zh-tw: name, address

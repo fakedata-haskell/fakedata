@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 73e8df431559a35f9c277bcf3882384614624756a09565b4bdc78fe46b64d3cf
+-- hash: 526b88be26dc828f11e41da911cc6321859a5c191305e5833ce63c08f15270f8
 
 name:           fakedata
 version:        0.5.0
@@ -598,11 +598,24 @@ test-suite fakedata-test
       LvTextSpec
       NameSpec
       NbNoTextSpec
+      NlTextSpec
       OperaSpec
       OtherSpec
+      PlTextSpec
       ProviderSpec
+      PtBrTextSpec
+      PtTextSpec
+      RuTextSpec
+      SkTextSpec
+      SvTextSpec
       TestImport
       TextSpec
+      ThTextSpec
+      TrTextSpec
+      UkTextSpec
+      ViTextSpec
+      ZhCnTextSpec
+      ZhTwTextSpec
       Paths_fakedata
   hs-source-dirs:
       test
