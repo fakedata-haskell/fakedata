@@ -119,55 +119,55 @@ irb(main):006:0> Faker::Address.city
 Next to do:
 Continue writing test from he.yml
 
-## Locales issue
+## Known locales issue
 
-de-ch
-- name (wrong/missing data)
+These issues are best fixed in the upstream ruby library.
 
-en-ca
-- postcode (regex)
-- formats (wrong/missing data)
+* de-ch
+  - name (wrong/missing data)
+* en-ca
+  - postcode (regex)
+  - formats (wrong/missing data)
+* en-gb
+  - postcode (regex)
+* en-us
+  - Whole thing is broken
+* en-MX:
+  - phone_number.formats, cell_phone.formats is broken
+* fr-CA
+  - postcode(regex)
+* nl
+  - postcode (regex)
+* vi: postcode (regex)
 
-en-gb
-- postcode (regex)
-en-us
-- Whole thing is broken
-en-MX:
-- phone_number.formats, cell_phone.formats is broken
-fr-CA
-- postcode(regex)
-nl
-- postcode (regex)
-vi: postcode (regex)
+These are fixes which needs to be applied:
 
-Fixes:
-
-en-NEP: Root key fix
-en-MS: name
-en-NG: fix cities
-en-sg: Fix name
-en-ug: Fix city
-en-za: Fix post_code, company, city
-en-MX: company.name, city, state
-es: company.name
-fr-ca: pokemon, phonenumber
-fr-ch: see why test is failing
-fr: pokemon, compas
-he: name, address
-hy: country_code, address, job, book.author
-id: name
-it: name.suffix
-ja: company.category? should it exist, name
-ko: company
-nb-no: address
-nl: name
-pt-br: team, phonenumber, university
-pt: city
-ru: commerce.color ? address, company.name
-sk: name, address
-sk: commerce.color ? , team
-tr: delete safe_email
-uk: commerce.color ? and fix a few
-vi: company, city
-zh-cn: 
-zh-tw: name, address
+* en-NEP: Root key fix
+* en-MS: name
+* en-NG: fix cities
+* en-sg: Fix name
+* en-ug: Fix city
+* en-za: Fix post_code, company, city
+* en-MX: company.name, city, state
+* es: company.name
+* fr-ca: pokemon, phonenumber
+* fr-ch: see why test is failing
+* fr: pokemon, compas
+* he: name, address
+* hy: country_code, address, job, book.author
+* id: name
+* it: name.suffix
+* ja: company.category? should it exist, name
+* ko: company
+* nb-no: address
+* nl: name
+* pt-br: team, phonenumber, university
+* pt: city
+* ru: commerce.color ? address, company.name
+* sk: name, address
+* sk: commerce.color ? , team
+* tr: delete safe_email
+* uk: commerce.color ? and fix a few
+* vi: company, city
+* zh-cn: 
+* zh-tw: name, address
