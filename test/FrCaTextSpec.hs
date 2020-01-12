@@ -53,20 +53,19 @@ spec = do
             , BO.author
             , BO.publisher
 
-            -- , PO.names
+            , PO.names
             -- , PO.locations
             -- , PO.moves
 
             -- , PH.formats
 
-            -- , FA.city
-            -- , FA.state
-            -- , FA.stateAbbr
-            -- , FA.countryCode
-            -- , FA.buildingNumber
-            -- , FA.streetSuffix
-            -- , FA.streetName
-            -- , FA.streetAddress
+            , FA.state
+            , FA.stateAbbr
+            , FA.countryCode
+            , FA.buildingNumber
+            , FA.streetSuffix
+            , FA.streetName
+            , FA.streetAddress
             -- , FA.postcode
               
             , IN.freeEmail

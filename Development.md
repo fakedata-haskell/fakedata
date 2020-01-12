@@ -131,7 +131,7 @@ These issues are best fixed in the upstream ruby library.
 * en-MX:
   - phone_number.formats, cell_phone.formats is broken
 * fr-CA
-  - postcode(regex)
+  - postcode(regex), phonenumber
 * nl
   - postcode (regex)
 * vi: postcode (regex)
@@ -153,7 +153,9 @@ These are fixes which might be just fixed by some code changes:
 * es-MX: company.name, city, state
   - Fixed
 * es: company.name
-* fr-ca: pokemon, phonenumber
+  - Not able to figure it out
+* fr-ca: pokemo
+  - https://github.com/faker-ruby/faker/pull/1901
 * fr-ch: see why test is failing
 * fr: pokemon, compas
 * he: name, address
