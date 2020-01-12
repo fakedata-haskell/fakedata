@@ -137,6 +137,12 @@ resolveNameField settings field@"male_middle_name" = let
     parser settings = parseNameField settings field
     provider settings = fetchData settings Name parser
     in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"middle_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
 resolveNameField settings field@"male_prefix" = let
     parser ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
@@ -156,6 +162,48 @@ resolveNameField settings field@"nobility_title_prefix" = let
     provider settings = fetchData settings Name parser
     in cachedRandomVec "name" field provider settings
 resolveNameField settings field@"nobility_title" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"malay_male_first_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"malay_female_first_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"chinese_male_first_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"chinese_male_last_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"chinese_female_first_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"male_english_name" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseNameField settings field
+    provider settings = fetchData settings Name parser
+    in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"female_english_name" = let
     parser ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
     parser settings = parseNameField settings field

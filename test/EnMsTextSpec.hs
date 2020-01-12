@@ -45,9 +45,7 @@ spec = do
              NA.prefix
             , NA.maleFirstName
             , NA.femaleFirstName
-            -- , NA.name
-
-
+            , NA.name
             , FA.city
             , FA.postcode
             , FA.buildingNumber

@@ -76,6 +76,16 @@ $(genParser "company" "type")
 
 $(genProvider "company" "type")
 
+-- For en-ZA locale
+$(genParser "company" "company_names")
+
+$(genProvider "company" "company_names")
+
+-- For es-mx locale
+$(genParser "company" "prefix")
+
+$(genProvider "company" "prefix")
+
 $(genParser "company" "sic_code")
 
 $(genProvider "company" "sic_code")
@@ -95,6 +105,10 @@ resolveCompanyField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveCompanyField settings "Name.last_name" =
   cachedRandomVec "name" "last_name" nameLastNameProvider settings
+resolveCompanyField settings field@"company_names" =
+  cachedRandomVec "company" field companyCompanyNamesProvider settings
 resolveCompanyField settings field@"suffix" =
   cachedRandomVec "company" field companySuffixProvider settings
+resolveCompanyField settings field@"prefix" =
+  cachedRandomVec "company" field companyPrefixProvider settings
 resolveCompanyField settings str = throwM $ InvalidField "company" str

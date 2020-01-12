@@ -50,12 +50,10 @@ spec = do
               
             , PH.formats
             , PH.cellPhoneFormat
-              
-            -- , CO.name
-            , CO.type'
-              
-            -- , FA.city
-            , FA.state
+            , CO.type'  
+            , FA.state            
+            , CO.name
+            , FA.city
             -- , FA.postcode
             ]
       bools <- verifyDistributeFakes functions

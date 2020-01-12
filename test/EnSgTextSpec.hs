@@ -44,14 +44,12 @@ spec = do
             [ 
               NA.firstName
             , NA.lastName
-            -- , NA.name
-            -- , NA.nameWithMiddle
-              
+            , NA.name
+            , NA.nameWithMiddle
             , FA.postcode
             , FA.buildingNumber
             -- , FA.streetName
             -- , FA.streetAddress
-
             , VE.licensePlate
             ]
       bools <- verifyDistributeFakes functions

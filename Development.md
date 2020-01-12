@@ -139,12 +139,19 @@ These issues are best fixed in the upstream ruby library.
 These are fixes which might be just fixed by some code changes:
 
 * en-NEP: Root key fix
+  - MR: https://github.com/faker-ruby/faker/pull/1899
 * en-MS: name
+  - Fixed
 * en-NG: fix cities
-* en-sg: Fix name
+  - Fixed
+* en-sg: Fix address (Not able to figure it out)
 * en-ug: Fix city
+  - Fixed
 * en-za: Fix post_code, company, city
-* en-MX: company.name, city, state
+  - https://github.com/faker-ruby/faker/pull/1900
+  - Enable postcode
+* es-MX: company.name, city, state
+  - Fixed
 * es: company.name
 * fr-ca: pokemon, phonenumber
 * fr-ch: see why test is failing

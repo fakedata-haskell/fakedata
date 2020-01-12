@@ -48,7 +48,7 @@ spec = do
               
             , PH.formats
               
-            -- , FA.city
+            , FA.city
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

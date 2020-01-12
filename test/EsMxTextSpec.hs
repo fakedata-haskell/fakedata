@@ -53,20 +53,20 @@ spec = do
             , IN.freeEmail
 
             , CO.suffix
-            -- , CO.name
+            , CO.name
               
             -- , PH.formats
             -- , PH.cellPhoneFormat
               
             , FA.country
-            -- , FA.buildingNumber
-            -- , FA.secondaryAddress
-            -- , FA.state
-            -- , FA.postcode
-            -- , FA.stateAbbr
-            -- , FA.timeZone
-            -- , FA.city
-            -- , FA.streetName
+            , FA.buildingNumber
+            , FA.secondaryAddress
+            , FA.state
+            , FA.postcode
+            , FA.stateAbbr
+            , FA.timeZone
+            , FA.city
+            , FA.streetName
 
             , SU.plans
             , SU.statuses

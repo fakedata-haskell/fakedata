@@ -52,8 +52,7 @@ spec = do
 
             , FA.streetSuffix
             , FA.state
-            -- , FA.city
-
+            , FA.city
             , PH.formats
             ]
       bools <- verifyDistributeFakes functions

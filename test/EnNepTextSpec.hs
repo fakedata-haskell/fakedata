@@ -42,23 +42,23 @@ spec = do
     it "validates en-NEP locale" $ do
       let functions :: [Fake Text] =
             [ 
-            --   NA.maleFirstName
-            -- , NA.femaleFirstName
-            -- , NA.name
-            -- , NA.firstName
-            -- , NA.lastName
-            -- , NA.nameWithMiddle
+              NA.maleFirstName
+            , NA.femaleFirstName
+            , NA.name
+            , NA.firstName
+            , NA.lastName
+            , NA.nameWithMiddle
 
-            -- , FA.city
-            -- , FA.postcode
-            -- , FA.state
+            , FA.city
+            , FA.postcode
+            , FA.state
 
-            -- , IN.freeEmail
-            -- , IN.domainSuffix
+            , IN.freeEmail
+            , IN.domainSuffix
 
-            -- , PH.formats
+            , PH.formats
               
-            -- , CO.suffix
+            , CO.suffix
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True
