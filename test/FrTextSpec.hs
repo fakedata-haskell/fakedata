@@ -58,9 +58,9 @@ spec = do
             , BO.author
             , BO.publisher
 
-            -- , PO.names
-            -- , PO.locations
-            -- , PO.moves
+            , PO.names
+            , PO.locations
+            , PO.moves
 
             , PH.formats
             , PH.cellPhoneFormat
@@ -77,16 +77,14 @@ spec = do
             , FA.postcode
               
             , CL.name
-            -- , CE.cardinalWord
-            -- , CE.cardinalAbbreviation
-            -- , CE.ordinalWord
-            -- , CE.ordinalAbbreviation
-            -- , CE.halfWindWord
-            -- , CE.halfWindAbbreviation
-            -- , CE.quarterWindWord
-            -- , CE.quarterWindAbbreviation
+            , CE.cardinalWord
+            , CE.cardinalAbbreviation
+            , CE.ordinalWord
+            , CE.ordinalAbbreviation
+            , CE.halfWindWord
+            , CE.halfWindAbbreviation
             -- , CE.direction
-            -- , CE.abbreviation
+            , CE.abbreviation
 
             , IN.freeEmail
             , IN.domainSuffix

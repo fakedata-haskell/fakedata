@@ -13,7 +13,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Provider.Name (resolveNameField)
+import Faker.Provider.Name (resolveNameField, nameNameProvider)
 
 parseAddress :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAddress settings (Object obj) = do
@@ -245,8 +245,19 @@ resolveAddressField settings field@"community_prefix" =
   cachedRandomVec "address" field communityPrefixProvider settings
 resolveAddressField settings field@"city_prefix" =
   cachedRandomVec "address" field addressCityPrefixProvider settings
+resolveAddressField settings field@"first_name" =
+  resolveNameField settings "first_name"
+resolveAddressField settings field@"last_name" =
+  resolveNameField settings "last_name"
 resolveAddressField settings field@"Name.first_name" =
   resolveNameField settings "first_name"
+resolveAddressField settings field@"Name.name" =
+  cachedRandomUnresolvedVec
+    "address"
+    "name"
+    nameNameProvider
+    resolveAddressText
+    settings
 resolveAddressField settings field@"city_suffix" =
   cachedRandomVec "address" field citySuffixProvider settings
 resolveAddressField settings field@"Name.last_name" =

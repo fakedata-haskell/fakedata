@@ -47,39 +47,39 @@ spec = do
               NA.lastName
             , NA.firstName
             , NA.prefix
-            -- , NA.name
-            -- , NA.nameWithMiddle
+            , NA.name
+            , NA.nameWithMiddle
               
-            -- , BO.title
-            -- , BO.author
-            -- , BO.publisher
+            , BO.title
+            , BO.author
+            , BO.publisher
 
-            -- , PO.names
-            -- , PO.locations
-            -- , PO.moves
+            , PO.names
+            , PO.locations
+            , PO.moves
 
-            -- , PH.formats
+            , PH.formats
 
-            -- , FA.city
-            -- , FA.state
-            -- , FA.countryCode
-            -- , FA.buildingNumber
-            -- , FA.secondaryAddress
-            -- , FA.streetSuffix
-            -- , FA.streetName
-            -- , FA.streetAddress
-            -- , FA.postcode
+            , FA.city
+            , FA.state
+            , FA.countryCode
+            , FA.buildingNumber
+            , FA.secondaryAddress
+            , FA.streetSuffix
+            , FA.streetName
+            , FA.streetAddress
+            , FA.postcode
               
-            -- , IN.freeEmail
-            -- , IN.domainSuffix
+            , IN.freeEmail
+            , IN.domainSuffix
 
-            -- , CO.suffix
-            -- , CO.name
-            -- , CO.buzzword
-            -- , CO.bs
+            , CO.suffix
+            , CO.name
+            , CO.buzzword
+            , CO.bs
 
-            -- , LO.words
-            -- , LO.supplemental
+            , LO.words
+            , LO.supplemental
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

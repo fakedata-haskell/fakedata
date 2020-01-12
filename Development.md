@@ -132,6 +132,8 @@ These issues are best fixed in the upstream ruby library.
   - phone_number.formats, cell_phone.formats is broken
 * fr-CA
   - postcode(regex), phonenumber
+* fr
+  - compass.direction (rethink code)
 * nl
   - postcode (regex)
 * vi: postcode (regex)
@@ -157,8 +159,11 @@ These are fixes which might be just fixed by some code changes:
 * fr-ca: pokemo
   - https://github.com/faker-ruby/faker/pull/1901
 * fr-ch: see why test is failing
-* fr: pokemon, compas
+  - https://github.com/faker-ruby/faker/pull/1902
+* fr: pokemon
+  - https://github.com/faker-ruby/faker/pull/1903  
 * he: name, address
+  - Fixed
 * hy: country_code, address, job, book.author
 * id: name
 * it: name.suffix

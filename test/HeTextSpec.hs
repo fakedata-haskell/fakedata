@@ -50,17 +50,17 @@ spec = do
             [ 
               NA.lastName
             , NA.firstName
-            -- , NA.name
-            -- , NA.nameWithMiddle
+            , NA.name
+            , NA.nameWithMiddle
               
             , PH.formats
             , PH.cellPhoneFormat
 
             , FA.city
             , FA.cityPrefix
-            -- , FA.buildingNumber
-            -- , FA.streetName
-            -- , FA.streetAddress
+            , FA.buildingNumber
+            , FA.streetName
+            , FA.streetAddress
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True
