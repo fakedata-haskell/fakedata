@@ -75,13 +75,13 @@ spec = do
             
             , AR.names
 
-            -- , JO.field
-            -- , JO.title
-            -- , JO.seniority
-            -- , JO.position
-            -- , JO.keySkills
-            -- , JO.employmentType
-            -- , JO.educationLevel
+            , JO.field
+            , JO.title
+            , JO.seniority
+            , JO.position
+            , JO.keySkills
+            , JO.employmentType
+            , JO.educationLevel
  
             , IN.domainSuffix
             , IN.freeEmail
@@ -103,7 +103,7 @@ spec = do
             , CO.suffix
             , CO.buzzword
             , CO.bs
-            -- , CO.name
+            , CO.name
             , CO.industry
             , CO.profession
             , CO.type'
@@ -114,10 +114,7 @@ spec = do
             , CE.ordinalAbbreviation
             , CE.halfWindWord
             , CE.halfWindAbbreviation
-            -- , CE.quarterWindWord
-            -- , CE.quarterWindAbbreviation
-            -- , CE.direction
-            -- , CE.abbreviation
+            , CE.abbreviation
 
             , CU.name
             , FO.dish
@@ -141,21 +138,20 @@ spec = do
             , SP.distanceMeasurement
             , SP.meteorite
               
-            -- , FA.country
-            -- , FA.countryCode
-            -- , FA.state
-            -- , FA.stateAbbr
-            -- , FA.community
-            -- , FA.city
-            -- , FA.cityPrefix
-            -- , FA.citySuffix
-            -- , FA.postcode
-            -- , FA.streetSuffix
-            -- , FA.buildingNumber
-            -- , FA.streetName
-            -- , FA.streetAddress
-            -- , FA.fullAddress
-            -- , FA.secondaryAddress
+            , FA.country
+            , FA.countryCode
+            , FA.state
+            , FA.stateAbbr
+            , FA.community
+            , FA.city
+            , FA.cityPrefix
+            , FA.postcode
+            , FA.streetSuffix
+            , FA.buildingNumber
+            , FA.streetName
+            , FA.streetAddress
+            , FA.fullAddress
+            , FA.secondaryAddress
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

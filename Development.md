@@ -164,8 +164,11 @@ These are fixes which might be just fixed by some code changes:
   - https://github.com/faker-ruby/faker/pull/1903  
 * he: name, address
   - Fixed
-* hy: country_code, address, job, book.author
+* hy: 
+  - https://github.com/faker-ruby/faker/pull/1914
+  - Need to fix for book.author
 * id: name
+  - Fixed
 * it: name.suffix
 * ja: company.category? should it exist, name
 * ko: company

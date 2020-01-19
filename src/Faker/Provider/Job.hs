@@ -66,6 +66,10 @@ $(genParser "job" "seniority")
 
 $(genProvider "job" "seniority")
 
+$(genParser "job" "field_of")
+
+$(genProvider "job" "field_of")
+
 $(genParser "job" "position")
 
 $(genProvider "job" "position")
@@ -102,6 +106,8 @@ resolveJobField settings field@"field" =
   cachedRandomVec "job" field jobField2Provider settings
 resolveJobField settings field@"position" =
   cachedRandomVec "job" field jobPositionProvider settings
+resolveJobField settings field@"field_of" =
+  cachedRandomVec "job" field jobFieldOfProvider settings
 resolveJobField settings field@"title" =
   cachedRandomUnresolvedVec "job" field jobTitleProvider resolveJobText settings
 resolveJobField settings str = throwM $ InvalidField "job" str

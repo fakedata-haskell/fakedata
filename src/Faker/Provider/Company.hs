@@ -13,7 +13,8 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Provider.Name (nameLastNameProvider, resolveNameText)
+import Faker.Provider.Name (nameLastNameProvider, resolveNameText, resolveNameField)
+import Faker.Provider.Address (villageProvider, communityProvider2, cityProvider2)
 import Faker.Provider.TH
 import Language.Haskell.TH
 
@@ -105,10 +106,18 @@ resolveCompanyField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveCompanyField settings "Name.last_name" =
   cachedRandomVec "name" "last_name" nameLastNameProvider settings
+resolveCompanyField settings "Name.first_name" =
+  resolveNameField settings "first_name"
 resolveCompanyField settings field@"company_names" =
   cachedRandomVec "company" field companyCompanyNamesProvider settings
 resolveCompanyField settings field@"suffix" =
   cachedRandomVec "company" field companySuffixProvider settings
 resolveCompanyField settings field@"prefix" =
   cachedRandomVec "company" field companyPrefixProvider settings
+resolveCompanyField settings "Address.village" =
+  cachedRandomVec "address" "village" villageProvider settings
+resolveCompanyField settings "Address.community" =
+  cachedRandomVec "address" "community2" communityProvider2 settings
+resolveCompanyField settings "Address.city" =
+  cachedRandomVec "address" "city2" cityProvider2 settings
 resolveCompanyField settings str = throwM $ InvalidField "company" str

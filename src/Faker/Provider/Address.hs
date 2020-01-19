@@ -50,6 +50,9 @@ parseCitySuffix settings = parseAddressField settings "city_suffix"
 parseCountry :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseCountry settings = parseAddressField settings "country"
 
+parseVillage :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseVillage settings = parseAddressField settings "village"
+
 parseCountryByCode ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseCountryByCode settings = parseAddressField settings "country_by_code"
@@ -82,6 +85,11 @@ parseCommunity ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
 parseCommunity settings = parseUnresolvedAddressField settings "community"
 
+parseCommunity2 ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseCommunity2 settings = parseAddressField settings "community"
+
+
 parseStreetSuffix ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseStreetSuffix settings = parseAddressField settings "street_suffix"
@@ -113,6 +121,10 @@ parseCity ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
 parseCity settings = parseUnresolvedAddressField settings "city"
 
+parseCity2 ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseCity2 settings = parseAddressField settings "city"
+
 parseStreetName ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
 parseStreetName settings = parseUnresolvedAddressField settings "street_name"
@@ -128,6 +140,9 @@ parseFullAddress settings = parseUnresolvedAddressField settings "full_address"
 
 countryProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 countryProvider settings = fetchData settings Address parseCountry
+
+villageProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+villageProvider settings = fetchData settings Address parseVillage
 
 addressCityPrefixProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
@@ -172,6 +187,11 @@ communityProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
 communityProvider settings = fetchData settings Address parseCommunity
 
+-- For hy locale
+communityProvider2 ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+communityProvider2 settings = fetchData settings Address parseCommunity2
+
 addressCommunityProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
 addressCommunityProvider = communityProvider
@@ -211,6 +231,10 @@ timeZoneProvider settings = fetchData settings Address parseTimeZone
 cityProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
 cityProvider settings = fetchData settings Address parseCity
+
+cityProvider2 ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+cityProvider2 settings = fetchData settings Address parseCity2
 
 streetNameProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
@@ -369,6 +393,24 @@ resolveAddressField settings field@"street_root" = let
     provider settings = fetchData settings Address parser
     in cachedRandomVec "address" field provider settings
 resolveAddressField settings field@"common_street_suffix" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"village_prefix" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"village" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"postcode" = let
     parser ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
     parser settings = parseAddressField settings field

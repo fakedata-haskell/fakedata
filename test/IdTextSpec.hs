@@ -50,8 +50,8 @@ spec = do
             [ 
               NA.lastName
             , NA.firstName
-            -- , NA.name
-            -- , NA.nameWithMiddle
+            , NA.name
+            , NA.nameWithMiddle
               
             , PH.formats
 
