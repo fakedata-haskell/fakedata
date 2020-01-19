@@ -91,6 +91,12 @@ $(genParser "company" "sic_code")
 
 $(genProvider "company" "sic_code")
 
+-- For ja locale
+
+$(genParser "company" "category")
+
+$(genProvider "company" "category")
+
 resolveCompanyText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveCompanyText settings txt = do
@@ -114,6 +120,8 @@ resolveCompanyField settings field@"suffix" =
   cachedRandomVec "company" field companySuffixProvider settings
 resolveCompanyField settings field@"prefix" =
   cachedRandomVec "company" field companyPrefixProvider settings
+resolveCompanyField settings field@"category" =
+  cachedRandomVec "company" field companyCategoryProvider settings
 resolveCompanyField settings "Address.village" =
   cachedRandomVec "address" "village" villageProvider settings
 resolveCompanyField settings "Address.community" =

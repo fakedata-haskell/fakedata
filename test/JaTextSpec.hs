@@ -59,17 +59,15 @@ spec = do
     it "validates ja locale" $ do
       let functions :: [Fake Text] =
             [ 
-              -- NA.lastName
-              NA.firstName
-            -- ,--  NA.name
-            -- , NA.nameWithMiddle
+              NA.lastName
+            , NA.firstName
+            , NA.name
+            , NA.nameWithMiddle
               
             , RE.namePrefix
             , RE.nameSuffix
-            -- , RE.name
+            , RE.name
             , RE.type'
-
-              
               
             , PH.formats
             , PH.cellPhoneFormat
@@ -81,7 +79,7 @@ spec = do
               
             , UN.prefix
             , UN.suffix
-            -- , UN.name
+            , UN.name
 
             , FA.cityPrefix
             , FA.citySuffix
@@ -98,8 +96,7 @@ spec = do
             , Faker.Ancient.god
               
             , CO.suffix
-            -- , CO.category
-            -- , CO.name
+            , CO.name
 
             , Faker.Food.sushi
 

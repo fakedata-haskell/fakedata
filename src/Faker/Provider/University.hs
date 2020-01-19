@@ -13,7 +13,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Provider.Address (stateProvider, cityProvider, resolveAddressText)
+import Faker.Provider.Address (stateProvider, cityProvider, resolveAddressText, resolveAddressField)
 import Faker.Provider.Name (nameLastNameProvider)
 import Faker.Provider.TH
 import Language.Haskell.TH
@@ -90,6 +90,8 @@ resolveUniversityField settings "Name.last_name" =
   cachedRandomVec "name" "last_name" nameLastNameProvider settings
 resolveUniversityField settings "Address.state" =
   cachedRandomVec "address" "state" stateProvider settings
+resolveUniversityField settings "Address.city_prefix" =
+  resolveAddressField settings "city_prefix"
 resolveUniversityField settings field@"Address.city" =
   cachedRandomUnresolvedVec
     "address"

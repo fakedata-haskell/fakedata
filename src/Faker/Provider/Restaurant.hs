@@ -14,6 +14,7 @@ import Data.Yaml
 import Faker
 import Faker.Internal
 import Faker.Provider.TH
+import Faker.Provider.Name (resolveNameField)
 import Language.Haskell.TH
 
 parseRestaurant :: FromJSON a => FakerSettings -> Value -> Parser a
@@ -101,6 +102,8 @@ resolveRestaurantField settings field@"name_prefix" =
     settings
 resolveRestaurantField settings field@"name_suffix" =
   cachedRandomVec "restaurant" field restaurantNameSuffixProvider settings
+resolveRestaurantField settings field@"type" =
+  cachedRandomVec "restaurant" field restaurantTypeProvider settings
 resolveRestaurantField settings field@"name" =
   cachedRandomUnresolvedVec
     "restaurant"
@@ -108,4 +111,6 @@ resolveRestaurantField settings field@"name" =
     restaurantNameProvider
     resolveRestaurantText
     settings
+resolveRestaurantField settings field@"Name.last_name" =
+    resolveNameField settings "last_name"
 resolveRestaurantField settings str = throwM $ InvalidField "restaurant" str

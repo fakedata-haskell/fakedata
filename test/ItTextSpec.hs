@@ -51,7 +51,6 @@ spec = do
             [ 
               NA.lastName
             , NA.firstName
-            -- , NA.suffix
             , NA.prefix
             , NA.name
             , NA.nameWithMiddle
