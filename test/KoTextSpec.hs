@@ -64,8 +64,8 @@ spec = do
             , FA.streetSuffix
             , FA.streetName
               
-            -- , CO.suffix
-            -- , CO.name
+            , CO.suffix
+            , CO.name
               
             , IN.freeEmail
             , IN.domainSuffix

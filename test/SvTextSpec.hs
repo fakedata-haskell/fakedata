@@ -87,7 +87,7 @@ spec = do
             , CE.productNameProduct
             , CE.productNameMaterial
 
-            -- , TE.name
+            , TE.name
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

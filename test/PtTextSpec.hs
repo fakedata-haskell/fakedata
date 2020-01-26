@@ -63,7 +63,7 @@ spec = do
 
             , PH.formats
 
-            -- , FA.city
+            , FA.city
             -- , FA.cityPrefix
             -- , FA.citySuffix
             , FA.country

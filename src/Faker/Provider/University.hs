@@ -69,6 +69,12 @@ $(genParserUnresolved "university" "name")
 
 $(genProviderUnresolved "university" "name")
 
+-- For pt-BR locale
+$(genParser "university" "region")
+
+$(genProvider "university" "region")
+
+
 resolveUniversityText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveUniversityText settings txt = do
@@ -86,6 +92,8 @@ resolveUniversityField settings "University.prefix" =
   cachedRandomVec "university" "prefix" universityPrefixProvider settings
 resolveUniversityField settings "University.suffix" =
   cachedRandomVec "university" "suffix" universitySuffixProvider settings
+resolveUniversityField settings "University.region" =
+  cachedRandomVec "university" "region" universityRegionProvider settings
 resolveUniversityField settings "Name.last_name" =
   cachedRandomVec "name" "last_name" nameLastNameProvider settings
 resolveUniversityField settings "Address.state" =

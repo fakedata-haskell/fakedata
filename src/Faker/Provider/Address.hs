@@ -53,6 +53,9 @@ parseCountry settings = parseAddressField settings "country"
 parseVillage :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseVillage settings = parseAddressField settings "village"
 
+parseDefaultCountry :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseDefaultCountry settings = parseAddressField settings "default_country"
+
 parseCountryByCode ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseCountryByCode settings = parseAddressField settings "country_by_code"
@@ -140,6 +143,9 @@ parseFullAddress settings = parseUnresolvedAddressField settings "full_address"
 
 countryProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 countryProvider settings = fetchData settings Address parseCountry
+
+defaultCountryProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+defaultCountryProvider settings = fetchData settings Address parseDefaultCountry
 
 villageProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 villageProvider settings = fetchData settings Address parseVillage
@@ -344,6 +350,12 @@ resolveAddressField settings field@"city_names" = let
     parser settings = parseAddressField settings field
     provider settings = fetchData settings Address parser
     in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"city_root" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
 resolveAddressField settings field@"cities" = let
     parser ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
@@ -416,4 +428,14 @@ resolveAddressField settings field@"postcode" = let
     parser settings = parseAddressField settings field
     provider settings = fetchData settings Address parser
     in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"street" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"Address.city_name" = resolveAddressField settings "city_name"
+resolveAddressField settings field@"Address.street_title" = resolveAddressField settings "street_title"
+resolveAddressField settings field@"default_country" =
+  cachedRandomVec "address" field defaultCountryProvider settings
 resolveAddressField settings str = throwM $ InvalidField "address" str

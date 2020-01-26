@@ -13,7 +13,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Provider.Address (resolveAddressText, stateProvider)
+import Faker.Provider.Address (resolveAddressText, stateProvider, resolveAddressField)
 import Faker.Provider.TH
 import Language.Haskell.TH
 
@@ -68,6 +68,22 @@ $(genParser "team" "mascot")
 
 $(genProvider "team" "mascot")
 
+$(genParser "team" "main_teams")
+
+$(genProvider "team" "main_teams")
+
+$(genParser "team" "gentile")
+
+$(genProvider "team" "gentile")
+
+$(genParser "team" "prefix")
+
+$(genProvider "team" "prefix")
+
+$(genParser "team" "suffix")
+
+$(genProvider "team" "suffix")
+
 $(genParserUnresolved "team" "name")
 
 $(genProviderUnresolved "team" "name")
@@ -86,6 +102,16 @@ resolveTeamField settings field@"creature" =
   cachedRandomVec "team" field teamCreatureProvider settings
 resolveTeamField settings "Address.state" =
   cachedRandomVec "address" "state" stateProvider settings
+resolveTeamField settings "Address.city" =
+  resolveAddressField settings "city"
+resolveTeamField settings "Team.main_teams" =
+  cachedRandomVec "address" "main_teams" teamMainTeamsProvider settings
+resolveTeamField settings "Team.prefix" =
+  cachedRandomVec "address" "prefix" teamPrefixProvider settings
+resolveTeamField settings "suffix" =
+  cachedRandomVec "address" "suffix" teamSuffixProvider settings
+resolveTeamField settings "Team.gentile" =
+  cachedRandomVec "address" "gentile" teamGentileProvider settings
 resolveTeamField settings field@"name" =
   cachedRandomUnresolvedVec
     "team"

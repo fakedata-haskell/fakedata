@@ -61,15 +61,15 @@ spec = do
             , PH.formats
             , PH.cellPhoneFormat
 
-            -- , FA.citySuffix
-            -- , FA.city
-            -- , FA.postcode
-            -- , FA.buildingNumber
-            -- , FA.secondaryAddress
-            -- , FA.state
-            -- , FA.streetSuffix
-            -- , FA.streetName
-            -- , FA.streetAddress
+            , FA.citySuffix
+            , FA.city
+            , FA.postcode
+            , FA.buildingNumber
+            , FA.secondaryAddress
+            , FA.state
+            , FA.streetSuffix
+            , FA.streetName
+            , FA.streetAddress
               
             , CO.suffix
             , CO.name

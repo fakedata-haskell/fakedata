@@ -56,36 +56,36 @@ spec = do
     it "validates sk locale" $ do
       let functions :: [Fake Text] =
             [ 
-            --   NA.lastName
-            -- , NA.maleFirstName
-            -- , NA.femaleFirstName
-            -- , NA.prefix
-            -- , NA.suffix
-            -- , NA.firstName
-            -- , NA.name
+              NA.lastName
+            , NA.maleFirstName
+            , NA.femaleFirstName
+            , NA.prefix
+            , NA.suffix
+            , NA.firstName
+            , NA.name
 
-              PH.formats
+            , PH.formats
 
             , FA.cityPrefix
             , FA.citySuffix
             , FA.city
-            -- , FA.streetName
-            -- , FA.streetAddress
-            -- , FA.country
-            -- , FA.postcode
-            -- , FA.buildingNumber
-            -- , FA.secondaryAddress
-            -- , FA.state
-            -- , FA.stateAbbr
-            -- , FA.timeZone
+            , FA.streetName
+            , FA.streetAddress
+            , FA.country
+            , FA.postcode
+            , FA.buildingNumber
+            , FA.secondaryAddress
+            , FA.state
+            , FA.stateAbbr
+            , FA.timeZone
               
             , IN.domainSuffix
             , IN.freeEmail
 
-            -- , CO.suffix
-            -- , CO.buzzword
-            -- , CO.bs
-            -- , CO.name
+            , CO.suffix
+            , CO.buzzword
+            , CO.bs
+            , CO.name
             
             , LO.words
             , LO.supplemental

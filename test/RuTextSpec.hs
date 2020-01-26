@@ -65,16 +65,16 @@ spec = do
 
             , PH.formats
 
-            -- , FA.city
-            -- , FA.streetName
-            -- , FA.streetAddress
-            -- , FA.fullAddress
-            -- , FA.country
-            -- , FA.postcode
-            -- , FA.buildingNumber
-            -- , FA.streetSuffix
-            -- , FA.secondaryAddress
-            -- , FA.state
+            , FA.city
+            , FA.streetName
+            , FA.streetAddress
+            , FA.fullAddress
+            , FA.country
+            , FA.postcode
+            , FA.buildingNumber
+            , FA.streetSuffix
+            , FA.secondaryAddress
+            , FA.state
               
             , CE.department
             , CE.productNameAdjective

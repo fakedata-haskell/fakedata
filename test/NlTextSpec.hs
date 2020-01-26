@@ -49,14 +49,14 @@ spec = do
     it "validates nl locale" $ do
       let functions :: [Fake Text] =
             [ 
-            --   NA.lastName
-            -- , NA.firstName
-            -- , NA.prefix
-            -- , NA.suffix
-            -- , NA.name
-            -- , NA.nameWithMiddle
+              NA.lastName
+            , NA.firstName
+            , NA.prefix
+            , NA.suffix
+            , NA.name
+            , NA.nameWithMiddle
 
-              PH.formats
+            , PH.formats
               
             , UN.prefix
             , UN.name

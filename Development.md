@@ -169,17 +169,29 @@ These are fixes which might be just fixed by some code changes:
   - Need to fix for book.author
 * id: name
   - Fixed
-* it: name.suffix
-* ja: company.category? should it exist, name
-* ko: company
+* it
+  - Fixed
+* ja
+  - Fixed
+* ko
+  - Fixed
 * nb-no: address
+  - Fixed
 * nl: name
+  - Fixed
 * pt-br: team, phonenumber, university
+  - Fixed
+  - Need to fix phonenumber
 * pt: city
+  - https://github.com/faker-ruby/faker/pull/1920
 * ru: commerce.color ? address, company.name
+  - Fixed
 * sk: name, address
-* sk: commerce.color ? , team
+  - Fixed
+* sv: commerce.color ? , team
+  - Fixed
 * tr: delete safe_email
+  - Fixed
 * uk: commerce.color ? and fix a few
 * vi: company, city
 * zh-cn: 

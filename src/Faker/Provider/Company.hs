@@ -128,4 +128,6 @@ resolveCompanyField settings "Address.community" =
   cachedRandomVec "address" "community2" communityProvider2 settings
 resolveCompanyField settings "Address.city" =
   cachedRandomVec "address" "city2" cityProvider2 settings
+resolveCompanyField settings "Name.man_last_name" =
+  resolveNameField settings "man_last_name"
 resolveCompanyField settings str = throwM $ InvalidField "company" str

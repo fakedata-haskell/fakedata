@@ -67,8 +67,8 @@ spec = do
             -- , PH.formats
             -- , PH.cellPhoneFormat
 
-            -- , TE.name
-            -- , TE.sport
+            , TE.name
+            , TE.sport
               
             , FO.ingredients
             , FO.spices
@@ -95,9 +95,9 @@ spec = do
             , CO.suffix
             , CO.name
               
-            -- , UN.prefix
-            -- , UN.suffix
-            -- , UN.name
+            , UN.prefix
+            , UN.suffix
+            , UN.name
               
             , IN.domainSuffix
             , IN.freeEmail

@@ -59,31 +59,31 @@ spec = do
     it "validates uk locale" $ do
       let functions :: [Fake Text] =
             [ 
-            --   NA.firstName
-            -- , NA.lastName
-            -- , NA.maleFirstName
-            -- , NA.femaleFirstName
-            -- , NA.name
-            -- , NA.nameWithMiddle
+              NA.firstName
+            , NA.lastName
+            , NA.maleFirstName
+            , NA.femaleFirstName
+            , NA.name
+            , NA.nameWithMiddle
               
-            -- , IN.freeEmail
-            -- , IN.domainSuffix
+            , IN.freeEmail
+            , IN.domainSuffix
               
-            -- , PH.formats
-            -- , PH.cellPhoneFormat
+            , PH.formats
+            , PH.cellPhoneFormat
               
-            -- , FA.city
-            -- , FA.country
-            -- , FA.buildingNumber
+            , FA.city
+            , FA.country
+            , FA.buildingNumber
             -- , FA.streetSuffix
-            -- , FA.postcode
-            -- , FA.secondaryAddress
-            -- , FA.state
+            , FA.postcode
+            , FA.secondaryAddress
+            , FA.state
             -- , FA.stateAbbr
             -- , FA.cityPrefix
             -- , FA.citySuffix
-            -- , FA.streetName
-            -- , FA.streetAddress
+            , FA.streetName
+            , FA.streetAddress
               
             -- , CE.department
             -- , CE.productNameAdjective
