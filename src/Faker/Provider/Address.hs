@@ -434,6 +434,30 @@ resolveAddressField settings field@"street" = let
     parser settings = parseAddressField settings field
     provider settings = fetchData settings Address parser
     in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"masculine_street_prefix" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"feminine_street_prefix" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"masculine_street_title" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"feminine_street_title" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseAddressField settings field
+    provider settings = fetchData settings Address parser
+    in cachedRandomVec "address" field provider settings
 resolveAddressField settings field@"Address.city_name" = resolveAddressField settings "city_name"
 resolveAddressField settings field@"Address.street_title" = resolveAddressField settings "street_title"
 resolveAddressField settings field@"default_country" =

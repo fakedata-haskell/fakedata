@@ -85,17 +85,17 @@ spec = do
             , FA.streetName
             , FA.streetAddress
               
-            -- , CE.department
-            -- , CE.productNameAdjective
-            -- , CE.productNameProduct
-            -- , CE.productNameMaterial
+            , CE.department
+            , CE.productNameAdjective
+            , CE.productNameProduct
+            , CE.productNameMaterial
 
-            -- , CO.suffix
-            -- , CO.name
+            , CO.suffix
+            , CO.name
 
-            -- , AR.names
-            -- , MU.instruments
-            -- , YO.quotes
+            , AR.names
+            , MU.instruments
+            , YO.quotes
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

@@ -56,22 +56,22 @@ spec = do
     it "validates zh-CN locale" $ do
       let functions :: [Fake Text] =
             [ 
-            --   NA.firstName
-            -- , NA.lastName
-            -- , NA.name
-            -- , NA.nameWithMiddle
+              NA.firstName
+            , NA.lastName
+            , NA.name
+            , NA.nameWithMiddle
 
-              PH.formats
+            , PH.formats
             , PH.cellPhoneFormat
 
             , FA.city
             , FA.buildingNumber
             , FA.postcode
-            -- , FA.streetSuffix
-            -- , FA.state
-            -- , FA.stateAbbr
-            -- , FA.streetName
-            -- , FA.streetAddress
+            , FA.streetSuffix
+            , FA.state
+            , FA.stateAbbr
+            , FA.streetName
+            -- , FA.streetAddress -- The extra last character is causing the issue. Needs further investigation.
 
             , UN.prefix
             , UN.suffix

@@ -110,13 +110,13 @@ resolveNameField settings field@"prefix" =
   cachedRandomVec "name" field namePrefixProvider settings
 resolveNameField settings field@"suffix" =
   cachedRandomVec "name" field nameSuffixProvider settings
-resolveNameField settings field@"first_name" = case getLocale settings of
-                                                 "id" -> do
+resolveNameField settings field@"first_name" = case (getLocale settings) `elem` ["id"] of
+                                                 True -> do
                                                    let parser :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
                                                        parser settings = parseNameField settings field
                                                        provider settings = fetchData settings Name parser
                                                    cachedRandomVec "name" "first_name2" provider settings
-                                                 _ -> cachedRandomUnresolvedVec "name" field nameFirstNameProvider resolveNameText settings
+                                                 False -> cachedRandomUnresolvedVec "name" field nameFirstNameProvider resolveNameText settings
 resolveNameField settings field@"last_name" =
   cachedRandomVec "name" field nameLastNameProvider settings
 resolveNameField settings field@"tussenvoegsel" =

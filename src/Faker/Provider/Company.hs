@@ -14,7 +14,7 @@ import Data.Yaml
 import Faker
 import Faker.Internal
 import Faker.Provider.Name (nameLastNameProvider, resolveNameText, resolveNameField)
-import Faker.Provider.Address (villageProvider, communityProvider2, cityProvider2)
+import Faker.Provider.Address (villageProvider, communityProvider2, cityProvider2, resolveAddressField)
 import Faker.Provider.TH
 import Language.Haskell.TH
 
@@ -126,8 +126,22 @@ resolveCompanyField settings "Address.village" =
   cachedRandomVec "address" "village" villageProvider settings
 resolveCompanyField settings "Address.community" =
   cachedRandomVec "address" "community2" communityProvider2 settings
+resolveCompanyField settings "Address.city_name" =
+  resolveAddressField settings "city_name"
 resolveCompanyField settings "Address.city" =
   cachedRandomVec "address" "city2" cityProvider2 settings
 resolveCompanyField settings "Name.man_last_name" =
   resolveNameField settings "man_last_name"
+resolveCompanyField settings "Name.male_first_name" =
+  resolveNameField settings "male_first_name"
+resolveCompanyField settings "Name.female_first_name" =
+  resolveNameField settings "female_first_name"
+resolveCompanyField settings "Name.male_last_name" =
+  resolveNameField settings "male_last_name"
+resolveCompanyField settings field@"product" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseCompanyField settings field
+    provider settings = fetchData settings Company parser
+    in cachedRandomVec "company" field provider settings
 resolveCompanyField settings str = throwM $ InvalidField "company" str

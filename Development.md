@@ -193,6 +193,10 @@ These are fixes which might be just fixed by some code changes:
 * tr: delete safe_email
   - Fixed
 * uk: commerce.color ? and fix a few
+  - https://github.com/faker-ruby/faker/pull/1921
 * vi: company, city
+  - Fixed
 * zh-cn: 
+  - https://github.com/faker-ruby/faker/pull/1922
+  - Need to be fixed: street_address
 * zh-tw: name, address

@@ -64,12 +64,12 @@ spec = do
             , PH.formats
             , PH.cellPhoneFormat
 
-            -- , FA.city
+            , FA.city
             -- , FA.postcode
               
             , IN.domainSuffix
 
-            -- , CO.name
+            , CO.name
               
             , LO.words
             ]

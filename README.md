@@ -170,12 +170,13 @@ There are two other libraries in the Hackage providing fake data:
 -   [faker](https://hackage.haskell.org/package/faker-0.0.0.2)
 -   [fake](https://hackage.haskell.org/package/fake-0.1.1.1)
 
-The problem with both the above libraries is that the library
-covers only a very small amount of fake data source. I wanted to have an
+The problem with both the above libraries is that the library covers
+only a very small amount of fake data source. I wanted to have an
 equivalent functionality with something like
-[faker](https://github.com/stympy/faker). Also, most of the combinators
-in this packages has been inspired (read as taken) from the `fake`
-library.
+[faker](https://github.com/stympy/faker). Also, most of the
+combinators in this packages has been inspired (read as taken) from
+the `fake` library. Also, `fakedata` offers fairly good amount of
+support of different locales.
 
 Acknowledgments
 ---------------
