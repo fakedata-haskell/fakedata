@@ -71,8 +71,7 @@ spec = do
             , FA.state
             , FA.stateAbbr
             , FA.streetName
-            -- , FA.streetAddress -- The extra last character is causing the issue. Needs further investigation.
-
+            , FA.streetAddress
             , UN.prefix
             , UN.suffix
             , UN.name

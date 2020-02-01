@@ -70,8 +70,8 @@ spec = do
             , FA.streetSuffix
             , FA.state
             , FA.stateAbbr
-            -- , FA.streetName
-            -- , FA.streetAddress
+            , FA.streetName
+            , FA.streetAddress
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

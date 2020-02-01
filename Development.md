@@ -198,5 +198,5 @@ These are fixes which might be just fixed by some code changes:
   - Fixed
 * zh-cn: 
   - https://github.com/faker-ruby/faker/pull/1922
-  - Need to be fixed: street_address
-* zh-tw: name, address
+* zh-tw:
+  - https://github.com/faker-ruby/faker/pull/1927
