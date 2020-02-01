@@ -56,20 +56,20 @@ spec = do
     it "validates zh-TW locale" $ do
       let functions :: [Fake Text] =
             [ 
-            --   NA.firstName
-            -- , NA.lastName
-            -- , NA.name
-            -- , NA.nameWithMiddle
-              PH.formats
+              NA.firstName
+            , NA.lastName
+            , NA.name
+            , NA.nameWithMiddle
+            , PH.formats
 
             , FA.city
             , FA.cityPrefix
             , FA.citySuffix
             , FA.buildingNumber
-            -- , FA.postcode
-            -- , FA.streetSuffix
-            -- , FA.state
-            -- , FA.stateAbbr
+            , FA.postcode
+            , FA.streetSuffix
+            , FA.state
+            , FA.stateAbbr
             -- , FA.streetName
             -- , FA.streetAddress
             ]
