@@ -30,4 +30,4 @@ $(generateFakeFields "educator" ["tertiary", "university_type"])
 
 $(generateFakeFields "educator" ["tertiary", "degree", "type"])
 
-$(generateFakeFieldUnresolveds "educator" ["tertiary", "degree", "course_number"]
+$(generateFakeFieldUnresolveds "educator" ["tertiary", "degree", "course_number"])
