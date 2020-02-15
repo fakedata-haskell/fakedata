@@ -50,9 +50,6 @@ spec = do
     it "group A - WC" $ do
       ga <- generate WC.groupsGroupA
       ga `shouldBe` "Russia"
-    it "courseNumber - Edu" $ do
-      ga <- generate ED.tertiaryCourseNumber
-      ga `shouldBe` "215"
     it "App author" $ do
       ga <-
         generateWithSettings (setDeterministic defaultFakerSettings) AP.author

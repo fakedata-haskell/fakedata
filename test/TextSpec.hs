@@ -470,12 +470,17 @@ spec = do
       (and bools) `shouldBe` True
     it "Educator" $ do
       let functions :: [Fake Text] =
-            [ ED.name
+            [ ED.schoolName
             , ED.secondary
-            , ED.tertiaryType
-            , ED.tertiaryDegreeSubject
+            , ED.university
+            , ED.secondarySchool
+            , ED.campus
+            , ED.subject
+            , ED.degree
+            , ED.courseName
+            , ED.tertiaryUniversityType
             , ED.tertiaryDegreeType
-            , ED.tertiaryCourseNumber
+            , ED.tertiaryDegreeCourseNumber
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

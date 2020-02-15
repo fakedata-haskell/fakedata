@@ -51,10 +51,6 @@ isUTCTime _ = True
 
 spec :: Spec
 spec = do
-  describe "Faker Generate" $ do
-    it "Nested unresolved field" $ do
-      ctries <- generate tertiaryCourseNumber
-      (ctries) `shouldBe` "215"
   describe "Faker Compass Generate" $ do
     it "Resolver check" $ do
       ctries <- generate direction

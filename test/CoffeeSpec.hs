@@ -56,7 +56,3 @@ spec = do
     it "Nested field" $ do
       ctries <- generate DD.actors
       ctries `shouldSatisfy` (\x -> T.length x > 5)
-  describe "Educator" $ do
-    it "Nested field" $ do
-      ctries <- generate tertiaryType
-      ctries `shouldBe` "University"
