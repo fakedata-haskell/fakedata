@@ -154,3 +154,4 @@ These are fixes which might be just fixed by some code changes:
 * pt-br: team, phonenumber, university
   - Fixed
   - Need to fix phonenumber
+* en-nz: fullAddress needs to be fixed

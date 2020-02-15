@@ -12,3 +12,6 @@ import Faker.TH
 $(generateFakeField "gender" "types")
 
 $(generateFakeField "gender" "binary_types")
+
+-- | @since 0.6.0
+$(generateFakeField "gender" "short_binary_types")

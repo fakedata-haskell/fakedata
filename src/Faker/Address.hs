@@ -105,3 +105,13 @@ fullAddress =
        "fullAddress"
        fullAddressProvider
        resolveAddressText)
+
+-- | @since 0.6.0
+mailBox :: Fake Text
+mailBox =
+  Fake
+    (cachedRandomUnresolvedVec
+       "address"
+       "mail_box"
+       mailBoxProvider
+       resolveAddressText)

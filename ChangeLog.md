@@ -3,7 +3,20 @@
 ## 0.6.0
 
 * Fix API for "ar" locale. Add test coverage.
-* Bug fixed in the following locales: `ca`
+* Bug fixed in the following locales: `ca`, `bg`, `da-DK`, `en-NEP`
+* New function to Address module: `mailBox`
+* Update following data sources: `en/color.yml`, `en-NZ.yml`
+* New function in Educator module: `degree`, `courseName`
+* New function in Gender module: `shortBinaryTypes`
+
+### Breaking changes
+
+* Educator module:
+  - Rename `tertiaryDegreeSubject` to `subject`
+  - Rename `name` function to `schoolName`
+  - Rename `tertiaryType` function to `universityType`.
+
+  
 
 ## 0.5.0
 

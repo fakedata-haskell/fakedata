@@ -91,6 +91,10 @@ $(genParser "name" "tussenvoegsel")
 
 $(genProvider "name" "tussenvoegsel")
 
+-- For en-nz locale
+$(genParser "name" "surname")
+
+$(genProvider "name" "surname")
 
 resolveNameText :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveNameText settings txt = do
@@ -229,4 +233,6 @@ resolveNameField settings field@"man_last_name" = let
     parser settings = parseNameField settings field
     provider settings = fetchData settings Name parser
     in cachedRandomVec "name" field provider settings
+resolveNameField settings field@"surname" = 
+    cachedRandomVec "name" field nameSurnameProvider settings
 resolveNameField settings str = throwM $ InvalidField "name" str

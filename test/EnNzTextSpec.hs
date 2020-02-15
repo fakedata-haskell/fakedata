@@ -14,6 +14,7 @@ import qualified Faker.Name as NA
 import qualified Faker.PhoneNumber as PH
 import qualified Faker.Bank as BH
 import qualified Faker.Team as TE
+import qualified Faker.University as UN
 
 import Test.Hspec
 import TestImport
@@ -46,17 +47,28 @@ spec = do
               NA.firstName
             , NA.lastName
             , NA.nameWithMiddle
+            , NA.suffix
               
             , CO.suffix
               
             , IN.domainSuffix
 
+            , FA.secondaryAddress
             , FA.postcode
             , FA.buildingNumber
             , FA.streetSuffix
+            , FA.communityPrefix
+            , FA.communitySuffix
+            , FA.city
+            , FA.mailBox
+            , FA.fullAddress
+            , FA.community
+            , FA.streetName
 
             , PH.formats
             , PH.cellPhoneFormat
+              
+            , UN.name
               
             , TE.sport
             , TE.name

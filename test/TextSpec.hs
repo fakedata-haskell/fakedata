@@ -194,6 +194,7 @@ spec = do
             , FA.streetName
             , FA.streetAddress
             , FA.fullAddress
+            , FA.mailBox
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -655,7 +656,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Gender" $ do
-      let functions :: [Fake Text] = [GE.types, GE.binaryTypes]
+      let functions :: [Fake Text] = [GE.types, GE.binaryTypes, GE.shortBinaryTypes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "GreekPhilosophers" $ do

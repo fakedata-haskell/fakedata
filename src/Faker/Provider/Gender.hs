@@ -51,3 +51,8 @@ $(genProvider "gender" "types")
 $(genParser "gender" "binary_types")
 
 $(genProvider "gender" "binary_types")
+
+$(genParser "gender" "short_binary_types")
+
+$(genProvider "gender" "short_binary_types")
+
