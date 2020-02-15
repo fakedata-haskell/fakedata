@@ -176,7 +176,11 @@ equivalent functionality with something like
 [faker](https://github.com/stympy/faker). Also, most of the
 combinators in this packages has been inspired (read as taken) from
 the `fake` library. Also, `fakedata` offers fairly good amount of
-support of different locales.
+support of different locales. Also since we rely on an external data
+source, we get free updates and high quality data source with little
+effort. Also, it's easier to extend the library with [it's own data
+source](https://github.com/psibi/fakedata/blob/master/Development.md#custom-fake-source-support-with-yml-file)
+if we want to do it that way.
 
 Acknowledgments
 ---------------

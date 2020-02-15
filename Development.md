@@ -140,63 +140,17 @@ These issues are best fixed in the upstream ruby library.
 
 These are fixes which might be just fixed by some code changes:
 
-* en-NEP: Root key fix
-  - MR: https://github.com/faker-ruby/faker/pull/1899
-* en-MS: name
-  - Fixed
-* en-NG: fix cities
-  - Fixed
 * en-sg: Fix address (Not able to figure it out)
-* en-ug: Fix city
-  - Fixed
 * en-za: Fix post_code, company, city
   - https://github.com/faker-ruby/faker/pull/1900
   - Enable postcode
-* es-MX: company.name, city, state
-  - Fixed
 * es: company.name
   - Not able to figure it out
-* fr-ca: pokemo
-  - https://github.com/faker-ruby/faker/pull/1901
 * fr-ch: see why test is failing
   - https://github.com/faker-ruby/faker/pull/1902
-* fr: pokemon
-  - https://github.com/faker-ruby/faker/pull/1903  
-* he: name, address
-  - Fixed
 * hy: 
   - https://github.com/faker-ruby/faker/pull/1914
   - Need to fix for book.author
-* id: name
-  - Fixed
-* it
-  - Fixed
-* ja
-  - Fixed
-* ko
-  - Fixed
-* nb-no: address
-  - Fixed
-* nl: name
-  - Fixed
 * pt-br: team, phonenumber, university
   - Fixed
   - Need to fix phonenumber
-* pt: city
-  - https://github.com/faker-ruby/faker/pull/1920
-* ru: commerce.color ? address, company.name
-  - Fixed
-* sk: name, address
-  - Fixed
-* sv: commerce.color ? , team
-  - Fixed
-* tr: delete safe_email
-  - Fixed
-* uk: commerce.color ? and fix a few
-  - https://github.com/faker-ruby/faker/pull/1921
-* vi: company, city
-  - Fixed
-* zh-cn: 
-  - https://github.com/faker-ruby/faker/pull/1922
-* zh-tw:
-  - https://github.com/faker-ruby/faker/pull/1927
