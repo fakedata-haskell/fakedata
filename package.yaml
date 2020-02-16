@@ -1,5 +1,5 @@
 name:                fakedata
-version:             0.5.0
+version:             0.6.0
 github:              "psibi/fakedata"
 license:             BSD3
 author:              "Sibi Prabakaran"
@@ -42,7 +42,7 @@ dependencies:
 
 library:
   source-dirs: src
-  other-modules: 
+  other-modules:
   - Paths_fakedata
   - Config
   - Faker.TH

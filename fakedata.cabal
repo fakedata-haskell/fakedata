@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3e5460a032a76c54649ee0168b2fb9ad5ae5d56c281456bc0c4f54252f5fc9f1
+-- hash: 1ec2667a2aa4e02732d576c8e8b6ea03d07bb9881d9602f529963975337e1621
 
 name:           fakedata
-version:        0.4.0
+version:        0.6.0
 synopsis:       Library for producing fake data
 description:    Please see the README on GitHub at <https://github.com/psibi/fakedata#readme>
 category:       Random, Fake, FakeData
@@ -552,19 +552,70 @@ test-suite fakedata-test
   main-is: Spec.hs
   other-modules:
       AddressSpec
+      ArTextSpec
+      BgTextSpec
       BookSpec
       BossaNovaSpec
+      CaCatTextSpec
+      CaTextSpec
       CoffeeSpec
       CombinatorsSpec
+      DaDkTextSpec
+      DeAtTextSpec
+      DeChTextSpec
+      DeTextSpec
+      EeTextSpec
+      EnAuOckerTextSpec
+      EnAuTextSpec
+      EnCaTextSpec
+      EnGbTextSpec
+      EnInTextSpec
+      EnMsTextSpec
+      EnNepTextSpec
+      EnNgTextSpec
+      EnNzTextSpec
+      EnPakTextSpec
+      EnSgTextSpec
+      EnThTextSpec
+      EnUgTextSpec
+      EnZaTextSpec
+      EsMxTextSpec
+      EsTextSpec
       FakerSpec
+      FaTextSpec
+      FiFiTextSpec
+      FrCaTextSpec
+      FrChTextSpec
+      FrTextSpec
       GamesSpec
+      HeTextSpec
+      HyTextSpec
+      IdTextSpec
       InternalSpec
+      ItTextSpec
+      JaTextSpec
+      KoTextSpec
+      LvTextSpec
       NameSpec
+      NbNoTextSpec
+      NlTextSpec
       OperaSpec
       OtherSpec
+      PlTextSpec
       ProviderSpec
+      PtBrTextSpec
+      PtTextSpec
+      RuTextSpec
+      SkTextSpec
+      SvTextSpec
       TestImport
       TextSpec
+      ThTextSpec
+      TrTextSpec
+      UkTextSpec
+      ViTextSpec
+      ZhCnTextSpec
+      ZhTwTextSpec
       Paths_fakedata
   hs-source-dirs:
       test

@@ -10,14 +10,31 @@ import Faker.Internal
 import Faker.Provider.Educator
 import Faker.TH
 
-$(generateFakeField "educator" "name")
+-- | @since 0.6.0
+$(generateFakeField "educator" "school_name")
 
 $(generateFakeField "educator" "secondary")
 
-$(generateFakeFields "educator" ["tertiary", "type"])
+$(generateFakeFieldUnresolved "educator" "university")
 
-$(generateFakeFields "educator" ["tertiary", "degree", "subject"])
+$(generateFakeFieldUnresolved "educator" "secondary_school")
+
+$(generateFakeFieldUnresolved "educator" "campus")
+
+-- | @since 0.6.0
+$(generateFakeField "educator" "subject")
+
+-- | @since 0.6.0
+$(generateFakeFieldUnresolved "educator" "degree")
+
+-- | @since 0.6.0
+$(generateFakeFieldUnresolved "educator" "course_name")
+
+-- | @since 0.6.0
+$(generateFakeFields "educator" ["tertiary", "university_type"])
 
 $(generateFakeFields "educator" ["tertiary", "degree", "type"])
 
-$(generateFakeFieldUnresolveds "educator" ["tertiary", "course_number"])
+$(generateFakeFieldUnresolveds
+    "educator"
+    ["tertiary", "degree", "course_number"])

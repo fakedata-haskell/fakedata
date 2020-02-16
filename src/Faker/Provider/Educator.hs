@@ -84,25 +84,49 @@ educatorTertiaryCourseNumberProvider ::
 educatorTertiaryCourseNumberProvider settings =
   fetchData settings Educator parseEducatorTertiaryCourseNumber
 
-$(genParser "educator" "name")
+$(genParser "educator" "school_name")
 
-$(genProvider "educator" "name")
+$(genProvider "educator" "school_name")
 
 $(genParser "educator" "secondary")
 
 $(genProvider "educator" "secondary")
 
-$(genParsers "educator" ["tertiary", "type"])
+$(genParserUnresolved "educator" "university")
 
-$(genProviders "educator" ["tertiary", "type"])
+$(genProviderUnresolved "educator" "university")
 
-$(genParsers "educator" ["tertiary", "degree", "subject"])
+$(genParserUnresolved "educator" "secondary_school")
 
-$(genProviders "educator" ["tertiary", "degree", "subject"])
+$(genProviderUnresolved "educator" "secondary_school")
+
+$(genParserUnresolved "educator" "campus")
+
+$(genProviderUnresolved "educator" "campus")
+
+$(genParser "educator" "subject")
+
+$(genProvider "educator" "subject")
+
+$(genParserUnresolved "educator" "degree")
+
+$(genProviderUnresolved "educator" "degree")
+
+$(genParserUnresolved "educator" "course_name")
+
+$(genProviderUnresolved "educator" "course_name")
+
+$(genParsers "educator" ["tertiary", "university_type"])
+
+$(genProviders "educator" ["tertiary", "university_type"])
 
 $(genParsers "educator" ["tertiary", "degree", "type"])
 
 $(genProviders "educator" ["tertiary", "degree", "type"])
+
+$(genParserUnresolveds "educator" ["tertiary", "degree", "course_number"])
+
+$(genProviderUnresolveds "educator" ["tertiary", "degree", "course_number"])
 
 resolveEducatorText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
@@ -122,6 +146,23 @@ resolveEducatorField settings field@"course_number" =
     "educator"
     field
     educatorTertiaryCourseNumberProvider
+    resolveEducatorText
+    settings
+resolveEducatorField settings field@"Educator.school_name" =
+  cachedRandomVec "educator" "school_name" educatorSchoolNameProvider settings
+resolveEducatorField settings field@"Educator.tertiary.university_type" =
+  cachedRandomVec "educator" "university_type" educatorTertiaryUniversityTypeProvider settings
+resolveEducatorField settings field@"secondary" =
+  cachedRandomVec "educator" field educatorSecondaryProvider settings
+resolveEducatorField settings field@"Educator.tertiary.degree.type" =
+  cachedRandomVec "educator" "type" educatorTertiaryDegreeTypeProvider settings
+resolveEducatorField settings field@"subject" =
+  cachedRandomVec "educator" field educatorSubjectProvider settings
+resolveEducatorField settings field@"Educator.tertiary.degree.course_number" =
+  cachedRandomUnresolvedVec
+    "educator"
+    "course_number"
+    educatorTertiaryDegreeCourseNumberProvider
     resolveEducatorText
     settings
 resolveEducatorField settings str = throwM $ InvalidField "educator" str

@@ -12,13 +12,7 @@ import Faker.TH
 $(generateFakeField "book" "title")
 
 author :: Fake Text
-author =
-  Fake
-    (cachedRandomUnresolvedVecWithoutVector
-       "book"
-       "author"
-       bookAuthorProvider
-       resolveBookText)
+author = Fake authorResolver
 
 $(generateFakeField "book" "publisher")
 

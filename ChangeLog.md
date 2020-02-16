@@ -1,5 +1,30 @@
 # Changelog for fakedata
 
+## 0.6.0
+
+* Fix API for "ar" locale. Add test coverage.
+* Bug fixed in the following locales: `ca`, `bg`, `da-DK`,
+  `en-NEP`, `en-ZA`, `fr-CA`, `fr-CH`, `fr`, `hy`, `id`, `ja`, `pt`,
+  `uk`, `zh-CN`, `zh-TW`
+* New function to Address module: `mailBox`
+* Update in following data sources:
+  - en/color.yml
+  - en-NZ.yml
+  - en/overwatch.yml
+  - en/phone_number.yml
+  - en/shakespeare.yml
+  - fa.yml
+  - pt-BR.yml
+* New function in Educator module: `degree`, `courseName`
+* New function in Gender module: `shortBinaryTypes`
+
+### Breaking changes
+
+* Educator module:
+  - Rename `tertiaryDegreeSubject` to `subject`
+  - Rename `name` function to `schoolName`
+  - Rename `tertiaryType` function to `tertiaryUniversityType`.
+
 ## 0.5.0
 
 * Move remaining internal modules into other-module: Config, Faker.TH

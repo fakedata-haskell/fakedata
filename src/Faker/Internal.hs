@@ -39,11 +39,9 @@ import Faker
 import Faker.Internal.Types (CacheFieldKey(..))
 import System.Random (StdGen, mkStdGen, randomR, split)
 
-newtype Unresolved a =
-  Unresolved
-    { unresolvedField :: a
-    }
-  deriving (Functor)
+newtype Unresolved a = Unresolved
+  { unresolvedField :: a
+  } deriving (Functor)
 
 instance Applicative Unresolved where
   pure = Unresolved
@@ -203,6 +201,8 @@ operateFields origWord (x:xs) = operateFields (operateField origWord x) xs
 dropTillBrace :: Text -> Text
 dropTillBrace txt = T.dropWhile (== '}') $ T.dropWhile (/= '}') txt
 
+-- λ> extractSingleField "#{hello} #{world} jam"
+-- ("hello"," #{world} jam")
 extractSingleField :: Text -> (Text, Text)
 extractSingleField txt =
   let (field, remaining) = T.span (\x -> x /= '}') txt''
@@ -211,12 +211,20 @@ extractSingleField txt =
     txt' = strip txt
     txt'' = snd $ T.span (\x -> x /= '#') txt'
 
+-- λ> resolveFields "#{hello} #{world}"
+-- ["hello","world"]
+-- λ> resolveFields "#{hello} #{world} jam"
+-- ["hello","world"]
 resolveFields :: Text -> [Text]
 resolveFields txt =
   let (field, remaining) = extractSingleField txt
+      newField val =
+        if T.null val
+          then []
+          else [val]
    in case T.null remaining of
-        True -> [field]
-        False -> [field] <> resolveFields remaining
+        True -> newField field
+        False -> newField field <> resolveFields remaining
 
 digitToChar :: Int -> Char
 digitToChar 0 = '0'

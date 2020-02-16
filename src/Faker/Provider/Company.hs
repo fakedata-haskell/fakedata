@@ -13,7 +13,8 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import Faker.Provider.Name (nameLastNameProvider, resolveNameText)
+import Faker.Provider.Name (nameLastNameProvider, resolveNameText, resolveNameField)
+import Faker.Provider.Address (villageProvider, communityProvider2, cityProvider2, resolveAddressField)
 import Faker.Provider.TH
 import Language.Haskell.TH
 
@@ -76,9 +77,25 @@ $(genParser "company" "type")
 
 $(genProvider "company" "type")
 
+-- For en-ZA locale
+$(genParser "company" "company_names")
+
+$(genProvider "company" "company_names")
+
+-- For es-mx locale
+$(genParser "company" "prefix")
+
+$(genProvider "company" "prefix")
+
 $(genParser "company" "sic_code")
 
 $(genProvider "company" "sic_code")
+
+-- For ja locale
+
+$(genParser "company" "category")
+
+$(genProvider "company" "category")
 
 resolveCompanyText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
@@ -95,6 +112,36 @@ resolveCompanyField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveCompanyField settings "Name.last_name" =
   cachedRandomVec "name" "last_name" nameLastNameProvider settings
+resolveCompanyField settings "Name.first_name" =
+  resolveNameField settings "first_name"
+resolveCompanyField settings field@"company_names" =
+  cachedRandomVec "company" field companyCompanyNamesProvider settings
 resolveCompanyField settings field@"suffix" =
   cachedRandomVec "company" field companySuffixProvider settings
+resolveCompanyField settings field@"prefix" =
+  cachedRandomVec "company" field companyPrefixProvider settings
+resolveCompanyField settings field@"category" =
+  cachedRandomVec "company" field companyCategoryProvider settings
+resolveCompanyField settings "Address.village" =
+  cachedRandomVec "address" "village" villageProvider settings
+resolveCompanyField settings "Address.community" =
+  cachedRandomVec "address" "community2" communityProvider2 settings
+resolveCompanyField settings "Address.city_name" =
+  resolveAddressField settings "city_name"
+resolveCompanyField settings "Address.city" =
+  cachedRandomVec "address" "city2" cityProvider2 settings
+resolveCompanyField settings "Name.man_last_name" =
+  resolveNameField settings "man_last_name"
+resolveCompanyField settings "Name.male_first_name" =
+  resolveNameField settings "male_first_name"
+resolveCompanyField settings "Name.female_first_name" =
+  resolveNameField settings "female_first_name"
+resolveCompanyField settings "Name.male_last_name" =
+  resolveNameField settings "male_last_name"
+resolveCompanyField settings field@"product" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parseCompanyField settings field
+    provider settings = fetchData settings Company parser
+    in cachedRandomVec "company" field provider settings
 resolveCompanyField settings str = throwM $ InvalidField "company" str

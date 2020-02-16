@@ -53,6 +53,15 @@ bookAuthorProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved Text)
 bookAuthorProvider settings = fetchData settings Book parseBookAuthorUnresolved
 
+parseAuthorFieldHyLocale ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseAuthorFieldHyLocale settings = parseBookField settings "author"
+
+authorProviderHyLocale ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+authorProviderHyLocale settings =
+  fetchData settings Address parseAuthorFieldHyLocale
+
 $(genParser "book" "publisher")
 
 $(genProvider "book" "publisher")
@@ -60,6 +69,18 @@ $(genProvider "book" "publisher")
 $(genParser "book" "genre")
 
 $(genProvider "book" "genre")
+
+authorResolver :: (MonadIO m, MonadThrow m) => FakerSettings -> m Text
+authorResolver settings =
+  case (getLocale settings) `elem` ["hy"] of
+    True -> (cachedRandomVec "book" "author" authorProviderHyLocale settings)
+    False ->
+      (cachedRandomUnresolvedVecWithoutVector
+         "book"
+         "author"
+         bookAuthorProvider
+         resolveBookText
+         settings)
 
 resolveBookText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveBookText settings txt = do
