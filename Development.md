@@ -137,19 +137,5 @@ These issues are best fixed in the upstream ruby library.
 * nl
   - postcode (regex)
 * vi: postcode (regex)
-
-These are fixes which might be just fixed by some code changes:
-
-* en-sg: Fix address
-* en-za: Fix post_code, company, city
-  - https://github.com/faker-ruby/faker/pull/1900
-  - Enable postcode
-* es: company.name
-  - Not able to figure it out
-* hy:
-  - https://github.com/faker-ruby/faker/pull/1914
-  - Need to fix for book.author
-* pt-br: team, phonenumber, university
-  - Fixed
-  - Need to fix phonenumber
-* en-nz: fullAddress needs to be fixed
+* pt-br:
+  - Fix format and cellPhoneFormat

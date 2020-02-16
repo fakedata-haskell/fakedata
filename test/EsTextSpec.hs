@@ -51,7 +51,7 @@ spec = do
             , IN.freeEmail
             , CO.suffix
             , CO.buzzword
-            -- , CO.name
+            , CO.name
             , CO.industry
             , CO.profession
             , PH.formats

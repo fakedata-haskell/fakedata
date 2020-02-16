@@ -24,7 +24,7 @@ isTexts :: [Text] -> Bool
 isTexts xs = and $ map isText xs
 
 locale :: Text
-locale = "en-ZA"          
+locale = "en-ZA"
 
 fakerSettings :: FakerSettings
 fakerSettings = setLocale locale defaultFakerSettings
@@ -41,20 +41,17 @@ spec = do
   describe "TextSpec" $ do
     it "validates en-ZA locale" $ do
       let functions :: [Fake Text] =
-            [ 
-              NA.lastName
+            [ NA.lastName
             , NA.firstName
             , NA.nameWithMiddle
-
             , IN.domainSuffix
-              
             , PH.formats
             , PH.cellPhoneFormat
-            , CO.type'  
-            , FA.state            
+            , CO.type'
+            , FA.state
             , CO.name
             , FA.city
-            -- , FA.postcode
+            , FA.postcode
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 526b88be26dc828f11e41da911cc6321859a5c191305e5833ce63c08f15270f8
+-- hash: 1ec2667a2aa4e02732d576c8e8b6ea03d07bb9881d9602f529963975337e1621
 
 name:           fakedata
-version:        0.5.0
+version:        0.6.0
 synopsis:       Library for producing fake data
 description:    Please see the README on GitHub at <https://github.com/psibi/fakedata#readme>
 category:       Random, Fake, FakeData

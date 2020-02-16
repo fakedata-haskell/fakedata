@@ -39,11 +39,9 @@ import Faker
 import Faker.Internal.Types (CacheFieldKey(..))
 import System.Random (StdGen, mkStdGen, randomR, split)
 
-newtype Unresolved a =
-  Unresolved
-    { unresolvedField :: a
-    }
-  deriving (Functor)
+newtype Unresolved a = Unresolved
+  { unresolvedField :: a
+  } deriving (Functor)
 
 instance Applicative Unresolved where
   pure = Unresolved
@@ -220,9 +218,10 @@ extractSingleField txt =
 resolveFields :: Text -> [Text]
 resolveFields txt =
   let (field, remaining) = extractSingleField txt
-      newField val = if T.null val
-                     then []
-                     else [val]
+      newField val =
+        if T.null val
+          then []
+          else [val]
    in case T.null remaining of
         True -> newField field
         False -> newField field <> resolveFields remaining

@@ -7,27 +7,27 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Faker hiding (defaultFakerSettings)
 import qualified Faker.Address as FA
-import Faker.Combinators (listOf)
-import qualified Faker.Company as CO
-import qualified Faker.Internet as IN
-import qualified Faker.Name as NA
-import qualified Faker.PhoneNumber as PH
-import qualified Faker.Book as BO
-import qualified Faker.Lorem as LO
-import qualified Faker.Game.Pokemon as PO
 import qualified Faker.Appliance as AP
-import qualified Faker.Measurement as ME
-import qualified Faker.Commerce as CE
-import qualified Faker.Compass as CE
-import qualified Faker.Job as JO
-import qualified Faker.Military as MI
-import qualified Faker.Nation as NE
 import qualified Faker.Artist as AR
+import qualified Faker.Book as BO
 import qualified Faker.Color as CL
-import qualified Faker.Space as SP
-import qualified Faker.Science as SC
-import qualified Faker.Food as FO
+import Faker.Combinators (listOf)
+import qualified Faker.Commerce as CE
+import qualified Faker.Company as CO
+import qualified Faker.Compass as CE
 import qualified Faker.Currency as CU
+import qualified Faker.Food as FO
+import qualified Faker.Game.Pokemon as PO
+import qualified Faker.Internet as IN
+import qualified Faker.Job as JO
+import qualified Faker.Lorem as LO
+import qualified Faker.Measurement as ME
+import qualified Faker.Military as MI
+import qualified Faker.Name as NA
+import qualified Faker.Nation as NE
+import qualified Faker.PhoneNumber as PH
+import qualified Faker.Science as SC
+import qualified Faker.Space as SP
 
 import Test.Hspec
 import TestImport
@@ -56,25 +56,19 @@ spec = do
   describe "TextSpec" $ do
     it "validates hy locale" $ do
       let functions :: [Fake Text] =
-            [ 
-              NA.lastName
+            [ NA.lastName
             , NA.firstName
             , NA.maleFirstName
             , NA.femaleFirstName
             , NA.name
             , NA.nameWithMiddle
-              
             , NE.nationality
             , NE.language
             , NE.capitalCity
-              
             , PH.formats
             , PH.cellPhoneFormat
-            
             , MI.armyRank
-            
             , AR.names
-
             , JO.field
             , JO.title
             , JO.seniority
@@ -82,24 +76,19 @@ spec = do
             , JO.keySkills
             , JO.employmentType
             , JO.educationLevel
- 
             , IN.domainSuffix
             , IN.freeEmail
-            
             , BO.title
-            -- , BO.author
+            , BO.author
             , BO.publisher
             , BO.genre
-
             , CL.name
-              
             , CE.department
             , CE.productNameAdjective
             , CE.productNameMaterial
             , CE.productNameProduct
             , CE.promotionCodeAdjective
             , CE.promotionCodeNoun
-              
             , CO.suffix
             , CO.buzzword
             , CO.bs
@@ -107,7 +96,6 @@ spec = do
             , CO.industry
             , CO.profession
             , CO.type'
-
             , CE.cardinalWord
             , CE.cardinalAbbreviation
             , CE.ordinalWord
@@ -115,7 +103,6 @@ spec = do
             , CE.halfWindWord
             , CE.halfWindAbbreviation
             , CE.abbreviation
-
             , CU.name
             , FO.dish
             , FO.descriptions
@@ -125,10 +112,8 @@ spec = do
             , FO.spices
             , FO.measurements
             , FO.metricMeasurements
-              
             , SC.element
             , SC.scientist
-
             , SP.planet
             , SP.moon
             , SP.galaxy
@@ -137,7 +122,6 @@ spec = do
             , SP.star
             , SP.distanceMeasurement
             , SP.meteorite
-              
             , FA.country
             , FA.countryCode
             , FA.state
