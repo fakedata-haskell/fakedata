@@ -140,15 +140,13 @@ These issues are best fixed in the upstream ruby library.
 
 These are fixes which might be just fixed by some code changes:
 
-* en-sg: Fix address (Not able to figure it out)
+* en-sg: Fix address
 * en-za: Fix post_code, company, city
   - https://github.com/faker-ruby/faker/pull/1900
   - Enable postcode
 * es: company.name
   - Not able to figure it out
-* fr-ch: see why test is failing
-  - https://github.com/faker-ruby/faker/pull/1902
-* hy: 
+* hy:
   - https://github.com/faker-ruby/faker/pull/1914
   - Need to fix for book.author
 * pt-br: team, phonenumber, university

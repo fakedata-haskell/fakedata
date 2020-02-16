@@ -7,25 +7,28 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Faker hiding (defaultFakerSettings)
 import qualified Faker.Address as FA
-import Faker.Combinators (listOf)
-import qualified Faker.Company as CO
-import qualified Faker.Internet as IN
-import qualified Faker.Name as NA
-import qualified Faker.PhoneNumber as PH
-import qualified Faker.Book as BO
-import qualified Faker.Lorem as LO
-import qualified Faker.Game.Pokemon as PO
 import qualified Faker.Appliance as AP
-import qualified Faker.Measurement as ME
-import qualified Faker.Compass as CE
+import qualified Faker.Book as BO
 import qualified Faker.Coin as CO
 import qualified Faker.Color as CL
-import qualified Faker.Gender as GE
-import qualified Faker.Vehicle as VE
+import Faker.Combinators (listOf)
+import qualified Faker.Company as CO
+import qualified Faker.Compass as CE
+import qualified Faker.ElectricalComponents as EC
 import qualified Faker.Food as FO
-import qualified Faker.Team as TE
+import qualified Faker.Game.Pokemon as PO
+import qualified Faker.Gender as GE
+import qualified Faker.Internet as IN
 import qualified Faker.Job as JO
+import qualified Faker.Lorem as LO
+import qualified Faker.Measurement as ME
+import qualified Faker.Name as NA
+import qualified Faker.PhoneNumber as PH
+import qualified Faker.Science as SC
+import qualified Faker.Space as SP
+import qualified Faker.Team as TE
 import qualified Faker.University as UN
+import qualified Faker.Vehicle as VE
 
 import Test.Hspec
 import TestImport
@@ -54,8 +57,7 @@ spec = do
   describe "TextSpec" $ do
     it "validates pt-BR locale" $ do
       let functions :: [Fake Text] =
-            [ 
-              NA.lastName
+            [ NA.lastName
             , NA.firstName
             , NA.prefix
             , NA.suffix
@@ -63,23 +65,17 @@ spec = do
             , NA.maleFirstName
             , NA.femaleFirstName
             , NA.nameWithMiddle
-
             -- , PH.formats
             -- , PH.cellPhoneFormat
-
             , TE.name
             , TE.sport
-              
             , FO.ingredients
             , FO.spices
             , FO.measurements
             , FO.measurementSizes
-              
             , VE.licensePlate
-
             , GE.types
             , GE.binaryTypes
-
             , FA.city
             , FA.country
             , FA.postcode
@@ -89,20 +85,15 @@ spec = do
             , FA.state
             , FA.stateAbbr
             , FA.streetName
-              
             , CL.name
-              
             , CO.suffix
             , CO.name
-              
             , UN.prefix
             , UN.suffix
             , UN.name
-              
             , IN.domainSuffix
             , IN.freeEmail
             , LO.words
-            
             , JO.field
             , JO.seniority
             , JO.position
@@ -110,6 +101,13 @@ spec = do
             , JO.employmentType
             , JO.educationLevel
             , JO.title
+            , SC.element
+            , SP.planet
+            , SP.moon
+            , SP.distanceMeasurement
+            , EC.active
+            , EC.passive
+            , EC.electromechanical
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True
