@@ -208,6 +208,12 @@ instance MonadIO Fake where
   liftIO :: IO a -> Fake a
   liftIO xs = Fake (\_ -> xs >>= pure)
 
+instance Semigroup a => Semigroup (Fake a) where
+  mx <> my = (<>) <$> mx <*> my
+
+instance Monoid a => Monoid (Fake a) where
+  mempty = pure mempty
+
 -- | Generate fake value with 'defaultFakerSettings'
 --
 -- @
