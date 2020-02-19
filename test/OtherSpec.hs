@@ -6,6 +6,7 @@ module OtherSpec where
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 import qualified Data.Map as M
+import Data.Semigroup ((<>))
 import Data.Text hiding (all, map)
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
@@ -54,3 +55,13 @@ spec = do
       ga <-
         generateWithSettings (setDeterministic defaultFakerSettings) AP.author
       ga `shouldBe` "Steuber, Donnelly and Goldner"
+  describe "Semigroup instance of Fake" $
+    it "can be appended and it is associative" $ do
+      phraseL <- generate $ (pure "Hello " <> name) <> pure "!"
+      phraseR <- generate $ pure "Hello " <> (name <> pure "!")
+      phraseL `shouldBe` "Hello Dominga Stiedemann!"
+      phraseR `shouldBe` "Hello Dominga Stiedemann!"
+  describe "Monoid instance of Fake" $
+    it "mappend mempty doesn't modify the other operand" $ do
+      name' <- generate $ name `mappend` mempty
+      name' `shouldBe` "Georgianne Steuber"
