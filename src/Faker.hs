@@ -36,6 +36,7 @@ import Control.Monad (ap)
 import Control.Monad.IO.Class
 import qualified Data.HashMap.Strict as HM
 import Data.IORef
+import Data.Semigroup (Semigroup, (<>))
 import Data.Text (Text)
 import Data.Typeable
 import Data.Vector (Vector)
@@ -208,11 +209,14 @@ instance MonadIO Fake where
   liftIO :: IO a -> Fake a
   liftIO xs = Fake (\_ -> xs >>= pure)
 
+-- | @since 0.6.1
 instance Semigroup a => Semigroup (Fake a) where
   mx <> my = (<>) <$> mx <*> my
 
+-- | @since 0.6.1
 instance Monoid a => Monoid (Fake a) where
   mempty = pure mempty
+  mappend mx my = mappend <$> mx <*> my
 
 -- | Generate fake value with 'defaultFakerSettings'
 --

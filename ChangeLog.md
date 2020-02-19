@@ -1,5 +1,9 @@
 # Changelog for fakedata
 
+## 0.6.1
+
+* Add `Semigroup` and `Monoid` instances to `Fake`
+
 ## 0.6.0
 
 * Fix API for "ar" locale. Add test coverage.
