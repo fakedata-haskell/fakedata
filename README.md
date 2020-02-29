@@ -13,7 +13,6 @@ LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/pa
         -   [Generate quotes from the movie Back to the Future](#generate-quotes-from-the-movie-back-to-the-future)
         -   [Combining Fake datas](#combining-fake-datas)
         -   [Combinators](#combinators)
-    -   [Reading Haddock Documentation](#reading-haddock-documentation)
     -   [Comparision with other
         libraries](#comparision-with-other-libraries)
     -   [Acknowledgments](#acknowledgments)

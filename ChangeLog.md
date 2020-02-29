@@ -3,6 +3,7 @@
 ## 0.6.1
 
 * Add `Semigroup` and `Monoid` instances to `Fake`
+* Doc fix: Remove broken links
 
 ## 0.6.0
 
