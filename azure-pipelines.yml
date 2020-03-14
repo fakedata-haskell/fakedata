@@ -27,20 +27,20 @@ schedules:
   always: true
 
 jobs:
-- template: ./.azure/azure-linux-template.yml
+# - template: ./.azure/azure-linux-template.yml
+#   parameters:
+#     name: Linux
+#     vmImage: ubuntu-latest
+#     os: linux
+
+- template: ./.azure/azure-osx-template.yml
   parameters:
-    name: Linux
-    vmImage: ubuntu-latest
-    os: linux
+    name: macOS
+    vmImage: macOS-latest
+    os: osx
 
-# - template: ./.azure/azure-osx-template.yml
-#   parameters:
-#     name: macOS
-#     vmImage: macOS-latest
-#     os: osx
-
-# - template: ./.azure/azure-windows-template.yml
-#   parameters:
-#    name: Windows
-#    vmImage: windows-latest
-#    os: windows
+- template: ./.azure/azure-windows-template.yml
+  parameters:
+   name: Windows
+   vmImage: windows-latest
+   os: windows
