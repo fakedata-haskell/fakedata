@@ -16,6 +16,7 @@ module Faker.Internal
   , cachedRandomVec
   , cachedRandomUnresolvedVec
   , cachedRandomUnresolvedVecWithoutVector
+  , cachedRegex
   , interpolateNumbers
   , interpolateString
   , resolveUnresolved
@@ -38,6 +39,7 @@ import Data.Word (Word64)
 import Faker
 import Faker.Internal.Types (CacheFieldKey(..))
 import System.Random (StdGen, mkStdGen, randomR, split)
+import Text.StringRandom (stringRandom)
 
 newtype Unresolved a = Unresolved
   { unresolvedField :: a
@@ -365,3 +367,37 @@ modifyRandomGen settings seed =
   let gen = getRandomGen settings
       newGen = incrementStdGen seed gen
    in setRandomGen newGen settings
+
+cachedRegex ::
+     (MonadThrow m, MonadIO m)
+  => Text
+  -> Text
+  -> (FakerSettings -> m Text)
+  -> FakerSettings
+  -> m Text
+cachedRegex sdata field provider settings = do
+  val <- liftIO $ presentInCache sdata field settings
+  case val of
+    Nothing -> do
+      dat <- provider settings
+      liftIO $ insertToCache sdata field settings (V.singleton dat)
+      generateRegexData settings provider
+    Just vec -> pure $ generateRegex settings (V.head vec)
+
+cleanFakerRegex :: Text -> Text
+cleanFakerRegex xs = T.dropEnd 1 $ T.drop 1 xs
+
+generateRegex :: FakerSettings -> Text -> Text
+generateRegex settings regex =
+  let stdGen = getRandomGen settings
+  in stringRandom stdGen (cleanFakerRegex regex)
+
+generateRegexData ::
+     (MonadThrow m, MonadIO m)
+  => FakerSettings
+  -> (FakerSettings -> m Text)
+  -> m Text
+generateRegexData settings provider = do
+  items <- provider settings
+  pure $ generateRegex settings items
+
