@@ -48,6 +48,8 @@ newtype Unresolved a = Unresolved
 
 newtype Regex = Regex { unRegex :: Text } deriving (Eq, Ord, Show)
 
+newtype RegexFakeValue = RegexFakeValue { unRegexFakeValue :: Text } deriving (Eq, Ord, Show)
+
 instance Applicative Unresolved where
   pure = Unresolved
   Unresolved f1 <*> Unresolved f2 = pure $ f1 f2
@@ -375,31 +377,31 @@ cachedRegex ::
      (MonadThrow m, MonadIO m)
   => Text
   -> Text
-  -> (FakerSettings -> m Text)
+  -> (FakerSettings -> m Regex)
   -> FakerSettings
-  -> m Regex
+  -> m RegexFakeValue
 cachedRegex sdata field provider settings = do
   val <- liftIO $ presentInCache sdata field settings
   case val of
     Nothing -> do
       dat <- provider settings
-      liftIO $ insertToCache sdata field settings (V.singleton dat)
+      liftIO $ insertToCache sdata field settings (V.singleton $ unRegex dat)
       generateRegexData settings provider
-    Just vec -> pure $ generateRegex settings (V.head vec)
+    Just vec -> pure $ generateRegex settings (Regex $ V.head vec)
 
 cleanFakerRegex :: Text -> Text
 cleanFakerRegex xs = T.dropEnd 1 $ T.drop 1 xs
 
-generateRegex :: FakerSettings -> Text -> Regex
+generateRegex :: FakerSettings -> Regex -> RegexFakeValue
 generateRegex settings regex =
   let stdGen = getRandomGen settings
-  in Regex $ stringRandom stdGen (cleanFakerRegex regex)
+  in RegexFakeValue $ stringRandom stdGen (cleanFakerRegex $ unRegex regex)
 
 generateRegexData ::
      (MonadThrow m, MonadIO m)
   => FakerSettings
-  -> (FakerSettings -> m Text)
-  -> m Regex
+  -> (FakerSettings -> m Regex)
+  -> m RegexFakeValue
 generateRegexData settings provider = do
   items <- provider settings
   pure $ generateRegex settings items

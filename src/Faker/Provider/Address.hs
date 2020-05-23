@@ -227,12 +227,12 @@ secondaryAddressProvider ::
 secondaryAddressProvider settings =
   fetchData settings Address parseSecondaryAddress
 
-postcodeRegexProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m Text
+postcodeRegexProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m Regex
 postcodeRegexProvider settings = do
   let parser :: FakerSettings -> Value -> Parser Text
       parser = \settings -> parseAddressField settings "postcode"
   val <- fetchDataSingle settings Address parser
-  pure $ V.head val
+  pure $ Regex $ V.head val
 
 postcodeProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
