@@ -5,6 +5,7 @@
 -- | Internal module
 module Faker.Internal
   ( Unresolved(..)
+  , Regex(..)
   , rvec
   , insertToCache
   , presentInCache
@@ -44,6 +45,8 @@ import Text.StringRandom (stringRandom)
 newtype Unresolved a = Unresolved
   { unresolvedField :: a
   } deriving (Functor)
+
+newtype Regex = Regex { unRegex :: Text } deriving (Eq, Ord, Show)
 
 instance Applicative Unresolved where
   pure = Unresolved
@@ -374,7 +377,7 @@ cachedRegex ::
   -> Text
   -> (FakerSettings -> m Text)
   -> FakerSettings
-  -> m Text
+  -> m Regex
 cachedRegex sdata field provider settings = do
   val <- liftIO $ presentInCache sdata field settings
   case val of
@@ -387,16 +390,16 @@ cachedRegex sdata field provider settings = do
 cleanFakerRegex :: Text -> Text
 cleanFakerRegex xs = T.dropEnd 1 $ T.drop 1 xs
 
-generateRegex :: FakerSettings -> Text -> Text
+generateRegex :: FakerSettings -> Text -> Regex
 generateRegex settings regex =
   let stdGen = getRandomGen settings
-  in stringRandom stdGen (cleanFakerRegex regex)
+  in Regex $ stringRandom stdGen (cleanFakerRegex regex)
 
 generateRegexData ::
      (MonadThrow m, MonadIO m)
   => FakerSettings
   -> (FakerSettings -> m Text)
-  -> m Text
+  -> m Regex
 generateRegexData settings provider = do
   items <- provider settings
   pure $ generateRegex settings items

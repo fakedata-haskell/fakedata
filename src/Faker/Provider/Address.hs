@@ -434,18 +434,11 @@ resolveAddressField settings field@"village" =
       parser settings = parseAddressField settings field
       provider settings = fetchData settings Address parser
    in cachedRandomVec "address" field provider settings
-resolveAddressField settings field@"postcode" = do
-  case (getLocale settings) `elem` ["vi"] of
-    True -> let parser :: FakerSettings -> Value -> Parser Text
-                parser settings = parseAddressField settings field
-                provider settings = do
-                  val <- fetchDataSingle settings Address parser
-                  pure $ V.head val
-            in cachedRegex "address" field provider settings
-    False -> let parser :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
-                 parser settings = parseAddressField settings field
-                 provider settings = fetchData settings Address parser
-             in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"postcode" =
+  let parser :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+      parser settings = parseAddressField settings field
+      provider settings = fetchData settings Address parser
+  in cachedRandomVec "address" field provider settings
 resolveAddressField settings field@"street" =
   let parser :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
       parser settings = parseAddressField settings field

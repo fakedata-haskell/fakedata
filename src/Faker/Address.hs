@@ -5,7 +5,7 @@ module Faker.Address where
 
 import Data.Text (Text)
 import Faker (Fake(..), FakerSettings(..), getLocale)
-import Faker.Internal (cachedRandomUnresolvedVec, cachedRandomVec, cachedRegex)
+import Faker.Internal (cachedRandomUnresolvedVec, cachedRandomVec, cachedRegex, Regex(..))
 import Faker.Provider.Address
 import Faker.TH
 import Control.Monad.Catch
@@ -64,7 +64,7 @@ postcode = Fake handlePostcode
 handlePostcode :: (MonadIO m, MonadThrow m) => FakerSettings -> m Text
 handlePostcode settings =
   case (getLocale settings) `elem` ["vi"] of
-    True -> cachedRegex "address" "postcode" postcodeRegexProvider settings
+    True -> unRegex <$> cachedRegex "address" "postcode" postcodeRegexProvider settings
     False ->
       cachedRandomUnresolvedVec
         "address"
