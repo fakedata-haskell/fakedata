@@ -6,6 +6,7 @@
 module Faker.Internal
   ( Unresolved(..)
   , Regex(..)
+  , RegexFakeValue(..)
   , rvec
   , insertToCache
   , presentInCache
