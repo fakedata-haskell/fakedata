@@ -60,20 +60,20 @@ secondaryAddress =
 
 postcode :: Fake Text
 postcode = Fake handlePostcode
-
-handlePostcode :: (MonadIO m, MonadThrow m) => FakerSettings -> m Text
-handlePostcode settings =
-  case (getLocale settings) `elem` ["vi"] of
-    True ->
-      unRegexFakeValue <$>
-      (cachedRegex "address" "postcode" postcodeRegexProvider settings)
-    False ->
-      cachedRandomUnresolvedVec
-        "address"
-        "postcode"
-        postcodeProvider
-        resolveAddressText
-        settings
+  where
+    handlePostcode :: (MonadIO m, MonadThrow m) => FakerSettings -> m Text
+    handlePostcode settings =
+      case (getLocale settings) `elem` ["vi"] of
+        True ->
+          unRegexFakeValue <$>
+          (cachedRegex "address" "postcode" postcodeRegexProvider settings)
+        False ->
+          cachedRandomUnresolvedVec
+            "address"
+            "postcode"
+            postcodeProvider
+            resolveAddressText
+            settings
 
 state :: Fake Text
 state = Fake (cachedRandomVec "address" "state" stateProvider)
