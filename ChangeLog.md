@@ -4,6 +4,7 @@
 
 * Add support for regex fake value generation. Useful for postcode
   functions for different locales.
+* Improve documentation of Faker.Combinators.
 
 ## 0.6.1
 
