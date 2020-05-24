@@ -5,6 +5,8 @@
 -- | Internal module
 module Faker.Internal
   ( Unresolved(..)
+  , Regex(..)
+  , RegexFakeValue(..)
   , rvec
   , insertToCache
   , presentInCache
@@ -16,6 +18,7 @@ module Faker.Internal
   , cachedRandomVec
   , cachedRandomUnresolvedVec
   , cachedRandomUnresolvedVecWithoutVector
+  , cachedRegex
   , interpolateNumbers
   , interpolateString
   , resolveUnresolved
@@ -38,10 +41,15 @@ import Data.Word (Word64)
 import Faker
 import Faker.Internal.Types (CacheFieldKey(..))
 import System.Random (StdGen, mkStdGen, randomR, split)
+import Text.StringRandom (stringRandom)
 
 newtype Unresolved a = Unresolved
   { unresolvedField :: a
   } deriving (Functor)
+
+newtype Regex = Regex { unRegex :: Text } deriving (Eq, Ord, Show)
+
+newtype RegexFakeValue = RegexFakeValue { unRegexFakeValue :: Text } deriving (Eq, Ord, Show)
 
 instance Applicative Unresolved where
   pure = Unresolved
@@ -365,3 +373,37 @@ modifyRandomGen settings seed =
   let gen = getRandomGen settings
       newGen = incrementStdGen seed gen
    in setRandomGen newGen settings
+
+cachedRegex ::
+     (MonadThrow m, MonadIO m)
+  => Text
+  -> Text
+  -> (FakerSettings -> m Regex)
+  -> FakerSettings
+  -> m RegexFakeValue
+cachedRegex sdata field provider settings = do
+  val <- liftIO $ presentInCache sdata field settings
+  case val of
+    Nothing -> do
+      dat <- provider settings
+      liftIO $ insertToCache sdata field settings (V.singleton $ unRegex dat)
+      generateRegexData settings provider
+    Just vec -> pure $ generateRegex settings (Regex $ V.head vec)
+
+cleanFakerRegex :: Text -> Text
+cleanFakerRegex xs = T.dropEnd 1 $ T.drop 1 xs
+
+generateRegex :: FakerSettings -> Regex -> RegexFakeValue
+generateRegex settings regex =
+  let stdGen = getRandomGen settings
+  in RegexFakeValue $ stringRandom stdGen (cleanFakerRegex $ unRegex regex)
+
+generateRegexData ::
+     (MonadThrow m, MonadIO m)
+  => FakerSettings
+  -> (FakerSettings -> m Regex)
+  -> m RegexFakeValue
+generateRegexData settings provider = do
+  items <- provider settings
+  pure $ generateRegex settings items
+

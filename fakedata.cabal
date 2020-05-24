@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0c9b3586bf2f75d7bd593d2b98d1ff3cbde55328aff719422374b521d5fdf563
+-- hash: 35641fe9c08f3acdce97900adc2a1c74a246aac73c03e1f659cf28047fd1eae9
 
 name:           fakedata
 version:        0.6.1
@@ -539,6 +539,7 @@ library
     , filepath
     , hashable
     , random
+    , string-random
     , template-haskell
     , text
     , time
@@ -632,6 +633,7 @@ test-suite fakedata-test
     , hspec
     , hspec-discover
     , random
+    , string-random
     , template-haskell
     , text
     , time
@@ -660,6 +662,7 @@ benchmark fakebench
     , gauge
     , hashable
     , random
+    , string-random
     , template-haskell
     , text
     , time

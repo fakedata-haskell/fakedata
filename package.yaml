@@ -39,6 +39,7 @@ dependencies:
 - template-haskell
 - bytestring
 - time
+- string-random
 
 library:
   source-dirs: src
