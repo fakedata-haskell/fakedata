@@ -87,6 +87,8 @@ $(genProviderUnresolved "phoneNumber" "formats")
 
 $(genParserUnresolved "cellPhone" "formats")
 
+$(genParserUnresolved "cellPhone" "subscriber_number")
+
 cellPhoneFormatProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
 cellPhoneFormatProvider settings =
@@ -124,6 +126,18 @@ resolvePhoneNumberField settings field@"PhoneNumber.exchange_code" = let
     parser ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
     parser settings = parsePhoneNumberField settings "exchange_code"
+    provider settings = fetchData settings PhoneNumber parser
+    in cachedRandomVec "phoneNumber" field provider settings
+resolvePhoneNumberField settings field@"PhoneNumber.subscriber_number" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parsePhoneNumberField settings "subscriber_number"
+    provider settings = fetchData settings PhoneNumber parser
+    in cachedRandomVec "phoneNumber" field provider settings
+resolvePhoneNumberField settings field@"PhoneNumber.extension" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parsePhoneNumberField settings "extension"
     provider settings = fetchData settings PhoneNumber parser
     in cachedRandomVec "phoneNumber" field provider settings
 resolvePhoneNumberField settings str = throwM $ InvalidField "phoneNumber" str

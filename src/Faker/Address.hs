@@ -20,11 +20,11 @@ citySuffix :: Fake Text
 citySuffix = Fake (cachedRandomVec "address" "citySuffix" citySuffixProvider)
 
 countryCode :: Fake Text
-countryCode = Fake (cachedRandomVec "address" "citySuffix" countryCodeProvider)
+countryCode = Fake (cachedRandomVec "address" "countryCode" countryCodeProvider)
 
 countryCodeLong :: Fake Text
 countryCodeLong =
-  Fake (cachedRandomVec "address" "citySuffix" countryCodeLongProvider)
+  Fake (cachedRandomVec "address" "countryCodeLong" countryCodeLongProvider)
 
 buildingNumber :: Fake Text
 buildingNumber =

@@ -65,7 +65,7 @@ spec = do
             , PH.cellPhoneFormat
 
             , FA.city
-            -- , FA.postcode
+            , FA.postcode
               
             , IN.domainSuffix
 

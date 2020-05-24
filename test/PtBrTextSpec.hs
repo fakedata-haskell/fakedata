@@ -65,8 +65,8 @@ spec = do
             , NA.maleFirstName
             , NA.femaleFirstName
             , NA.nameWithMiddle
-            -- , PH.formats
-            -- , PH.cellPhoneFormat
+            , PH.formats
+            , PH.cellPhoneFormat
             , TE.name
             , TE.sport
             , FO.ingredients

@@ -1,7 +1,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module FrCaTextSpec where
+module EnUsTextSpec where
 
 import Data.Text (Text)
 import qualified Data.Text as T
@@ -12,9 +12,7 @@ import qualified Faker.Company as CO
 import qualified Faker.Internet as IN
 import qualified Faker.Name as NA
 import qualified Faker.PhoneNumber as PH
-import qualified Faker.Book as BO
-import qualified Faker.Lorem as LO
-import qualified Faker.Game.Pokemon as PO
+import qualified Faker.Vehicle as VE
 
 import Test.Hspec
 import TestImport
@@ -26,7 +24,7 @@ isTexts :: [Text] -> Bool
 isTexts xs = and $ map isText xs
 
 locale :: Text
-locale = "fr-CA"
+locale = "en-US"
 
 fakerSettings :: FakerSettings
 fakerSettings = setLocale locale defaultFakerSettings
@@ -41,43 +39,28 @@ verifyDistributeFakes funs = do
 spec :: Spec
 spec = do
   describe "TextSpec" $ do
-    it "validates fr-CA locale" $ do
+    it "validates en-US locale" $ do
       let functions :: [Fake Text] =
-            [ NA.lastName
-            , NA.firstName
-            , NA.prefix
-            , NA.name
-            , NA.nameWithMiddle
-              
-            , BO.title
-            , BO.author
-            , BO.publisher
-
-            , PO.names
-            , PO.locations
-            , PO.moves
-
-            , PH.formats
-
-            , FA.state
-            , FA.stateAbbr
+            [ 
+              IN.domainSuffix
             , FA.countryCode
+            , FA.fullAddress
             , FA.buildingNumber
+            , FA.postcode
             , FA.streetSuffix
             , FA.streetName
+            , FA.stateAbbr
+            , FA.cityPrefix
+            , FA.citySuffix
+            , FA.city
+            , FA.secondaryAddress
+            , FA.fullAddress
             , FA.streetAddress
-            -- , FA.postcode
-              
-            , IN.freeEmail
-            , IN.domainSuffix
-
-            , CO.suffix
-            , CO.name
-            , CO.buzzword
-            , CO.bs
-
-            , LO.words
-            , LO.supplemental
+            , PH.countryCode
+            , PH.formats
+            , PH.cellPhoneFormat
+            , NA.firstName
+            , NA.lastName
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

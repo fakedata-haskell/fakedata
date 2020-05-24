@@ -48,7 +48,7 @@ spec = do
             , IN.domainSuffix
             , IN.freeEmail
 
-            -- , PH.formats
+            , PH.formats
 
             ]
       bools <- verifyDistributeFakes functions

@@ -46,7 +46,7 @@ spec = do
             , FA.postcode
 
             , CO.suffix
-            -- , CO.name
+            , CO.name
               
             , IN.domainSuffix
 
