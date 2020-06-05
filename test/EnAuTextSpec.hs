@@ -58,7 +58,7 @@ spec = do
             , NA.nameWithMiddle
             , NA.prefix
               
-            -- , PH.formats-- todo: country_code needs to be list
+            , PH.formats
             , PH.cellPhoneFormat 
               
             , TE.sport
