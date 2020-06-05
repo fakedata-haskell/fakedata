@@ -47,7 +47,7 @@ spec = do
         generateWithSettings
           (setLocale "en-AU" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Sarah Kirlin Jenkins"
+      (ctries) `shouldBe` "Sarah Ruby Jenkins"
     it "group A - WC" $ do
       ga <- generate WC.groupsGroupA
       ga `shouldBe` "Russia"
@@ -59,9 +59,9 @@ spec = do
     it "can be appended and it is associative" $ do
       phraseL <- generate $ (pure "Hello " <> name) <> pure "!"
       phraseR <- generate $ pure "Hello " <> (name <> pure "!")
-      phraseL `shouldBe` "Hello Dominga Stiedemann!"
-      phraseR `shouldBe` "Hello Dominga Stiedemann!"
+      phraseL `shouldBe` "Hello Roxanne Stiedemann!"
+      phraseR `shouldBe` "Hello Roxanne Stiedemann!"
   describe "Monoid instance of Fake" $
     it "mappend mempty doesn't modify the other operand" $ do
       name' <- generate $ name `mappend` mempty
-      name' `shouldBe` "Georgianne Steuber"
+      name' `shouldBe` "Sherryl Steuber"

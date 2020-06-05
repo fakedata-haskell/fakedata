@@ -125,3 +125,13 @@ mailBox =
        "mail_box"
        mailBoxProvider
        resolveAddressText)
+
+-- | @since 0.7.0
+cityWithState :: Fake Text
+cityWithState =
+  Fake
+    (cachedRandomUnresolvedVec
+       "address"
+       "city_with_state"
+       fullAddressProvider
+       resolveAddressText)

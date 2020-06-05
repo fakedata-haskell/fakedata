@@ -51,6 +51,7 @@ spec = do
             , IN.domainSuffix
 
             , PH.formats
+            , NA.lastName
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

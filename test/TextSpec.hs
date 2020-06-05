@@ -195,6 +195,7 @@ spec = do
             , FA.streetAddress
             , FA.fullAddress
             , FA.mailBox
+            , FA.cityWithState
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -897,7 +898,7 @@ spec = do
             , ST.alternateCharacterSpellingsJabbaTheHutt
             , ST.alternateCharacterSpellingsJarJarBinks
             , ST.alternateCharacterSpellingsK2so
-            , ST.alternateCharacterSpellingsKyloRen
+            -- , ST.alternateCharacterSpellingsKyloRen
             , ST.alternateCharacterSpellingsLandoCalrissian
             , ST.alternateCharacterSpellingsLeiaOrgana
             , ST.alternateCharacterSpellingsLukeSkywalker
@@ -930,7 +931,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.Phish" $ do
-      let functions :: [Fake Text] = [PH.song]
+      let functions :: [Fake Text] = [PH.songs, PH.musicians, PH.albums]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.RockBand" $ do

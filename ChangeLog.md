@@ -5,6 +5,14 @@
 * Add support for regex fake value generation. Useful for postcode
   functions for different locales.
 * Improve documentation of Faker.Combinators.
+* `de-CH` locale update: `lastName` function works now.
+* New function in Faker.Music.Phish module: albums, musicians
+* New function in Faker.Address: cityWithState
+
+### Breaking changes
+
+* Faker.Music.Phish module:
+  - Rename `song` function to `songs`
 
 ## 0.6.1
 
