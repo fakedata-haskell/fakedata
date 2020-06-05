@@ -1710,5 +1710,18 @@ name =
     , unresolvedNestedFields = []
     }
 
+blood :: ModuleInfo
+blood = ModuleInfo 
+    { mmoduleName = "blood"
+    , jsonField = "blood"
+    , fields =
+        [ "type"
+        , "rh_factor"
+        ]
+    , unresolvedFields = ["group"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = name
+currentOne = blood
