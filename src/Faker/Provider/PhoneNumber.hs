@@ -140,4 +140,22 @@ resolvePhoneNumberField settings field@"PhoneNumber.extension" = let
     parser settings = parsePhoneNumberField settings "extension"
     provider settings = fetchData settings PhoneNumber parser
     in cachedRandomVec "phoneNumber" field provider settings
+resolvePhoneNumberField settings field@"area_code" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parsePhoneNumberField settings "area_code"
+    provider settings = fetchData settings PhoneNumber parser
+    in cachedRandomVec "phoneNumber" field provider settings
+resolvePhoneNumberField settings field@"subscriber_number" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parsePhoneNumberField settings "subscriber_number"
+    provider settings = fetchData settings PhoneNumber parser
+    in cachedRandomVec "phoneNumber" field provider settings
+resolvePhoneNumberField settings field@"country_code" = let
+    parser ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+    parser settings = parsePhoneNumberField settings field
+    provider settings = fetchData settings PhoneNumber parser
+    in cachedRandomVec "phoneNumber" field provider settings
 resolvePhoneNumberField settings str = throwM $ InvalidField "phoneNumber" str

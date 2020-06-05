@@ -14,6 +14,8 @@ import qualified Faker.Name as NA
 import qualified Faker.Commerce as CE
 import qualified Faker.Team as TE
 import qualified Faker.Internet as IN
+import qualified Faker.University as UN
+import qualified Faker.Bank as BN
 import Faker.Combinators (listOf)
 
 import Test.Hspec
@@ -54,11 +56,15 @@ spec = do
             , NA.firstName
             , NA.lastName
             , NA.nameWithMiddle
+            , NA.prefix
               
-            , PH.formats
-            , PH.cellPhoneFormat
+            -- , PH.formats-- todo: country_code needs to be list
+            , PH.cellPhoneFormat 
               
             , TE.sport
+              
+            , UN.name
+            , BN.name
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

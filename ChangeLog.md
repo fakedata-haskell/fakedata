@@ -9,6 +9,15 @@
 * New function in Faker.Music.Phish module: albums, musicians
 * New function in Faker.Address: cityWithState
 
+### New modules
+
+* 
+
+### Locale Improvements
+
+* en-AU: Locale has updated which leads to working of newer functions:
+  Faker.Name.prefix, Faker.University.name, Faker.Bank.name
+
 ### Breaking changes
 
 * Faker.Music.Phish module:
