@@ -32,6 +32,14 @@ gen `suchThatMaybe` p = do
       else Nothing
 
 -- | Generates a value that satisfies a predicate.
+--
+-- @
+-- λ> import qualified Faker.Address as AD
+-- λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 5))
+-- λ> item
+-- "Ecuador"
+-- @
+--
 suchThat :: Fake a -> (a -> Bool) -> Fake a
 gen `suchThat` p = do
   mx <- gen `suchThatMaybe` p
@@ -41,6 +49,14 @@ gen `suchThat` p = do
 
 -- | Randomly uses one of the given generators. The input structure
 -- must be non-empty.
+--
+-- @
+-- λ> import qualified Faker.Address as FA
+-- λ> let fakes = [FA.country, FA.postcode, FA.state]
+-- λ> generate (oneof fakes)
+-- Montana
+-- @
+--
 oneof :: Foldable t => t (Fake a) -> Fake a
 oneof xs = helper
   where
@@ -51,6 +67,13 @@ oneof xs = helper
         xs' -> fromRange (0, length xs' - 1) >>= (items !!)
 
 -- | Generates one of the given values. The input list must be non-empty.
+--
+-- @
+-- λ> let fakeInt = elements [1..100]
+-- λ> generate fakeInt
+-- 22
+-- @
+--
 elements :: Foldable t => t a -> Fake a
 elements xs =
   case items of
@@ -59,10 +82,6 @@ elements xs =
   where
     items = toList xs
 
--- | Generates a random subsequence of the given list.
--- todo : implemente generic interface
--- subseqOf :: Foldable f => f a -> Fake (f a)
--- subseqOf xs = filterM (\_ -> fromRange (False, True)) (toList xs)
 -- | Generates a list of the given length.
 listOf :: Int -> Fake a -> Fake [a]
 listOf = replicateM
