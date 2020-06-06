@@ -13,6 +13,7 @@
 
 * Faker.Blood
 * Faker.Chiquito
+* Faker.Computer
 
 ### Locale Improvements
 

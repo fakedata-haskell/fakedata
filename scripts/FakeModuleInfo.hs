@@ -1723,5 +1723,33 @@ blood = ModuleInfo
     , unresolvedNestedFields = []
     }
 
+chiquito :: ModuleInfo
+chiquito = ModuleInfo
+    { mmoduleName = "chiquito"
+    , jsonField = "chiquito"
+    , fields =
+        [ "expressions"
+        , "terms"
+        , "sentences"
+        , "jokes"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+computer :: ModuleInfo
+computer = ModuleInfo
+    { mmoduleName = "computer"
+    , jsonField = "computer"
+    , fields =
+        [ "type"
+        , "platform"
+        ]
+    , unresolvedFields = []
+    , nestedFields = [["os","linux"], ["os","macos"],["os","windows"]]
+    , unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = blood
+currentOne = computer

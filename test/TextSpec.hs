@@ -23,6 +23,7 @@ import qualified Faker.Cannabis as CA
 import qualified Faker.Chiquito as CI
 import qualified Faker.ChuckNorris as CH
 import qualified Faker.Code as CO
+import qualified Faker.Computer as COM
 import qualified Faker.Coffee as CO
 import qualified Faker.Coin as CO
 import qualified Faker.Color as CO
@@ -356,6 +357,11 @@ spec = do
       (and bools) `shouldBe` True
     it "Color" $ do
       let functions :: [Fake Text] = [CO.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Computer" $ do
+      let functions :: [Fake Text] =
+            [COM.type', COM.platform, COM.osLinux, COM.osMacos, COM.osWindows]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Commerce" $ do
