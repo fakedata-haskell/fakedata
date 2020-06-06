@@ -24,6 +24,7 @@ data SourceData
   | BoJackHorseman
   | Book
   | Blood
+  | Chiquito
   | BossaNova
   | BreakingBad
   | Buffy

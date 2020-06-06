@@ -9,9 +9,10 @@
 * New function in Faker.Music.Phish module: albums, musicians
 * New function in Faker.Address: cityWithState
 
-### New modules
+### New modules introduced
 
 * Faker.Blood
+* Faker.Chiquito
 
 ### Locale Improvements
 

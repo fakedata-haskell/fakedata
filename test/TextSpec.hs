@@ -12,14 +12,15 @@ import qualified Faker.Appliance as AP
 import qualified Faker.Artist as AR
 import qualified Faker.Bank as BA
 import qualified Faker.Beer as BE
-import qualified Faker.Book as BO
 import qualified Faker.Blood as BL
+import qualified Faker.Book as BO
 import qualified Faker.Book.CultureSeries as CE
 import qualified Faker.Book.Dune as DU
 import qualified Faker.Book.Lovecraft as LO
 import qualified Faker.BossaNova as BO
 import qualified Faker.Business as BU
 import qualified Faker.Cannabis as CA
+import qualified Faker.Chiquito as CI
 import qualified Faker.ChuckNorris as CH
 import qualified Faker.Code as CO
 import qualified Faker.Coffee as CO
@@ -226,8 +227,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Blood" $ do
-      let functions :: [Fake Text] =
-            [BL.type', BL.rhFactor, BL.group]
+      let functions :: [Fake Text] = [BL.type', BL.rhFactor, BL.group]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Book.CultureSeries" $ do
@@ -307,6 +307,11 @@ spec = do
       (and bools) `shouldBe` True
     it "ChuckNorris" $ do
       let functions :: [Fake Text] = [CH.fact]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Chiquito" $ do
+      let functions :: [Fake Text] =
+            [CI.expressions, CI.terms, CI.sentences, CI.jokes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Code" $ do
@@ -663,7 +668,8 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Gender" $ do
-      let functions :: [Fake Text] = [GE.types, GE.binaryTypes, GE.shortBinaryTypes]
+      let functions :: [Fake Text] =
+            [GE.types, GE.binaryTypes, GE.shortBinaryTypes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "GreekPhilosophers" $ do

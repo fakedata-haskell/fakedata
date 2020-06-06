@@ -200,8 +200,10 @@ sourceFile Zelda = "zelda"
 sourceFile Basketball = "basketball"
 sourceFile Opera = "opera"
 sourceFile Blood = "blood"
+sourceFile Chiquito = "chiquito"
 
 mapSource :: Text -> Name
+mapSource "chiquito" = 'Chiquito
 mapSource "horse" = 'Horse
 mapSource "address" = 'Address
 mapSource "basketball" = 'Basketball
