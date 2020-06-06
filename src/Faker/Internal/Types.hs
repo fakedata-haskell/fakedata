@@ -23,6 +23,13 @@ data SourceData
   | Beer
   | BoJackHorseman
   | Book
+  | Blood
+  | Chiquito
+  | Computer
+  | Control
+  | DnD
+  | PearlJam
+  | Departed
   | BossaNova
   | BreakingBad
   | Buffy
@@ -155,6 +162,10 @@ data SourceData
   | Yoda
   | Zelda
   | Opera
+  | Rajnikanth
+  | Show
+  | Suits
+  | WarhammerFantasy
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

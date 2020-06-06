@@ -1,10 +1,52 @@
 # Changelog for fakedata
 
-## Unreleased
+## 0.7.0
 
 * Add support for regex fake value generation. Useful for postcode
   functions for different locales.
 * Improve documentation of Faker.Combinators.
+* `de-CH` locale update: `lastName` function works now.
+* New function in Faker.Music.Phish module: albums, musicians
+* New function in Faker.Address: cityWithState
+* New function in Faker.Movie: title
+
+### Data Update
+
+The following data sources which the libraries uses has been updated:
+
+* heroes_of_the_storm.yml
+* house.yml
+* name.yml
+* one_piece.yml
+
+### New modules introduced
+
+* Faker.Blood
+* Faker.Chiquito
+* Faker.Computer
+* Faker.Game.Control
+* Faker.Movie.Departed
+* Faker.Dnd
+* Faker.Music.PearlJam
+* Faker.Rajnikanth
+* Faker.Show
+* Faker.TvShow.Suits
+* Faker.WarhammerFantasy
+
+### Locale Improvements
+
+* en-AU: 
+  - Locale has updated which leads to working of newer functions:
+    Faker.Name.prefix, Faker.University.name, Faker.Bank.name
+* en-CA: Faker.Address.postcode works now.
+* en-GB: formats field has been updated.
+* fr-CA: Faker.Address.postcode works now.
+* ko: Supports Faker.Commerce moudle now.
+  
+### Breaking changes
+
+* Faker.Music.Phish module:
+  - Rename `song` function to `songs`
 
 ## 0.6.1
 

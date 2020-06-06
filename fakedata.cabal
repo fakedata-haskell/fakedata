@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 35641fe9c08f3acdce97900adc2a1c74a246aac73c03e1f659cf28047fd1eae9
+-- hash: fb4da218ac71d0bb4618f70be99c06015e6712d881d45c8dfaa89e740bad42e5
 
 name:           fakedata
 version:        0.6.1
@@ -89,6 +89,7 @@ data-files:
     faker/lib/locales/en/bank.yml
     faker/lib/locales/en/basketball.yml
     faker/lib/locales/en/beer.yml
+    faker/lib/locales/en/blood.yml
     faker/lib/locales/en/bojack_horseman.yml
     faker/lib/locales/en/book.yml
     faker/lib/locales/en/bossa_nova.yml
@@ -97,6 +98,7 @@ data-files:
     faker/lib/locales/en/business.yml
     faker/lib/locales/en/cannabis.yml
     faker/lib/locales/en/cat.yml
+    faker/lib/locales/en/chiquito.yml
     faker/lib/locales/en/chuck_norris.yml
     faker/lib/locales/en/code.yml
     faker/lib/locales/en/coffee.yml
@@ -106,15 +108,19 @@ data-files:
     faker/lib/locales/en/community.yml
     faker/lib/locales/en/company.yml
     faker/lib/locales/en/compass.yml
+    faker/lib/locales/en/computer.yml
     faker/lib/locales/en/construction.yml
+    faker/lib/locales/en/control.yml
     faker/lib/locales/en/cosmere.yml
     faker/lib/locales/en/crypto_coin.yml
     faker/lib/locales/en/culture_series.yml
     faker/lib/locales/en/currency.yml
     faker/lib/locales/en/dc_comics.yml
     faker/lib/locales/en/demographic.yml
+    faker/lib/locales/en/departed.yml
     faker/lib/locales/en/dessert.yml
     faker/lib/locales/en/device.yml
+    faker/lib/locales/en/dnd.yml
     faker/lib/locales/en/dog.yml
     faker/lib/locales/en/dota.yml
     faker/lib/locales/en/dr_who.yml
@@ -179,12 +185,14 @@ data-files:
     faker/lib/locales/en/opera.yml
     faker/lib/locales/en/overwatch.yml
     faker/lib/locales/en/parks_and_rec.yml
+    faker/lib/locales/en/pearl_jam.yml
     faker/lib/locales/en/phish.yml
     faker/lib/locales/en/phone_number.yml
     faker/lib/locales/en/pokemon.yml
     faker/lib/locales/en/princess_bride.yml
     faker/lib/locales/en/programming_language.yml
     faker/lib/locales/en/quote.yml
+    faker/lib/locales/en/rajnikanth.yml
     faker/lib/locales/en/relationship.yml
     faker/lib/locales/en/restaurant.yml
     faker/lib/locales/en/rick_and_morty.yml
@@ -193,6 +201,7 @@ data-files:
     faker/lib/locales/en/science.yml
     faker/lib/locales/en/seinfeld.yml
     faker/lib/locales/en/shakespeare.yml
+    faker/lib/locales/en/show.yml
     faker/lib/locales/en/silicon_valley.yml
     faker/lib/locales/en/simpsons.yml
     faker/lib/locales/en/slack_emoji.yml
@@ -206,6 +215,7 @@ data-files:
     faker/lib/locales/en/stranger_thing.yml
     faker/lib/locales/en/stripe.yml
     faker/lib/locales/en/subscription.yml
+    faker/lib/locales/en/suits.yml
     faker/lib/locales/en/super_smash_bros.yml
     faker/lib/locales/en/superhero.yml
     faker/lib/locales/en/sword_art_online.yml
@@ -220,6 +230,7 @@ data-files:
     faker/lib/locales/en/vehicle.yml
     faker/lib/locales/en/venture_bros.yml
     faker/lib/locales/en/verbs.yml
+    faker/lib/locales/en/warhammer_fantasy.yml
     faker/lib/locales/en/witcher.yml
     faker/lib/locales/en/world_cup.yml
     faker/lib/locales/en/world_of_warcraft.yml
@@ -241,6 +252,7 @@ library
       Faker.Artist
       Faker.Bank
       Faker.Beer
+      Faker.Blood
       Faker.Book
       Faker.Book.CultureSeries
       Faker.Book.Dune
@@ -248,6 +260,7 @@ library
       Faker.BossaNova
       Faker.Business
       Faker.Cannabis
+      Faker.Chiquito
       Faker.ChuckNorris
       Faker.Code
       Faker.Coffee
@@ -257,6 +270,7 @@ library
       Faker.Commerce
       Faker.Company
       Faker.Compass
+      Faker.Computer
       Faker.Construction
       Faker.Cosmere
       Faker.Creature.Animal
@@ -269,6 +283,7 @@ library
       Faker.DcComics
       Faker.Demographic
       Faker.Dessert
+      Faker.Dnd
       Faker.Educator
       Faker.ElectricalComponents
       Faker.Esport
@@ -276,6 +291,7 @@ library
       Faker.Finance
       Faker.Food
       Faker.FunnyName
+      Faker.Game.Control
       Faker.Game.Dota
       Faker.Game.ElderScrolls
       Faker.Game.Fallout
@@ -287,6 +303,7 @@ library
       Faker.Game.Pokemon
       Faker.Game.SonicTheHedgehog
       Faker.Game.SuperSmashBros
+      Faker.Game.WarhammerFantasy
       Faker.Game.Witcher
       Faker.Game.WorldOfWarcraft
       Faker.Game.Zelda
@@ -312,6 +329,7 @@ library
       Faker.Military
       Faker.Movie
       Faker.Movie.BackToTheFuture
+      Faker.Movie.Departed
       Faker.Movie.Ghostbusters
       Faker.Movie.GratefulDead
       Faker.Movie.HarryPotter
@@ -324,6 +342,7 @@ library
       Faker.Movie.VForVendetta
       Faker.Music
       Faker.Music.Opera
+      Faker.Music.PearlJam
       Faker.Music.Phish
       Faker.Music.RockBand
       Faker.Music.UmphreysMcgee
@@ -334,9 +353,11 @@ library
       Faker.ProgrammingLanguage
       Faker.Quote
       Faker.Quote.Shakespeare
+      Faker.Rajnikanth
       Faker.Relationship
       Faker.Restaurant
       Faker.Science
+      Faker.Show
       Faker.SlackEmoji
       Faker.Source
       Faker.Space
@@ -370,6 +391,7 @@ library
       Faker.TvShow.Stargate
       Faker.TvShow.StarTrek
       Faker.TvShow.StrangerThings
+      Faker.TvShow.Suits
       Faker.TvShow.TheExpanse
       Faker.TvShow.TheItCrowd
       Faker.TvShow.TheThickOfIt
@@ -395,6 +417,7 @@ library
       Faker.Provider.Bank
       Faker.Provider.Basketball
       Faker.Provider.Beer
+      Faker.Provider.Blood
       Faker.Provider.BoJackHorseman
       Faker.Provider.Book
       Faker.Provider.BossaNova
@@ -403,6 +426,7 @@ library
       Faker.Provider.Business
       Faker.Provider.Cannabis
       Faker.Provider.Cat
+      Faker.Provider.Chiquito
       Faker.Provider.ChuckNorris
       Faker.Provider.Code
       Faker.Provider.Coffee
@@ -412,15 +436,19 @@ library
       Faker.Provider.Community
       Faker.Provider.Company
       Faker.Provider.Compass
+      Faker.Provider.Computer
       Faker.Provider.Construction
+      Faker.Provider.Control
       Faker.Provider.Cosmere
       Faker.Provider.CryptoCoin
       Faker.Provider.CultureSeries
       Faker.Provider.Currency
       Faker.Provider.DcComics
       Faker.Provider.Demographic
+      Faker.Provider.Departed
       Faker.Provider.Dessert
       Faker.Provider.Device
+      Faker.Provider.Dnd
       Faker.Provider.Dog
       Faker.Provider.Dota
       Faker.Provider.DragonBall
@@ -482,12 +510,14 @@ library
       Faker.Provider.Opera
       Faker.Provider.Overwatch
       Faker.Provider.ParksAndRec
+      Faker.Provider.PearlJam
       Faker.Provider.Phish
       Faker.Provider.PhoneNumber
       Faker.Provider.Pokemon
       Faker.Provider.PrincessBride
       Faker.Provider.ProgrammingLanguage
       Faker.Provider.Quote
+      Faker.Provider.Rajnikanth
       Faker.Provider.Relationship
       Faker.Provider.Restaurant
       Faker.Provider.RickAndMorty
@@ -496,6 +526,7 @@ library
       Faker.Provider.Science
       Faker.Provider.Seinfeld
       Faker.Provider.Shakespeare
+      Faker.Provider.Show
       Faker.Provider.SiliconValley
       Faker.Provider.Simpsons
       Faker.Provider.SlackEmoji
@@ -508,6 +539,7 @@ library
       Faker.Provider.StarWars
       Faker.Provider.StrangerThings
       Faker.Provider.Subscription
+      Faker.Provider.Suits
       Faker.Provider.Superhero
       Faker.Provider.SuperSmashBros
       Faker.Provider.SwordArtOnline
@@ -523,6 +555,7 @@ library
       Faker.Provider.VentureBros
       Faker.Provider.Verbs
       Faker.Provider.VForVendetta
+      Faker.Provider.WarhammerFantasy
       Faker.Provider.Witcher
       Faker.Provider.WorldCup
       Faker.Provider.WorldOfWarcraft
@@ -579,6 +612,7 @@ test-suite fakedata-test
       EnSgTextSpec
       EnThTextSpec
       EnUgTextSpec
+      EnUsTextSpec
       EnZaTextSpec
       EsMxTextSpec
       EsTextSpec

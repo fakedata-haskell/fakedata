@@ -12,6 +12,7 @@ import qualified Faker.Appliance as AP
 import qualified Faker.Artist as AR
 import qualified Faker.Bank as BA
 import qualified Faker.Beer as BE
+import qualified Faker.Blood as BL
 import qualified Faker.Book as BO
 import qualified Faker.Book.CultureSeries as CE
 import qualified Faker.Book.Dune as DU
@@ -19,10 +20,14 @@ import qualified Faker.Book.Lovecraft as LO
 import qualified Faker.BossaNova as BO
 import qualified Faker.Business as BU
 import qualified Faker.Cannabis as CA
+import qualified Faker.Chiquito as CI
 import qualified Faker.ChuckNorris as CH
+import qualified Faker.Rajnikanth as RK
 import qualified Faker.Code as CO
+import qualified Faker.Computer as COM
 import qualified Faker.Coffee as CO
 import qualified Faker.Coin as CO
+import qualified Faker.Dnd as DN
 import qualified Faker.Color as CO
 import qualified Faker.Commerce as CO
 import qualified Faker.Company as CM
@@ -46,6 +51,8 @@ import qualified Faker.Finance as FI
 import qualified Faker.Food as FO
 import qualified Faker.FunnyName as FU
 import qualified Faker.Game.Dota as DO
+import qualified Faker.Game.WarhammerFantasy as WF
+import qualified Faker.Game.Control as GC
 import qualified Faker.Game.ElderScrolls as EL
 import qualified Faker.Game.Fallout as FA
 import qualified Faker.Game.HalfLife as HA
@@ -79,6 +86,7 @@ import qualified Faker.Marketing as MA
 import qualified Faker.Measurement as ME
 import qualified Faker.Military as MI
 import qualified Faker.Movie as MO
+import qualified Faker.Movie.Departed as MD
 import qualified Faker.Movie.BackToTheFuture as BA
 import qualified Faker.Movie.Ghostbusters as GH
 import qualified Faker.Movie.GratefulDead as GR
@@ -92,6 +100,7 @@ import qualified Faker.Movie.StarWars as ST
 import qualified Faker.Movie.VForVendetta as VF
 import qualified Faker.Music as MU
 import qualified Faker.Music.Opera as OP
+import qualified Faker.Music.PearlJam as PJ
 import qualified Faker.Music.Phish as PH
 import qualified Faker.Music.RockBand as RO
 import qualified Faker.Music.UmphreysMcgee as UM
@@ -113,6 +122,8 @@ import qualified Faker.Sport.Football as FO
 import qualified Faker.Subscription as SU
 import qualified Faker.Superhero as SU
 import qualified Faker.Team as TE
+import qualified Faker.Show as WS
+import qualified Faker.TvShow.Suits as SU
 import qualified Faker.TvShow.AquaTeenHungerForce as AQ
 import qualified Faker.TvShow.BoJackHorseman as BO
 import qualified Faker.TvShow.BreakingBad as BR
@@ -195,6 +206,7 @@ spec = do
             , FA.streetAddress
             , FA.fullAddress
             , FA.mailBox
+            , FA.cityWithState
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -221,6 +233,10 @@ spec = do
     it "Beer" $ do
       let functions :: [Fake Text] =
             [BE.name, BE.brand, BE.hop, BE.yeast, BE.malt, BE.style]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Blood" $ do
+      let functions :: [Fake Text] = [BL.type', BL.rhFactor, BL.group]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Book.CultureSeries" $ do
@@ -302,8 +318,26 @@ spec = do
       let functions :: [Fake Text] = [CH.fact]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
+    it "RajniKanth" $ do
+      let functions :: [Fake Text] = [RK.joke]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Show" $ do
+      let functions :: [Fake Text] = [WS.adultMusical]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Chiquito" $ do
+      let functions :: [Fake Text] =
+            [CI.expressions, CI.terms, CI.sentences, CI.jokes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
     it "Code" $ do
       let functions :: [Fake Text] = [CO.asin]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "DnD" $ do
+      let functions :: [Fake Text] =
+            [DN.species, DN.klasses, DN.backgrounds, DN.alignments]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Coffee" $ do
@@ -344,6 +378,11 @@ spec = do
       (and bools) `shouldBe` True
     it "Color" $ do
       let functions :: [Fake Text] = [CO.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Computer" $ do
+      let functions :: [Fake Text] =
+            [COM.type', COM.platform, COM.osLinux, COM.osMacos, COM.osWindows]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Commerce" $ do
@@ -424,6 +463,19 @@ spec = do
       (and bools) `shouldBe` True
     it "Creature.Cat" $ do
       let functions :: [Fake Text] = [CA.name, CA.breed, CA.registry]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Control" $ do
+      let functions :: [Fake Text] =
+            [ GC.character
+            , GC.location
+            , GC.objectOfPower
+            , GC.alteredItem
+            , GC.alteredWorldEvent
+            , GC.hiss
+            , GC.theBoard
+            , GC.quote
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Creature.Dog" $ do
@@ -619,6 +671,17 @@ spec = do
       let functions :: [Fake Text] = [OV.heroes, OV.locations, OV.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
+    it "Game.WarhammerFantasy" $ do
+      let functions :: [Fake Text] =
+            [ WF.creatures
+            , WF.factions
+            , WF.factions
+            , WF.locations
+            , WF.quotes
+            , WF.heros
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
     it "Game.Pokemon" $ do
       let functions :: [Fake Text] = [PO.names, PO.locations, PO.moves]
       bools <- verifyFakes functions
@@ -656,7 +719,8 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Gender" $ do
-      let functions :: [Fake Text] = [GE.types, GE.binaryTypes, GE.shortBinaryTypes]
+      let functions :: [Fake Text] =
+            [GE.types, GE.binaryTypes, GE.shortBinaryTypes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "GreekPhilosophers" $ do
@@ -784,6 +848,10 @@ spec = do
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
+    it "Movie.Departed" $ do
+      let functions :: [Fake Text] = [MD.actors, MD.characters, MD.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
     it "Movie.BackToTheFuture" $ do
       let functions :: [Fake Text] = [BA.dates, BA.characters, BA.quotes]
       bools <- verifyFakes functions
@@ -865,7 +933,7 @@ spec = do
             , ST.quotesJabbaTheHutt
             , ST.quotesJarJarBinks
             , ST.quotesK2so
-            , ST.quotesKyloRen
+            -- , ST.quotesKyloRen
             , ST.quotesLandoCalrissian
             , ST.quotesLeiaOrgana
             , ST.quotesLukeSkywalker
@@ -917,7 +985,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Movie" $ do
-      let functions :: [Fake Text] = [MO.quote]
+      let functions :: [Fake Text] = [MO.quote, MO.title]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.Opera" $ do
@@ -929,8 +997,17 @@ spec = do
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
+    it "Music.PearlJam" $ do
+      let functions :: [Fake Text] =
+            [ OP.italianByGiuseppeVerdi
+            , OP.italianByGioacchinoRossini
+            , OP.italianByGaetanoDonizetti
+            , OP.italianByVincenzoBellini
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
     it "Music.Phish" $ do
-      let functions :: [Fake Text] = [PH.song]
+      let functions :: [Fake Text] = [PH.songs, PH.musicians, PH.albums]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.RockBand" $ do
@@ -1313,6 +1390,10 @@ spec = do
       (and bools) `shouldBe` True
     it "TvShow.AquaTeenHungerForce" $ do
       let functions :: [Fake Text] = [AQ.character]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Suits" $ do
+      let functions :: [Fake Text] = [SU.characters, SU.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.BoJackHorseman" $ do

@@ -10,3 +10,5 @@ import Faker.Provider.Movie
 import Faker.TH
 
 $(generateFakeField "movie" "quote")
+
+$(generateFakeField "movie" "title")

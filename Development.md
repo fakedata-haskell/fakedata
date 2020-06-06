@@ -120,22 +120,10 @@ irb(main):006:0> Faker::Address.city
 
 These issues are best fixed in the upstream ruby library.
 
-* de-ch: name (wrong/missing data)
-* en-ca
-  - postcode (regex)
-  - formats (wrong/missing data)
-* en-gb
-  - postcode (regex)
-* en-us
-  - Whole thing is broken
-* en-MX:
-  - phone_number.formats, cell_phone.formats is broken
-* fr-CA
-  - postcode(regex), phonenumber
 * fr
   - compass.direction (rethink code)
-* nl
-  - postcode (regex)
-* vi: postcode (regex)
-* pt-br:
-  - Fix format and cellPhoneFormat
+* start wars - kylo ren test: https://github.com/faker-ruby/faker/pull/2011/files#r436272174
+
+## Steps before release
+
+* Make sure you remove Provider modules from cabal

@@ -46,11 +46,12 @@ spec = do
             , FA.postcode
 
             , CO.suffix
-            -- , CO.name
+            , CO.name
               
             , IN.domainSuffix
 
             , PH.formats
+            , NA.lastName
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

@@ -1,12 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Provider.Movie where
+module Faker.Provider.Rajnikanth where
 
 import Config
 import Control.Monad.Catch
-import Control.Monad.IO.Class
-import Data.Map.Strict (Map)
 import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
@@ -16,26 +14,26 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
-parseMovie :: FromJSON a => FakerSettings -> Value -> Parser a
-parseMovie settings (Object obj) = do
+parseRajnikanth :: FromJSON a => FakerSettings -> Value -> Parser a
+parseRajnikanth settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  movie <- faker .: "movie"
-  pure movie
-parseMovie settings val = fail $ "expected Object, but got " <> (show val)
+  rajnikanth <- faker .: "rajnikanth"
+  pure rajnikanth
+parseRajnikanth settings val = fail $ "expected Object, but got " <> (show val)
 
-parseMovieField ::
+parseRajnikanthField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
-parseMovieField settings txt val = do
-  movie <- parseMovie settings val
-  field <- movie .:? txt .!= mempty
+parseRajnikanthField settings txt val = do
+  rajnikanth <- parseRajnikanth settings val
+  field <- rajnikanth .:? txt .!= mempty
   pure field
 
-parseMovieFields ::
+parseRajnikanthFields ::
      (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
-parseMovieFields settings txts val = do
-  movie <- parseMovie settings val
-  helper movie txts
+parseRajnikanthFields settings txts val = do
+  rajnikanth <- parseRajnikanth settings val
+  helper rajnikanth txts
   where
     helper :: (FromJSON a) => Value -> [Text] -> Parser a
     helper a [] = parseJSON a
@@ -44,10 +42,6 @@ parseMovieFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-$(genParser "movie" "quote")
+$(genParser "rajnikanth" "joke")
 
-$(genProvider "movie" "quote")
-
-$(genParser "movie" "title")
-
-$(genProvider "movie" "title")
+$(genProvider "rajnikanth" "joke")

@@ -199,12 +199,30 @@ sourceFile Yoda = "yoda"
 sourceFile Zelda = "zelda"
 sourceFile Basketball = "basketball"
 sourceFile Opera = "opera"
+sourceFile Blood = "blood"
+sourceFile Chiquito = "chiquito"
+sourceFile Computer = "computer"
+sourceFile Control = "control"
+sourceFile Departed = "departed"
+sourceFile DnD = "dnd"
+sourceFile PearlJam = "pearl_jam"
+sourceFile Rajnikanth = "rajnikanth"
+sourceFile Show = "show"
+sourceFile WarhammerFantasy = "warhammer_fantasy"
+sourceFile Suits = "suits"
 
 mapSource :: Text -> Name
+mapSource "pearl_jam" = 'PearlJam
+mapSource "dnd" = 'DnD
+mapSource "chiquito" = 'Chiquito
+mapSource "departed" = 'Departed
+mapSource "computer" = 'Computer
+mapSource "control" = 'Control
 mapSource "horse" = 'Horse
 mapSource "address" = 'Address
 mapSource "basketball" = 'Basketball
 mapSource "name" = 'Name
+mapSource "blood" = 'Blood
 mapSource "ancient" = 'Ancient
 mapSource "animal" = 'Animal
 mapSource "app" = 'App
@@ -347,6 +365,10 @@ mapSource "yoda" = 'Yoda
 mapSource "zelda" = 'Zelda
 mapSource "measurement" = 'Measurement
 mapSource "opera" = 'Opera
+mapSource "rajnikanth" = 'Rajnikanth
+mapSource "show" = 'Show
+mapSource "suits" = 'Suits
+mapSource "warhammerFantasy" = 'WarhammerFantasy
 mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath

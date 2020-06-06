@@ -1,5 +1,5 @@
 name:                fakedata
-version:             0.6.1
+version:             0.7.0
 github:              "psibi/fakedata"
 license:             BSD3
 author:              "Sibi Prabakaran"
@@ -58,6 +58,7 @@ library:
   - Faker.Provider.Bank
   - Faker.Provider.Basketball
   - Faker.Provider.Beer
+  - Faker.Provider.Blood
   - Faker.Provider.BoJackHorseman
   - Faker.Provider.Book
   - Faker.Provider.BossaNova
@@ -66,6 +67,7 @@ library:
   - Faker.Provider.Business
   - Faker.Provider.Cannabis
   - Faker.Provider.Cat
+  - Faker.Provider.Chiquito
   - Faker.Provider.ChuckNorris
   - Faker.Provider.Code
   - Faker.Provider.Coffee
@@ -75,15 +77,19 @@ library:
   - Faker.Provider.Community
   - Faker.Provider.Company
   - Faker.Provider.Compass
+  - Faker.Provider.Computer
   - Faker.Provider.Construction
+  - Faker.Provider.Control
   - Faker.Provider.Cosmere
   - Faker.Provider.CryptoCoin
   - Faker.Provider.CultureSeries
   - Faker.Provider.Currency
   - Faker.Provider.DcComics
   - Faker.Provider.Demographic
+  - Faker.Provider.Departed
   - Faker.Provider.Dessert
   - Faker.Provider.Device
+  - Faker.Provider.Dnd
   - Faker.Provider.Dog
   - Faker.Provider.Dota
   - Faker.Provider.DragonBall
@@ -145,12 +151,14 @@ library:
   - Faker.Provider.Opera
   - Faker.Provider.Overwatch
   - Faker.Provider.ParksAndRec
+  - Faker.Provider.PearlJam
   - Faker.Provider.Phish
   - Faker.Provider.PhoneNumber
   - Faker.Provider.Pokemon
   - Faker.Provider.PrincessBride
   - Faker.Provider.ProgrammingLanguage
   - Faker.Provider.Quote
+  - Faker.Provider.Rajnikanth
   - Faker.Provider.Relationship
   - Faker.Provider.Restaurant
   - Faker.Provider.RickAndMorty
@@ -159,6 +167,7 @@ library:
   - Faker.Provider.Science
   - Faker.Provider.Seinfeld
   - Faker.Provider.Shakespeare
+  - Faker.Provider.Show
   - Faker.Provider.SiliconValley
   - Faker.Provider.Simpsons
   - Faker.Provider.SlackEmoji
@@ -171,6 +180,7 @@ library:
   - Faker.Provider.StarWars
   - Faker.Provider.StrangerThings
   - Faker.Provider.Subscription
+  - Faker.Provider.Suits
   - Faker.Provider.Superhero
   - Faker.Provider.SuperSmashBros
   - Faker.Provider.SwordArtOnline
@@ -186,6 +196,7 @@ library:
   - Faker.Provider.VentureBros
   - Faker.Provider.Verbs
   - Faker.Provider.VForVendetta
+  - Faker.Provider.WarhammerFantasy
   - Faker.Provider.Witcher
   - Faker.Provider.WorldCup
   - Faker.Provider.WorldOfWarcraft

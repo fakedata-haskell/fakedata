@@ -44,6 +44,14 @@ parsePhishFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-$(genParser "phish" "song")
+$(genParser "phish" "songs")
 
-$(genProvider "phish" "song")
+$(genProvider "phish" "songs")
+
+$(genParser "phish" "musicians")
+
+$(genProvider "phish" "musicians")
+
+$(genParser "phish" "albums")
+
+$(genProvider "phish" "albums")

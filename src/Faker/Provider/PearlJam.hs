@@ -1,12 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Provider.Movie where
+module Faker.Provider.PearlJam where
 
 import Config
 import Control.Monad.Catch
-import Control.Monad.IO.Class
-import Data.Map.Strict (Map)
 import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
@@ -16,26 +14,26 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
-parseMovie :: FromJSON a => FakerSettings -> Value -> Parser a
-parseMovie settings (Object obj) = do
+parsePearlJam :: FromJSON a => FakerSettings -> Value -> Parser a
+parsePearlJam settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  movie <- faker .: "movie"
-  pure movie
-parseMovie settings val = fail $ "expected Object, but got " <> (show val)
+  pearlJam <- faker .: "pearl_jam"
+  pure pearlJam
+parsePearlJam settings val = fail $ "expected Object, but got " <> (show val)
 
-parseMovieField ::
+parsePearlJamField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
-parseMovieField settings txt val = do
-  movie <- parseMovie settings val
-  field <- movie .:? txt .!= mempty
+parsePearlJamField settings txt val = do
+  pearlJam <- parsePearlJam settings val
+  field <- pearlJam .:? txt .!= mempty
   pure field
 
-parseMovieFields ::
+parsePearlJamFields ::
      (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
-parseMovieFields settings txts val = do
-  movie <- parseMovie settings val
-  helper movie txts
+parsePearlJamFields settings txts val = do
+  pearlJam <- parsePearlJam settings val
+  helper pearlJam txts
   where
     helper :: (FromJSON a) => Value -> [Text] -> Parser a
     helper a [] = parseJSON a
@@ -44,10 +42,14 @@ parseMovieFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-$(genParser "movie" "quote")
+$(genParser "pearl_jam" "musicians")
 
-$(genProvider "movie" "quote")
+$(genProvider "pearl_jam" "musicians")
 
-$(genParser "movie" "title")
+$(genParser "pearl_jam" "albums")
 
-$(genProvider "movie" "title")
+$(genProvider "pearl_jam" "albums")
+
+$(genParser "pearl_jam" "songs")
+
+$(genProvider "pearl_jam" "songs")

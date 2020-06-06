@@ -20,11 +20,11 @@ citySuffix :: Fake Text
 citySuffix = Fake (cachedRandomVec "address" "citySuffix" citySuffixProvider)
 
 countryCode :: Fake Text
-countryCode = Fake (cachedRandomVec "address" "citySuffix" countryCodeProvider)
+countryCode = Fake (cachedRandomVec "address" "countryCode" countryCodeProvider)
 
 countryCodeLong :: Fake Text
 countryCodeLong =
-  Fake (cachedRandomVec "address" "citySuffix" countryCodeLongProvider)
+  Fake (cachedRandomVec "address" "countryCodeLong" countryCodeLongProvider)
 
 buildingNumber :: Fake Text
 buildingNumber =
@@ -63,7 +63,7 @@ postcode = Fake handlePostcode
   where
     handlePostcode :: (MonadIO m, MonadThrow m) => FakerSettings -> m Text
     handlePostcode settings =
-      case (getLocale settings) `elem` ["vi"] of
+      case (getLocale settings) `elem` ["vi", "en-CA", "fr-CA"] of
         True ->
           unRegexFakeValue <$>
           (cachedRegex "address" "postcode" postcodeRegexProvider settings)
@@ -124,4 +124,14 @@ mailBox =
        "address"
        "mail_box"
        mailBoxProvider
+       resolveAddressText)
+
+-- | @since 0.7.0
+cityWithState :: Fake Text
+cityWithState =
+  Fake
+    (cachedRandomUnresolvedVec
+       "address"
+       "city_with_state"
+       fullAddressProvider
        resolveAddressText)

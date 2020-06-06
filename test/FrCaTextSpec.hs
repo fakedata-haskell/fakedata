@@ -54,10 +54,10 @@ spec = do
             , BO.publisher
 
             , PO.names
-            -- , PO.locations
-            -- , PO.moves
+            , PO.locations
+            , PO.moves
 
-            -- , PH.formats
+            , PH.formats
 
             , FA.state
             , FA.stateAbbr
@@ -66,7 +66,7 @@ spec = do
             , FA.streetSuffix
             , FA.streetName
             , FA.streetAddress
-            -- , FA.postcode
+            , FA.postcode
               
             , IN.freeEmail
             , IN.domainSuffix

@@ -1710,5 +1710,164 @@ name =
     , unresolvedNestedFields = []
     }
 
+blood :: ModuleInfo
+blood = ModuleInfo 
+    { mmoduleName = "blood"
+    , jsonField = "blood"
+    , fields =
+        [ "type"
+        , "rh_factor"
+        ]
+    , unresolvedFields = ["group"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+chiquito :: ModuleInfo
+chiquito = ModuleInfo
+    { mmoduleName = "chiquito"
+    , jsonField = "chiquito"
+    , fields =
+        [ "expressions"
+        , "terms"
+        , "sentences"
+        , "jokes"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+computer :: ModuleInfo
+computer = ModuleInfo
+    { mmoduleName = "computer"
+    , jsonField = "computer"
+    , fields =
+        [ "type"
+        , "platform"
+        ]
+    , unresolvedFields = []
+    , nestedFields = [["os","linux"], ["os","macos"],["os","windows"]]
+    , unresolvedNestedFields = []
+    }
+
+control :: ModuleInfo
+control =
+  ModuleInfo
+    { mmoduleName = "control"
+    , jsonField = "control"
+    , fields =
+        [ "character"
+        , "location"
+        , "object_of_power"
+        , "altered_item"
+        , "altered_world_event"
+        , "hiss"
+        , "the_board"
+        , "quote"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+departed :: ModuleInfo
+departed =
+  ModuleInfo
+    { mmoduleName = "departed"
+    , jsonField = "departed"
+    , fields =
+        [ "actors"
+        , "characters"
+        , "quotes"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+dnd :: ModuleInfo
+dnd =
+  ModuleInfo
+    { mmoduleName = "dnd"
+    , jsonField = "dnd"
+    , fields =
+        [ "species"
+        , "klasses"
+        , "backgrounds"
+        , "alignments"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+pearlJam :: ModuleInfo
+pearlJam =
+  ModuleInfo
+    { mmoduleName = "pearlJam"
+    , jsonField = "pearl_jam"
+    , fields =
+        [ "musicians"
+        , "albums"
+        , "songs"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+rajnikanth :: ModuleInfo
+rajnikanth =
+  ModuleInfo
+    { mmoduleName = "rajnikanth"
+    , jsonField = "rajnikanth"
+    , fields =
+        [ "joke"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+showM :: ModuleInfo
+showM =
+  ModuleInfo
+    { mmoduleName = "show"
+    , jsonField = "show"
+    , fields =
+        [ "adult_musical"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+suits :: ModuleInfo
+suits =
+  ModuleInfo
+    { mmoduleName = "suits"
+    , jsonField = "suits"
+    , fields =
+        [ "characters", "quotes"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+warhammerFantasy :: ModuleInfo
+warhammerFantasy  =
+  ModuleInfo
+    { mmoduleName = "warhammerFantasy"
+    , jsonField = "warhammer_fantasy"
+    , fields =
+        [ "heros", "quotes", "locations", "factions", "creatures"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+      
 currentOne :: ModuleInfo
-currentOne = name
+currentOne = warhammerFantasy

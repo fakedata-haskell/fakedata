@@ -43,12 +43,12 @@ spec = do
             [ 
               FA.state
             , FA.stateAbbr
-            -- , FA.postcode
+            , FA.postcode
 
             , IN.domainSuffix
             , IN.freeEmail
 
-            -- , PH.formats
+            , PH.formats
 
             ]
       bools <- verifyDistributeFakes functions

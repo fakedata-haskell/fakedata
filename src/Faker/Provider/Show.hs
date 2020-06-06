@@ -1,12 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Provider.Movie where
+module Faker.Provider.Show where
 
 import Config
 import Control.Monad.Catch
-import Control.Monad.IO.Class
-import Data.Map.Strict (Map)
 import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
@@ -16,26 +14,26 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
-parseMovie :: FromJSON a => FakerSettings -> Value -> Parser a
-parseMovie settings (Object obj) = do
+parseShow :: FromJSON a => FakerSettings -> Value -> Parser a
+parseShow settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  movie <- faker .: "movie"
-  pure movie
-parseMovie settings val = fail $ "expected Object, but got " <> (show val)
+  show <- faker .: "show"
+  pure show
+parseShow settings val = fail $ "expected Object, but got " <> (show val)
 
-parseMovieField ::
+parseShowField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
-parseMovieField settings txt val = do
-  movie <- parseMovie settings val
-  field <- movie .:? txt .!= mempty
+parseShowField settings txt val = do
+  show <- parseShow settings val
+  field <- show .:? txt .!= mempty
   pure field
 
-parseMovieFields ::
+parseShowFields ::
      (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
-parseMovieFields settings txts val = do
-  movie <- parseMovie settings val
-  helper movie txts
+parseShowFields settings txts val = do
+  show <- parseShow settings val
+  helper show txts
   where
     helper :: (FromJSON a) => Value -> [Text] -> Parser a
     helper a [] = parseJSON a
@@ -44,10 +42,6 @@ parseMovieFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-$(genParser "movie" "quote")
+$(genParser "show" "adult_musical")
 
-$(genProvider "movie" "quote")
-
-$(genParser "movie" "title")
-
-$(genProvider "movie" "title")
+$(genProvider "show" "adult_musical")

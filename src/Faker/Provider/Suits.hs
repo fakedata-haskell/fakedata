@@ -1,41 +1,39 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module Faker.Provider.Movie where
+module Faker.Provider.Suits where
 
 import Config
 import Control.Monad.Catch
-import Control.Monad.IO.Class
-import Data.Map.Strict (Map)
-import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
+import Data.Monoid ((<>))
 import Data.Yaml
 import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
-parseMovie :: FromJSON a => FakerSettings -> Value -> Parser a
-parseMovie settings (Object obj) = do
+parseSuits :: FromJSON a => FakerSettings -> Value -> Parser a
+parseSuits settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  movie <- faker .: "movie"
-  pure movie
-parseMovie settings val = fail $ "expected Object, but got " <> (show val)
+  suits <- faker .: "suits"
+  pure suits
+parseSuits settings val = fail $ "expected Object, but got " <> (show val)
 
-parseMovieField ::
+parseSuitsField ::
      (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
-parseMovieField settings txt val = do
-  movie <- parseMovie settings val
-  field <- movie .:? txt .!= mempty
+parseSuitsField settings txt val = do
+  suits <- parseSuits settings val
+  field <- suits .:? txt .!= mempty
   pure field
 
-parseMovieFields ::
+parseSuitsFields ::
      (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
-parseMovieFields settings txts val = do
-  movie <- parseMovie settings val
-  helper movie txts
+parseSuitsFields settings txts val = do
+  suits <- parseSuits settings val
+  helper suits txts
   where
     helper :: (FromJSON a) => Value -> [Text] -> Parser a
     helper a [] = parseJSON a
@@ -44,10 +42,25 @@ parseMovieFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-$(genParser "movie" "quote")
 
-$(genProvider "movie" "quote")
 
-$(genParser "movie" "title")
 
-$(genProvider "movie" "title")
+$(genParser "suits" "characters")
+
+$(genProvider "suits" "characters")
+
+
+$(genParser "suits" "quotes")
+
+$(genProvider "suits" "quotes")
+
+
+
+
+
+
+
+
+
+
+

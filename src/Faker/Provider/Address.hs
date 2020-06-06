@@ -86,6 +86,14 @@ parseBuildingNumber ::
 parseBuildingNumber settings =
   parseUnresolvedAddressField settings "building_number"
 
+parseCityWithState ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
+parseCityWithState settings = parseUnresolvedAddressField settings "city_with_state"
+
+cityWithStateProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
+cityWithStateProvider settings = fetchData settings Address parseCityWithState
+
 parseMailBox ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser (Unresolved a)
 parseMailBox settings = parseUnresolvedAddressField settings "mail_box"

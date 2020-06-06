@@ -1,22 +1,18 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module EnAuTextSpec where
+module EnUsTextSpec where
 
 import Data.Text (Text)
 import qualified Data.Text as T
 import Faker hiding (defaultFakerSettings)
 import qualified Faker.Address as FA
-import qualified Faker.Company as CO
-import qualified Faker.PhoneNumber as PH
-import qualified Faker.Color as CL
-import qualified Faker.Name as NA
-import qualified Faker.Commerce as CE
-import qualified Faker.Team as TE
-import qualified Faker.Internet as IN
-import qualified Faker.University as UN
-import qualified Faker.Bank as BN
 import Faker.Combinators (listOf)
+import qualified Faker.Company as CO
+import qualified Faker.Internet as IN
+import qualified Faker.Name as NA
+import qualified Faker.PhoneNumber as PH
+import qualified Faker.Vehicle as VE
 
 import Test.Hspec
 import TestImport
@@ -27,8 +23,11 @@ isText x = T.length x >= 1
 isTexts :: [Text] -> Bool
 isTexts xs = and $ map isText xs
 
+locale :: Text
+locale = "en-US"
+
 fakerSettings :: FakerSettings
-fakerSettings = setLocale "en-AU" defaultFakerSettings
+fakerSettings = setLocale locale defaultFakerSettings
 
 verifyDistributeFakes :: [Fake Text] -> IO [Bool]
 verifyDistributeFakes funs = do
@@ -40,32 +39,28 @@ verifyDistributeFakes funs = do
 spec :: Spec
 spec = do
   describe "TextSpec" $ do
-    it "validates en-AU locale" $ do
+    it "validates en-US locale" $ do
       let functions :: [Fake Text] =
             [ 
-              FA.state
-            , FA.stateAbbr
-            , FA.postcode
+              IN.domainSuffix
+            , FA.countryCode
+            , FA.fullAddress
             , FA.buildingNumber
+            , FA.postcode
             , FA.streetSuffix
-
-            , CO.suffix
-              
-            , IN.domainSuffix
-
+            , FA.streetName
+            , FA.stateAbbr
+            , FA.cityPrefix
+            , FA.citySuffix
+            , FA.city
+            , FA.secondaryAddress
+            , FA.fullAddress
+            , FA.streetAddress
+            , PH.countryCode
+            , PH.formats
+            , PH.cellPhoneFormat
             , NA.firstName
             , NA.lastName
-            , NA.nameWithMiddle
-            , NA.prefix
-              
-            , PH.formats
-            , PH.cellPhoneFormat 
-              
-            , TE.sport
-              
-            , UN.name
-            , BN.name
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True
-
