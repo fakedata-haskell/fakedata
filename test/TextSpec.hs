@@ -22,6 +22,7 @@ import qualified Faker.Business as BU
 import qualified Faker.Cannabis as CA
 import qualified Faker.Chiquito as CI
 import qualified Faker.ChuckNorris as CH
+import qualified Faker.Rajnikanth as RK
 import qualified Faker.Code as CO
 import qualified Faker.Computer as COM
 import qualified Faker.Coffee as CO
@@ -120,6 +121,7 @@ import qualified Faker.Sport.Football as FO
 import qualified Faker.Subscription as SU
 import qualified Faker.Superhero as SU
 import qualified Faker.Team as TE
+import qualified Faker.Show as WS
 import qualified Faker.TvShow.AquaTeenHungerForce as AQ
 import qualified Faker.TvShow.BoJackHorseman as BO
 import qualified Faker.TvShow.BreakingBad as BR
@@ -312,6 +314,14 @@ spec = do
       (and bools) `shouldBe` True
     it "ChuckNorris" $ do
       let functions :: [Fake Text] = [CH.fact]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "RajniKanth" $ do
+      let functions :: [Fake Text] = [RK.joke]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Show" $ do
+      let functions :: [Fake Text] = [WS.adultMusical]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Chiquito" $ do

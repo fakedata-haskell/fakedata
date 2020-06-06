@@ -162,6 +162,8 @@ data SourceData
   | Yoda
   | Zelda
   | Opera
+  | Rajnikanth
+  | Show
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

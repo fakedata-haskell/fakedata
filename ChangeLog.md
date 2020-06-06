@@ -12,6 +12,8 @@
 
 ### Data Update
 
+The following data sources which the libraries uses has been updated:
+
 * heroes_of_the_storm.yml
 * house.yml
 * name.yml
@@ -26,6 +28,8 @@
 * Faker.Movie.Departed
 * Faker.Dnd
 * Faker.Music.PearlJam
+* Faker.Rajnikanth
+* Faker.Show
 
 ### Locale Improvements
 

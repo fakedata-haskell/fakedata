@@ -1816,6 +1816,32 @@ pearlJam =
     , nestedFields = []
     , unresolvedNestedFields = []
     }
+
+rajnikanth :: ModuleInfo
+rajnikanth =
+  ModuleInfo
+    { mmoduleName = "rajnikanth"
+    , jsonField = "rajnikanth"
+    , fields =
+        [ "joke"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+showM :: ModuleInfo
+showM =
+  ModuleInfo
+    { mmoduleName = "show"
+    , jsonField = "show"
+    , fields =
+        [ "adult_musical"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
   
 currentOne :: ModuleInfo
-currentOne = pearlJam
+currentOne = showM
