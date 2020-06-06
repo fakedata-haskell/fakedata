@@ -83,6 +83,7 @@ import qualified Faker.Marketing as MA
 import qualified Faker.Measurement as ME
 import qualified Faker.Military as MI
 import qualified Faker.Movie as MO
+import qualified Faker.Movie.Departed as MD
 import qualified Faker.Movie.BackToTheFuture as BA
 import qualified Faker.Movie.Ghostbusters as GH
 import qualified Faker.Movie.GratefulDead as GR
@@ -815,6 +816,10 @@ spec = do
             , MI.airForceRank
             , MI.dodPaygrade
             ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Movie.Departed" $ do
+      let functions :: [Fake Text] = [MD.actors, MD.characters, MD.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Movie.BackToTheFuture" $ do

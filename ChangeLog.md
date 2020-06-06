@@ -15,6 +15,7 @@
 * Faker.Chiquito
 * Faker.Computer
 * Faker.Game.Control
+* Faker.Movie.Departed
 
 ### Locale Improvements
 

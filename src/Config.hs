@@ -203,9 +203,11 @@ sourceFile Blood = "blood"
 sourceFile Chiquito = "chiquito"
 sourceFile Computer = "computer"
 sourceFile Control = "control"
+sourceFile Departed = "departed"
 
 mapSource :: Text -> Name
 mapSource "chiquito" = 'Chiquito
+mapSource "departed" = 'Departed
 mapSource "computer" = 'Computer
 mapSource "control" = 'Control
 mapSource "horse" = 'Horse

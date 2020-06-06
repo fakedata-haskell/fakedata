@@ -1771,6 +1771,20 @@ control =
     , unresolvedNestedFields = []
     }
 
+departed :: ModuleInfo
+departed =
+  ModuleInfo
+    { mmoduleName = "departed"
+    , jsonField = "departed"
+    , fields =
+        [ "actors"
+        , "characters"
+        , "quotes"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
 
 currentOne :: ModuleInfo
-currentOne = control
+currentOne = departed
