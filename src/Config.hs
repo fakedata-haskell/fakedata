@@ -199,12 +199,14 @@ sourceFile Yoda = "yoda"
 sourceFile Zelda = "zelda"
 sourceFile Basketball = "basketball"
 sourceFile Opera = "opera"
+sourceFile Blood = "blood"
 
 mapSource :: Text -> Name
 mapSource "horse" = 'Horse
 mapSource "address" = 'Address
 mapSource "basketball" = 'Basketball
 mapSource "name" = 'Name
+mapSource "blood" = 'Blood
 mapSource "ancient" = 'Ancient
 mapSource "animal" = 'Animal
 mapSource "app" = 'App

@@ -11,7 +11,7 @@
 
 ### New modules
 
-* 
+* Faker.Blood
 
 ### Locale Improvements
 

@@ -13,6 +13,7 @@ import qualified Faker.Artist as AR
 import qualified Faker.Bank as BA
 import qualified Faker.Beer as BE
 import qualified Faker.Book as BO
+import qualified Faker.Blood as BL
 import qualified Faker.Book.CultureSeries as CE
 import qualified Faker.Book.Dune as DU
 import qualified Faker.Book.Lovecraft as LO
@@ -222,6 +223,11 @@ spec = do
     it "Beer" $ do
       let functions :: [Fake Text] =
             [BE.name, BE.brand, BE.hop, BE.yeast, BE.malt, BE.style]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Blood" $ do
+      let functions :: [Fake Text] =
+            [BL.type', BL.rhFactor, BL.group]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Book.CultureSeries" $ do
