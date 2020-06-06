@@ -1786,5 +1786,21 @@ departed =
     , unresolvedNestedFields = []
     }
 
+dnd :: ModuleInfo
+dnd =
+  ModuleInfo
+    { mmoduleName = "dnd"
+    , jsonField = "dnd"
+    , fields =
+        [ "species"
+        , "klasses"
+        , "backgrounds"
+        , "alignments"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+  
 currentOne :: ModuleInfo
-currentOne = departed
+currentOne = dnd

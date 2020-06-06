@@ -8,6 +8,14 @@
 * `de-CH` locale update: `lastName` function works now.
 * New function in Faker.Music.Phish module: albums, musicians
 * New function in Faker.Address: cityWithState
+* New function in Faker.Movie: title
+
+### Data Update
+
+* heroes_of_the_storm.yml
+* house.yml
+* name.yml
+* one_piece.yml
 
 ### New modules introduced
 
@@ -16,6 +24,7 @@
 * Faker.Computer
 * Faker.Game.Control
 * Faker.Movie.Departed
+* Faker.Dnd
 
 ### Locale Improvements
 
@@ -24,6 +33,7 @@
     Faker.Name.prefix, Faker.University.name, Faker.Bank.name
 * en-CA: 
   - Faker.Address.postcode works now.
+* en-GB: formats field has been updated.
 
 ### Breaking changes
 

@@ -26,6 +26,7 @@ import qualified Faker.Code as CO
 import qualified Faker.Computer as COM
 import qualified Faker.Coffee as CO
 import qualified Faker.Coin as CO
+import qualified Faker.Dnd as DN
 import qualified Faker.Color as CO
 import qualified Faker.Commerce as CO
 import qualified Faker.Company as CM
@@ -319,6 +320,11 @@ spec = do
       (and bools) `shouldBe` True
     it "Code" $ do
       let functions :: [Fake Text] = [CO.asin]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "DnD" $ do
+      let functions :: [Fake Text] =
+            [DN.species, DN.klasses, DN.backgrounds, DN.alignments]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Coffee" $ do
@@ -955,7 +961,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Movie" $ do
-      let functions :: [Fake Text] = [MO.quote]
+      let functions :: [Fake Text] = [MO.quote, MO.title]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.Opera" $ do

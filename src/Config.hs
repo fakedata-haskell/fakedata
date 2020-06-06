@@ -204,8 +204,10 @@ sourceFile Chiquito = "chiquito"
 sourceFile Computer = "computer"
 sourceFile Control = "control"
 sourceFile Departed = "departed"
+sourceFile DnD = "dnd"
 
 mapSource :: Text -> Name
+mapSource "dnd" = 'DnD
 mapSource "chiquito" = 'Chiquito
 mapSource "departed" = 'Departed
 mapSource "computer" = 'Computer

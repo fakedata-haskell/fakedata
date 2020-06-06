@@ -47,3 +47,7 @@ parseMovieFields settings txts val = do
 $(genParser "movie" "quote")
 
 $(genProvider "movie" "quote")
+
+$(genParser "movie" "title")
+
+$(genProvider "movie" "title")
