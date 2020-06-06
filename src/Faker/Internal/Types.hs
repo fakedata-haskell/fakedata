@@ -164,6 +164,7 @@ data SourceData
   | Opera
   | Rajnikanth
   | Show
+  | Suits
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

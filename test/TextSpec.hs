@@ -122,6 +122,7 @@ import qualified Faker.Subscription as SU
 import qualified Faker.Superhero as SU
 import qualified Faker.Team as TE
 import qualified Faker.Show as WS
+import qualified Faker.TvShow.Suits as SU
 import qualified Faker.TvShow.AquaTeenHungerForce as AQ
 import qualified Faker.TvShow.BoJackHorseman as BO
 import qualified Faker.TvShow.BreakingBad as BR
@@ -952,7 +953,7 @@ spec = do
             , ST.alternateCharacterSpellingsJabbaTheHutt
             , ST.alternateCharacterSpellingsJarJarBinks
             , ST.alternateCharacterSpellingsK2so
-            -- , ST.alternateCharacterSpellingsKyloRen
+            , ST.alternateCharacterSpellingsKyloRen
             , ST.alternateCharacterSpellingsLandoCalrissian
             , ST.alternateCharacterSpellingsLeiaOrgana
             , ST.alternateCharacterSpellingsLukeSkywalker
@@ -1377,6 +1378,10 @@ spec = do
       (and bools) `shouldBe` True
     it "TvShow.AquaTeenHungerForce" $ do
       let functions :: [Fake Text] = [AQ.character]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Suits" $ do
+      let functions :: [Fake Text] = [SU.characters, SU.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.BoJackHorseman" $ do
