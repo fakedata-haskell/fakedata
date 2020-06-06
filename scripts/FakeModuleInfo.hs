@@ -1842,6 +1842,32 @@ showM =
     , nestedFields = []
     , unresolvedNestedFields = []
     }
-  
+
+suits :: ModuleInfo
+suits =
+  ModuleInfo
+    { mmoduleName = "suits"
+    , jsonField = "suits"
+    , fields =
+        [ "characters", "quotes"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+warhammerFantasy :: ModuleInfo
+warhammerFantasy  =
+  ModuleInfo
+    { mmoduleName = "warhammerFantasy"
+    , jsonField = "warhammer_fantasy"
+    , fields =
+        [ "heros", "quotes", "locations", "factions", "creatures"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+      
 currentOne :: ModuleInfo
-currentOne = showM
+currentOne = warhammerFantasy

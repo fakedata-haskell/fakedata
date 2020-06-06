@@ -208,6 +208,7 @@ sourceFile DnD = "dnd"
 sourceFile PearlJam = "pearl_jam"
 sourceFile Rajnikanth = "rajnikanth"
 sourceFile Show = "show"
+sourceFile WarhammerFantasy = "warhammer_fantasy"
 sourceFile Suits = "suits"
 
 mapSource :: Text -> Name
@@ -367,6 +368,7 @@ mapSource "opera" = 'Opera
 mapSource "rajnikanth" = 'Rajnikanth
 mapSource "show" = 'Show
 mapSource "suits" = 'Suits
+mapSource "warhammerFantasy" = 'WarhammerFantasy
 mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath

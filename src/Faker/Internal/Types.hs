@@ -165,6 +165,7 @@ data SourceData
   | Rajnikanth
   | Show
   | Suits
+  | WarhammerFantasy
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

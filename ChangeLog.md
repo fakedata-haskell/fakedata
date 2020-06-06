@@ -30,6 +30,8 @@ The following data sources which the libraries uses has been updated:
 * Faker.Music.PearlJam
 * Faker.Rajnikanth
 * Faker.Show
+* Faker.TvShow.Suits
+* Faker.WarhammerFantasy
 
 ### Locale Improvements
 
