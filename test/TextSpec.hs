@@ -51,6 +51,7 @@ import qualified Faker.Finance as FI
 import qualified Faker.Food as FO
 import qualified Faker.FunnyName as FU
 import qualified Faker.Game.Dota as DO
+import qualified Faker.Game.WarhammerFantasy as WF
 import qualified Faker.Game.Control as GC
 import qualified Faker.Game.ElderScrolls as EL
 import qualified Faker.Game.Fallout as FA
@@ -668,6 +669,17 @@ spec = do
       (and bools) `shouldBe` True
     it "Game.Overwatch" $ do
       let functions :: [Fake Text] = [OV.heroes, OV.locations, OV.quotes]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.WarhammerFantasy" $ do
+      let functions :: [Fake Text] =
+            [ WF.creatures
+            , WF.factions
+            , WF.factions
+            , WF.locations
+            , WF.quotes
+            , WF.heros
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.Pokemon" $ do

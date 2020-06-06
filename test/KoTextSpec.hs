@@ -9,6 +9,7 @@ import Faker hiding (defaultFakerSettings)
 import qualified Faker.Address as FA
 import Faker.Combinators (listOf)
 import qualified Faker.Company as CO
+import qualified Faker.Commerce as CM
 import qualified Faker.Internet as IN
 import qualified Faker.Name as NA
 import qualified Faker.PhoneNumber as PH
@@ -71,6 +72,13 @@ spec = do
             , IN.domainSuffix
               
             , LO.words
+
+            , CM.department
+            , CM.productNameAdjective
+            , CM.productNameMaterial
+            , CM.productNameProduct
+            , CM.promotionCodeAdjective
+            , CM.promotionCodeNoun
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

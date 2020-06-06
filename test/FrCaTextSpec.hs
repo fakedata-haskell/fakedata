@@ -66,7 +66,7 @@ spec = do
             , FA.streetSuffix
             , FA.streetName
             , FA.streetAddress
-            -- , FA.postcode
+            , FA.postcode
               
             , IN.freeEmail
             , IN.domainSuffix

@@ -38,10 +38,11 @@ The following data sources which the libraries uses has been updated:
 * en-AU: 
   - Locale has updated which leads to working of newer functions:
     Faker.Name.prefix, Faker.University.name, Faker.Bank.name
-* en-CA: 
-  - Faker.Address.postcode works now.
+* en-CA: Faker.Address.postcode works now.
 * en-GB: formats field has been updated.
-
+* fr-CA: Faker.Address.postcode works now.
+* ko: Supports Faker.Commerce moudle now.
+  
 ### Breaking changes
 
 * Faker.Music.Phish module:
