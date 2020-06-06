@@ -25,6 +25,7 @@
 * Faker.Game.Control
 * Faker.Movie.Departed
 * Faker.Dnd
+* Faker.Music.PearlJam
 
 ### Locale Improvements
 

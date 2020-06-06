@@ -205,8 +205,10 @@ sourceFile Computer = "computer"
 sourceFile Control = "control"
 sourceFile Departed = "departed"
 sourceFile DnD = "dnd"
+sourceFile PearlJam = "pearl_jam"
 
 mapSource :: Text -> Name
+mapSource "pearl_jam" = 'PearlJam
 mapSource "dnd" = 'DnD
 mapSource "chiquito" = 'Chiquito
 mapSource "departed" = 'Departed

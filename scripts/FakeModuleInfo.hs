@@ -1801,6 +1801,21 @@ dnd =
     , nestedFields = []
     , unresolvedNestedFields = []
     }
+
+pearlJam :: ModuleInfo
+pearlJam =
+  ModuleInfo
+    { mmoduleName = "pearlJam"
+    , jsonField = "pearl_jam"
+    , fields =
+        [ "musicians"
+        , "albums"
+        , "songs"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
   
 currentOne :: ModuleInfo
-currentOne = dnd
+currentOne = pearlJam

@@ -98,6 +98,7 @@ import qualified Faker.Movie.StarWars as ST
 import qualified Faker.Movie.VForVendetta as VF
 import qualified Faker.Music as MU
 import qualified Faker.Music.Opera as OP
+import qualified Faker.Music.PearlJam as PJ
 import qualified Faker.Music.Phish as PH
 import qualified Faker.Music.RockBand as RO
 import qualified Faker.Music.UmphreysMcgee as UM
@@ -965,6 +966,15 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.Opera" $ do
+      let functions :: [Fake Text] =
+            [ OP.italianByGiuseppeVerdi
+            , OP.italianByGioacchinoRossini
+            , OP.italianByGaetanoDonizetti
+            , OP.italianByVincenzoBellini
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Music.PearlJam" $ do
       let functions :: [Fake Text] =
             [ OP.italianByGiuseppeVerdi
             , OP.italianByGioacchinoRossini
