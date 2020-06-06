@@ -14,6 +14,7 @@
 * Faker.Blood
 * Faker.Chiquito
 * Faker.Computer
+* Faker.Game.Control
 
 ### Locale Improvements
 

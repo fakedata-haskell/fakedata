@@ -202,10 +202,12 @@ sourceFile Opera = "opera"
 sourceFile Blood = "blood"
 sourceFile Chiquito = "chiquito"
 sourceFile Computer = "computer"
+sourceFile Control = "control"
 
 mapSource :: Text -> Name
 mapSource "chiquito" = 'Chiquito
 mapSource "computer" = 'Computer
+mapSource "control" = 'Control
 mapSource "horse" = 'Horse
 mapSource "address" = 'Address
 mapSource "basketball" = 'Basketball

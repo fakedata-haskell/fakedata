@@ -1751,5 +1751,26 @@ computer = ModuleInfo
     , unresolvedNestedFields = []
     }
 
+control :: ModuleInfo
+control =
+  ModuleInfo
+    { mmoduleName = "control"
+    , jsonField = "control"
+    , fields =
+        [ "character"
+        , "location"
+        , "object_of_power"
+        , "altered_item"
+        , "altered_world_event"
+        , "hiss"
+        , "the_board"
+        , "quote"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+
 currentOne :: ModuleInfo
-currentOne = computer
+currentOne = control

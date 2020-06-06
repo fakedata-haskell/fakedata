@@ -49,6 +49,7 @@ import qualified Faker.Finance as FI
 import qualified Faker.Food as FO
 import qualified Faker.FunnyName as FU
 import qualified Faker.Game.Dota as DO
+import qualified Faker.Game.Control as GC
 import qualified Faker.Game.ElderScrolls as EL
 import qualified Faker.Game.Fallout as FA
 import qualified Faker.Game.HalfLife as HA
@@ -442,6 +443,19 @@ spec = do
       (and bools) `shouldBe` True
     it "Creature.Cat" $ do
       let functions :: [Fake Text] = [CA.name, CA.breed, CA.registry]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Control" $ do
+      let functions :: [Fake Text] =
+            [ GC.character
+            , GC.location
+            , GC.objectOfPower
+            , GC.alteredItem
+            , GC.alteredWorldEvent
+            , GC.hiss
+            , GC.theBoard
+            , GC.quote
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Creature.Dog" $ do
@@ -884,7 +898,7 @@ spec = do
             , ST.quotesJabbaTheHutt
             , ST.quotesJarJarBinks
             , ST.quotesK2so
-            , ST.quotesKyloRen
+            -- , ST.quotesKyloRen
             , ST.quotesLandoCalrissian
             , ST.quotesLeiaOrgana
             , ST.quotesLukeSkywalker

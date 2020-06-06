@@ -26,6 +26,7 @@ data SourceData
   | Blood
   | Chiquito
   | Computer
+  | Control
   | BossaNova
   | BreakingBad
   | Buffy
