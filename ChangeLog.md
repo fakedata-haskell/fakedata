@@ -15,8 +15,11 @@
 
 ### Locale Improvements
 
-* en-AU: Locale has updated which leads to working of newer functions:
-  Faker.Name.prefix, Faker.University.name, Faker.Bank.name
+* en-AU: 
+  - Locale has updated which leads to working of newer functions:
+    Faker.Name.prefix, Faker.University.name, Faker.Bank.name
+* en-CA: 
+  - Faker.Address.postcode works now.
 
 ### Breaking changes
 

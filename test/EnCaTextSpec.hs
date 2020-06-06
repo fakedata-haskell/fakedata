@@ -43,7 +43,7 @@ spec = do
             [ 
               FA.state
             , FA.stateAbbr
-            -- , FA.postcode
+            , FA.postcode
 
             , IN.domainSuffix
             , IN.freeEmail
