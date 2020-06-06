@@ -1,6 +1,6 @@
 # Changelog for fakedata
 
-## Unreleased
+## 0.7.0
 
 * Add support for regex fake value generation. Useful for postcode
   functions for different locales.
