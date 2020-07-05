@@ -13,7 +13,7 @@ LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/pa
     - [Tutorial](#tutorial)
         - [Generating address](#generating-address)
         - [Generating name](#generating-name)
-        - [Generate quotes from the movie [Back to the Future](https://en.wikipedia.org/wiki/Back_to_the_Future)](#generate-quotes-from-the-movie-back-to-the-futurehttpsenwikipediaorgwikiback_to_the_future)
+        - [Generate quotes from the movie Back to the Future](#generate-quotes-from-the-movie-back-to-the-future)
         - [Combining Fake datas](#combining-fake-datas)
         - [Combinators](#combinators)
             - [listOf](#listof)
@@ -54,7 +54,7 @@ Tutorial
 "Sherryl Steuber"
 ```
 
-### Generate quotes from the movie [Back to the Future](https://en.wikipedia.org/wiki/Back_to_the_Future)
+### Generate quotes from the movie Back to the Future
 
     λ> import Faker.Movie.BackToTheFuture
     λ> import Faker.Combinators
