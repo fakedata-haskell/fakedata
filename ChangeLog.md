@@ -1,5 +1,13 @@
 # Changelog for fakedata
 
+## Unreleased
+
+### Breaking changes
+
+* Behavior of Monad instances changed. Monad instance by will not
+  change the underlying StdGen by default. It will change only when
+  you do `setNonDeterministic` for the settings.
+
 ## 0.7.1
 
 * Add combinator for `fakeBoundedEnum` In Faker.Combinators

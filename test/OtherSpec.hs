@@ -59,8 +59,8 @@ spec = do
     it "can be appended and it is associative" $ do
       phraseL <- generate $ (pure "Hello " <> name) <> pure "!"
       phraseR <- generate $ pure "Hello " <> (name <> pure "!")
-      phraseL `shouldBe` "Hello Roxanne Stiedemann!"
-      phraseR `shouldBe` "Hello Roxanne Stiedemann!"
+      phraseL `shouldBe` "Hello Sherryl Steuber!"
+      phraseR `shouldBe` "Hello Sherryl Steuber!"
   describe "Monoid instance of Fake" $
     it "mappend mempty doesn't modify the other operand" $ do
       name' <- generate $ name `mappend` mempty

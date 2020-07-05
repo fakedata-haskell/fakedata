@@ -6,16 +6,23 @@ Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.or
 LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
 ![Build Status](https://github.com/psibi/fakedata/workflows/Tests/badge.svg?branch=master)
 
--   [Fakedata](#fakedata)
-    -   [Tutorial](#tutorial)
-        -   [Generating address](#generating-address)
-        -   [Generating name](#generating-name)
-        -   [Generate quotes from the movie Back to the Future](#generate-quotes-from-the-movie-back-to-the-future)
-        -   [Combining Fake datas](#combining-fake-datas)
-        -   [Combinators](#combinators)
-    -   [Comparision with other
-        libraries](#comparision-with-other-libraries)
-    -   [Acknowledgments](#acknowledgments)
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [fakedata](#fakedata)
+    - [Tutorial](#tutorial)
+        - [Generating address](#generating-address)
+        - [Generating name](#generating-name)
+        - [Generate quotes from the movie [Back to the Future](https://en.wikipedia.org/wiki/Back_to_the_Future)](#generate-quotes-from-the-movie-back-to-the-futurehttpsenwikipediaorgwikiback_to_the_future)
+        - [Combining Fake datas](#combining-fake-datas)
+        - [Combinators](#combinators)
+            - [listOf](#listof)
+            - [oneOf](#oneof)
+            - [suchThat](#suchthat)
+    - [Comparision with other libraries](#comparision-with-other-libraries)
+    - [Acknowledgments](#acknowledgments)
+
+<!-- markdown-toc end -->
 
 fakedata
 ========
@@ -36,7 +43,7 @@ Tutorial
 λ> import Faker.Address
 λ> address <- generate fullAddress
 λ> address
-"Suite 153 153 Langosh Way, East Antony, MI 15342-5123"
+"Apt. 298 340 Ike Mission, Goldnertown, FL 19488-9259"
 ```
 
 ### Generating name
@@ -44,7 +51,7 @@ Tutorial
 ``` {.shellsession}
 λ> fullName <- generate name
 λ> fullName
-"Antony Langosh"
+"Sherryl Steuber"
 ```
 
 ### Generate quotes from the movie [Back to the Future](https://en.wikipedia.org/wiki/Back_to_the_Future)
@@ -91,8 +98,8 @@ And on executing them:
 
     $ stack name.hs
     Person
-      { personName = "Antony Langosh"
-      , personAddress = "Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"
+      { personName = "Sherryl Steuber"
+      , personAddress = "Apt. 298 340 Ike Mission, Goldnertown, FL 19488-9259"
       }
 
 You would have noticed in the above output that the name and address are

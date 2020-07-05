@@ -196,15 +196,23 @@ spec = do
               c2 <- country
               pure (c1, c2)
         fakeCountry <- generate someCountry
-        fakeCountry `shouldBe` ("Ecuador", "French Guiana")
-      it "Non equality of sequence" $ do
+        fakeCountry `shouldBe` ("Ecuador", "Ecuador")
+      it "Monad instance of Fake (tuple)" $ do
+        let someCountry :: Fake (Text, Text)
+            someCountry = do
+              c1 <- country
+              c2 <- country
+              pure (c1, c2)
+        fakeCountry <- generateWithSettings (setNonDeterministic defaultFakerSettings) someCountry
+        (fst fakeCountry) `shouldNotBe` (snd fakeCountry)
+      it "Equality of sequence" $ do
         let someCountry :: Fake (Text, Text)
             someCountry = do
               c1 <- country
               c2 <- country
               pure (c1, c2)
         (c1, c2) <- generate someCountry
-        c1 `shouldNotBe` c2
+        c1 `shouldBe` c2
       it "Resolver based function" $ do
         bno <- generate buildingNumber
         bno `shouldBe` "153"
@@ -218,7 +226,7 @@ spec = do
               c2 <- buildingNumber
               pure (c1, c2)
         (c1, c2) <- generate someBuilding
-        c1 `shouldNotBe` c2
+        c1 `shouldBe` c2
     describe "Empty data sources" $ do
       -- it "For ee locale, countries is empty" $ do
       --   ctries <- countryProvider (setLocale "ee" defaultFakerSettings)
