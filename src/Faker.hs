@@ -178,6 +178,7 @@ newtype Fake a = Fake
   }
 
 instance Functor Fake where
+  {-# INLINE fmap #-}
   fmap :: (a -> b) -> Fake a -> Fake b
   fmap f (Fake h) =
     Fake
@@ -187,23 +188,30 @@ instance Functor Fake where
          pure b)
 
 instance Applicative Fake where
+  {-# INLINE pure #-}    
   pure x = Fake (\_ -> pure x)
+  {-# INLINE (<*>) #-}
   (<*>) = ap
 
 instance Monad Fake where
+  {-# INLINE return #-}
   return :: a -> Fake a
   return x = Fake (\_ -> return x)
+  {-# INLINE (>>=) #-}
   (>>=) :: Fake a -> (a -> Fake b) -> Fake b
-  (Fake h) >>= k =
-    Fake
-      (\settings ->
-         let stdGen = getRandomGen settings
-             (r1, _) = split stdGen
-             m = do
-               (item :: a) <- h settings
-               let (Fake k1) = k item
-               k1 (setRandomGen r1 settings)
-          in m)
+  f >>= k = generateNewFake f k
+
+generateNewFake :: Fake a -> (a -> Fake b) -> Fake b
+generateNewFake (Fake h) k = Fake (\settings -> do
+  let deterministic = getDeterministic settings
+      currentStdGen = getRandomGen settings
+      newStdGen = if deterministic
+                  then currentStdGen
+                  else fst $ split currentStdGen
+  item <- h settings
+  let (Fake k1) = k item
+  k1 (setRandomGen newStdGen settings))
+{-# SPECIALIZE INLINE generateNewFake :: Fake Text -> (Text -> Fake Text) -> Fake Text #-}
 
 instance MonadIO Fake where
   liftIO :: IO a -> Fake a
