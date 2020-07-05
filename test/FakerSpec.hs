@@ -14,6 +14,7 @@ import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Faker
 import Faker.Combinators
+import Faker.Nation as FN
 import Faker.Company
 import Faker.Compass
 import Faker.Construction
@@ -101,9 +102,9 @@ spec = do
     it "University" $ do
       item <- generate FU.name
       item `shouldSatisfy` isText
-    -- it "Nation - flagEmoji" $ do
-    --   item <- generate flagEmoji
-    --   item `shouldSatisfy` isText
+    it "Nation - flagEmoji" $ do
+      item <- generate FN.flagEmoji
+      item `shouldSatisfy` isText
     it "Job" $ do
       item <- generate field
       item `shouldSatisfy` isText
