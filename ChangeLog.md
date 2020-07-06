@@ -8,6 +8,12 @@
   change the underlying StdGen by default. It will change only when
   you do `setNonDeterministic` for the settings.
 
+### Locale Improvements
+
+* en-GB: Faker.Address.postcode works now.
+* nl: Faker.Address.postcode works now.
+* ru: Faker.Company.name works now
+
 ## 0.7.0
 
 * Add support for regex fake value generation. Useful for postcode

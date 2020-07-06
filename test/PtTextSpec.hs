@@ -64,8 +64,8 @@ spec = do
             , PH.formats
 
             , FA.city
-            -- , FA.cityPrefix
-            -- , FA.citySuffix
+            -- , FA.cityPrefix  (Data source is empty)
+            -- , FA.citySuffix  (Data source is empty)
             , FA.country
             , FA.countryCode
             , FA.postcode

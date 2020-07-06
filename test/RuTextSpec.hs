@@ -84,7 +84,7 @@ spec = do
             , IN.domainSuffix
             , IN.freeEmail
 
-            -- , CO.name
+            , CO.name
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

@@ -75,13 +75,13 @@ spec = do
             , FA.city
             , FA.country
             , FA.buildingNumber
-            -- , FA.streetSuffix
+            -- , FA.streetSuffix (Data source is empty)
             , FA.postcode
             , FA.secondaryAddress
             , FA.state
-            -- , FA.stateAbbr
-            -- , FA.cityPrefix
-            -- , FA.citySuffix
+            -- , FA.stateAbbr (Data source is empty)
+            -- , FA.cityPrefix (Data source is empty)
+            -- , FA.citySuffix (Data source is empty)
             , FA.streetName
             , FA.streetAddress
               

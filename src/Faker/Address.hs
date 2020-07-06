@@ -63,7 +63,7 @@ postcode = Fake handlePostcode
   where
     handlePostcode :: (MonadIO m, MonadThrow m) => FakerSettings -> m Text
     handlePostcode settings =
-      case (getLocale settings) `elem` ["vi", "en-CA", "fr-CA"] of
+      case (getLocale settings) `elem` ["vi", "en-CA", "fr-CA", "en-GB", "nl"] of
         True ->
           unRegexFakeValue <$>
           (cachedRegex "address" "postcode" postcodeRegexProvider settings)

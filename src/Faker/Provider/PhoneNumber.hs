@@ -158,4 +158,16 @@ resolvePhoneNumberField settings field@"country_code" = let
     parser settings = parsePhoneNumberField settings field
     provider settings = fetchDataSingle settings PhoneNumber parser
     in cachedRandomVec "phoneNumber" field provider settings
+-- resolvePhoneNumberField settings field@"PhoneNumber.lada_dos" = let
+--     parser ::
+--      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+--     parser settings = parsePhoneNumberField settings "lada_dos"
+--     provider settings = fetchData settings PhoneNumber parser
+--     in cachedRandomVec "phoneNumber" field provider settings
+-- resolvePhoneNumberField settings field@"PhoneNumber.lada_tres" = let
+--     parser ::
+--      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+--     parser settings = parsePhoneNumberField settings "lada_tres"
+--     provider settings = fetchData settings PhoneNumber parser
+--     in cachedRandomVec "phoneNumber" field provider settings
 resolvePhoneNumberField settings str = throwM $ InvalidField "phoneNumber" str
