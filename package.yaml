@@ -40,6 +40,8 @@ dependencies:
 - bytestring
 - time
 - string-random
+- fakedata-parser
+- attoparsec
 
 library:
   source-dirs: src

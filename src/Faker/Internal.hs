@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE BangPatterns #-}
 
 -- | Internal module
 module Faker.Internal
@@ -42,6 +43,9 @@ import Faker
 import Faker.Internal.Types (CacheFieldKey(..))
 import System.Random (StdGen, mkStdGen, randomR, split)
 import Text.StringRandom (stringRandom)
+import Fakedata.Parser
+import Data.Attoparsec.Text as P
+import Control.Monad (when)
 
 newtype Unresolved a = Unresolved
   { unresolvedField :: a
@@ -163,21 +167,45 @@ resolveUnresolved ::
   -> Unresolved (Vector Text)
   -> (FakerSettings -> Text -> m Text)
   -> m Text
-resolveUnresolved settings (Unresolved unres) resolverFn =
+resolveUnresolved settings (Unresolved unres) resolverFn = do
   let unresLen = V.length unres
       stdGen = getRandomGen settings
       (index, _) = randomR (0, unresLen - 1) stdGen
       randomItem = unres ! index
-      resolve =
-        if operateField randomItem "hello" == randomItem -- todo: remove hack
-          then pure $
-               interpolateString
-                 settings
-                 (interpolateNumbers settings randomItem)
-          else resolverFn settings randomItem
-   in if unresLen == 0
-        then throwM $ NoDataFound settings
-        else resolve
+  when (unresLen == 0) $ throwM $ NoDataFound settings
+  case P.parseOnly parseFakedata randomItem of
+       Left err -> throwM $ ParseError err
+       Right vals -> combineFakeIRValue settings resolverFn vals
+
+resolveFakeIRValue :: (MonadIO m) => FakerSettings -> (FakerSettings -> Text -> m Text) -> FakeIRValue -> m Text
+resolveFakeIRValue _ _ (Literal txt) = pure txt
+resolveFakeIRValue settings _ (Hash num) = pure $ resolveHash settings num
+resolveFakeIRValue settings _ (Ques num) = pure $ resolveQues settings num
+resolveFakeIRValue settings resolverFn (Resolve text) = resolverFn settings text
+
+combineFakeIRValue :: (MonadIO m) => FakerSettings -> (FakerSettings -> Text -> m Text) -> [FakeIRValue] -> m Text
+combineFakeIRValue settings resolverFn xs = do
+  vals <- mapM (resolveFakeIRValue settings resolverFn) xs
+  pure $ T.concat vals
+
+-- resolveHash settings 3
+-- "234"                                             
+resolveHash :: FakerSettings -> Int -> Text
+resolveHash settings num = T.pack $ helper settings num mempty
+    where
+      helper _ 0 acc = acc
+      helper settings !n acc = do
+        let (num, newGen) = randomR (0, 9) (getRandomGen settings)
+        helper (setRandomGen newGen settings) (n - 1) ((digitToChar num):acc)
+
+resolveQues :: FakerSettings -> Int -> Text
+resolveQues settings num = T.pack $ helper settings num mempty
+    where
+      helper _ 0 acc = acc
+      helper settings !n acc = do
+        let (char, newGen) = randomR ('A', 'Z') (getRandomGen settings)
+        helper (setRandomGen newGen settings) (n - 1) (char:acc)
+
 
 uncons2 :: Text -> Maybe (String, Text)
 uncons2 txt = do
