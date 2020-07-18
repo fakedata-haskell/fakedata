@@ -117,14 +117,7 @@ $(genProviders "compass" ["quarter-wind", "azimuth"])
 
 resolveCompassText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveCompassText settings txt = do
-  let fields = resolveFields txt
-  compassFields <-
-    mapM
-      (\(seed, field) ->
-         resolveCompassField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt compassFields
+resolveCompassText = genericResolver' resolveCompassField
 
 cardinalProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)

@@ -287,15 +287,7 @@ fullAddressProvider settings = fetchData settings Address parseFullAddress
 -- > resolveCommunityText "#{community_prefix} #{community_suffix}"
 resolveAddressText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveAddressText settings txt = do
-  communityFields :: [Text] <-
-    mapM
-      (\(seed, field) ->
-         resolveAddressField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt communityFields
-  where
-    fields = resolveFields txt
+resolveAddressText = genericResolver' resolveAddressField
 
 resolveAddressField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

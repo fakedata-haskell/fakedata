@@ -14,18 +14,15 @@ module Faker.Internal
   , resolver
   , refinedString
   , refinedText
-  , operateFields
-  , resolveFields
   , cachedRandomVec
   , cachedRandomUnresolvedVec
   , cachedRandomUnresolvedVecWithoutVector
   , cachedRegex
-  , interpolateNumbers
-  , interpolateString
   , resolveUnresolved
-  , uncons2
-  , operateField
   , modifyRandomGen
+  , resolveFields
+  , genericResolver
+  , genericResolver'
   ) where
 
 import Config
@@ -188,6 +185,18 @@ combineFakeIRValue settings resolverFn xs = do
   vals <- mapM (resolveFakeIRValue settings resolverFn) xs
   pure $ T.concat vals
 
+resolveFields :: (MonadIO m, MonadThrow m) => Text -> m [FakeIRValue]
+resolveFields text = case P.parseOnly parseFakedata text of
+                       Left err -> throwM $ ParseError err
+                       Right vals -> pure vals
+
+genericResolver :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> (FakerSettings -> Text -> m Text) -> m Text
+genericResolver settings txt resolverFn = do
+  combineFakeIRValue settings resolverFn [Resolve txt]
+
+genericResolver' :: (MonadIO m, MonadThrow m) => (FakerSettings -> Text -> m Text) -> FakerSettings -> Text -> m Text
+genericResolver' resolverFn settings txt = genericResolver settings txt resolverFn
+
 -- resolveHash settings 3
 -- "234"                                             
 resolveHash :: FakerSettings -> Int -> Text
@@ -206,62 +215,6 @@ resolveQues settings num = T.pack $ helper settings num mempty
         let (char, newGen) = randomR ('A', 'Z') (getRandomGen settings)
         helper (setRandomGen newGen settings) (n - 1) (char:acc)
 
-
-uncons2 :: Text -> Maybe (String, Text)
-uncons2 txt = do
-  (c1, rem1) <- T.uncons txt
-  (c2, rem2) <- T.uncons rem1
-  pure $ ((c1 : [c2]), rem2)
-
--- operateField "#{hello} #{world}" "jam"
--- "jam #{world}"
-operateField :: Text -> Text -> Text
-operateField origWord word = helper origWord word []
-  where
-    helper :: Text -> Text -> String -> Text
-    helper txt word' acc =
-      case uncons2 txt of
-        Nothing -> origWord
-        Just (str, rem') ->
-          if str == "#{"
-            then let actualRem = dropTillBrace rem'
-                  in (T.pack acc) <> word' <> actualRem
-            else case T.uncons txt of
-                   Nothing -> origWord
-                   Just (c, rem2) -> helper rem2 word' (acc <> [c])
-
-operateFields :: Text -> [Text] -> Text
-operateFields origWord [] = origWord
-operateFields origWord (x:xs) = operateFields (operateField origWord x) xs
-
-dropTillBrace :: Text -> Text
-dropTillBrace txt = T.dropWhile (== '}') $ T.dropWhile (/= '}') txt
-
--- λ> extractSingleField "#{hello} #{world} jam"
--- ("hello"," #{world} jam")
-extractSingleField :: Text -> (Text, Text)
-extractSingleField txt =
-  let (field, remaining) = T.span (\x -> x /= '}') txt''
-   in (T.drop 2 field, T.drop 1 remaining)
-  where
-    txt' = strip txt
-    txt'' = snd $ T.span (\x -> x /= '#') txt'
-
--- λ> resolveFields "#{hello} #{world}"
--- ["hello","world"]
--- λ> resolveFields "#{hello} #{world} jam"
--- ["hello","world"]
-resolveFields :: Text -> [Text]
-resolveFields txt =
-  let (field, remaining) = extractSingleField txt
-      newField val =
-        if T.null val
-          then []
-          else [val]
-   in case T.null remaining of
-        True -> newField field
-        False -> newField field <> resolveFields remaining
-
 digitToChar :: Int -> Char
 digitToChar 0 = '0'
 digitToChar 1 = '1'
@@ -274,59 +227,6 @@ digitToChar 7 = '7'
 digitToChar 8 = '8'
 digitToChar 9 = '9'
 digitToChar x = error $ "Expected single digit number, but received " <> show x
-
-isHash :: Char -> Bool
-isHash c = c == '#'
-
--- >> interpolateNumbers "#####"
--- >> 23456
--- >> interpolateNumbers "ab-##"
--- >> ab-32
-interpolateNumbers :: FakerSettings -> Text -> Text
-interpolateNumbers fsettings txt = helper fsettings [] txt
-  where
-    helper settings acc text =
-      case T.null text of
-        True -> T.pack acc
-        False ->
-          case T.uncons text of
-            Nothing -> T.pack acc
-            Just (c, rem') ->
-              if isHash c
-                then let stdGen = getRandomGen settings
-                         (int, gen) = randomR (0, 9) stdGen
-                      in helper
-                           (setRandomGen gen settings)
-                           (acc ++ [digitToChar int])
-                           rem'
-                else helper settings (acc ++ [c]) rem'
-
-isQues :: Char -> Bool
-isQues c = c == '?'
-
--- >> interpolateString "?????"
--- >> ABCDE
--- >> interpolateString "32-##"
--- >> 32-ZF
-interpolateString :: FakerSettings -> Text -> Text
-interpolateString fsettings text = helper fsettings [] text
-  where
-    helper :: FakerSettings -> [Char] -> Text -> Text
-    helper settings acc txt =
-      case T.null txt of
-        True -> T.pack acc
-        False ->
-          case T.uncons txt of
-            Nothing -> T.pack acc
-            Just (c, remTxt) ->
-              if isQues c
-                then let stdGen = getRandomGen settings
-                         (int, gen) = randomR ('A', 'Z') stdGen
-                      in helper
-                           (setRandomGen gen settings)
-                           (acc ++ [int])
-                           remTxt
-                else helper settings (acc ++ [c]) remTxt
 
 resolver ::
      (MonadThrow m, MonadIO m)

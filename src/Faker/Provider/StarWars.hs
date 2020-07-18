@@ -93,10 +93,7 @@ $(genProviderUnresolved "starWars" "call_sign")
 
 resolveStarWarsText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveStarWarsText settings txt = do
-  let fields = resolveFields txt
-  starWarsFields <- mapM (resolveStarWarsField settings) fields
-  pure $ operateFields txt starWarsFields
+resolveStarWarsText = genericResolver' resolveStarWarsField
 
 resolveStarWarsField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

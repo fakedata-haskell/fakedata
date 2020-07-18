@@ -82,14 +82,7 @@ $(genProviderUnresolved "restaurant" "name")
 
 resolveRestaurantText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveRestaurantText settings txt = do
-  let fields = resolveFields txt
-  restaurantFields <-
-    mapM
-      (\(seed, field) ->
-         resolveRestaurantField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt restaurantFields
+resolveRestaurantText = genericResolver' resolveRestaurantField
 
 resolveRestaurantField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

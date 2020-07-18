@@ -97,13 +97,7 @@ $(genParser "name" "surname")
 $(genProvider "name" "surname")
 
 resolveNameText :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
-resolveNameText settings txt = do
-  let fields = resolveFields txt
-  nameFields <-
-    mapM
-      (\(seed, field) -> resolveNameField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt nameFields
+resolveNameText = genericResolver' resolveNameField
 
 resolveNameField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveNameField settings field@"female_first_name" =
