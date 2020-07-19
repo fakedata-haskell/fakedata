@@ -174,15 +174,15 @@ resolveUnresolved settings (Unresolved unres) resolverFn = do
        Left err -> throwM $ ParseError err
        Right vals -> combineFakeIRValue settings resolverFn vals
 
-resolveFakeIRValue :: (MonadIO m) => FakerSettings -> (FakerSettings -> Text -> m Text) -> FakeIRValue -> m Text
-resolveFakeIRValue _ _ (Literal txt) = pure txt
-resolveFakeIRValue settings _ (Hash num) = pure $ resolveHash settings num
-resolveFakeIRValue settings _ (Ques num) = pure $ resolveQues settings num
-resolveFakeIRValue settings resolverFn (Resolve text) = resolverFn settings text
+resolveFakeIRValue :: (MonadIO m) => FakerSettings -> (FakerSettings -> Text -> m Text) -> (FakeIRValue,StdGen) -> m Text
+resolveFakeIRValue _ _ (Literal txt,_) = pure txt
+resolveFakeIRValue settings _ (Hash num,_) = pure $ resolveHash settings num
+resolveFakeIRValue settings _ (Ques num,_) = pure $ resolveQues settings num
+resolveFakeIRValue settings resolverFn (Resolve text,gen) = resolverFn (setRandomGen gen settings) text
 
 combineFakeIRValue :: (MonadIO m) => FakerSettings -> (FakerSettings -> Text -> m Text) -> [FakeIRValue] -> m Text
 combineFakeIRValue settings resolverFn xs = do
-  vals <- mapM (resolveFakeIRValue settings resolverFn) xs
+  vals <- mapM (resolveFakeIRValue settings resolverFn) (zip xs (stdgens (getRandomGen settings)))
   pure $ T.concat vals
 
 resolveFields :: (MonadIO m, MonadThrow m) => Text -> m [FakeIRValue]
@@ -191,8 +191,7 @@ resolveFields text = case P.parseOnly parseFakedata text of
                        Right vals -> pure vals
 
 genericResolver :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> (FakerSettings -> Text -> m Text) -> m Text
-genericResolver settings txt resolverFn = do
-  combineFakeIRValue settings resolverFn [Resolve txt]
+genericResolver settings txt resolverFn = combineFakeIRValue settings resolverFn [Resolve txt]
 
 genericResolver' :: (MonadIO m, MonadThrow m) => (FakerSettings -> Text -> m Text) -> FakerSettings -> Text -> m Text
 genericResolver' resolverFn settings txt = genericResolver settings txt resolverFn
@@ -287,6 +286,10 @@ insertToCache sdata field settings vec = do
   hmap <- getCacheField settings
   let hmap2 = HM.insert key vec hmap
   setCacheField hmap2 settings
+
+stdgens :: StdGen -> [StdGen]
+stdgens gen = let (g1, g2) = split gen
+              in [gen, g1, g2] <> (stdgens g2)
 
 -- TODO: Not efficient. Better to switch to splitmax once this gets
 -- resolved: https://github.com/phadej/splitmix/issues/23

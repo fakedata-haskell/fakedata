@@ -26,7 +26,7 @@ spec = do
           defaultFakerSettings
           (pure $ pure $ "32-????-####")
           (\s t -> pure t)
-      txt `shouldBe` "32-XJZS-1534"
+      txt `shouldBe` "32-SZJX-4351"
     it "doesn't get confused with garbage" $ do
       txt <-
         resolveUnresolved
@@ -79,7 +79,7 @@ spec = do
         c1 `shouldBe` c2
       it "Resolver based function" $ do
         bno <- generate buildingNumber
-        bno `shouldBe` "153"
+        bno `shouldBe` "351"
       it "Resolver fullAddress" $ do
         bno <- generate fullAddress
         bno `shouldSatisfy` (\x -> T.length x > 25)

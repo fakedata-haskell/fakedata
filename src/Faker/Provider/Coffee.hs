@@ -178,7 +178,7 @@ $(genProviders "coffee" ["regions", "india"])
 
 resolveCoffeeText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveCoffeeText = genericResolver' resolveCoffeeText
+resolveCoffeeText = genericResolver' resolveCoffeeField
 
 resolveCoffeeField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
