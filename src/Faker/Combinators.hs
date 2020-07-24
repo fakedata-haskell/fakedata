@@ -115,5 +115,5 @@ fakeEnumFromTo :: Enum a => a -> a -> Fake a
 fakeEnumFromTo from to = toEnum <$> fromRange (fromEnum from, fromEnum to)
 
 -- | A sumtype can just derive these `fakeEnumFromTo` `minBound` `maxBound`
-fakeBoundedEnum :: Enum a => Bounded a => Fake a
+fakeBoundedEnum :: (Enum a, Bounded a) => Fake a
 fakeBoundedEnum = fakeEnumFromTo minBound maxBound
