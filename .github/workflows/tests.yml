@@ -33,7 +33,9 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
-          path: ~/.stack
+          path: |
+            ~/.stack
+            ${{ github.workspace }}/.stack
           key: ${{ runner.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.resolver }}-
