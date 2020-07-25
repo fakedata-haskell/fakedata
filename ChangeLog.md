@@ -2,7 +2,8 @@
 
 ## 0.7.1
 
-Add combinator for `fakeBoundedEnum` In Faker.Combinators
+* Add combinator for `fakeBoundedEnum` In Faker.Combinators
+* Improved Haddock documentation for Faker.Combinators
 
 ## 0.7.0
 
