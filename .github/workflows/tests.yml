@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Clone project
         uses: actions/checkout@v2
-        submodules: true
+        submodules: 'true'
 
       - name: Cache dependencies
         uses: actions/cache@v1
