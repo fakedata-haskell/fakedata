@@ -1,5 +1,9 @@
 # Changelog for fakedata
 
+## 0.7.1
+
+Add combinator for `fakeBoundedEnum` In Faker.Combinators
+
 ## 0.7.0
 
 * Add support for regex fake value generation. Useful for postcode
