@@ -40,8 +40,7 @@ jobs:
         shell: bash
         run: |
             set -ex
-            curl -sSL https://get.haskellstack.org/ | sh -s - -f
-            if [ "$RUNNER_OS" == "Windows" ]; then
-                choco install 7zip.portable
+            if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
+                curl -sSL https://get.haskellstack.org/ | sh -s - -f
             fi
             stack test --fast --no-terminal --resolver=${{ matrix.resolver }}
