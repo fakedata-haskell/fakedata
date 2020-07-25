@@ -36,6 +36,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.resolver }}-
 
+      - name: Install 7z
+        shell: bash
+        run: |
+            set -ex
+            choco install 7zip.portable
+        runs-on: [windows-latest]
+
       - name: Build and run tests
         shell: bash
         run: |
