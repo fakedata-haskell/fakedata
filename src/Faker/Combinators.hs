@@ -41,9 +41,9 @@ pickAny =
 --
 -- @
 -- λ> import qualified Faker.Address as AD
--- λ> item :: Text <- 'generate' $ 'suchThatMaybe' AD.country (\x -> (T.length x > 5))
+-- λ> item :: Text \<- 'generate' $ 'suchThatMaybe' AD.country (\x -> (T.length x > 5))
 -- λ> item
--- Just "Ecuador"
+-- Just Ecuador
 -- @
 --
 suchThatMaybe :: Fake a -> (a -> Bool) -> Fake (Maybe a)
@@ -60,7 +60,7 @@ gen `suchThatMaybe` p = do
 -- λ> import qualified Faker.Address as AD
 -- λ> item :: Text \<- 'generate' $ 'suchThat' AD.country (\\x -> (T.length x > 5))
 -- λ> item
--- "Ecuador"
+-- Ecuador
 -- @
 --
 suchThat :: Fake a -> (a -> Bool) -> Fake a
