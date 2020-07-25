@@ -20,6 +20,8 @@ jobs:
           - os: windows-latest
             resolver: nightly
           - os: windows-latest
+            resolver: lts-16
+          - os: windows-latest
             resolver: lts-15
 
     steps:
