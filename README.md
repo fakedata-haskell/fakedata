@@ -4,7 +4,7 @@
 Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.org/nightly/package/fakedata)
 [![Stackage
 LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
-[![Build Status](https://dev.azure.com/psibi2000/fakedata/_apis/build/status/psibi.fakedata?branchName=master)](https://dev.azure.com/psibi2000/fakedata/_build/latest?definitionId=7&branchName=master)
+![Build Status](https://github.com/psibi/fakedata/workflows/Tests/badge.svg?branch=master)
 
 -   [Fakedata](#fakedata)
     -   [Tutorial](#tutorial)
