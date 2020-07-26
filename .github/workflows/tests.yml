@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         resolver: [nightly, lts-16, lts-15, lts-14, lts-12]
         # Bugs in GHC make it crash too often to be worth running
         exclude:
@@ -46,8 +46,7 @@ jobs:
         shell: bash
         run: |
             set -ex
-            stack path
-            # if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
-            #     curl -sSL https://get.haskellstack.org/ | sh -s - -f
-            # fi
-            # stack test --fast --no-terminal --resolver=${{ matrix.resolver }}
+            if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
+                curl -sSL https://get.haskellstack.org/ | sh -s - -f
+            fi
+            stack test --fast --no-terminal --resolver=${{ matrix.resolver }}
