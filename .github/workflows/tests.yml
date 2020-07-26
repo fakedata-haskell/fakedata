@@ -3,13 +3,17 @@ name: Tests
 on:
     pull_request:
     push:
-        branches:
-        - master
+      branches:
+      - master
+      tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   build:
     name: CI
     runs-on: ${{ matrix.os }}
+    env:
+      STACK_ROOT: ${{ github.workspace }}/.stack
     strategy:
       fail-fast: false
       matrix:
@@ -36,9 +40,9 @@ jobs:
           path: |
             ~/.stack
             ${{ github.workspace }}/.stack
-          key: ${{ runner.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml') }}
+          key: ${{ runner.os }}-${{ matrix.resolver }}-haskell-${{ hashFiles('stack.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.resolver }}-
+            ${{ runner.os }}-${{ matrix.resolver }}-haskell-
 
       - name: Build and run tests
         shell: bash
@@ -48,3 +52,14 @@ jobs:
                 curl -sSL https://get.haskellstack.org/ | sh -s - -f
             fi
             stack test --fast --no-terminal --resolver=${{ matrix.resolver }}
+        
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        if: ${{ github.event.release.tag_name != '' }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body_path: ChangeLog.md
+          draft: false
+          prerelease: false
