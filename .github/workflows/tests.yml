@@ -48,8 +48,6 @@ jobs:
         shell: bash
         run: |
             set -ex
-            echo ${{ github.event.release.tag_name }}
-            echo after echo
             if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
                 curl -sSL https://get.haskellstack.org/ | sh -s - -f
             fi
