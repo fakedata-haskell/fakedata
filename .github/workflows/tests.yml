@@ -38,7 +38,7 @@ jobs:
           path: |
             ~/.stack
             ${{ github.workspace }}/.stack
-          key: ${{ runner.os }}-${{ matrix.resolver }}-hask-${{ hashFiles('stack.yaml') }}
+          key: ${{ runner.os }}-${{ matrix.resolver }}-haskell-${{ hashFiles('stack.yaml') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.resolver }}-hask-
 
