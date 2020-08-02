@@ -7,6 +7,13 @@ import Faker
 import System.Random
 
 -- | Generates a random element in the given inclusive range.
+--
+-- @
+-- λ> item \<- 'generate' $ 'fromRange' (1,10)
+-- λ> item
+-- 2
+-- @
+--
 fromRange :: Random a => (a, a) -> Fake a
 fromRange rng =
   Fake
@@ -15,6 +22,14 @@ fromRange rng =
         in pure x)
 
 -- | Generates a random element over the natural range of `a`.
+--
+-- @
+-- λ> import Data.Word
+-- λ> item :: Word8 \<- 'generate' 'pickAny'
+-- λ> item
+-- 57
+-- @
+--
 pickAny :: Random a => Fake a
 pickAny =
   Fake
@@ -23,6 +38,14 @@ pickAny =
         in pure x)
 
 -- | Tries to generate a value that satisfies a predicate.
+--
+-- @
+-- λ> import qualified Faker.Address as AD
+-- λ> item :: Text \<- 'generate' $ 'suchThatMaybe' AD.country (\x -> (T.length x > 5))
+-- λ> item
+-- Just Ecuador
+-- @
+--
 suchThatMaybe :: Fake a -> (a -> Bool) -> Fake (Maybe a)
 gen `suchThatMaybe` p = do
   x <- gen
@@ -35,9 +58,9 @@ gen `suchThatMaybe` p = do
 --
 -- @
 -- λ> import qualified Faker.Address as AD
--- λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 5))
+-- λ> item :: Text \<- 'generate' $ 'suchThat' AD.country (\\x -> (T.length x > 5))
 -- λ> item
--- "Ecuador"
+-- Ecuador
 -- @
 --
 suchThat :: Fake a -> (a -> Bool) -> Fake a
@@ -103,6 +126,7 @@ frequency xs0 = fromRange (1, tot) >>= (`pick` xs0)
     pick _ _ = error "Fake.pick used with empty list"
 
 -- | Generate a value of an enumeration in the range [from, to].
+--
 -- @since 0.2.0
 --
 -- @
@@ -113,3 +137,11 @@ frequency xs0 = fromRange (1, tot) >>= (`pick` xs0)
 --
 fakeEnumFromTo :: Enum a => a -> a -> Fake a
 fakeEnumFromTo from to = toEnum <$> fromRange (fromEnum from, fromEnum to)
+
+-- | A sumtype can just use this function directly. Defined as
+-- fakeBoundedEnum = `fakeEnumFromTo` `minBound` `maxBound`
+--
+-- @since 0.7.1
+--
+fakeBoundedEnum :: (Enum a, Bounded a) => Fake a
+fakeBoundedEnum = fakeEnumFromTo minBound maxBound

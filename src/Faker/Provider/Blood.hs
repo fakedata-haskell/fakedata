@@ -67,10 +67,7 @@ $(genParserUnresolved "blood" "group")
 $(genProviderUnresolved "blood" "group")
 
 resolveBloodText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveBloodText settings txt = do
-  let fields = resolveFields txt
-  bloodFields <- mapM (resolveBloodField settings) fields
-  pure $ operateFields txt bloodFields
+resolveBloodText = genericResolver' resolveBloodField
 
 resolveBloodField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

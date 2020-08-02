@@ -14,6 +14,11 @@
 * nl: Faker.Address.postcode works now.
 * ru: Faker.Company.name works now
 
+## 0.7.1
+
+* Add combinator for `fakeBoundedEnum` In Faker.Combinators
+* Improved Haddock documentation for Faker.Combinators
+
 ## 0.7.0
 
 * Add support for regex fake value generation. Useful for postcode

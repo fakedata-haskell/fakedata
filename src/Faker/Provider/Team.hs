@@ -89,13 +89,7 @@ $(genParserUnresolved "team" "name")
 $(genProviderUnresolved "team" "name")
 
 resolveTeamText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveTeamText settings txt = do
-  let fields = resolveFields txt
-  teamFields <-
-    mapM
-      (\(seed, field) -> resolveTeamField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt teamFields
+resolveTeamText = genericResolver' resolveTeamField
 
 resolveTeamField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveTeamField settings field@"creature" =

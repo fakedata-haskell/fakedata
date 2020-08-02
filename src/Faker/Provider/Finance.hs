@@ -105,14 +105,7 @@ $(genProviderUnresolved "finance" "laser")
 
 resolveFinanceText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveFinanceText settings txt = do
-  let fields = resolveFields txt
-  financeFields <-
-    mapM
-      (\(seed, field) ->
-         resolveFinanceField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt financeFields
+resolveFinanceText = genericResolver' resolveFinanceField
 
 resolveFinanceField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

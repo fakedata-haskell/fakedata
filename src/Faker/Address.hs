@@ -133,5 +133,5 @@ cityWithState =
     (cachedRandomUnresolvedVec
        "address"
        "city_with_state"
-       fullAddressProvider
+       cityWithStateProvider
        resolveAddressText)

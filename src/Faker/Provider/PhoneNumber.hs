@@ -109,10 +109,7 @@ countryCodeProvider settings = fetchData settings PhoneNumber parseCountryCode
 
 resolvePhoneNumberText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolvePhoneNumberText settings txt = do
-  let fields = resolveFields txt
-  phoneNumberFields <- mapM (resolvePhoneNumberField settings) fields
-  pure $ operateFields txt phoneNumberFields
+resolvePhoneNumberText = genericResolver' resolvePhoneNumberField
 
 resolvePhoneNumberField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

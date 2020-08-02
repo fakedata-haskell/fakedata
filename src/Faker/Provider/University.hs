@@ -77,14 +77,7 @@ $(genProvider "university" "region")
 
 resolveUniversityText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveUniversityText settings txt = do
-  let fields = resolveFields txt
-  universityFields <-
-    mapM
-      (\(seed, field) ->
-         resolveUniversityField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt universityFields
+resolveUniversityText = genericResolver' resolveUniversityField
 
 resolveUniversityField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

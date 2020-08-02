@@ -20,40 +20,13 @@ fakerException = const True
 spec :: Spec
 spec = do
   describe "Address" $ do
-    -- it "parses countries for defaultSettings" $ do
-    --   ctries <- countryProvider defaultFakerSettings
-    --   ctries `shouldSatisfy` (\x -> V.length x >= 40)
-    -- it "parses countryByCode for defaultSettings" $ do
-    --   ctries <- countryByCodeProvider defaultFakerSettings
-    --   ctries `shouldSatisfy` (\x -> Prelude.length (M.toList x) >= 40)
-    -- it "parses countries for other locales" $ do
-    --   locales <- populateLocales
-    --   let settings :: [FakerSettings] =
-    --         map (\l -> setLocale l defaultFakerSettings) locales
-    --       ctries :: IO [V.Vector Text] = mapM countryProvider settings
-    --   ctries' :: [V.Vector Text] <- ctries
-    --   let exp :: [Bool] = map (\x -> V.length x >= 10) ctries'
-    --   True `shouldBe` (all (\x -> x == True) exp)
-    it "produces random integer text" $ do
-      let txt = interpolateNumbers defaultFakerSettings "#####"
-      let num :: Int = read (unpack txt)
-      num `shouldSatisfy` (\x -> x >= 0 && T.length txt == 5)
-    it "produces random integer only for hash" $ do
-      let txt = interpolateNumbers defaultFakerSettings "ab-##"
-      txt `shouldSatisfy` (\x -> T.length x == 5 && (T.take 3 x == "ab-"))
-    it "produces random alphabets" $ do
-      let txt = interpolateString defaultFakerSettings "????"
-      txt `shouldBe` "XJZS"
-    it "preserves unwanted things" $ do
-      let txt = interpolateString defaultFakerSettings "32-????"
-      txt `shouldBe` "32-XJZS"
     it "preserves unwanted things and works with numbers" $ do
       txt <-
         resolveUnresolved
           defaultFakerSettings
           (pure $ pure $ "32-????-####")
           (\s t -> pure t)
-      txt `shouldBe` "32-XJZS-1534"
+      txt `shouldBe` "32-SZJX-4351"
     it "doesn't get confused with garbage" $ do
       txt <-
         resolveUnresolved
@@ -61,119 +34,10 @@ spec = do
           (pure $ pure $ "abjakf-324jak")
           (\s t -> pure t)
       txt `shouldBe` "abjakf-324jak"
-    it "resolve field" $ do
-      let field = resolveFields "#{community_prefix} #{community_suffix}"
-      field `shouldBe` ["community_prefix", "community_suffix"]
-    it "resolve field with dot" $ do
-      let field =
-            resolveFields "#{city_prefix} #{Name.first_name}#{city_suffix}"
-      field `shouldBe` ["city_prefix", "Name.first_name", "city_suffix"]
-    it "resolve field with dot (2)" $ do
-      let field = resolveFields "#{Name.last_name} #{street_suffix}"
-      field `shouldBe` ["Name.last_name", "street_suffix"]
-    it "resolve field with commas" $ do
-      let field =
-            resolveFields
-              "#{secondary_address} #{street_address}, #{city}, #{state_abbr} #{zip_code}"
-      field `shouldBe`
-        [ "secondary_address"
-        , "street_address"
-        , "city"
-        , "state_abbr"
-        , "zip_code"
-        ]
-    -- it "resolveAddressField" $ do
-    --   item <- resolveAddressField defaultFakerSettings "community_suffix"
-    --   item `shouldSatisfy` (\x -> T.length x > 0)
-    it "uncons2" $ do
-      let item = uncons2 "hello"
-      item `shouldBe` Just ("he" :: String, "llo" :: Text)
-    describe "operateField" $ do
-      it "sample example" $ do
-        let item = operateField "#{hello} #{world}" "jam"
-        item `shouldBe` "jam #{world}"
-      it "leading space example" $ do
-        let item = operateField " #{hello} #{world}" "jam"
-        item `shouldBe` " jam #{world}"
-      it "trailing chars" $ do
-        let item = operateField " #{hello} #{world} kool" "jam"
-        item `shouldBe` " jam #{world} kool"
-      it "edge case" $ do
-        let item = operateField "this is" "jam"
-        item `shouldBe` "this is"
-    describe "operateFields" $ do
-      it "sample example" $ do
-        let item = operateFields "#{hello} #{world}" ["jam", "cream"]
-        item `shouldBe` "jam cream"
-      it "leading space example" $ do
-        let item = operateFields " #{hello} #{world}" ["jam", "cream"]
-        item `shouldBe` " jam cream"
-      it "extra arguments" $ do
-        let item =
-              operateFields " #{hello} #{world} kool" ["jam", "kool", "name"]
-        item `shouldBe` " jam kool kool"
-    -- it "resolveAddressText" $ do
-    --   item <-
-    --     resolveAddressText
-    --       defaultFakerSettings
-    --       "#{community_prefix} #{community_suffix}"
-    --   item `shouldSatisfy` (\x -> T.length x > 0 && T.any (== ' ') item)
-    -- describe "Resolver check" $ do
-    --   it "community" $ do
-    --     item <-
-    --       resolveAddressText
-    --         defaultFakerSettings
-    --         "#{community_prefix} #{community_suffix}"
-    --     item `shouldSatisfy` (\x -> T.length x >= 5)
-      -- it "community via function" $ do
-      --   comm <- communityProvider defaultFakerSettings
-      --   item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
-      --   item `shouldSatisfy` (\x -> T.length x >= 5)
-      -- it "building_number" $ do
-      --   comm <- buildingNumberProvider defaultFakerSettings
-      --   item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
-      --   item `shouldSatisfy` (\x -> T.length x >= 3)
-      -- it "secondary_address" $ do
-      --   comm <- secondaryAddressProvider defaultFakerSettings
-      --   item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
-      --   item `shouldSatisfy` (\x -> T.length x >= 5)
-      -- it "street_address" $ do
-      --   item <-
-      --     resolveAddressText
-      --       defaultFakerSettings
-      --       "#{Name.last_name} #{street_suffix}"
-      --   item `shouldSatisfy` (\x -> T.length x >= 5)
-      -- it "street_address via function" $ do
-      --   comm <- streetAddressProvider defaultFakerSettings
-      --   item <- resolveUnresolved defaultFakerSettings comm resolveAddressText
-      --   item `shouldSatisfy` (\x -> T.length x >= 5)
     describe "Address functions" $ do
       it "basic check" $ do
         fakeCountry <- generate country
         fakeCountry `shouldBe` "Ecuador"
-      -- it "check community equality" $ do
-      --   let community1 :: Fake Text
-      --       community1 =
-      --         Fake
-      --           (cachedRandomUnresolvedVec
-      --              "address"
-      --              "community"
-      --              communityProvider
-      --              resolveAddressText)
-      --   c1 <- generate community1
-      --   c2 <- generate community
-      --   c1 `shouldBe` c2
-      -- it "check city prefix equality" $ do
-      --   let cityPrefix1 :: Fake Text
-      --       cityPrefix1 =
-      --         Fake
-      --           (cachedRandomVec
-      --              "address"
-      --              "cityPrefix"
-      --              addressCityPrefixProvider)
-      --   c1 <- generate cityPrefix1
-      --   c2 <- generate cityPrefix
-      --   c1 `shouldBe` c2
       it "Monad instance of Fake" $ do
         let someCountry :: Fake Text
             someCountry = do
@@ -215,7 +79,7 @@ spec = do
         c1 `shouldBe` c2
       it "Resolver based function" $ do
         bno <- generate buildingNumber
-        bno `shouldBe` "153"
+        bno `shouldBe` "351"
       it "Resolver fullAddress" $ do
         bno <- generate fullAddress
         bno `shouldSatisfy` (\x -> T.length x > 25)
@@ -228,10 +92,72 @@ spec = do
         (c1, c2) <- generate someBuilding
         c1 `shouldBe` c2
     describe "Empty data sources" $ do
-      -- it "For ee locale, countries is empty" $ do
-      --   ctries <- countryProvider (setLocale "ee" defaultFakerSettings)
-      --   ctries `shouldSatisfy` (\x -> V.length x == 0)
       it "For ee locale, throws exception" $ do
         let action =
               generateWithSettings (setLocale "ee" defaultFakerSettings) country
         action `shouldThrow` fakerException
+    describe "Functions in address module" $ do
+      it "Country" $ do
+        val <- generateWithSettings defaultFakerSettings country
+        val `shouldBe` "Ecuador"
+      it "cityPrefix" $ do
+        val <- generateWithSettings defaultFakerSettings cityPrefix
+        val `shouldBe` "East"
+      it "citySuffix" $ do
+        val <- generateWithSettings defaultFakerSettings citySuffix
+        val `shouldBe` "burgh"
+      it "countryCode" $ do
+        val <- generateWithSettings defaultFakerSettings countryCode
+        val `shouldBe` "FJ"
+      it "countryCodeLong" $ do
+        val <- generateWithSettings defaultFakerSettings countryCodeLong
+        val `shouldBe` "CYM"
+      it "buildingNumber" $ do
+        val <- generateWithSettings defaultFakerSettings buildingNumber
+        val `shouldBe` "351"
+      it "communityPrefix" $ do
+        val <- generateWithSettings defaultFakerSettings communityPrefix
+        val `shouldBe` "Pine"
+      it "communitySuffix" $ do
+        val <- generateWithSettings defaultFakerSettings communitySuffix
+        val `shouldBe` "Oaks"
+      it "community" $ do
+        val <- generateWithSettings defaultFakerSettings community
+        val `shouldBe` "Pine Place"
+      it "streetSuffix" $ do
+        val <- generateWithSettings defaultFakerSettings streetSuffix
+        val `shouldBe` "Way"
+      it "secondaryAddress" $ do
+        val <- generateWithSettings defaultFakerSettings secondaryAddress
+        val `shouldBe` "Suite 351"
+      it "postcode" $ do
+        val <- generateWithSettings defaultFakerSettings postcode
+        val `shouldBe` "24351-4351"
+      it "state" $ do
+        val <- generateWithSettings defaultFakerSettings state
+        val `shouldBe` "Michigan"
+      it "stateAbbr" $ do
+        val <- generateWithSettings defaultFakerSettings stateAbbr
+        val `shouldBe` "MI"
+      it "timeZone" $ do
+        val <- generateWithSettings defaultFakerSettings timeZone
+        val `shouldBe` "America/Chicago"
+      it "city" $ do
+        val <- generateWithSettings defaultFakerSettings city
+        val `shouldBe` "East Vernita"
+      it "streetName" $ do
+        val <- generateWithSettings defaultFakerSettings streetName
+        val `shouldBe` "Langosh Ferry"
+      it "streetAddress" $ do
+        val <- generateWithSettings defaultFakerSettings streetAddress
+        val `shouldBe` "351 Vernita Avenue"
+      it "fullAddress" $ do
+        val <- generateWithSettings defaultFakerSettings fullAddress
+        val `shouldBe` "Suite 351 892 Steuber Points, Kelleymouth, AK 66043-6043"
+      it "mailBox" $ do
+        val <- generateWithSettings defaultFakerSettings mailBox
+        val `shouldBe` "PO Box 4351"
+      it "cityWithState" $ do
+        val <- generateWithSettings defaultFakerSettings cityWithState
+        val `shouldBe` "East Vernita, Minnesota"
+

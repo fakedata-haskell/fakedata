@@ -130,14 +130,7 @@ $(genProviderUnresolveds "educator" ["tertiary", "degree", "course_number"])
 
 resolveEducatorText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveEducatorText settings txt = do
-  let fields = resolveFields txt
-  educatorFields <-
-    mapM
-      (\(seed, field) ->
-         resolveEducatorField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt educatorFields
+resolveEducatorText = genericResolver' resolveEducatorField
 
 resolveEducatorField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

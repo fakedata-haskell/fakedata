@@ -35,33 +35,33 @@ spec = do
         generateWithSettings
           (setLocale "ee" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Kajar Vaino Kõiv"
+      (ctries) `shouldBe` "Kaido Välbe Mark"
     it "name with middle - pak" $ do
       ctries <-
         generateWithSettings
           (setLocale "en-PAK" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Mian Khan Nambardar"
+      (ctries) `shouldBe` "Zia Butt Iqbal"
     it "name with middle - au" $ do
       ctries <-
         generateWithSettings
           (setLocale "en-AU" defaultFakerSettings)
           nameWithMiddle
-      (ctries) `shouldBe` "Sarah Ruby Jenkins"
+      (ctries) `shouldBe` "Georgia Sarah Kelly"
     it "group A - WC" $ do
       ga <- generate WC.groupsGroupA
       ga `shouldBe` "Russia"
     it "App author" $ do
       ga <-
         generateWithSettings (setDeterministic defaultFakerSettings) AP.author
-      ga `shouldBe` "Steuber, Donnelly and Goldner"
+      ga `shouldBe` "Langosh, Stiedemann and Koch"
   describe "Semigroup instance of Fake" $
     it "can be appended and it is associative" $ do
       phraseL <- generate $ (pure "Hello " <> name) <> pure "!"
       phraseR <- generate $ pure "Hello " <> (name <> pure "!")
-      phraseL `shouldBe` "Hello Sherryl Steuber!"
-      phraseR `shouldBe` "Hello Sherryl Steuber!"
+      phraseL `shouldBe` "Hello Antony Stiedemann!"
+      phraseR `shouldBe` "Hello Antony Stiedemann!"
   describe "Monoid instance of Fake" $
     it "mappend mempty doesn't modify the other operand" $ do
       name' <- generate $ name `mappend` mempty
-      name' `shouldBe` "Sherryl Steuber"
+      name' `shouldBe` "Antony Stiedemann"
