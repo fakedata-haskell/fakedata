@@ -14,6 +14,7 @@ import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Faker
 import Faker.Combinators
+import Faker.Nation as FN
 import Faker.Company
 import Faker.Compass
 import Faker.Construction
@@ -54,7 +55,7 @@ spec = do
   describe "Faker Compass Generate" $ do
     it "Resolver check" $ do
       ctries <- generate direction
-      (ctries) `shouldBe` "southwest"
+      (ctries) `shouldBe` "SE"
     it "Resolver check" $ do
       ctries <- generate $ listOf 5 direction
       (ctries) `shouldSatisfy` (\x -> Prelude.length x == 5)
@@ -101,9 +102,9 @@ spec = do
     it "University" $ do
       item <- generate FU.name
       item `shouldSatisfy` isText
-    -- it "Nation - flagEmoji" $ do
-    --   item <- generate flagEmoji
-    --   item `shouldSatisfy` isText
+    it "Nation - flagEmoji" $ do
+      item <- generate FN.flagEmoji
+      item `shouldSatisfy` isText
     it "Job" $ do
       item <- generate field
       item `shouldSatisfy` isText
@@ -114,7 +115,7 @@ spec = do
     describe "Restaurant" $ do
       it "name" $ do
         item <- generate FR.name
-        item `shouldBe` "Sweet House"
+        item `shouldBe` "Thirsty Pizza"
       it "name_suffix" $ do
         item <- generate FR.nameSuffix
         item `shouldSatisfy` isText

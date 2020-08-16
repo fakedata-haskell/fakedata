@@ -83,13 +83,7 @@ authorResolver settings =
          settings)
 
 resolveBookText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveBookText settings txt = do
-  let fields = resolveFields txt
-  bookFields <-
-    mapM
-      (\(seed, field) -> resolveBookField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt bookFields
+resolveBookText = genericResolver' resolveBookField
 
 resolveBookField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveBookField settings "Name.name" =

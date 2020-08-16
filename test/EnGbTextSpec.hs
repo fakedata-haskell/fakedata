@@ -36,9 +36,9 @@ spec = do
     it "validates ee locale" $ do
       let functions :: [Fake Text] =
             [ 
-              -- FA.postcode
+              FA.postcode
 
-              IN.domainSuffix
+            , IN.domainSuffix
 
             , PH.formats
             , PH.cellPhoneFormat

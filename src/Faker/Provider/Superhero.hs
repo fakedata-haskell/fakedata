@@ -77,14 +77,7 @@ $(genProviderUnresolved "superhero" "name")
 
 resolveSuperheroText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveSuperheroText settings txt = do
-  let fields = resolveFields txt
-  superheroFields <-
-    mapM
-      (\(seed, field) ->
-         resolveSuperheroField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt superheroFields
+resolveSuperheroText settings txt = genericResolver settings txt resolveSuperheroField
 
 resolveSuperheroField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

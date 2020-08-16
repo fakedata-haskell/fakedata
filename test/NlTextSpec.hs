@@ -65,7 +65,7 @@ spec = do
             , FA.cityPrefix
             , FA.city
             , FA.country
-            -- , FA.postcode
+            , FA.postcode
             , FA.buildingNumber
             , FA.secondaryAddress
             , FA.state

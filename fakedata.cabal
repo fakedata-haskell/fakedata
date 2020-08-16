@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cb02a7474470faa118a3512db1754e55f5593b16ca1f15eb9494f6e19ce91d59
+-- hash: 44948b891a06eb3d34c94ede8a4198e7b75f1b9dd721dfea4717e1044b9729ff
 
 name:           fakedata
 version:        0.7.1
@@ -564,11 +564,13 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      attoparsec
+    , base >=4.7 && <5
     , bytestring
     , containers
     , directory
     , exceptions
+    , fakedata-parser
     , filepath
     , hashable
     , random
@@ -656,12 +658,14 @@ test-suite fakedata-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      attoparsec
+    , base >=4.7 && <5
     , bytestring
     , containers
     , directory
     , exceptions
     , fakedata
+    , fakedata-parser
     , filepath
     , hashable
     , hspec
@@ -685,13 +689,15 @@ benchmark fakebench
       bench
   ghc-options: -O2
   build-depends:
-      base >=4.7 && <5
+      attoparsec
+    , base >=4.7 && <5
     , bytestring
     , containers
     , deepseq
     , directory
     , exceptions
     , fakedata
+    , fakedata-parser
     , filepath
     , gauge
     , hashable

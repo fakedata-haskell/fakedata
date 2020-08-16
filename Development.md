@@ -121,7 +121,7 @@ irb(main):006:0> Faker::Address.city
 These issues are best fixed in the upstream ruby library.
 
 * fr
-  - compass.direction (rethink code)
+  - compass.direction (rethink code): https://github.com/faker-ruby/faker/pull/2073
 * start wars - kylo ren test: https://github.com/faker-ruby/faker/pull/2011/files#r436272174
 
 ## Steps before release

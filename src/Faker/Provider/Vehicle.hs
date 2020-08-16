@@ -117,10 +117,7 @@ vehicleLicensePlateProvider _ = pure $ pure $ pure "???-###"
 
 resolveVehicleText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveVehicleText settings txt = do
-  let fields = resolveFields txt
-  vehicleFields <- mapM (resolveVehicleField settings) fields
-  pure $ operateFields txt vehicleFields
+resolveVehicleText settings txt = genericResolver settings txt resolveVehicleField
 
 resolveVehicleField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

@@ -178,14 +178,7 @@ $(genProviders "coffee" ["regions", "india"])
 
 resolveCoffeeText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveCoffeeText settings txt = do
-  let fields = resolveFields txt
-  coffeeFields <-
-    mapM
-      (\(seed, field) ->
-         resolveCoffeeField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt coffeeFields
+resolveCoffeeText = genericResolver' resolveCoffeeField
 
 resolveCoffeeField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

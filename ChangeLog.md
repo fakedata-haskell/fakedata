@@ -1,5 +1,19 @@
 # Changelog for fakedata
 
+## Unreleased
+
+### Breaking changes
+
+* Behavior of Monad instances changed. Monad instance by will not
+  change the underlying StdGen by default. It will change only when
+  you do `setNonDeterministic` for the settings.
+
+### Locale Improvements
+
+* en-GB: Faker.Address.postcode works now.
+* nl: Faker.Address.postcode works now.
+* ru: Faker.Company.name works now
+
 ## 0.7.1
 
 * Add combinator for `fakeBoundedEnum` In Faker.Combinators

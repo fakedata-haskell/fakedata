@@ -99,14 +99,7 @@ $(genProvider "company" "category")
 
 resolveCompanyText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveCompanyText settings txt = do
-  let fields = resolveFields txt
-  companyFields <-
-    mapM
-      (\(seed, field) ->
-         resolveCompanyField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt companyFields
+resolveCompanyText = genericResolver' resolveCompanyField
 
 resolveCompanyField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text

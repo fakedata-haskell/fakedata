@@ -93,14 +93,7 @@ $(genProviderUnresolved "slackEmoji" "emoji")
 
 resolveSlackEmojiText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolveSlackEmojiText settings txt = do
-  let fields = resolveFields txt
-  slackEmojiFields <-
-    mapM
-      (\(seed, field) ->
-         resolveSlackEmojiField (modifyRandomGen settings seed) field)
-      (zip [1 ..] fields)
-  pure $ operateFields txt slackEmojiFields
+resolveSlackEmojiText = genericResolver' resolveSlackEmojiField
 
 resolveSlackEmojiField ::
      (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
