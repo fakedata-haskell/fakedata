@@ -1,8 +1,21 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NumericUnderscores #-}
+{-# LANGUAGE TypeApplications #-}
 
-module Faker.Company where
+module Faker.Company
+  ( buzzword
+  , suffix
+  , bs
+  , name
+  , industry
+  , profession
+  , type'
+  , sicCode
+  , email
+  , domain
+  ) where
 
 import Data.Monoid ((<>))
 import Data.Text
@@ -11,6 +24,10 @@ import Faker
 import Faker.Internal
 import Faker.Provider.Company
 import Faker.TH
+import qualified Faker.Internet as F
+import qualified Faker.Name as F
+import qualified Faker.Combinators as F
+import Data.Char(isAlphaNum)
 
 $(generateFakeField "company" "suffix")
 
@@ -47,3 +64,23 @@ $(generateFakeField "company" "type")
 -- @since 0.2.0
 --
 $(generateFakeField "company" "sic_code")
+
+-- | Generates a domain name like "crazychairauction.com"
+domain :: Fake Text
+domain = do
+  suffix <- F.domainSuffix
+  companyName <- name
+  pure $ fixupName companyName <> "." <> suffix
+
+-- | Generates an email like "jappie_klooster@crazychairauction.com"
+email :: Fake Text
+email = do
+  humanName <-  F.name
+  number <- F.fromRange @Int (0, 999_999_999) -- reasonable uniqueness
+  domainName <- domain
+  let numText :: Text
+      numText = pack $ show number
+  pure $ fixupName humanName <> "-" <> numText <> "@" <> domainName
+
+fixupName :: Text -> Text
+fixupName = Data.Text.filter (\c -> isAlphaNum c || c == '_') . replace " " "_"

@@ -93,6 +93,11 @@ The following data sources which the libraries uses has been updated:
 * id.yml
 * it.yml
 
+### Company
+
+* Add company email
+* Add company domain
+
 ## 0.7.1
 
 * Add combinator for `fakeBoundedEnum` In Faker.Combinators
