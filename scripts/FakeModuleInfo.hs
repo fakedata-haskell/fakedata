@@ -1873,6 +1873,58 @@ warhammerFantasy  =
     , nestedFields = []
     , unresolvedNestedFields = []
     }
+
+bigBangTheory :: ModuleInfo
+bigBangTheory = 
+  ModuleInfo
+    { mmoduleName = "bigBangTheory"
+    , jsonField = "big_bang_theory"
+    , fields =
+        [ "characters", "quotes"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+futurama :: ModuleInfo
+futurama = 
+  ModuleInfo
+    { mmoduleName = "futurama"
+    , jsonField = "big_futurama"
+    , fields =
+        [ "characters", "locations", "quotes", "hermes_catchphrases"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+drivingLicense :: ModuleInfo
+drivingLicense =
+    ModuleInfo
+    { mmoduleName = "drivingLicense"
+    , jsonField = "driving_license"
+    , fields =
+        [
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = [["usa","alabama"],["usa","alaska"],["usa","arizona"],["usa", "arkansas"],["usa","california"],["usa","colorado"],["usa","connecticut"],["usa","delaware"],["usa","district_of_columbia"],["usa","florida"],["usa","georgia"],["usa","hawaii"],["usa","idaho"],["usa","illinois"],["usa","indiana"], ["usa","iowa"],["usa","kansas"],["usa","kentucky"],["usa","louisiana"],["usa","maine"],["usa","maryland"],["usa","massachusetts"],["usa","michigan"],["usa","minnesota"],["usa","mississippi"],["usa","missouri"],["usa","montana"],["usa","nebraska"],["usa","nevada"],["usa","new_hampshire"],["usa","new_jersey"],["usa","new_mexico"],["usa","new_york"],["usa","north_carolina"],["usa","ohio"],["usa","oklahoma"],["usa","oregon"],["usa","pennsylvania"],["usa","rhode_island"],["usa","south_carolina"],["usa","south_dakota"],["usa","tennessee"],["usa","texas"],["usa","utah"],["usa","vermont"],["usa","virginia"],["usa","washington"],["usa","west_virginia"],["usa","wisconsin"],["usa","wyoming"]]
+    }
+
+drone :: ModuleInfo
+drone =
+  ModuleInfo
+    { mmoduleName = "drone"
+    , jsonField = "drone"
+    , fields =
+        [ "name", "battery_type","iso","photo_format", "video_format", "max_shutter_speed","min_shutter_speed", "shutter_speed_units"
+        ]
+    , unresolvedFields = ["weight", "max_ascent_speed", "max_descent_speed", "flight_time", "max_altitude", "max_flight_distance", "max_speed", "max_wind_resistance", "max_angular_velocity", "max_tilt_angle", "operating_temperature", "battery_capacity", "battery_voltage", "battery_weight", "charging_temperature", "max_charging_power", "max_resolution"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
       
 currentOne :: ModuleInfo
 currentOne = dnd

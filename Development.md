@@ -121,10 +121,10 @@ irb(main):006:0> Faker::Address.city
 New modules:
 
 * en/barcode.yml
-* en/big_bang_theory.yml
-* en/driving_license.yml
-* en/drone.yml
-* en/futurama.yml
+* en/big_bang_theory.yml (gen)
+* en/driving_license.yml (gen)
+* en/drone.yml (gen)
+* en/futurama.yml (gen)
 * en/minecrafty.yml
 * en/prince.yml
 * en/rush.yml
