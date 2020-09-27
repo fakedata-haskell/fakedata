@@ -59,6 +59,7 @@ library:
   - Faker.Provider.BackToTheFuture
   - Faker.Provider.Bank
   - Faker.Provider.Basketball
+  - Faker.Provider.BigBangTheory
   - Faker.Provider.Beer
   - Faker.Provider.Blood
   - Faker.Provider.BoJackHorseman

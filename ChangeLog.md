@@ -29,6 +29,10 @@
   function introduced. See Module update section.
 * Faker.Game.HeroesOfTheStorm: Rename classes function to classNames
 
+### New modules introduced
+
+* Faker.TvShow.BigBangTheory
+
 ### Locale Improvements
 
 * en-GB: Faker.Address.postcode

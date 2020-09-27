@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 390f2560b6da31562a9c5688d629da25c7bd4be24748b83ae8464b0e2ba5a680
+-- hash: a2e6e45ca95dee2e622f0f1334e8504d32cd3ec924f6cecb6389350487c2df64
 
 name:           fakedata
 version:        0.7.1
@@ -377,6 +377,7 @@ library
       Faker.Superhero
       Faker.Team
       Faker.TvShow.AquaTeenHungerForce
+      Faker.TvShow.BigBangTheory
       Faker.TvShow.BoJackHorseman
       Faker.TvShow.BreakingBad
       Faker.TvShow.Buffy
@@ -426,6 +427,7 @@ library
       Faker.Provider.BackToTheFuture
       Faker.Provider.Bank
       Faker.Provider.Basketball
+      Faker.Provider.BigBangTheory
       Faker.Provider.Beer
       Faker.Provider.Blood
       Faker.Provider.BoJackHorseman

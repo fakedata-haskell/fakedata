@@ -2,7 +2,8 @@ module FakeModuleInfo where
 
 data ModuleInfo =
   ModuleInfo
-    { mmoduleName :: String -- eg: buffy
+    { mmoduleName :: String -- eg: buffy. Module name. This should be
+                            -- the value in mapSource fucntion too.
     , jsonField :: String -- ^ Field after en.faker
     , fields :: [String]
     , unresolvedFields :: [String]
@@ -2005,4 +2006,4 @@ barcode =
     } 
       
 currentOne :: ModuleInfo
-currentOne = dnd
+currentOne = bigBangTheory

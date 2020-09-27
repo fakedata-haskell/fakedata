@@ -25,6 +25,7 @@ import qualified Faker.ChuckNorris as CH
 import qualified Faker.Rajnikanth as RK
 import qualified Faker.Code as CO
 import qualified Faker.Computer as COM
+import qualified Faker.TvShow.BigBangTheory as BB
 import qualified Faker.Coffee as CO
 import qualified Faker.Coin as CO
 import qualified Faker.Dnd as DN
@@ -1401,6 +1402,10 @@ spec = do
       (and bools) `shouldBe` True
     it "TvShow.AquaTeenHungerForce" $ do
       let functions :: [Fake Text] = [AQ.character, AQ.quote]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.BigBangTheory" $ do
+      let functions :: [Fake Text] = [BB.characters, BB.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.Suits" $ do
