@@ -48,7 +48,7 @@ know exactly what has changed since the last release, follow these:
 
 ``` shellsession
 $ cd scripts
-$ stack unpack fakedata-0.2.2
+$ stack unpack fakedata-0.7.1
 ```
 
 Now you may want to change the `ymlDiff.sh`'s `OLD_FAKER_DIR` variable.
@@ -118,11 +118,18 @@ irb(main):006:0> Faker::Address.city
 
 ## Known locale issues
 
-These issues are best fixed in the upstream ruby library.
+New modules:
 
-* fr
-  - compass.direction (rethink code): https://github.com/faker-ruby/faker/pull/2073
-* start wars - kylo ren test: https://github.com/faker-ruby/faker/pull/2011/files#r436272174
+* en/barcode.yml
+* en/big_bang_theory.yml
+* en/driving_license.yml
+* en/drone.yml
+* en/futurama.yml
+* en/minecrafty.yml
+* en/prince.yml
+* en/rush.yml
+* en/street_fighter.yml
+* en/studio_ghibli.yml
 
 ## Steps before release
 
