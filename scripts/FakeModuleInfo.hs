@@ -1925,6 +1925,84 @@ drone =
     , nestedFields = []
     , unresolvedNestedFields = []
     }
+
+minecraft :: ModuleInfo
+minecraft =
+  ModuleInfo
+    { mmoduleName = "minecraft"
+    , jsonField = "minecraft"
+    , fields =
+        [ "blocks","items", "mobs"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }    
+
+prince :: ModuleInfo
+prince =
+  ModuleInfo
+    { mmoduleName = "prince"
+    , jsonField = "prince"
+    , fields =
+        [ "lyric","song", "album","band"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }    
+
+rush :: ModuleInfo
+rush =
+  ModuleInfo
+    { mmoduleName = "rush"
+    , jsonField = "rush"
+    , fields =
+        [ "players","albums"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    } 
+   
+streetFighter :: ModuleInfo
+streetFighter =
+  ModuleInfo
+    { mmoduleName = "streetFighter"
+    , jsonField = "street_fighter"
+    , fields =
+        [ "characters","stages", "quotes", "moves"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    } 
+
+studioGhibli :: ModuleInfo
+studioGhibli =
+  ModuleInfo
+    { mmoduleName = "studioGhibli"
+    , jsonField = "studio_ghibli"
+    , fields =
+        [ "characters", "quotes", "movies"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    } 
+
+barcode :: ModuleInfo
+barcode =
+  ModuleInfo
+    { mmoduleName = "barcode"
+    , jsonField = "barcode"
+    , fields =
+        [ 
+        ]
+    , unresolvedFields = ["ean_8","ean_13","upc_a","upc_e","composite_symbol", "isbn", "ismn","issn"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    } 
       
 currentOne :: ModuleInfo
 currentOne = dnd

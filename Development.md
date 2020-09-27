@@ -120,16 +120,16 @@ irb(main):006:0> Faker::Address.city
 
 New modules:
 
-* en/barcode.yml
+* en/barcode.yml (gen)
 * en/big_bang_theory.yml (gen)
 * en/driving_license.yml (gen)
 * en/drone.yml (gen)
 * en/futurama.yml (gen)
-* en/minecrafty.yml
-* en/prince.yml
-* en/rush.yml
-* en/street_fighter.yml
-* en/studio_ghibli.yml
+* en/minecrafty.yml (gen)
+* en/prince.yml (gen)
+* en/rush.yml (gen)
+* en/street_fighter.yml (gen)
+* en/studio_ghibli.yml (gen)
 
 ## Steps before release
 

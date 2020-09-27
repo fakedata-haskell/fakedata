@@ -140,7 +140,7 @@ main = do
 
 ``` {.haskell}
 λ> import Faker.Address
-λ> item <- generate $ listOf 5 country
+λ> item <- generateNonDeterministic $ listOf 5 country
 λ> item
 ["Ecuador","French Guiana","Faroe Islands","Canada","Armenia"]
 ```
