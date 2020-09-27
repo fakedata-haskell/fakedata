@@ -6,13 +6,79 @@
 
 * Behavior of Monad instances changed. Monad instance by will not
   change the underlying StdGen by default. It will change only when
-  you do `setNonDeterministic` for the settings.
+  you do `setNonDeterministic` for the settings. If you use functions
+  like `listOf` with `generate` function then all the values would be
+  the same:
+
+``` haskell
+λ> import Faker.Coffee
+λ> qs <- generate $ listOf 5 blendName
+λ> qs
+["The Treat","The Treat","The Treat","The Treat","The Treat"]
+```
+
+  Now instead you have to use `generateNonDeterministic` function:
+
+``` haskell
+λ> qs <- generateNonDeterministic $ listOf 5 blendName
+λ> qs
+["The Treat","Evening Cowboy","Veranda Forrester","Blue Choice","Veranda Cake"]
+```
+
+* Faker.Dnd: Remove species and background function. Other new
+  function introduced. See Module update section.
+* Faker.Game.HeroesOfTheStorm: Rename classes function to classNames
 
 ### Locale Improvements
 
-* en-GB: Faker.Address.postcode works now.
-* nl: Faker.Address.postcode works now.
-* ru: Faker.Company.name works now
+* en-GB: Faker.Address.postcode
+* nl: Faker.Address.postcode
+* ru: Faker.Company.name
+* de-AT: PhoneNumber.countryCode
+* de-CH: PhoneNumber.countryCode
+* de: PhoneNumber.countryCode
+* en-au-ocker: PhoneNumber.countryCode
+* en-IND: PhoneNumber.countryCode
+* en-MS: PhoneNumber.countryCode
+* en-NEP: PhoneNumber.countryCode
+* en-NZ: PhoneNumber.countryCode
+* en-SG: PhoneNumber.countryCode
+* es: Vehicle.licensePlate
+* fr-CA: PhoneNumber.cellPhoneFormat, PhoneNumber.countryCode
+* fr: PhoneNumber.countryCode, Compass.direction
+* id: PhoneNumber.countryCode
+* it: PhoneNumber.countryCode
+* ko: Color.name, Space.planet, Space.galaxy, Gender.binaryTypes
+* nb-NO: PhoneNumber.countryCode
+* pt: PhoneNumber.countryCode
+* ru: PhoneNumber.countryCode
+* sk: PhoneNumber.countryCode
+
+### Module updates
+
+* Faker.TvShow.AquaTeenHungerForce: quote
+* Faker.DND: cities, languages, meleeWeapons, monsters, races, rangedWeapons
+* Faker.TvShow.Simpsons: episodeTitles
+* Faker.Movie.StarWars: quotesKyloRen
+
+### Data Update
+
+The following data sources which the libraries uses has been updated:
+
+* en/animal.yml
+* en/aqua_teen_hunger_force.yml
+* en-AU.yml
+* en/bank.yml
+* en-GB.yml
+* en-IND.yml
+* en/star_trek.yml
+* en-US.yml
+* fi-FI.yml
+* fr-CA.yml
+* fr-CH.yml
+* fr.yml
+* id.yml
+* it.yml
 
 ## 0.7.1
 
