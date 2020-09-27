@@ -44,5 +44,7 @@ $(generateFakeField "company" "profession")
 $(generateFakeField "company" "type")
 
 -- | SIC code for classifying industries.
+--
 -- @since 0.2.0
+--
 $(generateFakeField "company" "sic_code")

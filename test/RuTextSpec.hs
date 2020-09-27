@@ -64,6 +64,7 @@ spec = do
             , NA.nameWithMiddle
 
             , PH.formats
+            , PH.countryCode
 
             , FA.city
             , FA.streetName

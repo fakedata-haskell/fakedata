@@ -45,24 +45,44 @@ parseDndFields settings txts val = do
 
 
 
-$(genParser "dnd" "species")
-
-$(genProvider "dnd" "species")
-
-
 $(genParser "dnd" "klasses")
 
 $(genProvider "dnd" "klasses")
 
 
-$(genParser "dnd" "backgrounds")
-
-$(genProvider "dnd" "backgrounds")
-
-
 $(genParser "dnd" "alignments")
 
 $(genProvider "dnd" "alignments")
+
+
+$(genParser "dnd" "cities")
+
+$(genProvider "dnd" "cities")
+
+
+$(genParser "dnd" "languages")
+
+$(genProvider "dnd" "languages")
+
+
+$(genParser "dnd" "melee_weapons")
+
+$(genProvider "dnd" "melee_weapons")
+
+
+$(genParser "dnd" "monsters")
+
+$(genProvider "dnd" "monsters")
+
+
+$(genParser "dnd" "races")
+
+$(genProvider "dnd" "races")
+
+
+$(genParser "dnd" "ranged_weapons")
+
+$(genProvider "dnd" "ranged_weapons")
 
 
 

@@ -109,6 +109,7 @@ spec = do
               
             , PH.formats
             , PH.cellPhoneFormat
+            , PH.countryCode
               
             , BO.title
             , BO.author

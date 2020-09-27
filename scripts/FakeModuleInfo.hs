@@ -1792,10 +1792,15 @@ dnd =
     { mmoduleName = "dnd"
     , jsonField = "dnd"
     , fields =
-        [ "species"
-        , "klasses"
-        , "backgrounds"
+        [ 
+          "klasses"
         , "alignments"
+        , "cities"
+        , "languages"
+        , "melee_weapons"
+        , "monsters"
+        , "races"
+        , "ranged_weapons"
         ]
     , unresolvedFields = []
     , nestedFields = []
@@ -1870,4 +1875,4 @@ warhammerFantasy  =
     }
       
 currentOne :: ModuleInfo
-currentOne = warhammerFantasy
+currentOne = dnd

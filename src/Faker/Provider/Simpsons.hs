@@ -55,3 +55,7 @@ $(genProvider "simpsons" "locations")
 $(genParser "simpsons" "quotes")
 
 $(genProvider "simpsons" "quotes")
+
+$(genParser "simpsons" "episode_titles")
+
+$(genProvider "simpsons" "episode_titles")

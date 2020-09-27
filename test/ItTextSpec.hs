@@ -56,6 +56,8 @@ spec = do
             , NA.nameWithMiddle
               
             , PH.formats
+            , PH.countryCode
+              
             , SU.plans
             , SU.statuses
             , SU.paymentMethods

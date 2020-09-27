@@ -58,6 +58,8 @@ spec = do
             , PO.moves
 
             , PH.formats
+            , PH.cellPhoneFormat
+            , PH.countryCode
 
             , FA.state
             , FA.stateAbbr

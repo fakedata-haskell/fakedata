@@ -49,9 +49,9 @@ $(genParser "heroesOfTheStorm" "battlegrounds")
 
 $(genProvider "heroesOfTheStorm" "battlegrounds")
 
-$(genParser "heroesOfTheStorm" "classes")
+$(genParser "heroesOfTheStorm" "class_names")
 
-$(genProvider "heroesOfTheStorm" "classes")
+$(genProvider "heroesOfTheStorm" "class_names")
 
 $(genParser "heroesOfTheStorm" "heroes")
 

@@ -55,6 +55,7 @@ spec = do
 
             , CO.suffix
             , PH.formats
+            , PH.countryCode
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

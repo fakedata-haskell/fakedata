@@ -337,7 +337,16 @@ spec = do
       (and bools) `shouldBe` True
     it "DnD" $ do
       let functions :: [Fake Text] =
-            [DN.species, DN.klasses, DN.backgrounds, DN.alignments]
+            [
+              DN.klasses
+            , DN.alignments
+            , DN.cities
+            , DN.languages
+            , DN.meleeWeapons
+            , DN.monsters
+            , DN.races
+            , DN.rangedWeapons
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Coffee" $ do
@@ -659,7 +668,9 @@ spec = do
       (and bools) `shouldBe` True
     it "Game.HeroesOfTheStorm" $ do
       let functions :: [Fake Text] =
-            [HS.battlegrounds, HS.classes, HS.heroes, HS.quotes]
+            [HS.battlegrounds
+            , HS.classNames
+            , HS.heroes, HS.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.Myst" $ do
@@ -933,7 +944,7 @@ spec = do
             , ST.quotesJabbaTheHutt
             , ST.quotesJarJarBinks
             , ST.quotesK2so
-            -- , ST.quotesKyloRen
+            , ST.quotesKyloRen
             , ST.quotesLandoCalrissian
             , ST.quotesLeiaOrgana
             , ST.quotesLukeSkywalker
@@ -1389,7 +1400,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.AquaTeenHungerForce" $ do
-      let functions :: [Fake Text] = [AQ.character]
+      let functions :: [Fake Text] = [AQ.character, AQ.quote]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.Suits" $ do
@@ -1501,7 +1512,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.Simpsons" $ do
-      let functions :: [Fake Text] = [SS.characters, SS.locations, SS.quotes]
+      let functions :: [Fake Text] = [SS.characters, SS.locations, SS.quotes, SS.episodeTitles]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.SouthPark" $ do

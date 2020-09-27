@@ -65,6 +65,7 @@ spec = do
             , NA.name
 
             , PH.formats
+            , PH.countryCode
 
             , FA.cityPrefix
             , FA.citySuffix

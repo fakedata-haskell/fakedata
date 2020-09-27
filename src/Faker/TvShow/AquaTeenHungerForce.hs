@@ -10,3 +10,7 @@ import Faker.Provider.AquaTeenHungerForce
 character :: Fake Text
 character =
   Fake $ cachedRandomVec "aquaTeenHungerForce" "character" athfCharacterProvider
+
+quote :: Fake Text
+quote =
+  Fake $ cachedRandomVec "aquaTeenHungerForce" "quote" quoteProvider

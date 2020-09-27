@@ -9,10 +9,9 @@ import qualified Data.Text as T
 import qualified Data.Vector as V
 import Faker hiding (defaultFakerSettings)
 import Faker.Address
-import Faker.Internal
--- import Faker.Provider.Address
 import Test.Hspec
 import TestImport
+import Faker.Internal
 
 fakerException :: Selector FakerException
 fakerException = const True
@@ -147,13 +146,13 @@ spec = do
         val `shouldBe` "East Vernita"
       it "streetName" $ do
         val <- generateWithSettings defaultFakerSettings streetName
-        val `shouldBe` "Langosh Ferry"
+        val `shouldBe` "Schmidt Ferry"
       it "streetAddress" $ do
         val <- generateWithSettings defaultFakerSettings streetAddress
         val `shouldBe` "351 Vernita Avenue"
       it "fullAddress" $ do
         val <- generateWithSettings defaultFakerSettings fullAddress
-        val `shouldBe` "Suite 351 892 Steuber Points, Kelleymouth, AK 66043-6043"
+        val `shouldBe` "Suite 351 892 Donnelly Points, Kelleymouth, AK 66043-6043"
       it "mailBox" $ do
         val <- generateWithSettings defaultFakerSettings mailBox
         val `shouldBe` "PO Box 4351"
