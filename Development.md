@@ -97,7 +97,8 @@ $ ls | sed "s/^/- Faker.Provider./g" | sed "s/.hs//g"
 
 fakedata uses TH extensively to reduce code duplication. To understand
 the TH based code, you can read the plain haskell code equivalent. I
-have the module `Faker.Address` for easy understanding.
+have the module `Faker.Address` for easy understanding. For single
+value generation, see `Faker.Barcode` module.
 
 ## Debugging using the Ruby Program
 

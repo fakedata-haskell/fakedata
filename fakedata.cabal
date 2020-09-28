@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a2e6e45ca95dee2e622f0f1334e8504d32cd3ec924f6cecb6389350487c2df64
+-- hash: f64a8023355a9af80270e31467bf6c4fa81e43d0bd5b0bb983167d4159e0a6e7
 
 name:           fakedata
 version:        0.7.1
@@ -261,6 +261,7 @@ library
       Faker.Appliance
       Faker.Artist
       Faker.Bank
+      Faker.Barcode
       Faker.Beer
       Faker.Blood
       Faker.Book
@@ -420,6 +421,7 @@ library
       Faker.Provider.Address
       Faker.Provider.Ancient
       Faker.Provider.Animal
+      Faker.Provider.Barcode
       Faker.Provider.App
       Faker.Provider.Appliance
       Faker.Provider.AquaTeenHungerForce

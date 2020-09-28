@@ -211,8 +211,10 @@ sourceFile Rajnikanth = "rajnikanth"
 sourceFile Show = "show"
 sourceFile WarhammerFantasy = "warhammer_fantasy"
 sourceFile Suits = "suits"
+sourceFile Barcode = "barcode"
 
 mapSource :: Text -> Name
+mapSource "barcode" = 'Barcode
 mapSource "pearl_jam" = 'PearlJam
 mapSource "dnd" = 'DnD
 mapSource "chiquito" = 'Chiquito

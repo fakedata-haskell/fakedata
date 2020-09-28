@@ -2006,4 +2006,4 @@ barcode =
     } 
       
 currentOne :: ModuleInfo
-currentOne = bigBangTheory
+currentOne = barcode

@@ -52,6 +52,7 @@ library:
   - Faker.Provider.Address
   - Faker.Provider.Ancient
   - Faker.Provider.Animal
+  - Faker.Provider.Barcode
   - Faker.Provider.App
   - Faker.Provider.Appliance
   - Faker.Provider.AquaTeenHungerForce

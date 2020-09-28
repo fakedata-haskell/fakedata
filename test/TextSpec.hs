@@ -11,6 +11,7 @@ import qualified Faker.App as AP
 import qualified Faker.Appliance as AP
 import qualified Faker.Artist as AR
 import qualified Faker.Bank as BA
+import qualified Faker.Barcode as BC
 import qualified Faker.Beer as BE
 import qualified Faker.Blood as BL
 import qualified Faker.Book as BO
@@ -22,17 +23,14 @@ import qualified Faker.Business as BU
 import qualified Faker.Cannabis as CA
 import qualified Faker.Chiquito as CI
 import qualified Faker.ChuckNorris as CH
-import qualified Faker.Rajnikanth as RK
 import qualified Faker.Code as CO
-import qualified Faker.Computer as COM
-import qualified Faker.TvShow.BigBangTheory as BB
 import qualified Faker.Coffee as CO
 import qualified Faker.Coin as CO
-import qualified Faker.Dnd as DN
 import qualified Faker.Color as CO
 import qualified Faker.Commerce as CO
 import qualified Faker.Company as CM
 import qualified Faker.Compass as CO
+import qualified Faker.Computer as COM
 import qualified Faker.Construction as CO
 import qualified Faker.Cosmere as CO
 import qualified Faker.Creature.Animal as AN
@@ -44,6 +42,7 @@ import qualified Faker.Currency as CU
 import qualified Faker.DcComics as DC
 import qualified Faker.Demographic as DE
 import qualified Faker.Dessert as DE
+import qualified Faker.Dnd as DN
 import qualified Faker.Educator as ED
 import qualified Faker.ElectricalComponents as EC
 import qualified Faker.Esport as ES
@@ -51,9 +50,8 @@ import qualified Faker.File as FI
 import qualified Faker.Finance as FI
 import qualified Faker.Food as FO
 import qualified Faker.FunnyName as FU
-import qualified Faker.Game.Dota as DO
-import qualified Faker.Game.WarhammerFantasy as WF
 import qualified Faker.Game.Control as GC
+import qualified Faker.Game.Dota as DO
 import qualified Faker.Game.ElderScrolls as EL
 import qualified Faker.Game.Fallout as FA
 import qualified Faker.Game.HalfLife as HA
@@ -64,7 +62,7 @@ import qualified Faker.Game.Overwatch as OV
 import qualified Faker.Game.Pokemon as PO
 import qualified Faker.Game.SonicTheHedgehog as SO
 import qualified Faker.Game.SuperSmashBros as SU
-import qualified Faker.Game.Witcher as WI
+import qualified Faker.Game.WarhammerFantasy as WF
 import qualified Faker.Game.Witcher as WI
 import qualified Faker.Game.WorldOfWarcraft as WO
 import qualified Faker.Game.Zelda as ZE
@@ -87,8 +85,8 @@ import qualified Faker.Marketing as MA
 import qualified Faker.Measurement as ME
 import qualified Faker.Military as MI
 import qualified Faker.Movie as MO
-import qualified Faker.Movie.Departed as MD
 import qualified Faker.Movie.BackToTheFuture as BA
+import qualified Faker.Movie.Departed as MD
 import qualified Faker.Movie.Ghostbusters as GH
 import qualified Faker.Movie.GratefulDead as GR
 import qualified Faker.Movie.HarryPotter as HA
@@ -112,9 +110,11 @@ import qualified Faker.PhoneNumber as PH
 import qualified Faker.ProgrammingLanguage as PR
 import qualified Faker.Quote as QU
 import qualified Faker.Quote.Shakespeare as SH
+import qualified Faker.Rajnikanth as RK
 import qualified Faker.Relationship as RE
 import qualified Faker.Restaurant as RE
 import qualified Faker.Science as SC
+import qualified Faker.Show as WS
 import qualified Faker.SlackEmoji as SL
 import qualified Faker.Source as SO
 import qualified Faker.Space as SP
@@ -123,9 +123,8 @@ import qualified Faker.Sport.Football as FO
 import qualified Faker.Subscription as SU
 import qualified Faker.Superhero as SU
 import qualified Faker.Team as TE
-import qualified Faker.Show as WS
-import qualified Faker.TvShow.Suits as SU
 import qualified Faker.TvShow.AquaTeenHungerForce as AQ
+import qualified Faker.TvShow.BigBangTheory as BB
 import qualified Faker.TvShow.BoJackHorseman as BO
 import qualified Faker.TvShow.BreakingBad as BR
 import qualified Faker.TvShow.Buffy as BU
@@ -150,6 +149,7 @@ import qualified Faker.TvShow.SouthPark as SO
 import qualified Faker.TvShow.StarTrek as SR
 import qualified Faker.TvShow.Stargate as SG
 import qualified Faker.TvShow.StrangerThings as SH
+import qualified Faker.TvShow.Suits as SU
 import qualified Faker.TvShow.TheExpanse as TH
 import qualified Faker.TvShow.TheItCrowd as TI
 import qualified Faker.TvShow.TheThickOfIt as TO
@@ -160,7 +160,6 @@ import qualified Faker.Vehicle as VE
 import qualified Faker.Verbs as VE
 import qualified Faker.WorldCup as WO
 import qualified Faker.Yoda as YO
-
 import Test.Hspec
 import TestImport
 
@@ -187,27 +186,27 @@ spec = do
   describe "TextSpec" $ do
     it "Address" $ do
       let functions :: [Fake Text] =
-            [ FA.country
-            , FA.cityPrefix
-            , FA.citySuffix
-            , FA.countryCode
-            , FA.countryCodeLong
-            , FA.buildingNumber
-            , FA.communityPrefix
-            , FA.communitySuffix
-            , FA.community
-            , FA.streetSuffix
-            , FA.secondaryAddress
-            , FA.postcode
-            , FA.state
-            , FA.stateAbbr
-            , FA.timeZone
-            , FA.city
-            , FA.streetName
-            , FA.streetAddress
-            , FA.fullAddress
-            , FA.mailBox
-            , FA.cityWithState
+            [ FA.country,
+              FA.cityPrefix,
+              FA.citySuffix,
+              FA.countryCode,
+              FA.countryCodeLong,
+              FA.buildingNumber,
+              FA.communityPrefix,
+              FA.communitySuffix,
+              FA.community,
+              FA.streetSuffix,
+              FA.secondaryAddress,
+              FA.postcode,
+              FA.state,
+              FA.stateAbbr,
+              FA.timeZone,
+              FA.city,
+              FA.streetName,
+              FA.streetAddress,
+              FA.fullAddress,
+              FA.mailBox,
+              FA.cityWithState
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -231,6 +230,19 @@ spec = do
       let functions :: [Fake Text] = [BA.name, BA.swiftBic]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
+    it "Barcode" $ do
+      let functions :: [Fake Text] =
+            [ BC.ean8,
+              BC.ean13,
+              BC.upcA,
+              BC.upcE,
+              BC.compositeSymbol,
+              BC.isbn,
+              BC.ismn,
+              BC.issn
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
     it "Beer" $ do
       let functions :: [Fake Text] =
             [BE.name, BE.brand, BE.hop, BE.yeast, BE.malt, BE.style]
@@ -242,43 +254,43 @@ spec = do
       (and bools) `shouldBe` True
     it "Book.CultureSeries" $ do
       let functions :: [Fake Text] =
-            [ CE.books
-            , CE.cultureShips
-            , CE.cultureShipClasses
-            , CE.cultureShipClassAbvs
-            , CE.civs
-            , CE.planets
+            [ CE.books,
+              CE.cultureShips,
+              CE.cultureShipClasses,
+              CE.cultureShipClassAbvs,
+              CE.civs,
+              CE.planets
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Book.Dune" $ do
       let functions :: [Fake Text] =
-            [ DU.characters
-            , DU.titles
-            , DU.planets
-            , DU.quotesGuildNavigator
-            , DU.quotesEmperor
-            , DU.quotesPaul
-            , DU.quotesThufir
-            , DU.quotesJessica
-            , DU.quotesIrulan
-            , DU.quotesMohiam
-            , DU.quotesGurney
-            , DU.quotesLeto
-            , DU.quotesStilgar
-            , DU.quotesLietKynes
-            , DU.quotesPardotKynes
-            , DU.quotesBaronHarkonnen
-            , DU.quotesPiter
-            , DU.quotesAlia
-            , DU.quotesMapes
-            , DU.quotesDuncan
-            , DU.quotesYueh
-            , DU.sayingsBeneGesserit
-            , DU.sayingsFremen
-            , DU.sayingsMentat
-            , DU.sayingsMuaddib
-            , DU.sayingsOrangeCatholicBible
+            [ DU.characters,
+              DU.titles,
+              DU.planets,
+              DU.quotesGuildNavigator,
+              DU.quotesEmperor,
+              DU.quotesPaul,
+              DU.quotesThufir,
+              DU.quotesJessica,
+              DU.quotesIrulan,
+              DU.quotesMohiam,
+              DU.quotesGurney,
+              DU.quotesLeto,
+              DU.quotesStilgar,
+              DU.quotesLietKynes,
+              DU.quotesPardotKynes,
+              DU.quotesBaronHarkonnen,
+              DU.quotesPiter,
+              DU.quotesAlia,
+              DU.quotesMapes,
+              DU.quotesDuncan,
+              DU.quotesYueh,
+              DU.sayingsBeneGesserit,
+              DU.sayingsFremen,
+              DU.sayingsMentat,
+              DU.sayingsMuaddib,
+              DU.sayingsOrangeCatholicBible
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -302,16 +314,16 @@ spec = do
       (and bools) `shouldBe` True
     it "Cannabis" $ do
       let functions :: [Fake Text] =
-            [ CA.strains
-            , CA.cannabinoidAbbreviations
-            , CA.cannabinoids
-            , CA.terpenes
-            , CA.medicalUses
-            , CA.healthBenefits
-            , CA.categories
-            , CA.types
-            , CA.buzzwords
-            , CA.brands
+            [ CA.strains,
+              CA.cannabinoidAbbreviations,
+              CA.cannabinoids,
+              CA.terpenes,
+              CA.medicalUses,
+              CA.healthBenefits,
+              CA.categories,
+              CA.types,
+              CA.buzzwords,
+              CA.brands
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -338,47 +350,46 @@ spec = do
       (and bools) `shouldBe` True
     it "DnD" $ do
       let functions :: [Fake Text] =
-            [
-              DN.klasses
-            , DN.alignments
-            , DN.cities
-            , DN.languages
-            , DN.meleeWeapons
-            , DN.monsters
-            , DN.races
-            , DN.rangedWeapons
+            [ DN.klasses,
+              DN.alignments,
+              DN.cities,
+              DN.languages,
+              DN.meleeWeapons,
+              DN.monsters,
+              DN.races,
+              DN.rangedWeapons
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Coffee" $ do
       let functions :: [Fake Text] =
-            [ CO.country
-            , CO.variety
-            , CO.intensifier
-            , CO.body
-            , CO.descriptor
-            , CO.name1
-            , CO.name2
-            , CO.notes
-            , CO.blendName
-            , CO.regionsColombia
-            , CO.regionsBrazil
-            , CO.regionsSumatra
-            , CO.regionsEthiopia
-            , CO.regionsHonduras
-            , CO.regionsKenya
-            , CO.regionsUganda
-            , CO.regionsMexico
-            , CO.regionsGuatemala
-            , CO.regionsNicaragua
-            , CO.regionsCostaRica
-            , CO.regionsTanzania
-            , CO.regionsElSalvador
-            , CO.regionsRwanda
-            , CO.regionsBurundi
-            , CO.regionsPanama
-            , CO.regionsYemen
-            , CO.regionsIndia
+            [ CO.country,
+              CO.variety,
+              CO.intensifier,
+              CO.body,
+              CO.descriptor,
+              CO.name1,
+              CO.name2,
+              CO.notes,
+              CO.blendName,
+              CO.regionsColombia,
+              CO.regionsBrazil,
+              CO.regionsSumatra,
+              CO.regionsEthiopia,
+              CO.regionsHonduras,
+              CO.regionsKenya,
+              CO.regionsUganda,
+              CO.regionsMexico,
+              CO.regionsGuatemala,
+              CO.regionsNicaragua,
+              CO.regionsCostaRica,
+              CO.regionsTanzania,
+              CO.regionsElSalvador,
+              CO.regionsRwanda,
+              CO.regionsBurundi,
+              CO.regionsPanama,
+              CO.regionsYemen,
+              CO.regionsIndia
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -397,73 +408,73 @@ spec = do
       (and bools) `shouldBe` True
     it "Commerce" $ do
       let functions :: [Fake Text] =
-            [ CO.department
-            , CO.productNameAdjective
-            , CO.productNameMaterial
-            , CO.productNameProduct
-            , CO.promotionCodeAdjective
-            , CO.promotionCodeNoun
+            [ CO.department,
+              CO.productNameAdjective,
+              CO.productNameMaterial,
+              CO.productNameProduct,
+              CO.promotionCodeAdjective,
+              CO.promotionCodeNoun
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Company" $ do
       let functions :: [Fake Text] =
-            [ CM.suffix
-            , CM.buzzword
-            , CM.bs
-            , CM.name
-            , CM.industry
-            , CM.profession
-            , CM.type'
-            , CM.sicCode
-            , CM.buzzword
-            , CM.bs
+            [ CM.suffix,
+              CM.buzzword,
+              CM.bs,
+              CM.name,
+              CM.industry,
+              CM.profession,
+              CM.type',
+              CM.sicCode,
+              CM.buzzword,
+              CM.bs
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Company" $ do
       let functions :: [Fake Text] =
-            [ CO.direction
-            , CO.abbreviation
-            , CO.azimuth
-            , CO.cardinalWord
-            , CO.cardinalAbbreviation
-            , CO.cardinalAzimuth
-            , CO.ordinalWord
-            , CO.ordinalAbbreviation
-            , CO.ordinalAzimuth
-            , CO.halfWindWord
-            , CO.halfWindAbbreviation
-            , CO.halfWindAzimuth
-            , CO.quarterWindWord
-            , CO.quarterWindAbbreviation
-            , CO.quarterWindAzimuth
+            [ CO.direction,
+              CO.abbreviation,
+              CO.azimuth,
+              CO.cardinalWord,
+              CO.cardinalAbbreviation,
+              CO.cardinalAzimuth,
+              CO.ordinalWord,
+              CO.ordinalAbbreviation,
+              CO.ordinalAzimuth,
+              CO.halfWindWord,
+              CO.halfWindAbbreviation,
+              CO.halfWindAzimuth,
+              CO.quarterWindWord,
+              CO.quarterWindAbbreviation,
+              CO.quarterWindAzimuth
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Construction" $ do
       let functions :: [Fake Text] =
-            [ CO.materials
-            , CO.subcontractCategories
-            , CO.heavyEquipment
-            , CO.roles
-            , CO.trades
-            , CO.standardCostCodes
+            [ CO.materials,
+              CO.subcontractCategories,
+              CO.heavyEquipment,
+              CO.roles,
+              CO.trades,
+              CO.standardCostCodes
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Cosmere" $ do
       let functions :: [Fake Text] =
-            [ CO.aons
-            , CO.shardWorlds
-            , CO.shards
-            , CO.surges
-            , CO.knightsRadiant
-            , CO.metals
-            , CO.allomancers
-            , CO.feruchemists
-            , CO.heralds
-            , CO.sprens
+            [ CO.aons,
+              CO.shardWorlds,
+              CO.shards,
+              CO.surges,
+              CO.knightsRadiant,
+              CO.metals,
+              CO.allomancers,
+              CO.feruchemists,
+              CO.heralds,
+              CO.sprens
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -477,26 +488,26 @@ spec = do
       (and bools) `shouldBe` True
     it "Game.Control" $ do
       let functions :: [Fake Text] =
-            [ GC.character
-            , GC.location
-            , GC.objectOfPower
-            , GC.alteredItem
-            , GC.alteredWorldEvent
-            , GC.hiss
-            , GC.theBoard
-            , GC.quote
+            [ GC.character,
+              GC.location,
+              GC.objectOfPower,
+              GC.alteredItem,
+              GC.alteredWorldEvent,
+              GC.hiss,
+              GC.theBoard,
+              GC.quote
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Creature.Dog" $ do
       let functions :: [Fake Text] =
-            [ DO.name
-            , DO.breed
-            , DO.sound
-            , DO.memePhrase
-            , DO.age
-            , DO.coatLength
-            , DO.size
+            [ DO.name,
+              DO.breed,
+              DO.sound,
+              DO.memePhrase,
+              DO.age,
+              DO.coatLength,
+              DO.size
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -519,11 +530,11 @@ spec = do
       (and bools) `shouldBe` True
     it "Demographic" $ do
       let functions :: [Fake Text] =
-            [ DE.race
-            , DE.sex
-            , DE.demonym
-            , DE.educationalAttainment
-            , DE.maritalStatus
+            [ DE.race,
+              DE.sex,
+              DE.demonym,
+              DE.educationalAttainment,
+              DE.maritalStatus
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -533,17 +544,17 @@ spec = do
       (and bools) `shouldBe` True
     it "Educator" $ do
       let functions :: [Fake Text] =
-            [ ED.schoolName
-            , ED.secondary
-            , ED.university
-            , ED.secondarySchool
-            , ED.campus
-            , ED.subject
-            , ED.degree
-            , ED.courseName
-            , ED.tertiaryUniversityType
-            , ED.tertiaryDegreeType
-            , ED.tertiaryDegreeCourseNumber
+            [ ED.schoolName,
+              ED.secondary,
+              ED.university,
+              ED.secondarySchool,
+              ED.campus,
+              ED.subject,
+              ED.degree,
+              ED.courseName,
+              ED.tertiaryUniversityType,
+              ED.tertiaryDegreeType,
+              ED.tertiaryDegreeCourseNumber
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -563,32 +574,32 @@ spec = do
       (and bools) `shouldBe` True
     it "Finance" $ do
       let functions :: [Fake Text] =
-            [ FI.visa
-            , FI.mastercard
-            , FI.discover
-            , FI.dinersClub
-            , FI.jcb
-            , FI.switch
-            , FI.solo
-            , FI.dankort
-            , FI.maestro
-            , FI.forbrugsforeningen
-            , FI.laser
+            [ FI.visa,
+              FI.mastercard,
+              FI.discover,
+              FI.dinersClub,
+              FI.jcb,
+              FI.switch,
+              FI.solo,
+              FI.dankort,
+              FI.maestro,
+              FI.forbrugsforeningen,
+              FI.laser
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Food" $ do
       let functions :: [Fake Text] =
-            [ FO.dish
-            , FO.descriptions
-            , FO.ingredients
-            , FO.fruits
-            , FO.vegetables
-            , FO.spices
-            , FO.measurements
-            , FO.measurementSizes
-            , FO.metricMeasurements
-            , FO.sushi
+            [ FO.dish,
+              FO.descriptions,
+              FO.ingredients,
+              FO.fruits,
+              FO.vegetables,
+              FO.spices,
+              FO.measurements,
+              FO.measurementSizes,
+              FO.metricMeasurements,
+              FO.sushi
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -598,59 +609,59 @@ spec = do
       (and bools) `shouldBe` True
     it "Game.Dota" $ do
       let functions :: [Fake Text] =
-            [ DO.hero
-            , DO.item
-            , DO.team
-            , DO.player
-            , DO.abaddonQuote
-            , DO.alchemistQuote
-            , DO.axeQuote
-            , DO.beastmasterQuote
-            , DO.brewmasterQuote
-            , DO.bristlebackQuote
-            , DO.centaurQuote
-            , DO.chaosKnightQuote
-            , DO.clockwerkQuote
-            , DO.doomQuote
-            , DO.dragonKnightQuote
-            , DO.earthSpiritQuote
-            , DO.earthshakerQuote
-            , DO.elderTitanQuote
-            , DO.huskarQuote
-            , DO.ioQuote
-            , DO.kunkkaQuote
-            , DO.legionCommanderQuote
-            , DO.lifestealerQuote
-            , DO.lycanQuote
-            , DO.magnusQuote
-            , DO.nightStalkerQuote
-            , DO.omniknightQuote
-            , DO.phoenixQuote
-            , DO.pudgeQuote
-            , DO.sandKingQuote
-            , DO.slardarQuote
-            , DO.spiritBreakerQuote
-            , DO.svenQuote
-            , DO.tidehunterQuote
-            , DO.timbersawQuote
-            , DO.tinyQuote
-            , DO.tuskQuote
-            , DO.underlordQuote
-            , DO.undyingQuote
-            , DO.wraithKingQuote
-            , DO.meepoQuote
+            [ DO.hero,
+              DO.item,
+              DO.team,
+              DO.player,
+              DO.abaddonQuote,
+              DO.alchemistQuote,
+              DO.axeQuote,
+              DO.beastmasterQuote,
+              DO.brewmasterQuote,
+              DO.bristlebackQuote,
+              DO.centaurQuote,
+              DO.chaosKnightQuote,
+              DO.clockwerkQuote,
+              DO.doomQuote,
+              DO.dragonKnightQuote,
+              DO.earthSpiritQuote,
+              DO.earthshakerQuote,
+              DO.elderTitanQuote,
+              DO.huskarQuote,
+              DO.ioQuote,
+              DO.kunkkaQuote,
+              DO.legionCommanderQuote,
+              DO.lifestealerQuote,
+              DO.lycanQuote,
+              DO.magnusQuote,
+              DO.nightStalkerQuote,
+              DO.omniknightQuote,
+              DO.phoenixQuote,
+              DO.pudgeQuote,
+              DO.sandKingQuote,
+              DO.slardarQuote,
+              DO.spiritBreakerQuote,
+              DO.svenQuote,
+              DO.tidehunterQuote,
+              DO.timbersawQuote,
+              DO.tinyQuote,
+              DO.tuskQuote,
+              DO.underlordQuote,
+              DO.undyingQuote,
+              DO.wraithKingQuote,
+              DO.meepoQuote
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.ElderScrolls" $ do
       let functions :: [Fake Text] =
-            [ EL.race
-            , EL.creature
-            , EL.region
-            , EL.dragon
-            , EL.city
-            , EL.firstName
-            , EL.lastName
+            [ EL.race,
+              EL.creature,
+              EL.region,
+              EL.dragon,
+              EL.city,
+              EL.firstName,
+              EL.lastName
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -669,9 +680,11 @@ spec = do
       (and bools) `shouldBe` True
     it "Game.HeroesOfTheStorm" $ do
       let functions :: [Fake Text] =
-            [HS.battlegrounds
-            , HS.classNames
-            , HS.heroes, HS.quotes]
+            [ HS.battlegrounds,
+              HS.classNames,
+              HS.heroes,
+              HS.quotes
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.Myst" $ do
@@ -685,12 +698,12 @@ spec = do
       (and bools) `shouldBe` True
     it "Game.WarhammerFantasy" $ do
       let functions :: [Fake Text] =
-            [ WF.creatures
-            , WF.factions
-            , WF.factions
-            , WF.locations
-            , WF.quotes
-            , WF.heros
+            [ WF.creatures,
+              WF.factions,
+              WF.factions,
+              WF.locations,
+              WF.quotes,
+              WF.heros
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -712,12 +725,12 @@ spec = do
       (and bools) `shouldBe` True
     it "Game.Witcher" $ do
       let functions :: [Fake Text] =
-            [ WI.characters
-            , WI.witchers
-            , WI.schools
-            , WI.locations
-            , WI.quotes
-            , WI.monsters
+            [ WI.characters,
+              WI.witchers,
+              WI.schools,
+              WI.locations,
+              WI.quotes,
+              WI.monsters
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -759,15 +772,15 @@ spec = do
       (and bools) `shouldBe` True
     it "Internet" $ do
       let functions :: [Fake Text] =
-            [ IN.freeEmail
-            , IN.domainSuffix
-            , IN.userAgentAol
-            , IN.userAgentChrome
-            , IN.userAgentFirefox
-            , IN.userAgentInternetExplorer
-            , IN.userAgentNetscape
-            , IN.userAgentOpera
-            , IN.userAgentSafari
+            [ IN.freeEmail,
+              IN.domainSuffix,
+              IN.userAgentAol,
+              IN.userAgentChrome,
+              IN.userAgentFirefox,
+              IN.userAgentInternetExplorer,
+              IN.userAgentNetscape,
+              IN.userAgentOpera,
+              IN.userAgentSafari
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -777,12 +790,12 @@ spec = do
       (and bools) `shouldBe` True
     it "JapaneseMedia.OnePiece" $ do
       let functions :: [Fake Text] =
-            [ ON.characters
-            , ON.seas
-            , ON.islands
-            , ON.locations
-            , ON.quotes
-            , ON.akumasNoMi
+            [ ON.characters,
+              ON.seas,
+              ON.islands,
+              ON.locations,
+              ON.quotes,
+              ON.akumasNoMi
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -793,35 +806,35 @@ spec = do
       (and bools) `shouldBe` True
     it "Job" $ do
       let functions :: [Fake Text] =
-            [ JO.field
-            , JO.seniority
-            , JO.position
-            , JO.keySkills
-            , JO.employmentType
-            , JO.educationLevel
-            , JO.title
+            [ JO.field,
+              JO.seniority,
+              JO.position,
+              JO.keySkills,
+              JO.employmentType,
+              JO.educationLevel,
+              JO.title
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Kpop" $ do
       let functions :: [Fake Text] =
-            [ KP.iGroups
-            , KP.iiGroups
-            , KP.iiiGroups
-            , KP.girlGroups
-            , KP.boyBands
-            , KP.solo
+            [ KP.iGroups,
+              KP.iiGroups,
+              KP.iiiGroups,
+              KP.girlGroups,
+              KP.boyBands,
+              KP.solo
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "LeagueOfLegends" $ do
       let functions :: [Fake Text] =
-            [ LE.champion
-            , LE.location
-            , LE.quote
-            , LE.summonerSpell
-            , LE.masteries
-            , LE.rank
+            [ LE.champion,
+              LE.location,
+              LE.quote,
+              LE.summonerSpell,
+              LE.masteries,
+              LE.rank
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -839,24 +852,24 @@ spec = do
       (and bools) `shouldBe` True
     it "Measurement" $ do
       let functions :: [Fake Text] =
-            [ ME.height
-            , ME.length
-            , ME.volume
-            , ME.weight
-            , ME.metricHeight
-            , ME.metricLength
-            , ME.metricVolume
-            , ME.metricWeight
+            [ ME.height,
+              ME.length,
+              ME.volume,
+              ME.weight,
+              ME.metricHeight,
+              ME.metricLength,
+              ME.metricVolume,
+              ME.metricWeight
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Military" $ do
       let functions :: [Fake Text] =
-            [ MI.armyRank
-            , MI.marinesRank
-            , MI.navyRank
-            , MI.airForceRank
-            , MI.dodPaygrade
+            [ MI.armyRank,
+              MI.marinesRank,
+              MI.navyRank,
+              MI.airForceRank,
+              MI.dodPaygrade
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -878,24 +891,24 @@ spec = do
       (and bools) `shouldBe` True
     it "Movie.HarryPotter" $ do
       let functions :: [Fake Text] =
-            [ HA.characters
-            , HA.locations
-            , HA.quotes
-            , HA.books
-            , HA.houses
-            , HA.spells
+            [ HA.characters,
+              HA.locations,
+              HA.quotes,
+              HA.books,
+              HA.houses,
+              HA.spells
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Movie.HitchhikersGuideToTheGalaxy" $ do
       let functions :: [Fake Text] =
-            [ HI.characters
-            , HI.locations
-            , HI.marvinQuote
-            , HI.planets
-            , HI.quotes
-            , HI.species
-            , HI.starships
+            [ HI.characters,
+              HI.locations,
+              HI.marvinQuote,
+              HI.planets,
+              HI.quotes,
+              HI.species,
+              HI.starships
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -918,77 +931,77 @@ spec = do
       (and bools) `shouldBe` True
     it "Movie.StarWars" $ do
       let functions :: [Fake Text] =
-            [ ST.characters
-            , ST.callSquadrons
-            , ST.droids
-            , ST.planets
-            , ST.species
-            , ST.vehicles
-            , ST.wookieeWords
-            , ST.callNumbers
-            , ST.callSign
-            , ST.quotesAdmiralAckbar
-            , ST.quotesAhsokaTano
-            , ST.quotesAsajjVentress
-            , ST.quotesBendu
-            , ST.quotesBobaFett
-            , ST.quotesC3po
-            , ST.quotesCountDooku
-            , ST.quotesDarthCaedus
-            , ST.quotesDarthVader
-            , ST.quotesEmperorPalpatine
-            , ST.quotesFinn
-            , ST.quotesGrandAdmiralThrawn
-            , ST.quotesGrandMoffTarkin
-            , ST.quotesGreedo
-            , ST.quotesHanSolo
-            , ST.quotesJabbaTheHutt
-            , ST.quotesJarJarBinks
-            , ST.quotesK2so
-            , ST.quotesKyloRen
-            , ST.quotesLandoCalrissian
-            , ST.quotesLeiaOrgana
-            , ST.quotesLukeSkywalker
-            , ST.quotesMaceWindu
-            , ST.quotesMazKanata
-            , ST.quotesObiWanKenobi
-            , ST.quotesPadmeAmidala
-            , ST.quotesQuiGonJinn
-            , ST.quotesRey
-            , ST.quotesShmiSkywalker
-            , ST.quotesYoda
-            , ST.alternateCharacterSpellingsAdmiralAckbar
-            , ST.alternateCharacterSpellingsAhsokaTano
-            , ST.alternateCharacterSpellingsAnakinSkywalker
-            , ST.alternateCharacterSpellingsAsajjVentress
-            , ST.alternateCharacterSpellingsBendu
-            , ST.alternateCharacterSpellingsBobaFett
-            , ST.alternateCharacterSpellingsC3po
-            , ST.alternateCharacterSpellingsCountDooku
-            , ST.alternateCharacterSpellingsDarthCaedus
-            , ST.alternateCharacterSpellingsDarthVader
-            , ST.alternateCharacterSpellingsEmperorPalpatine
-            , ST.alternateCharacterSpellingsFinn
-            , ST.alternateCharacterSpellingsGeneralHux
-            , ST.alternateCharacterSpellingsGrandAdmiralThrawn
-            , ST.alternateCharacterSpellingsGrandMoffTarkin
-            , ST.alternateCharacterSpellingsGreedo
-            , ST.alternateCharacterSpellingsHanSolo
-            , ST.alternateCharacterSpellingsJabbaTheHutt
-            , ST.alternateCharacterSpellingsJarJarBinks
-            , ST.alternateCharacterSpellingsK2so
-            , ST.alternateCharacterSpellingsKyloRen
-            , ST.alternateCharacterSpellingsLandoCalrissian
-            , ST.alternateCharacterSpellingsLeiaOrgana
-            , ST.alternateCharacterSpellingsLukeSkywalker
-            , ST.alternateCharacterSpellingsMaceWindu
-            , ST.alternateCharacterSpellingsMazKanata
-            , ST.alternateCharacterSpellingsObiWanKenobi
-            , ST.alternateCharacterSpellingsPadmeAmidala
-            , ST.alternateCharacterSpellingsQuiGonJinn
-            , ST.alternateCharacterSpellingsRey
-            , ST.alternateCharacterSpellingsShmiSkywalker
-            , ST.alternateCharacterSpellingsYoda
+            [ ST.characters,
+              ST.callSquadrons,
+              ST.droids,
+              ST.planets,
+              ST.species,
+              ST.vehicles,
+              ST.wookieeWords,
+              ST.callNumbers,
+              ST.callSign,
+              ST.quotesAdmiralAckbar,
+              ST.quotesAhsokaTano,
+              ST.quotesAsajjVentress,
+              ST.quotesBendu,
+              ST.quotesBobaFett,
+              ST.quotesC3po,
+              ST.quotesCountDooku,
+              ST.quotesDarthCaedus,
+              ST.quotesDarthVader,
+              ST.quotesEmperorPalpatine,
+              ST.quotesFinn,
+              ST.quotesGrandAdmiralThrawn,
+              ST.quotesGrandMoffTarkin,
+              ST.quotesGreedo,
+              ST.quotesHanSolo,
+              ST.quotesJabbaTheHutt,
+              ST.quotesJarJarBinks,
+              ST.quotesK2so,
+              ST.quotesKyloRen,
+              ST.quotesLandoCalrissian,
+              ST.quotesLeiaOrgana,
+              ST.quotesLukeSkywalker,
+              ST.quotesMaceWindu,
+              ST.quotesMazKanata,
+              ST.quotesObiWanKenobi,
+              ST.quotesPadmeAmidala,
+              ST.quotesQuiGonJinn,
+              ST.quotesRey,
+              ST.quotesShmiSkywalker,
+              ST.quotesYoda,
+              ST.alternateCharacterSpellingsAdmiralAckbar,
+              ST.alternateCharacterSpellingsAhsokaTano,
+              ST.alternateCharacterSpellingsAnakinSkywalker,
+              ST.alternateCharacterSpellingsAsajjVentress,
+              ST.alternateCharacterSpellingsBendu,
+              ST.alternateCharacterSpellingsBobaFett,
+              ST.alternateCharacterSpellingsC3po,
+              ST.alternateCharacterSpellingsCountDooku,
+              ST.alternateCharacterSpellingsDarthCaedus,
+              ST.alternateCharacterSpellingsDarthVader,
+              ST.alternateCharacterSpellingsEmperorPalpatine,
+              ST.alternateCharacterSpellingsFinn,
+              ST.alternateCharacterSpellingsGeneralHux,
+              ST.alternateCharacterSpellingsGrandAdmiralThrawn,
+              ST.alternateCharacterSpellingsGrandMoffTarkin,
+              ST.alternateCharacterSpellingsGreedo,
+              ST.alternateCharacterSpellingsHanSolo,
+              ST.alternateCharacterSpellingsJabbaTheHutt,
+              ST.alternateCharacterSpellingsJarJarBinks,
+              ST.alternateCharacterSpellingsK2so,
+              ST.alternateCharacterSpellingsKyloRen,
+              ST.alternateCharacterSpellingsLandoCalrissian,
+              ST.alternateCharacterSpellingsLeiaOrgana,
+              ST.alternateCharacterSpellingsLukeSkywalker,
+              ST.alternateCharacterSpellingsMaceWindu,
+              ST.alternateCharacterSpellingsMazKanata,
+              ST.alternateCharacterSpellingsObiWanKenobi,
+              ST.alternateCharacterSpellingsPadmeAmidala,
+              ST.alternateCharacterSpellingsQuiGonJinn,
+              ST.alternateCharacterSpellingsRey,
+              ST.alternateCharacterSpellingsShmiSkywalker,
+              ST.alternateCharacterSpellingsYoda
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1002,19 +1015,19 @@ spec = do
       (and bools) `shouldBe` True
     it "Music.Opera" $ do
       let functions :: [Fake Text] =
-            [ OP.italianByGiuseppeVerdi
-            , OP.italianByGioacchinoRossini
-            , OP.italianByGaetanoDonizetti
-            , OP.italianByVincenzoBellini
+            [ OP.italianByGiuseppeVerdi,
+              OP.italianByGioacchinoRossini,
+              OP.italianByGaetanoDonizetti,
+              OP.italianByVincenzoBellini
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.PearlJam" $ do
       let functions :: [Fake Text] =
-            [ OP.italianByGiuseppeVerdi
-            , OP.italianByGioacchinoRossini
-            , OP.italianByGaetanoDonizetti
-            , OP.italianByVincenzoBellini
+            [ OP.italianByGiuseppeVerdi,
+              OP.italianByGioacchinoRossini,
+              OP.italianByGaetanoDonizetti,
+              OP.italianByVincenzoBellini
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1037,14 +1050,14 @@ spec = do
       (and bools) `shouldBe` True
     it "Name" $ do
       let functions :: [Fake Text] =
-            [ NA.maleFirstName
-            , NA.femaleFirstName
-            , NA.prefix
-            , NA.suffix
-            , NA.lastName
-            , NA.name
-            , NA.nameWithMiddle
-            , NA.firstName
+            [ NA.maleFirstName,
+              NA.femaleFirstName,
+              NA.prefix,
+              NA.suffix,
+              NA.lastName,
+              NA.name,
+              NA.nameWithMiddle,
+              NA.firstName
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1073,34 +1086,34 @@ spec = do
       (and bools) `shouldBe` True
     it "Quote" $ do
       let functions :: [Fake Text] =
-            [ QU.famousLastWords
-            , QU.matz
-            , QU.mostInterestingManInTheWorld
-            , QU.robin
-            , QU.singularSiegler
-            , QU.yoda
+            [ QU.famousLastWords,
+              QU.matz,
+              QU.mostInterestingManInTheWorld,
+              QU.robin,
+              QU.singularSiegler,
+              QU.yoda
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Relationship" $ do
       let functions :: [Fake Text] =
-            [ RE.inLaw
-            , RE.spouse
-            , RE.parent
-            , RE.sibling
-            , RE.familialDirect
-            , RE.familialExtended
+            [ RE.inLaw,
+              RE.spouse,
+              RE.parent,
+              RE.sibling,
+              RE.familialDirect,
+              RE.familialExtended
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Restaurant" $ do
       let functions :: [Fake Text] =
-            [ RE.nameSuffix
-            , RE.type'
-            , RE.description
-            , RE.review
-            , RE.namePrefix
-            , RE.name
+            [ RE.nameSuffix,
+              RE.type',
+              RE.description,
+              RE.review,
+              RE.namePrefix,
+              RE.name
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1111,45 +1124,45 @@ spec = do
       (and bools) `shouldBe` True
     it "SlackEmoji" $ do
       let functions :: [Fake Text] =
-            [ SL.people
-            , SL.nature
-            , SL.foodAndDrink
-            , SL.celebration
-            , SL.activity
-            , SL.travelAndPlaces
-            , SL.objectsAndSymbols
-            , SL.custom
-            , SL.emoji
+            [ SL.people,
+              SL.nature,
+              SL.foodAndDrink,
+              SL.celebration,
+              SL.activity,
+              SL.travelAndPlaces,
+              SL.objectsAndSymbols,
+              SL.custom,
+              SL.emoji
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Source" $ do
       let functions :: [Fake Text] =
-            [ SO.helloWorldRuby
-            , SO.helloWorldJavascript
-            , SO.printRuby
-            , SO.printJavascript
-            , SO.print1To10Ruby
-            , SO.print1To10Javascript
+            [ SO.helloWorldRuby,
+              SO.helloWorldJavascript,
+              SO.printRuby,
+              SO.printJavascript,
+              SO.print1To10Ruby,
+              SO.print1To10Javascript
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Space" $ do
       let functions :: [Fake Text] =
-            [ SP.planet
-            , SP.moon
-            , SP.galaxy
-            , SP.nebula
-            , SP.starCluster
-            , SP.constellation
-            , SP.star
-            , SP.agency
-            , SP.agencyAbv
-            , SP.nasaSpaceCraft
-            , SP.company
-            , SP.distanceMeasurement
-            , SP.meteorite
-            , SP.launchVehicle
+            [ SP.planet,
+              SP.moon,
+              SP.galaxy,
+              SP.nebula,
+              SP.starCluster,
+              SP.constellation,
+              SP.star,
+              SP.agency,
+              SP.agencyAbv,
+              SP.nasaSpaceCraft,
+              SP.company,
+              SP.distanceMeasurement,
+              SP.meteorite,
+              SP.launchVehicle
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1165,11 +1178,11 @@ spec = do
       (and bools) `shouldBe` True
     it "Subscription" $ do
       let functions :: [Fake Text] =
-            [ SU.plans
-            , SU.statuses
-            , SU.paymentMethods
-            , SU.subscriptionTerms
-            , SU.paymentTerms
+            [ SU.plans,
+              SU.statuses,
+              SU.paymentMethods,
+              SU.subscriptionTerms,
+              SU.paymentTerms
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1188,27 +1201,27 @@ spec = do
       (and bools) `shouldBe` True
     it "Vehicle" $ do
       let functions :: [Fake Text] =
-            [ VE.manufacture
-            , VE.makes
-            , VE.colors
-            , VE.transmissions
-            , VE.driveTypes
-            , VE.fuelTypes
-            , VE.styles
-            , VE.carTypes
-            , VE.carOptions
-            , VE.standardSpecs
-            , VE.licensePlate
-            , VE.modelsByMakeBMW
-            , VE.modelsByMakeAudi
-            , VE.modelsByMakeToyota
-            , VE.modelsByMakeChevy
-            , VE.modelsByMakeFord
-            , VE.modelsByMakeDodge
-            , VE.modelsByMakeLincoln
-            , VE.modelsByMakeBuick
-            , VE.modelsByMakeHonda
-            , VE.modelsByMakeNissan
+            [ VE.manufacture,
+              VE.makes,
+              VE.colors,
+              VE.transmissions,
+              VE.driveTypes,
+              VE.fuelTypes,
+              VE.styles,
+              VE.carTypes,
+              VE.carOptions,
+              VE.standardSpecs,
+              VE.licensePlate,
+              VE.modelsByMakeBMW,
+              VE.modelsByMakeAudi,
+              VE.modelsByMakeToyota,
+              VE.modelsByMakeChevy,
+              VE.modelsByMakeFord,
+              VE.modelsByMakeDodge,
+              VE.modelsByMakeLincoln,
+              VE.modelsByMakeBuick,
+              VE.modelsByMakeHonda,
+              VE.modelsByMakeNissan
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1222,177 +1235,177 @@ spec = do
       (and bools) `shouldBe` True
     it "WorldCup" $ do
       let functions :: [Fake Text] =
-            [ WO.teams
-            , WO.stadiums
-            , WO.cities
-            , WO.groupsGroupA
-            , WO.groupsGroupB
-            , WO.groupsGroupC
-            , WO.groupsGroupD
-            , WO.groupsGroupE
-            , WO.groupsGroupF
-            , WO.groupsGroupG
-            , WO.groupsGroupH
-            , WO.rostersEgyptCoach
-            , WO.rostersEgyptGoalkeepers
-            , WO.rostersEgyptDefenders
-            , WO.rostersEgyptMidfielders
-            , WO.rostersEgyptForwards
-            , WO.rostersRussiaCoach
-            , WO.rostersRussiaGoalkeepers
-            , WO.rostersRussiaDefenders
-            , WO.rostersRussiaMidfielders
-            , WO.rostersRussiaForwards
-            , WO.rostersSaudiArabiaCoach
-            , WO.rostersSaudiArabiaGoalkeepers
-            , WO.rostersSaudiArabiaDefenders
-            , WO.rostersSaudiArabiaMidfielders
-            , WO.rostersSaudiArabiaForwards
-            , WO.rostersUruguayCoach
-            , WO.rostersUruguayGoalkeepers
-            , WO.rostersUruguayDefenders
-            , WO.rostersUruguayMidfielders
-            , WO.rostersUruguayForwards
-            , WO.rostersIranCoach
-            , WO.rostersIranGoalkeepers
-            , WO.rostersIranDefenders
-            , WO.rostersIranMidfielders
-            , WO.rostersIranForwards
-            , WO.rostersMoroccoCoach
-            , WO.rostersMoroccoGoalkeepers
-            , WO.rostersMoroccoDefenders
-            , WO.rostersMoroccoMidfielders
-            , WO.rostersMoroccoForwards
-            , WO.rostersPortugalCoach
-            , WO.rostersPortugalGoalkeepers
-            , WO.rostersPortugalDefenders
-            , WO.rostersPortugalMidfielders
-            , WO.rostersPortugalForwards
-            , WO.rostersSpainCoach
-            , WO.rostersSpainGoalkeepers
-            , WO.rostersSpainDefenders
-            , WO.rostersSpainMidfielders
-            , WO.rostersSpainForwards
-            , WO.rostersAustraliaCoach
-            , WO.rostersAustraliaGoalkeepers
-            , WO.rostersAustraliaDefenders
-            , WO.rostersAustraliaMidfielders
-            , WO.rostersAustraliaForwards
-            , WO.rostersDenmarkCoach
-            , WO.rostersDenmarkGoalkeepers
-            , WO.rostersDenmarkDefenders
-            , WO.rostersDenmarkMidfielders
-            , WO.rostersDenmarkForwards
-            , WO.rostersFranceCoach
-            , WO.rostersFranceGoalkeepers
-            , WO.rostersFranceDefenders
-            , WO.rostersFranceMidfielders
-            , WO.rostersFranceForwards
-            , WO.rostersPeruCoach
-            , WO.rostersPeruGoalkeepers
-            , WO.rostersPeruDefenders
-            , WO.rostersPeruMidfielders
-            , WO.rostersPeruForwards
-            , WO.rostersArgentinaCoach
-            , WO.rostersArgentinaGoalkeepers
-            , WO.rostersArgentinaDefenders
-            , WO.rostersArgentinaMidfielders
-            , WO.rostersArgentinaForwards
-            , WO.rostersCroatiaCoach
-            , WO.rostersCroatiaGoalkeepers
-            , WO.rostersCroatiaDefenders
-            , WO.rostersCroatiaMidfielders
-            , WO.rostersCroatiaForwards
-            , WO.rostersIcelandCoach
-            , WO.rostersIcelandGoalkeepers
-            , WO.rostersIcelandDefenders
-            , WO.rostersIcelandMidfielders
-            , WO.rostersIcelandForwards
-            , WO.rostersNigeriaCoach
-            , WO.rostersNigeriaGoalkeepers
-            , WO.rostersNigeriaDefenders
-            , WO.rostersNigeriaMidfielders
-            , WO.rostersNigeriaForwards
-            , WO.rostersBrazilCoach
-            , WO.rostersBrazilGoalkeepers
-            , WO.rostersBrazilDefenders
-            , WO.rostersBrazilMidfielders
-            , WO.rostersBrazilForwards
-            , WO.rostersCostaRicaCoach
-            , WO.rostersCostaRicaGoalkeepers
-            , WO.rostersCostaRicaDefenders
-            , WO.rostersCostaRicaMidfielders
-            , WO.rostersCostaRicaForwards
-            , WO.rostersSerbiaCoach
-            , WO.rostersSerbiaGoalkeepers
-            , WO.rostersSerbiaDefenders
-            , WO.rostersSerbiaMidfielders
-            , WO.rostersSerbiaForwards
-            , WO.rostersSwitzerlandCoach
-            , WO.rostersSwitzerlandGoalkeepers
-            , WO.rostersSwitzerlandDefenders
-            , WO.rostersSwitzerlandMidfielders
-            , WO.rostersSwitzerlandForwards
-            , WO.rostersGermanyCoach
-            , WO.rostersGermanyGoalkeepers
-            , WO.rostersGermanyDefenders
-            , WO.rostersGermanyMidfielders
-            , WO.rostersGermanyForwards
-            , WO.rostersMexicoCoach
-            , WO.rostersMexicoGoalkeepers
-            , WO.rostersMexicoDefenders
-            , WO.rostersMexicoMidfielders
-            , WO.rostersMexicoForwards
-            , WO.rostersSouthKoreaCoach
-            , WO.rostersSouthKoreaGoalkeepers
-            , WO.rostersSouthKoreaDefenders
-            , WO.rostersSouthKoreaMidfielders
-            , WO.rostersSouthKoreaForwards
-            , WO.rostersSwedenCoach
-            , WO.rostersSwedenGoalkeepers
-            , WO.rostersSwedenDefenders
-            , WO.rostersSwedenMidfielders
-            , WO.rostersSwedenForwards
-            , WO.rostersBelgiumCoach
-            , WO.rostersBelgiumGoalkeepers
-            , WO.rostersBelgiumDefenders
-            , WO.rostersBelgiumMidfielders
-            , WO.rostersBelgiumForwards
-            , WO.rostersEnglandCoach
-            , WO.rostersEnglandGoalkeepers
-            , WO.rostersEnglandDefenders
-            , WO.rostersEnglandMidfielders
-            , WO.rostersEnglandForwards
-            , WO.rostersPanamaCoach
-            , WO.rostersPanamaGoalkeepers
-            , WO.rostersPanamaDefenders
-            , WO.rostersPanamaMidfielders
-            , WO.rostersPanamaForwards
-            , WO.rostersTunisiaCoach
-            , WO.rostersTunisiaGoalkeepers
-            , WO.rostersTunisiaDefenders
-            , WO.rostersTunisiaMidfielders
-            , WO.rostersTunisiaForwards
-            , WO.rostersColumbiaCoach
-            , WO.rostersColumbiaGoalkeepers
-            , WO.rostersColumbiaDefenders
-            , WO.rostersColumbiaMidfielders
-            , WO.rostersColumbiaForwards
-            , WO.rostersJapanCoach
-            , WO.rostersJapanGoalkeepers
-            , WO.rostersJapanDefenders
-            , WO.rostersJapanMidfielders
-            , WO.rostersJapanForwards
-            , WO.rostersPolandCoach
-            , WO.rostersPolandGoalkeepers
-            , WO.rostersPolandDefenders
-            , WO.rostersPolandMidfielders
-            , WO.rostersPolandForwards
-            , WO.rostersSenegalCoach
-            , WO.rostersSenegalGoalkeepers
-            , WO.rostersSenegalDefenders
-            , WO.rostersSenegalMidfielders
-            , WO.rostersSenegalForwards
+            [ WO.teams,
+              WO.stadiums,
+              WO.cities,
+              WO.groupsGroupA,
+              WO.groupsGroupB,
+              WO.groupsGroupC,
+              WO.groupsGroupD,
+              WO.groupsGroupE,
+              WO.groupsGroupF,
+              WO.groupsGroupG,
+              WO.groupsGroupH,
+              WO.rostersEgyptCoach,
+              WO.rostersEgyptGoalkeepers,
+              WO.rostersEgyptDefenders,
+              WO.rostersEgyptMidfielders,
+              WO.rostersEgyptForwards,
+              WO.rostersRussiaCoach,
+              WO.rostersRussiaGoalkeepers,
+              WO.rostersRussiaDefenders,
+              WO.rostersRussiaMidfielders,
+              WO.rostersRussiaForwards,
+              WO.rostersSaudiArabiaCoach,
+              WO.rostersSaudiArabiaGoalkeepers,
+              WO.rostersSaudiArabiaDefenders,
+              WO.rostersSaudiArabiaMidfielders,
+              WO.rostersSaudiArabiaForwards,
+              WO.rostersUruguayCoach,
+              WO.rostersUruguayGoalkeepers,
+              WO.rostersUruguayDefenders,
+              WO.rostersUruguayMidfielders,
+              WO.rostersUruguayForwards,
+              WO.rostersIranCoach,
+              WO.rostersIranGoalkeepers,
+              WO.rostersIranDefenders,
+              WO.rostersIranMidfielders,
+              WO.rostersIranForwards,
+              WO.rostersMoroccoCoach,
+              WO.rostersMoroccoGoalkeepers,
+              WO.rostersMoroccoDefenders,
+              WO.rostersMoroccoMidfielders,
+              WO.rostersMoroccoForwards,
+              WO.rostersPortugalCoach,
+              WO.rostersPortugalGoalkeepers,
+              WO.rostersPortugalDefenders,
+              WO.rostersPortugalMidfielders,
+              WO.rostersPortugalForwards,
+              WO.rostersSpainCoach,
+              WO.rostersSpainGoalkeepers,
+              WO.rostersSpainDefenders,
+              WO.rostersSpainMidfielders,
+              WO.rostersSpainForwards,
+              WO.rostersAustraliaCoach,
+              WO.rostersAustraliaGoalkeepers,
+              WO.rostersAustraliaDefenders,
+              WO.rostersAustraliaMidfielders,
+              WO.rostersAustraliaForwards,
+              WO.rostersDenmarkCoach,
+              WO.rostersDenmarkGoalkeepers,
+              WO.rostersDenmarkDefenders,
+              WO.rostersDenmarkMidfielders,
+              WO.rostersDenmarkForwards,
+              WO.rostersFranceCoach,
+              WO.rostersFranceGoalkeepers,
+              WO.rostersFranceDefenders,
+              WO.rostersFranceMidfielders,
+              WO.rostersFranceForwards,
+              WO.rostersPeruCoach,
+              WO.rostersPeruGoalkeepers,
+              WO.rostersPeruDefenders,
+              WO.rostersPeruMidfielders,
+              WO.rostersPeruForwards,
+              WO.rostersArgentinaCoach,
+              WO.rostersArgentinaGoalkeepers,
+              WO.rostersArgentinaDefenders,
+              WO.rostersArgentinaMidfielders,
+              WO.rostersArgentinaForwards,
+              WO.rostersCroatiaCoach,
+              WO.rostersCroatiaGoalkeepers,
+              WO.rostersCroatiaDefenders,
+              WO.rostersCroatiaMidfielders,
+              WO.rostersCroatiaForwards,
+              WO.rostersIcelandCoach,
+              WO.rostersIcelandGoalkeepers,
+              WO.rostersIcelandDefenders,
+              WO.rostersIcelandMidfielders,
+              WO.rostersIcelandForwards,
+              WO.rostersNigeriaCoach,
+              WO.rostersNigeriaGoalkeepers,
+              WO.rostersNigeriaDefenders,
+              WO.rostersNigeriaMidfielders,
+              WO.rostersNigeriaForwards,
+              WO.rostersBrazilCoach,
+              WO.rostersBrazilGoalkeepers,
+              WO.rostersBrazilDefenders,
+              WO.rostersBrazilMidfielders,
+              WO.rostersBrazilForwards,
+              WO.rostersCostaRicaCoach,
+              WO.rostersCostaRicaGoalkeepers,
+              WO.rostersCostaRicaDefenders,
+              WO.rostersCostaRicaMidfielders,
+              WO.rostersCostaRicaForwards,
+              WO.rostersSerbiaCoach,
+              WO.rostersSerbiaGoalkeepers,
+              WO.rostersSerbiaDefenders,
+              WO.rostersSerbiaMidfielders,
+              WO.rostersSerbiaForwards,
+              WO.rostersSwitzerlandCoach,
+              WO.rostersSwitzerlandGoalkeepers,
+              WO.rostersSwitzerlandDefenders,
+              WO.rostersSwitzerlandMidfielders,
+              WO.rostersSwitzerlandForwards,
+              WO.rostersGermanyCoach,
+              WO.rostersGermanyGoalkeepers,
+              WO.rostersGermanyDefenders,
+              WO.rostersGermanyMidfielders,
+              WO.rostersGermanyForwards,
+              WO.rostersMexicoCoach,
+              WO.rostersMexicoGoalkeepers,
+              WO.rostersMexicoDefenders,
+              WO.rostersMexicoMidfielders,
+              WO.rostersMexicoForwards,
+              WO.rostersSouthKoreaCoach,
+              WO.rostersSouthKoreaGoalkeepers,
+              WO.rostersSouthKoreaDefenders,
+              WO.rostersSouthKoreaMidfielders,
+              WO.rostersSouthKoreaForwards,
+              WO.rostersSwedenCoach,
+              WO.rostersSwedenGoalkeepers,
+              WO.rostersSwedenDefenders,
+              WO.rostersSwedenMidfielders,
+              WO.rostersSwedenForwards,
+              WO.rostersBelgiumCoach,
+              WO.rostersBelgiumGoalkeepers,
+              WO.rostersBelgiumDefenders,
+              WO.rostersBelgiumMidfielders,
+              WO.rostersBelgiumForwards,
+              WO.rostersEnglandCoach,
+              WO.rostersEnglandGoalkeepers,
+              WO.rostersEnglandDefenders,
+              WO.rostersEnglandMidfielders,
+              WO.rostersEnglandForwards,
+              WO.rostersPanamaCoach,
+              WO.rostersPanamaGoalkeepers,
+              WO.rostersPanamaDefenders,
+              WO.rostersPanamaMidfielders,
+              WO.rostersPanamaForwards,
+              WO.rostersTunisiaCoach,
+              WO.rostersTunisiaGoalkeepers,
+              WO.rostersTunisiaDefenders,
+              WO.rostersTunisiaMidfielders,
+              WO.rostersTunisiaForwards,
+              WO.rostersColumbiaCoach,
+              WO.rostersColumbiaGoalkeepers,
+              WO.rostersColumbiaDefenders,
+              WO.rostersColumbiaMidfielders,
+              WO.rostersColumbiaForwards,
+              WO.rostersJapanCoach,
+              WO.rostersJapanGoalkeepers,
+              WO.rostersJapanDefenders,
+              WO.rostersJapanMidfielders,
+              WO.rostersJapanForwards,
+              WO.rostersPolandCoach,
+              WO.rostersPolandGoalkeepers,
+              WO.rostersPolandDefenders,
+              WO.rostersPolandMidfielders,
+              WO.rostersPolandForwards,
+              WO.rostersSenegalCoach,
+              WO.rostersSenegalGoalkeepers,
+              WO.rostersSenegalDefenders,
+              WO.rostersSenegalMidfielders,
+              WO.rostersSenegalForwards
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1431,13 +1444,13 @@ spec = do
       (and bools) `shouldBe` True
     it "TvShow.DrWho" $ do
       let functions :: [Fake Text] =
-            [ DR.character
-            , DR.theDoctors
-            , DR.actors
-            , DR.catchPhrases
-            , DR.quotes
-            , DR.villains
-            , DR.species
+            [ DR.character,
+              DR.theDoctors,
+              DR.actors,
+              DR.catchPhrases,
+              DR.quotes,
+              DR.villains,
+              DR.species
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1505,14 +1518,14 @@ spec = do
       (and bools) `shouldBe` True
     it "TvShow.SiliconValley" $ do
       let functions :: [Fake Text] =
-            [ SI.characters
-            , SI.companies
-            , SI.quotes
-            , SI.apps
-            , SI.inventions
-            , SI.mottos
-            , SI.urls
-            , SI.email
+            [ SI.characters,
+              SI.companies,
+              SI.quotes,
+              SI.apps,
+              SI.inventions,
+              SI.mottos,
+              SI.urls,
+              SI.email
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

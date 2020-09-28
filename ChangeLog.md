@@ -32,6 +32,7 @@
 ### New modules introduced
 
 * Faker.TvShow.BigBangTheory
+* Faker.Barcode
 
 ### Locale Improvements
 

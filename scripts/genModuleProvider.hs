@@ -149,10 +149,7 @@ $(genProviderUnresolved "#{mmoduleName}" "#{field}")
     unresolverFunction1 =
       [i|
 resolve#{capModname}Text :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolve#{capModname}Text settings txt = do
-  let fields = resolveFields txt
-  #{mmoduleName}Fields <- mapM (resolve#{capModname}Field settings) fields
-  pure $ operateFields txt #{mmoduleName}Fields
+resolve#{capModname}Text = genericResolver' resolve#{capModname}Field
 
 resolve#{capModname}Field :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 #{generateresolveFieldFns}
@@ -163,14 +160,13 @@ resolve#{capModname}Field settings str = throwM $ InvalidField "#{mmoduleName}" 
       let cf = capitalize field
        in [i|
 resolve#{capModname}Field settings undefined =
-  randomUnresolvedVec settings #{field}Provider resolve#{cf}Text
+  cacheRandomUnresolvedVec settings #{field}Provider resolve#{cf}Text
 |]
     generateNestedField1 = concat $ map generateNestedField nestedFields
     generateNestedField :: [String] -> String
     generateNestedField field =
       [i|
 $(genParsers "#{mmoduleName}" #{show field})
-
 $(genProviders "#{mmoduleName}" #{show field})
 
 |]

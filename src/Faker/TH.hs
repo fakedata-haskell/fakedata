@@ -6,6 +6,7 @@ module Faker.TH
   ( generateFakeField
   , generateFakeFields
   , generateFakeFieldUnresolved
+  , generateFakeFieldSingleUnresolved
   , generateFakeFieldUnresolveds
   ) where
 
@@ -128,6 +129,44 @@ generateFakeFieldUnresolved entityName fieldName = do
                     (AppE
                        (AppE
                           (VarE 'cachedRandomUnresolvedVec)
+                          (LitE (StringL entityName)))
+                       (LitE (StringL fieldName)))
+                    (VarE providerFn))
+                 (VarE resolverFn))))
+        []
+    ]
+
+generateFakeFieldSingleUnresolved :: String -> String -> Q [Dec]
+generateFakeFieldSingleUnresolved entityName fieldName = do
+  let funName = mkName $ refinedString fieldName
+      pfn = refinedString $ entityName <> (stringTitle fieldName) <> "Provider"
+      rfn = "resolve" <> (refinedString $ stringTitle entityName) <> "Text"
+  providerName <- lookupValueName pfn
+  resolverName <- lookupValueName rfn
+  providerFn <-
+    case providerName of
+      Nothing ->
+        fail $
+        "generateFakeFieldUnresolved: Function " <> pfn <> " not found in scope"
+      Just fn -> return fn
+  resolverFn <-
+    case resolverName of
+      Nothing ->
+        fail $
+        "generateFakeFieldUnresolved: Function " <> rfn <> " not found in scope"
+      Just fn -> return fn
+  return $
+    [ SigD funName (AppT (ConT ''Fake) (ConT ''Text))
+    , ValD
+        (VarP funName)
+        (NormalB
+           (AppE
+              (ConE 'Fake)
+              (AppE
+                 (AppE
+                    (AppE
+                       (AppE
+                          (VarE 'cachedRandomUnresolvedVecWithoutVector)
                           (LitE (StringL entityName)))
                        (LitE (StringL fieldName)))
                     (VarE providerFn))
