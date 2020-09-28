@@ -173,6 +173,7 @@ data SourceData
   | Futurama
   | Minecraft
   | Prince
+  | Rush
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

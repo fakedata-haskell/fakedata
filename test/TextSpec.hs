@@ -107,6 +107,7 @@ import qualified Faker.Music.Phish as PH
 import qualified Faker.Music.Prince as PC
 import qualified Faker.Music.RockBand as RO
 import qualified Faker.Music.UmphreysMcgee as UM
+import qualified Faker.Music.Rush as RU
 import qualified Faker.Name as NA
 import qualified Faker.Nation as NA
 import qualified Faker.NatoPhoneticAlphabet as NA
@@ -1156,6 +1157,13 @@ spec = do
               PC.song,
               PC.album,
               PC.band
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Music.Rush" $ do
+      let functions :: [Fake Text] =
+            [ RU.players,
+              RU.albums
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

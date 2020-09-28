@@ -38,6 +38,7 @@
 * Faker.TvShow.Futurama
 * Faker.Game.Minecraft
 * Faker.Music.Prince
+* Faker.Music.Rush
 
 ### Locale Improvements
 

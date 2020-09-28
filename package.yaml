@@ -172,6 +172,7 @@ library:
   - Faker.Provider.RickAndMorty
   - Faker.Provider.RockBand
   - Faker.Provider.Rupaul
+  - Faker.Provider.Rush
   - Faker.Provider.Science
   - Faker.Provider.Seinfeld
   - Faker.Provider.Shakespeare
