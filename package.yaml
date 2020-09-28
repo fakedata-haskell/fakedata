@@ -89,6 +89,7 @@ library:
   - Faker.Provider.CultureSeries
   - Faker.Provider.Currency
   - Faker.Provider.DrivingLicense
+  - Faker.Provider.Drone
   - Faker.Provider.DcComics
   - Faker.Provider.Demographic
   - Faker.Provider.Departed

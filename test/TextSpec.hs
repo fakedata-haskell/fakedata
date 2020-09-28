@@ -44,6 +44,7 @@ import qualified Faker.Demographic as DE
 import qualified Faker.Dessert as DE
 import qualified Faker.Dnd as DN
 import qualified Faker.DrivingLicense as DR
+import qualified Faker.Drone as DX
 import qualified Faker.Educator as ED
 import qualified Faker.ElectricalComponents as EC
 import qualified Faker.Esport as ES
@@ -527,6 +528,36 @@ spec = do
     it "DcComics" $ do
       let functions :: [Fake Text] =
             [DC.hero, DC.heroine, DC.villain, DC.name, DC.title]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Drone" $ do
+      let functions :: [Fake Text] =
+            [ DX.name,
+              DX.batteryType,
+              DX.iso,
+              DX.photoFormat,
+              DX.videoFormat,
+              DX.maxShutterSpeed,
+              DX.minShutterSpeed,
+              DX.shutterSpeedUnits,
+              DX.weight,
+              DX.maxAscentSpeed,
+              DX.maxDescentSpeed,
+              DX.flightTime,
+              DX.maxAltitude,
+              DX.maxFlightDistance,
+              DX.maxSpeed,
+              DX.maxWindResistance,
+              DX.maxAngularVelocity,
+              DX.maxTiltAngle,
+              DX.operatingTemperature,
+              DX.batteryCapacity,
+              DX.batteryVoltage,
+              DX.batteryWeight,
+              DX.chargingTemperature,
+              DX.maxChargingPower,
+              DX.maxResolution
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "DrivingLicense" $ do

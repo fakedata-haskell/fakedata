@@ -169,6 +169,7 @@ data SourceData
   | WarhammerFantasy
   | Barcode
   | DrivingLicense
+  | Drone
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 
