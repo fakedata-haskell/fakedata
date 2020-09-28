@@ -40,6 +40,7 @@
 * Faker.Music.Prince
 * Faker.Music.Rush
 * Faker.Game.StreetFighter
+* Faker.JapaneseMedia.StudioGhibli
 
 ### Locale Improvements
 

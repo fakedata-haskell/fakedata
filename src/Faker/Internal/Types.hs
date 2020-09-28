@@ -175,6 +175,7 @@ data SourceData
   | Prince
   | Rush
   | StreetFighter
+  | StudioGhibli
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

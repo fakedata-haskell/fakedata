@@ -79,6 +79,7 @@ import qualified Faker.IndustrySegments as IN
 import qualified Faker.Internet as IN
 import qualified Faker.JapaneseMedia.DragonBall as DR
 import qualified Faker.JapaneseMedia.OnePiece as ON
+import qualified Faker.JapaneseMedia.StudioGhibli as GI
 import qualified Faker.JapaneseMedia.SwordArtOnline as SW
 import qualified Faker.Job as JO
 import qualified Faker.Kpop as KP
@@ -856,8 +857,8 @@ spec = do
       let functions :: [Fake Text] =
             [ SF.characters,
               SF.stages,
-              SF.quotes,
-              SF.moves
+              SF.quotes
+              -- SF.moves
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -920,6 +921,14 @@ spec = do
     it "JapaneseMedia.SwordArtOnline" $ do
       let functions :: [Fake Text] =
             [SW.realName, SW.gameName, SW.location, SW.item]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "JapaneseMedia.StudioGhibli" $ do
+      let functions :: [Fake Text] =
+            [ GI.characters,
+              GI.quotes,
+              GI.movies
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Job" $ do

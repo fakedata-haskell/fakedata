@@ -119,10 +119,7 @@ irb(main):006:0> Faker::Address.city
 
 ## Known locale issues
 
-New modules:
-
-* en/street_fighter.yml (gen)
-* en/studio_ghibli.yml (gen)
+* Game.StreetFighter: moves function is breaking
 
 ## Steps before release
 

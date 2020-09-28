@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 63b72ccc8d586c2f11fdefb08965e07d63fbae5a529bd39c9e3e8fa7d4eb9ada
+-- hash: 1fe62f424c00c4b9aba0a347b322d76d978f2b6cebe2b6fa2c5b2beb40a0630d
 
 name:           fakedata
 version:        0.7.1
@@ -333,6 +333,7 @@ library
       Faker.Internet
       Faker.JapaneseMedia.DragonBall
       Faker.JapaneseMedia.OnePiece
+      Faker.JapaneseMedia.StudioGhibli
       Faker.JapaneseMedia.SwordArtOnline
       Faker.Job
       Faker.Kpop
@@ -572,6 +573,7 @@ library
       Faker.Provider.Superhero
       Faker.Provider.SuperSmashBros
       Faker.Provider.SwordArtOnline
+      Faker.Provider.StudioGhibli
       Faker.Provider.Team
       Faker.Provider.TheExpanse
       Faker.Provider.TheItCrowd

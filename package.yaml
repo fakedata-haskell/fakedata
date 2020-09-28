@@ -194,6 +194,7 @@ library:
   - Faker.Provider.Superhero
   - Faker.Provider.SuperSmashBros
   - Faker.Provider.SwordArtOnline
+  - Faker.Provider.StudioGhibli
   - Faker.Provider.Team
   - Faker.Provider.TheExpanse
   - Faker.Provider.TheItCrowd
