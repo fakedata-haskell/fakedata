@@ -218,8 +218,10 @@ sourceFile Futurama = "futurama"
 sourceFile Minecraft = "minecraft"
 sourceFile Prince = "prince"
 sourceFile Rush = "rush"
+sourceFile StreetFighter = "street_fighter"
 
 mapSource :: Text -> Name
+mapSource "streetFighter" = 'StreetFighter
 mapSource "prince" = 'Prince
 mapSource "minecraft" = 'Minecraft
 mapSource "futurama" = 'Futurama

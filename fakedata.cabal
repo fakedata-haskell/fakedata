@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c30e149d5d639cd2052ac5916fb3b4de8586c3550aeaeabf866c5390dd054d49
+-- hash: 63b72ccc8d586c2f11fdefb08965e07d63fbae5a529bd39c9e3e8fa7d4eb9ada
 
 name:           fakedata
 version:        0.7.1
@@ -316,6 +316,7 @@ library
       Faker.Game.Overwatch
       Faker.Game.Pokemon
       Faker.Game.SonicTheHedgehog
+      Faker.Game.StreetFighter
       Faker.Game.SuperSmashBros
       Faker.Game.WarhammerFantasy
       Faker.Game.Witcher
@@ -369,7 +370,6 @@ library
       Faker.PhoneNumber
       Faker.ProgrammingLanguage
       Faker.Provider.Prince
-      Faker.Provider.Rush
       Faker.Quote
       Faker.Quote.Shakespeare
       Faker.Rajnikanth
@@ -550,6 +550,7 @@ library
       Faker.Provider.RickAndMorty
       Faker.Provider.RockBand
       Faker.Provider.Rupaul
+      Faker.Provider.Rush
       Faker.Provider.Science
       Faker.Provider.Seinfeld
       Faker.Provider.Shakespeare
@@ -565,6 +566,7 @@ library
       Faker.Provider.StarTrek
       Faker.Provider.StarWars
       Faker.Provider.StrangerThings
+      Faker.Provider.StreetFighter
       Faker.Provider.Subscription
       Faker.Provider.Suits
       Faker.Provider.Superhero

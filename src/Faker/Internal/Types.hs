@@ -174,6 +174,7 @@ data SourceData
   | Minecraft
   | Prince
   | Rush
+  | StreetFighter
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

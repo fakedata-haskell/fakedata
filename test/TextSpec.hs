@@ -64,6 +64,7 @@ import qualified Faker.Game.Myst as MY
 import qualified Faker.Game.Overwatch as OV
 import qualified Faker.Game.Pokemon as PO
 import qualified Faker.Game.SonicTheHedgehog as SO
+import qualified Faker.Game.StreetFighter as SF
 import qualified Faker.Game.SuperSmashBros as SU
 import qualified Faker.Game.WarhammerFantasy as WF
 import qualified Faker.Game.Witcher as WI
@@ -106,8 +107,8 @@ import qualified Faker.Music.PearlJam as PJ
 import qualified Faker.Music.Phish as PH
 import qualified Faker.Music.Prince as PC
 import qualified Faker.Music.RockBand as RO
-import qualified Faker.Music.UmphreysMcgee as UM
 import qualified Faker.Music.Rush as RU
+import qualified Faker.Music.UmphreysMcgee as UM
 import qualified Faker.Name as NA
 import qualified Faker.Nation as NA
 import qualified Faker.NatoPhoneticAlphabet as NA
@@ -848,6 +849,15 @@ spec = do
             [ MC.blocks,
               MC.items,
               MC.mobs
+            ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.StreetFighter" $ do
+      let functions :: [Fake Text] =
+            [ SF.characters,
+              SF.stages,
+              SF.quotes,
+              SF.moves
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

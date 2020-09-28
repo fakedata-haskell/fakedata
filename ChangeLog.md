@@ -39,6 +39,7 @@
 * Faker.Game.Minecraft
 * Faker.Music.Prince
 * Faker.Music.Rush
+* Faker.Game.StreetFighter
 
 ### Locale Improvements
 

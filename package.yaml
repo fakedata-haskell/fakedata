@@ -188,6 +188,7 @@ library:
   - Faker.Provider.StarTrek
   - Faker.Provider.StarWars
   - Faker.Provider.StrangerThings
+  - Faker.Provider.StreetFighter
   - Faker.Provider.Subscription
   - Faker.Provider.Suits
   - Faker.Provider.Superhero

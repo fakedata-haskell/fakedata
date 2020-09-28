@@ -121,7 +121,6 @@ irb(main):006:0> Faker::Address.city
 
 New modules:
 
-* en/rush.yml (gen)
 * en/street_fighter.yml (gen)
 * en/studio_ghibli.yml (gen)
 

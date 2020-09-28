@@ -2006,4 +2006,4 @@ barcode =
     } 
       
 currentOne :: ModuleInfo
-currentOne = rush
+currentOne = streetFighter
