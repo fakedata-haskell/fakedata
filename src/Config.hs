@@ -216,8 +216,10 @@ sourceFile DrivingLicense = "driving_license"
 sourceFile Drone = "drone"
 sourceFile Futurama = "futurama"
 sourceFile Minecraft = "minecraft"
+sourceFile Prince = "prince"
 
 mapSource :: Text -> Name
+mapSource "prince" = 'Prince
 mapSource "minecraft" = 'Minecraft
 mapSource "futurama" = 'Futurama
 mapSource "drone" = 'Drone

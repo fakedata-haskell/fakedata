@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 011b5a8b3399b49854c22ade09ad695e628df2542d9256ed5634ec570ecdf06e
+-- hash: ebfb291b84bcd004e66427f4c6f9185eabefbb2446c288658121884d6126baf7
 
 name:           fakedata
 version:        0.7.1
@@ -359,6 +359,7 @@ library
       Faker.Music.Opera
       Faker.Music.PearlJam
       Faker.Music.Phish
+      Faker.Music.Prince
       Faker.Music.RockBand
       Faker.Music.UmphreysMcgee
       Faker.Name
@@ -366,6 +367,8 @@ library
       Faker.NatoPhoneticAlphabet
       Faker.PhoneNumber
       Faker.ProgrammingLanguage
+      Faker.Provider.Prince
+      Faker.Provider.Rush
       Faker.Quote
       Faker.Quote.Shakespeare
       Faker.Rajnikanth

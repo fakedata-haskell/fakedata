@@ -172,6 +172,7 @@ data SourceData
   | Drone
   | Futurama
   | Minecraft
+  | Prince
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

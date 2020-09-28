@@ -2006,4 +2006,4 @@ barcode =
     } 
       
 currentOne :: ModuleInfo
-currentOne = minecraft
+currentOne = rush
