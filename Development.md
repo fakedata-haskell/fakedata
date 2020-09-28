@@ -48,7 +48,7 @@ know exactly what has changed since the last release, follow these:
 
 ``` shellsession
 $ cd scripts
-$ stack unpack fakedata-0.2.2
+$ stack unpack fakedata-0.7.1
 ```
 
 Now you may want to change the `ymlDiff.sh`'s `OLD_FAKER_DIR` variable.
@@ -97,7 +97,8 @@ $ ls | sed "s/^/- Faker.Provider./g" | sed "s/.hs//g"
 
 fakedata uses TH extensively to reduce code duplication. To understand
 the TH based code, you can read the plain haskell code equivalent. I
-have the module `Faker.Address` for easy understanding.
+have the module `Faker.Address` for easy understanding. For single
+value generation, see `Faker.Barcode` module.
 
 ## Debugging using the Ruby Program
 
@@ -118,11 +119,7 @@ irb(main):006:0> Faker::Address.city
 
 ## Known locale issues
 
-These issues are best fixed in the upstream ruby library.
-
-* fr
-  - compass.direction (rethink code): https://github.com/faker-ruby/faker/pull/2073
-* start wars - kylo ren test: https://github.com/faker-ruby/faker/pull/2011/files#r436272174
+* Game.StreetFighter: moves function is breaking
 
 ## Steps before release
 

@@ -50,6 +50,7 @@ spec = do
             , FA.streetName
             , FA.streetAddress
             , VE.licensePlate
+            , PH.countryCode
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

@@ -28,6 +28,7 @@ module Faker
   , getCacheFile
     -- * Generators
   , generate
+  , generateNonDeterministic
   , generateWithSettings
   ) where
 
@@ -238,6 +239,18 @@ generate (Fake f) = do
   cacheField <- newIORef HM.empty
   cacheFile <- newIORef HM.empty
   f $ defaultFakerSettings {fsCacheField = cacheField, fsCacheFile = cacheFile}
+
+-- | Generate fake value with 'defaultFakerSettings'
+--
+-- @since 0.8.0
+--
+-- @
+-- λ> import qualified Faker.Name as FN
+-- λ> generate FN.name
+-- "Antony Langosh"
+-- @
+generateNonDeterministic :: Fake a -> IO a
+generateNonDeterministic = generateWithSettings $ setNonDeterministic defaultFakerSettings
 
 -- | Generate fake value with supplied 'FakerSettings'
 --

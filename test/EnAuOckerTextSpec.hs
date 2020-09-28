@@ -51,6 +51,7 @@ spec = do
               
             , PH.formats
             , PH.cellPhoneFormat
+            , PH.countryCode
               
             , FA.postcode
             , FA.city

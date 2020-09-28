@@ -58,7 +58,7 @@ Tutorial
 
     λ> import Faker.Movie.BackToTheFuture
     λ> import Faker.Combinators
-    λ> qs <- generate $ listOf 5 quote
+    λ> qs <- generateNonDeterministic $ listOf 5 quotes
     λ> qs
     [ "Yes. Yes. I'm George. George McFly. I'm your density. I mean, your destiny."
     , "Hello? Hello? Anybody home? Huh? Think, McFly. Think! I gotta have time to get them retyped. Do you realize what would happen if I hand in my reports in your handwriting? I'll get fired. You wouldn't want that to happen, would ya? Would ya?"
@@ -140,7 +140,7 @@ main = do
 
 ``` {.haskell}
 λ> import Faker.Address
-λ> item <- generate $ listOf 5 country
+λ> item <- generateNonDeterministic $ listOf 5 country
 λ> item
 ["Ecuador","French Guiana","Faroe Islands","Canada","Armenia"]
 ```

@@ -22,6 +22,7 @@ data SourceData
   | Bank
   | Beer
   | BoJackHorseman
+  | BigBangTheory
   | Book
   | Blood
   | Chiquito
@@ -166,6 +167,15 @@ data SourceData
   | Show
   | Suits
   | WarhammerFantasy
+  | Barcode
+  | DrivingLicense
+  | Drone
+  | Futurama
+  | Minecraft
+  | Prince
+  | Rush
+  | StreetFighter
+  | StudioGhibli
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

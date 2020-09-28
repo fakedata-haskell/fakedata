@@ -62,6 +62,7 @@ spec = do
             , NA.nameWithMiddle
 
             , PH.formats
+            , PH.countryCode
 
             , FA.city
             -- , FA.cityPrefix  (Data source is empty)

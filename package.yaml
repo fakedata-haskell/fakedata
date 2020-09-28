@@ -52,6 +52,7 @@ library:
   - Faker.Provider.Address
   - Faker.Provider.Ancient
   - Faker.Provider.Animal
+  - Faker.Provider.Barcode
   - Faker.Provider.App
   - Faker.Provider.Appliance
   - Faker.Provider.AquaTeenHungerForce
@@ -59,6 +60,7 @@ library:
   - Faker.Provider.BackToTheFuture
   - Faker.Provider.Bank
   - Faker.Provider.Basketball
+  - Faker.Provider.BigBangTheory
   - Faker.Provider.Beer
   - Faker.Provider.Blood
   - Faker.Provider.BoJackHorseman
@@ -86,6 +88,8 @@ library:
   - Faker.Provider.CryptoCoin
   - Faker.Provider.CultureSeries
   - Faker.Provider.Currency
+  - Faker.Provider.DrivingLicense
+  - Faker.Provider.Drone
   - Faker.Provider.DcComics
   - Faker.Provider.Demographic
   - Faker.Provider.Departed
@@ -111,6 +115,7 @@ library:
   - Faker.Provider.FreshPrinceOfBelAir
   - Faker.Provider.Friends
   - Faker.Provider.FunnyName
+  - Faker.Provider.Futurama
   - Faker.Provider.GameOfThrones
   - Faker.Provider.Gender
   - Faker.Provider.Ghostbusters
@@ -145,6 +150,7 @@ library:
   - Faker.Provider.Movie
   - Faker.Provider.Music
   - Faker.Provider.Myst
+  - Faker.Provider.Minecraft
   - Faker.Provider.Name
   - Faker.Provider.Nation
   - Faker.Provider.NatoPhoneticAlphabet
@@ -166,6 +172,7 @@ library:
   - Faker.Provider.RickAndMorty
   - Faker.Provider.RockBand
   - Faker.Provider.Rupaul
+  - Faker.Provider.Rush
   - Faker.Provider.Science
   - Faker.Provider.Seinfeld
   - Faker.Provider.Shakespeare
@@ -181,11 +188,13 @@ library:
   - Faker.Provider.StarTrek
   - Faker.Provider.StarWars
   - Faker.Provider.StrangerThings
+  - Faker.Provider.StreetFighter
   - Faker.Provider.Subscription
   - Faker.Provider.Suits
   - Faker.Provider.Superhero
   - Faker.Provider.SuperSmashBros
   - Faker.Provider.SwordArtOnline
+  - Faker.Provider.StudioGhibli
   - Faker.Provider.Team
   - Faker.Provider.TheExpanse
   - Faker.Provider.TheItCrowd

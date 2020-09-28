@@ -35,7 +35,7 @@ verifyDistributeFakes funs = do
 spec :: Spec
 spec = do
   describe "TextSpec" $ do
-    it "validates ee locale" $ do
+    it "validates en-IND locale" $ do
       let functions :: [Fake Text] =
             [ NA.firstName
             , NA.lastName
@@ -48,6 +48,7 @@ spec = do
             , IN.freeEmail
             , CO.suffix
             , PH.formats
+            , PH.countryCode
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

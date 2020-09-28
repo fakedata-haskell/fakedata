@@ -14,3 +14,5 @@ $(generateFakeField "simpsons" "characters")
 $(generateFakeField "simpsons" "locations")
 
 $(generateFakeField "simpsons" "quotes")
+
+$(generateFakeField "simpsons" "episode_titles")

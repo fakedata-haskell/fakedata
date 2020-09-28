@@ -36,6 +36,9 @@ spec = do
     it "listOf" $ do
       item :: [Text] <- generate $ listOf 5 country
       item `shouldSatisfy` (\x -> Prelude.length x == 5)
+    it "listOf is unique" $ do
+      item :: [Text] <- generateNonDeterministic $ listOf 2 country
+      (item !! 0) `shouldNotBe` (item !! 1)
     it "orderedList" $ do
       item :: [Text] <- generate $ orderedList 5 country
       item `shouldSatisfy` (\x -> Prelude.length x == 5)

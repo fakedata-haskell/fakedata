@@ -67,6 +67,7 @@ spec = do
               
             , PH.formats
             , PH.cellPhoneFormat
+            , PH.countryCode
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

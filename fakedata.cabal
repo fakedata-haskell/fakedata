@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 44948b891a06eb3d34c94ede8a4198e7b75f1b9dd721dfea4717e1044b9729ff
+-- hash: 1fe62f424c00c4b9aba0a347b322d76d978f2b6cebe2b6fa2c5b2beb40a0630d
 
 name:           fakedata
 version:        0.7.1
@@ -87,8 +87,10 @@ data-files:
     faker/lib/locales/en/artist.yml
     faker/lib/locales/en/back_to_the_future.yml
     faker/lib/locales/en/bank.yml
+    faker/lib/locales/en/barcode.yml
     faker/lib/locales/en/basketball.yml
     faker/lib/locales/en/beer.yml
+    faker/lib/locales/en/big_bang_theory.yml
     faker/lib/locales/en/blood.yml
     faker/lib/locales/en/bojack_horseman.yml
     faker/lib/locales/en/book.yml
@@ -125,6 +127,8 @@ data-files:
     faker/lib/locales/en/dota.yml
     faker/lib/locales/en/dr_who.yml
     faker/lib/locales/en/dragon_ball.yml
+    faker/lib/locales/en/driving_license.yml
+    faker/lib/locales/en/drone.yml
     faker/lib/locales/en/dumb_and_dumber.yml
     faker/lib/locales/en/dune.yml
     faker/lib/locales/en/educator.yml
@@ -140,6 +144,7 @@ data-files:
     faker/lib/locales/en/fresh_prince_of_bel_air.yml
     faker/lib/locales/en/friends.yml
     faker/lib/locales/en/funny_name.yml
+    faker/lib/locales/en/futurama.yml
     faker/lib/locales/en/game.yml
     faker/lib/locales/en/game_of_thrones.yml
     faker/lib/locales/en/gender.yml
@@ -174,6 +179,7 @@ data-files:
     faker/lib/locales/en/measurement.yml
     faker/lib/locales/en/michael_scott.yml
     faker/lib/locales/en/military.yml
+    faker/lib/locales/en/minecraft.yml
     faker/lib/locales/en/movie.yml
     faker/lib/locales/en/music.yml
     faker/lib/locales/en/myst.yml
@@ -189,6 +195,7 @@ data-files:
     faker/lib/locales/en/phish.yml
     faker/lib/locales/en/phone_number.yml
     faker/lib/locales/en/pokemon.yml
+    faker/lib/locales/en/prince.yml
     faker/lib/locales/en/princess_bride.yml
     faker/lib/locales/en/programming_language.yml
     faker/lib/locales/en/quote.yml
@@ -198,6 +205,7 @@ data-files:
     faker/lib/locales/en/rick_and_morty.yml
     faker/lib/locales/en/rock_band.yml
     faker/lib/locales/en/rupaul.yml
+    faker/lib/locales/en/rush.yml
     faker/lib/locales/en/science.yml
     faker/lib/locales/en/seinfeld.yml
     faker/lib/locales/en/shakespeare.yml
@@ -213,7 +221,9 @@ data-files:
     faker/lib/locales/en/star_wars.yml
     faker/lib/locales/en/stargate.yml
     faker/lib/locales/en/stranger_thing.yml
+    faker/lib/locales/en/street_fighter.yml
     faker/lib/locales/en/stripe.yml
+    faker/lib/locales/en/studio_ghibli.yml
     faker/lib/locales/en/subscription.yml
     faker/lib/locales/en/suits.yml
     faker/lib/locales/en/super_smash_bros.yml
@@ -251,6 +261,7 @@ library
       Faker.Appliance
       Faker.Artist
       Faker.Bank
+      Faker.Barcode
       Faker.Beer
       Faker.Blood
       Faker.Book
@@ -284,6 +295,8 @@ library
       Faker.Demographic
       Faker.Dessert
       Faker.Dnd
+      Faker.DrivingLicense
+      Faker.Drone
       Faker.Educator
       Faker.ElectricalComponents
       Faker.Esport
@@ -298,10 +311,12 @@ library
       Faker.Game.HalfLife
       Faker.Game.Heroes
       Faker.Game.HeroesOfTheStorm
+      Faker.Game.Minecraft
       Faker.Game.Myst
       Faker.Game.Overwatch
       Faker.Game.Pokemon
       Faker.Game.SonicTheHedgehog
+      Faker.Game.StreetFighter
       Faker.Game.SuperSmashBros
       Faker.Game.WarhammerFantasy
       Faker.Game.Witcher
@@ -318,6 +333,7 @@ library
       Faker.Internet
       Faker.JapaneseMedia.DragonBall
       Faker.JapaneseMedia.OnePiece
+      Faker.JapaneseMedia.StudioGhibli
       Faker.JapaneseMedia.SwordArtOnline
       Faker.Job
       Faker.Kpop
@@ -327,6 +343,7 @@ library
       Faker.Marketing
       Faker.Measurement
       Faker.Military
+      Faker.Minecraft
       Faker.Movie
       Faker.Movie.BackToTheFuture
       Faker.Movie.Departed
@@ -344,13 +361,16 @@ library
       Faker.Music.Opera
       Faker.Music.PearlJam
       Faker.Music.Phish
+      Faker.Music.Prince
       Faker.Music.RockBand
+      Faker.Music.Rush
       Faker.Music.UmphreysMcgee
       Faker.Name
       Faker.Nation
       Faker.NatoPhoneticAlphabet
       Faker.PhoneNumber
       Faker.ProgrammingLanguage
+      Faker.Provider.Prince
       Faker.Quote
       Faker.Quote.Shakespeare
       Faker.Rajnikanth
@@ -367,6 +387,7 @@ library
       Faker.Superhero
       Faker.Team
       Faker.TvShow.AquaTeenHungerForce
+      Faker.TvShow.BigBangTheory
       Faker.TvShow.BoJackHorseman
       Faker.TvShow.BreakingBad
       Faker.TvShow.Buffy
@@ -376,6 +397,7 @@ library
       Faker.TvShow.FamilyGuy
       Faker.TvShow.FreshPrinceOfBelAir
       Faker.TvShow.Friends
+      Faker.TvShow.Futurama
       Faker.TvShow.GameOfThrones
       Faker.TvShow.HeyArnold
       Faker.TvShow.HowIMetYourMother
@@ -409,6 +431,7 @@ library
       Faker.Provider.Address
       Faker.Provider.Ancient
       Faker.Provider.Animal
+      Faker.Provider.Barcode
       Faker.Provider.App
       Faker.Provider.Appliance
       Faker.Provider.AquaTeenHungerForce
@@ -416,6 +439,7 @@ library
       Faker.Provider.BackToTheFuture
       Faker.Provider.Bank
       Faker.Provider.Basketball
+      Faker.Provider.BigBangTheory
       Faker.Provider.Beer
       Faker.Provider.Blood
       Faker.Provider.BoJackHorseman
@@ -443,6 +467,8 @@ library
       Faker.Provider.CryptoCoin
       Faker.Provider.CultureSeries
       Faker.Provider.Currency
+      Faker.Provider.DrivingLicense
+      Faker.Provider.Drone
       Faker.Provider.DcComics
       Faker.Provider.Demographic
       Faker.Provider.Departed
@@ -468,6 +494,7 @@ library
       Faker.Provider.FreshPrinceOfBelAir
       Faker.Provider.Friends
       Faker.Provider.FunnyName
+      Faker.Provider.Futurama
       Faker.Provider.GameOfThrones
       Faker.Provider.Gender
       Faker.Provider.Ghostbusters
@@ -502,6 +529,7 @@ library
       Faker.Provider.Movie
       Faker.Provider.Music
       Faker.Provider.Myst
+      Faker.Provider.Minecraft
       Faker.Provider.Name
       Faker.Provider.Nation
       Faker.Provider.NatoPhoneticAlphabet
@@ -523,6 +551,7 @@ library
       Faker.Provider.RickAndMorty
       Faker.Provider.RockBand
       Faker.Provider.Rupaul
+      Faker.Provider.Rush
       Faker.Provider.Science
       Faker.Provider.Seinfeld
       Faker.Provider.Shakespeare
@@ -538,11 +567,13 @@ library
       Faker.Provider.StarTrek
       Faker.Provider.StarWars
       Faker.Provider.StrangerThings
+      Faker.Provider.StreetFighter
       Faker.Provider.Subscription
       Faker.Provider.Suits
       Faker.Provider.Superhero
       Faker.Provider.SuperSmashBros
       Faker.Provider.SwordArtOnline
+      Faker.Provider.StudioGhibli
       Faker.Provider.Team
       Faker.Provider.TheExpanse
       Faker.Provider.TheItCrowd

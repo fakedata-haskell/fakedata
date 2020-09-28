@@ -11,7 +11,9 @@ import Faker.TH
 
 $(generateFakeField "heroesOfTheStorm" "battlegrounds")
 
-$(generateFakeField "heroesOfTheStorm" "classes")
+-- @since 0.8.0
+--
+$(generateFakeField "heroesOfTheStorm" "class_names")
 
 $(generateFakeField "heroesOfTheStorm" "heroes")
 

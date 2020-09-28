@@ -2,7 +2,8 @@ module FakeModuleInfo where
 
 data ModuleInfo =
   ModuleInfo
-    { mmoduleName :: String -- eg: buffy
+    { mmoduleName :: String -- eg: buffy. Module name. This should be
+                            -- the value in mapSource fucntion too.
     , jsonField :: String -- ^ Field after en.faker
     , fields :: [String]
     , unresolvedFields :: [String]
@@ -1792,10 +1793,15 @@ dnd =
     { mmoduleName = "dnd"
     , jsonField = "dnd"
     , fields =
-        [ "species"
-        , "klasses"
-        , "backgrounds"
+        [ 
+          "klasses"
         , "alignments"
+        , "cities"
+        , "languages"
+        , "melee_weapons"
+        , "monsters"
+        , "races"
+        , "ranged_weapons"
         ]
     , unresolvedFields = []
     , nestedFields = []
@@ -1868,6 +1874,136 @@ warhammerFantasy  =
     , nestedFields = []
     , unresolvedNestedFields = []
     }
+
+bigBangTheory :: ModuleInfo
+bigBangTheory = 
+  ModuleInfo
+    { mmoduleName = "bigBangTheory"
+    , jsonField = "big_bang_theory"
+    , fields =
+        [ "characters", "quotes"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+futurama :: ModuleInfo
+futurama = 
+  ModuleInfo
+    { mmoduleName = "futurama"
+    , jsonField = "futurama"
+    , fields =
+        [ "characters", "locations", "quotes", "hermes_catchphrases"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+drivingLicense :: ModuleInfo
+drivingLicense =
+    ModuleInfo
+    { mmoduleName = "drivingLicense"
+    , jsonField = "driving_licence"
+    , fields =
+        [
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = [["usa","alabama"],["usa","alaska"],["usa","arizona"],["usa", "arkansas"],["usa","california"],["usa","colorado"],["usa","connecticut"],["usa","delaware"],["usa","district_of_columbia"],["usa","florida"],["usa","georgia"],["usa","hawaii"],["usa","idaho"],["usa","illinois"],["usa","indiana"], ["usa","iowa"],["usa","kansas"],["usa","kentucky"],["usa","louisiana"],["usa","maine"],["usa","maryland"],["usa","massachusetts"],["usa","michigan"],["usa","minnesota"],["usa","mississippi"],["usa","missouri"],["usa","montana"],["usa","nebraska"],["usa","nevada"],["usa","new_hampshire"],["usa","new_jersey"],["usa","new_mexico"],["usa","new_york"],["usa","north_carolina"],["usa","ohio"],["usa","oklahoma"],["usa","oregon"],["usa","pennsylvania"],["usa","rhode_island"],["usa","south_carolina"],["usa","south_dakota"],["usa","tennessee"],["usa","texas"],["usa","utah"],["usa","vermont"],["usa","virginia"],["usa","washington"],["usa","west_virginia"],["usa","wisconsin"],["usa","wyoming"]]
+    }
+
+drone :: ModuleInfo
+drone =
+  ModuleInfo
+    { mmoduleName = "drone"
+    , jsonField = "drone"
+    , fields =
+        [ "name", "battery_type","iso","photo_format", "video_format", "max_shutter_speed","min_shutter_speed", "shutter_speed_units"
+        ]
+    , unresolvedFields = ["weight", "max_ascent_speed", "max_descent_speed", "flight_time", "max_altitude", "max_flight_distance", "max_speed", "max_wind_resistance", "max_angular_velocity", "max_tilt_angle", "operating_temperature", "battery_capacity", "battery_voltage", "battery_weight", "charging_temperature", "max_charging_power", "max_resolution"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }
+
+minecraft :: ModuleInfo
+minecraft =
+  ModuleInfo
+    { mmoduleName = "minecraft"
+    , jsonField = "minecraft"
+    , fields =
+        [ "blocks","items", "mobs"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }    
+
+prince :: ModuleInfo
+prince =
+  ModuleInfo
+    { mmoduleName = "prince"
+    , jsonField = "prince"
+    , fields =
+        [ "lyric","song", "album","band"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    }    
+
+rush :: ModuleInfo
+rush =
+  ModuleInfo
+    { mmoduleName = "rush"
+    , jsonField = "rush"
+    , fields =
+        [ "players","albums"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    } 
+   
+streetFighter :: ModuleInfo
+streetFighter =
+  ModuleInfo
+    { mmoduleName = "streetFighter"
+    , jsonField = "street_fighter"
+    , fields =
+        [ "characters","stages", "quotes", "moves"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    } 
+
+studioGhibli :: ModuleInfo
+studioGhibli =
+  ModuleInfo
+    { mmoduleName = "studioGhibli"
+    , jsonField = "studio_ghibli"
+    , fields =
+        [ "characters", "quotes", "movies"
+        ]
+    , unresolvedFields = []
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    } 
+
+barcode :: ModuleInfo
+barcode =
+  ModuleInfo
+    { mmoduleName = "barcode"
+    , jsonField = "barcode"
+    , fields =
+        [ 
+        ]
+    , unresolvedFields = ["ean_8","ean_13","upc_a","upc_e","composite_symbol", "isbn", "ismn","issn"]
+    , nestedFields = []
+    , unresolvedNestedFields = []
+    } 
       
 currentOne :: ModuleInfo
-currentOne = warhammerFantasy
+currentOne = studioGhibli

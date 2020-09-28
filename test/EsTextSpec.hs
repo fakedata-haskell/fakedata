@@ -13,6 +13,7 @@ import qualified Faker.Internet as IN
 import qualified Faker.Name as NA
 import qualified Faker.PhoneNumber as PH
 import qualified Faker.Subscription as SU
+import qualified Faker.Vehicle as VE
 
 import Test.Hspec
 import TestImport
@@ -73,6 +74,7 @@ spec = do
             , SU.paymentMethods
             , SU.subscriptionTerms
             , SU.paymentTerms
+            , VE.licensePlate
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

@@ -60,6 +60,7 @@ spec = do
 
             , PH.formats
             , PH.cellPhoneFormat
+            , PH.countryCode
 
             , FA.citySuffix
             , FA.city

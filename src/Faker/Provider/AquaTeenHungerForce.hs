@@ -35,3 +35,11 @@ parseAthfCharacter settings = parseAthfField settings "character"
 athfCharacterProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 athfCharacterProvider settings = fetchData settings ATHF parseAthfCharacter
+
+parseAthfQuote ::
+     (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseAthfQuote settings = parseAthfField settings "quote"
+
+quoteProvider ::
+     (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+quoteProvider settings = fetchData settings ATHF parseAthfQuote

@@ -52,6 +52,7 @@ spec = do
             , FA.streetName
 
             , PH.formats
+            , PH.countryCode
               
             , BH.name
             ]

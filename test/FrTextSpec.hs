@@ -64,6 +64,7 @@ spec = do
 
             , PH.formats
             , PH.cellPhoneFormat
+            , PH.countryCode
 
             , FA.city
             , FA.state
@@ -83,7 +84,7 @@ spec = do
             , CE.ordinalAbbreviation
             , CE.halfWindWord
             , CE.halfWindAbbreviation
-            -- , CE.direction
+            , CE.direction
             , CE.abbreviation
 
             , IN.freeEmail

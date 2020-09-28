@@ -12,6 +12,11 @@ capitalize :: String -> String
 capitalize [] = []
 capitalize (x:xs) = (toUpper x) : xs
 
+-- λ> fixupNestedFields ["hello","world","bye"]
+-- "helloWorldBye"
+fixupNestedFields :: [String] -> String
+fixupNestedFields xs = foldl1 (\a b -> a <> capitalize b) xs
+
 moduleData :: ModuleInfo -> String
 moduleData mod@ModuleInfo {..} =
   [i|{-# LANGUAGE OverloadedStrings #-}
@@ -60,6 +65,8 @@ parse#{capModname}Fields settings txts val = do
 
 #{unresolvedParser}
 
+#{unresolvedNested}
+
 #{resolvedFields}
 
 #{unresolvedStr}
@@ -100,11 +107,10 @@ parseUnresolved#{capModname}Fields settings txts val = do
     -- unresolvedNFn
     unresolvedFn :: [String] -> String
     unresolvedFn field =
-      [i|
-$(genParserUnresolveds "#{mmoduleName}" "#{show field}")
-
-$(genProviderUnresolveds "#{mmoduleName}" "#{show field}")
-
+      let fieldName = fixupNestedFields field
+      in [i|
+$(genParserUnresolveds "#{mmoduleName}" #{show field})
+$(genProviderUnresolveds "#{mmoduleName}" #{show field})
 |]
     unresolvedFns :: [String]
     unresolvedFns = map unresolvedFn unresolvedNestedFields
@@ -133,7 +139,6 @@ $(genProvider "#{mmoduleName}" "#{field}")
     unresolvedField field =
       [i|
 $(genParserUnresolved "#{mmoduleName}" "#{field}")
-
 $(genProviderUnresolved "#{mmoduleName}" "#{field}")
 |]
     unres :: [String]
@@ -149,10 +154,7 @@ $(genProviderUnresolved "#{mmoduleName}" "#{field}")
     unresolverFunction1 =
       [i|
 resolve#{capModname}Text :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
-resolve#{capModname}Text settings txt = do
-  let fields = resolveFields txt
-  #{mmoduleName}Fields <- mapM (resolve#{capModname}Field settings) fields
-  pure $ operateFields txt #{mmoduleName}Fields
+resolve#{capModname}Text = genericResolver' resolve#{capModname}Field
 
 resolve#{capModname}Field :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 #{generateresolveFieldFns}
@@ -163,27 +165,26 @@ resolve#{capModname}Field settings str = throwM $ InvalidField "#{mmoduleName}" 
       let cf = capitalize field
        in [i|
 resolve#{capModname}Field settings undefined =
-  randomUnresolvedVec settings #{field}Provider resolve#{cf}Text
+  cacheRandomUnresolvedVec settings #{field}Provider resolve#{cf}Text
 |]
     generateNestedField1 = concat $ map generateNestedField nestedFields
     generateNestedField :: [String] -> String
     generateNestedField field =
       [i|
 $(genParsers "#{mmoduleName}" #{show field})
-
 $(genProviders "#{mmoduleName}" #{show field})
 
 |]
     generateresolveFieldFnsString :: String
     generateresolveFieldFnsString =
-      if unresolvedFields == []
+      if unresolvedFields == [] && unresolvedNestedFields == []
         then mempty
         else unresolverFunction1
     generateresolveFieldFns :: String
     generateresolveFieldFns = concatMap generateresolveFieldFn unresolvedFields
     unresolvedParser :: String
     unresolvedParser =
-      if unresolvedFields == []
+      if (unresolvedFields == [] && unresolvedNestedFields == [])
         then mempty
         else [i|
 parseUnresolved#{capModname}Field ::

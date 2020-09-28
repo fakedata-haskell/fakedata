@@ -54,14 +54,14 @@ spec = do
     it "App author" $ do
       ga <-
         generateWithSettings (setDeterministic defaultFakerSettings) AP.author
-      ga `shouldBe` "Langosh, Stiedemann and Koch"
+      ga `shouldBe` "Schmidt, Breitenberg and Lowe"
   describe "Semigroup instance of Fake" $
     it "can be appended and it is associative" $ do
       phraseL <- generate $ (pure "Hello " <> name) <> pure "!"
       phraseR <- generate $ pure "Hello " <> (name <> pure "!")
-      phraseL `shouldBe` "Hello Antony Stiedemann!"
-      phraseR `shouldBe` "Hello Antony Stiedemann!"
+      phraseL `shouldBe` "Hello Brent Breitenberg!"
+      phraseR `shouldBe` "Hello Brent Breitenberg!"
   describe "Monoid instance of Fake" $
     it "mappend mempty doesn't modify the other operand" $ do
       name' <- generate $ name `mappend` mempty
-      name' `shouldBe` "Antony Stiedemann"
+      name' `shouldBe` "Brent Breitenberg"

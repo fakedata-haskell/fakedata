@@ -20,6 +20,8 @@ import qualified Faker.Appliance as AP
 import qualified Faker.Measurement as ME
 import qualified Faker.Compass as CE
 import qualified Faker.Color as CL
+import qualified Faker.Gender as GE
+import qualified Faker.Space as SP
 import qualified Faker.Subscription as SU
 
 import Test.Hspec
@@ -68,6 +70,10 @@ spec = do
             , CO.suffix
             , CO.name
               
+            , CL.name
+              
+            , GE.binaryTypes
+              
             , IN.freeEmail
             , IN.domainSuffix
               
@@ -79,6 +85,9 @@ spec = do
             , CM.productNameProduct
             , CM.promotionCodeAdjective
             , CM.promotionCodeNoun
+              
+            , SP.planet
+            , SP.galaxy
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

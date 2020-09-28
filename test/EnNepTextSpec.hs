@@ -57,6 +57,7 @@ spec = do
             , IN.domainSuffix
 
             , PH.formats
+            , PH.countryCode
               
             , CO.suffix
             ]
