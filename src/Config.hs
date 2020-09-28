@@ -214,8 +214,10 @@ sourceFile Suits = "suits"
 sourceFile Barcode = "barcode"
 sourceFile DrivingLicense = "driving_license"
 sourceFile Drone = "drone"
+sourceFile Futurama = "futurama"
 
 mapSource :: Text -> Name
+mapSource "futurama" = 'Futurama
 mapSource "drone" = 'Drone
 mapSource "drivingLicense" = 'DrivingLicense
 mapSource "barcode" = 'Barcode

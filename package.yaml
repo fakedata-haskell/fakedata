@@ -115,6 +115,7 @@ library:
   - Faker.Provider.FreshPrinceOfBelAir
   - Faker.Provider.Friends
   - Faker.Provider.FunnyName
+  - Faker.Provider.Futurama
   - Faker.Provider.GameOfThrones
   - Faker.Provider.Gender
   - Faker.Provider.Ghostbusters

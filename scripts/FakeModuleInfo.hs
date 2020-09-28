@@ -1892,7 +1892,7 @@ futurama :: ModuleInfo
 futurama = 
   ModuleInfo
     { mmoduleName = "futurama"
-    , jsonField = "big_futurama"
+    , jsonField = "futurama"
     , fields =
         [ "characters", "locations", "quotes", "hermes_catchphrases"
         ]
@@ -2006,4 +2006,4 @@ barcode =
     } 
       
 currentOne :: ModuleInfo
-currentOne = drone
+currentOne = futurama

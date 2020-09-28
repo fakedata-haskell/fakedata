@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: af5748d45a11490f106ea553ec9a5ee105a922c531ef4d7f3a455dca3f0e2e8e
+-- hash: 587e467acc51c5908cf9e49f6d962350b0a125b612696d69baddd338124f0843
 
 name:           fakedata
 version:        0.7.1
@@ -364,7 +364,6 @@ library
       Faker.NatoPhoneticAlphabet
       Faker.PhoneNumber
       Faker.ProgrammingLanguage
-      Faker.Provider.Drone
       Faker.Quote
       Faker.Quote.Shakespeare
       Faker.Rajnikanth
@@ -391,6 +390,7 @@ library
       Faker.TvShow.FamilyGuy
       Faker.TvShow.FreshPrinceOfBelAir
       Faker.TvShow.Friends
+      Faker.TvShow.Futurama
       Faker.TvShow.GameOfThrones
       Faker.TvShow.HeyArnold
       Faker.TvShow.HowIMetYourMother
@@ -461,6 +461,7 @@ library
       Faker.Provider.CultureSeries
       Faker.Provider.Currency
       Faker.Provider.DrivingLicense
+      Faker.Provider.Drone
       Faker.Provider.DcComics
       Faker.Provider.Demographic
       Faker.Provider.Departed
@@ -486,6 +487,7 @@ library
       Faker.Provider.FreshPrinceOfBelAir
       Faker.Provider.Friends
       Faker.Provider.FunnyName
+      Faker.Provider.Futurama
       Faker.Provider.GameOfThrones
       Faker.Provider.Gender
       Faker.Provider.Ghostbusters

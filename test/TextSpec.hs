@@ -136,6 +136,7 @@ import qualified Faker.TvShow.DumbAndDumber as DD
 import qualified Faker.TvShow.FamilyGuy as FA
 import qualified Faker.TvShow.FreshPrinceOfBelAir as FR
 import qualified Faker.TvShow.Friends as FI
+import qualified Faker.TvShow.Futurama as FT
 import qualified Faker.TvShow.GameOfThrones as GA
 import qualified Faker.TvShow.HeyArnold as HE
 import qualified Faker.TvShow.HowIMetYourMother as HI
@@ -692,6 +693,15 @@ spec = do
       (and bools) `shouldBe` True
     it "FunnyName" $ do
       let functions :: [Fake Text] = [FU.name]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "TvShow.Futurama" $ do
+      let functions :: [Fake Text] =
+            [ FT.characters,
+              FT.locations,
+              FT.quotes,
+              FT.hermesCatchphrases
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.Dota" $ do

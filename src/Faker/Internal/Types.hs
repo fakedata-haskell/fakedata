@@ -170,6 +170,7 @@ data SourceData
   | Barcode
   | DrivingLicense
   | Drone
+  | Futurama
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

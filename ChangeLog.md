@@ -35,6 +35,7 @@
 * Faker.Barcode
 * Faker.DrivingLicense
 * Faker.Drone
+* Faker.TvShow.Futurama
 
 ### Locale Improvements
 
