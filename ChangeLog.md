@@ -36,6 +36,7 @@
 * Faker.DrivingLicense
 * Faker.Drone
 * Faker.TvShow.Futurama
+* Faker.Game.Minecraft
 
 ### Locale Improvements
 

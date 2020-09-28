@@ -171,6 +171,7 @@ data SourceData
   | DrivingLicense
   | Drone
   | Futurama
+  | Minecraft
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

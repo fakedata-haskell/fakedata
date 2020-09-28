@@ -121,7 +121,6 @@ irb(main):006:0> Faker::Address.city
 
 New modules:
 
-* en/futurama.yml (gen)
 * en/minecrafty.yml (gen)
 * en/prince.yml (gen)
 * en/rush.yml (gen)

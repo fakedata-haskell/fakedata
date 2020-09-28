@@ -215,8 +215,10 @@ sourceFile Barcode = "barcode"
 sourceFile DrivingLicense = "driving_license"
 sourceFile Drone = "drone"
 sourceFile Futurama = "futurama"
+sourceFile Minecraft = "minecraft"
 
 mapSource :: Text -> Name
+mapSource "minecraft" = 'Minecraft
 mapSource "futurama" = 'Futurama
 mapSource "drone" = 'Drone
 mapSource "drivingLicense" = 'DrivingLicense

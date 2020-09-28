@@ -150,6 +150,7 @@ library:
   - Faker.Provider.Movie
   - Faker.Provider.Music
   - Faker.Provider.Myst
+  - Faker.Provider.Minecraft
   - Faker.Provider.Name
   - Faker.Provider.Nation
   - Faker.Provider.NatoPhoneticAlphabet

@@ -59,6 +59,7 @@ import qualified Faker.Game.Fallout as FA
 import qualified Faker.Game.HalfLife as HA
 import qualified Faker.Game.Heroes as HE
 import qualified Faker.Game.HeroesOfTheStorm as HS
+import qualified Faker.Game.Minecraft as MC
 import qualified Faker.Game.Myst as MY
 import qualified Faker.Game.Overwatch as OV
 import qualified Faker.Game.Pokemon as PO
@@ -838,6 +839,14 @@ spec = do
     it "Game.Zelda" $ do
       let functions :: [Fake Text] =
             [ZE.games, ZE.characters, ZE.locations, ZE.items]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "Game.Minecraft" $ do
+      let functions :: [Fake Text] =
+            [ MC.blocks,
+              MC.items,
+              MC.mobs
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Gender" $ do
