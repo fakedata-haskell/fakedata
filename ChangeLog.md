@@ -33,6 +33,7 @@
 
 * Faker.TvShow.BigBangTheory
 * Faker.Barcode
+* Faker.DrivingLicense
 
 ### Locale Improvements
 

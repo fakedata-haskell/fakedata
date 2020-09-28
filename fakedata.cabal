@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f64a8023355a9af80270e31467bf6c4fa81e43d0bd5b0bb983167d4159e0a6e7
+-- hash: 6d35974d63f3bbe7c8d51471e80261633b9d5cee5052429ab176ba8af23ac31e
 
 name:           fakedata
 version:        0.7.1
@@ -295,6 +295,7 @@ library
       Faker.Demographic
       Faker.Dessert
       Faker.Dnd
+      Faker.DrivingLicense
       Faker.Educator
       Faker.ElectricalComponents
       Faker.Esport
@@ -457,6 +458,7 @@ library
       Faker.Provider.CryptoCoin
       Faker.Provider.CultureSeries
       Faker.Provider.Currency
+      Faker.Provider.DrivingLicense
       Faker.Provider.DcComics
       Faker.Provider.Demographic
       Faker.Provider.Departed

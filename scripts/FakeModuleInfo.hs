@@ -1905,7 +1905,7 @@ drivingLicense :: ModuleInfo
 drivingLicense =
     ModuleInfo
     { mmoduleName = "drivingLicense"
-    , jsonField = "driving_license"
+    , jsonField = "driving_licence"
     , fields =
         [
         ]
@@ -2006,4 +2006,4 @@ barcode =
     } 
       
 currentOne :: ModuleInfo
-currentOne = barcode
+currentOne = drivingLicense

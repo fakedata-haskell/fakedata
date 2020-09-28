@@ -88,6 +88,7 @@ library:
   - Faker.Provider.CryptoCoin
   - Faker.Provider.CultureSeries
   - Faker.Provider.Currency
+  - Faker.Provider.DrivingLicense
   - Faker.Provider.DcComics
   - Faker.Provider.Demographic
   - Faker.Provider.Departed

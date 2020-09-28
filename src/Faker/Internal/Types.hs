@@ -168,6 +168,7 @@ data SourceData
   | Suits
   | WarhammerFantasy
   | Barcode
+  | DrivingLicense
   | CustomSourceEnglish String
   deriving (Show, Eq, Ord, Generic, Hashable)
 

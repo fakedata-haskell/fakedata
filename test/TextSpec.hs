@@ -43,6 +43,7 @@ import qualified Faker.DcComics as DC
 import qualified Faker.Demographic as DE
 import qualified Faker.Dessert as DE
 import qualified Faker.Dnd as DN
+import qualified Faker.DrivingLicense as DR
 import qualified Faker.Educator as ED
 import qualified Faker.ElectricalComponents as EC
 import qualified Faker.Esport as ES
@@ -526,6 +527,61 @@ spec = do
     it "DcComics" $ do
       let functions :: [Fake Text] =
             [DC.hero, DC.heroine, DC.villain, DC.name, DC.title]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
+    it "DrivingLicense" $ do
+      let functions :: [Fake Text] =
+            [ DR.usaAlabama,
+              DR.usaAlaska,
+              DR.usaArizona,
+              DR.usaArkansas,
+              DR.usaCalifornia,
+              DR.usaColorado,
+              DR.usaConnecticut,
+              DR.usaDelaware,
+              DR.usaDistrictOfColumbia,
+              DR.usaFlorida,
+              DR.usaGeorgia,
+              DR.usaHawaii,
+              DR.usaIdaho,
+              DR.usaIllinois,
+              DR.usaIndiana,
+              DR.usaIowa,
+              DR.usaKansas,
+              DR.usaKentucky,
+              DR.usaLouisiana,
+              DR.usaMaine,
+              DR.usaMaryland,
+              DR.usaMassachusetts,
+              DR.usaMichigan,
+              DR.usaMinnesota,
+              DR.usaMississippi,
+              DR.usaMissouri,
+              DR.usaMontana,
+              DR.usaNebraska,
+              DR.usaNevada,
+              DR.usaNewHampshire,
+              DR.usaNewJersey,
+              DR.usaNewMexico,
+              DR.usaNewYork,
+              DR.usaNorthCarolina,
+              DR.usaOhio,
+              DR.usaOklahoma,
+              DR.usaOregon,
+              DR.usaPennsylvania,
+              DR.usaRhodeIsland,
+              DR.usaSouthCarolina,
+              DR.usaSouthDakota,
+              DR.usaTennessee,
+              DR.usaTexas,
+              DR.usaUtah,
+              DR.usaVermont,
+              DR.usaVirginia,
+              DR.usaWashington,
+              DR.usaWestVirginia,
+              DR.usaWisconsin,
+              DR.usaWyoming
+            ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Demographic" $ do

@@ -12,9 +12,23 @@ capitalize :: String -> String
 capitalize [] = []
 capitalize (x:xs) = (toUpper x) : xs
 
+-- λ> fixupNestedFields ["hello","world","bye"]
+-- "helloWorldBye"
+fixupNestedFields :: [String] -> String
+fixupNestedFields xs = foldl1 (\a b -> a <> capitalize b) xs
+
 moduleDef :: ModuleInfo -> String
 moduleDef mod@ModuleInfo {..} =
   let capModname = capitalize mmoduleName
+
+      fakeFieldUnresolved :: [String] -> String
+      fakeFieldUnresolved str =
+        [i|
+$(generateFakeFieldUnresolveds "#{mmoduleName}" #{show str})
+|]
+      unresolvedFieldsCode :: String
+      unresolvedFieldsCode = concat $ map fakeFieldUnresolved unresolvedNestedFields
+
       fakeField :: String -> String
       fakeField str =
         [i|
@@ -50,6 +64,7 @@ import Faker.TH
 #{fakeFields}
 #{ufakeFields}
 #{nfakeFields}
+#{unresolvedFieldsCode}
 |]
 
 generateModule :: ModuleInfo -> IO ()

@@ -212,8 +212,10 @@ sourceFile Show = "show"
 sourceFile WarhammerFantasy = "warhammer_fantasy"
 sourceFile Suits = "suits"
 sourceFile Barcode = "barcode"
+sourceFile DrivingLicense = "driving_license"
 
 mapSource :: Text -> Name
+mapSource "drivingLicense" = 'DrivingLicense
 mapSource "barcode" = 'Barcode
 mapSource "pearl_jam" = 'PearlJam
 mapSource "dnd" = 'DnD
