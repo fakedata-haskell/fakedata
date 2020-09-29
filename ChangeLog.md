@@ -1,14 +1,14 @@
 # Changelog for fakedata
 
-## Unreleased
+## 0.8.0
 
 ### Breaking changes
 
-* Behavior of Monad instances changed. Monad instance by will not
-  change the underlying StdGen by default. It will change only when
-  you do `setNonDeterministic` for the settings. If you use functions
-  like `listOf` with `generate` function then all the values would be
-  the same:
+* Behavior of Monad instances changed. Monad instance by default will
+  not change the underlying StdGen by default. It will change only
+  when you do `setNonDeterministic` for the settings. If you use
+  functions like `listOf` with `generate` function then all the values
+  would be the same:
 
 ``` haskell
 λ> import Faker.Coffee

@@ -240,14 +240,17 @@ generate (Fake f) = do
   cacheFile <- newIORef HM.empty
   f $ defaultFakerSettings {fsCacheField = cacheField, fsCacheFile = cacheFile}
 
--- | Generate fake value with 'defaultFakerSettings'
+-- | Generate fake value with 'defaultFakerSettings' but with non
+-- deterministic setting.
 --
 -- @since 0.8.0
 --
 -- @
 -- λ> import qualified Faker.Name as FN
--- λ> generate FN.name
--- "Antony Langosh"
+-- λ> generateNonDeterministic FN.name
+-- "Prof. Antoine O'Conner"
+-- λ> generateNonDeterministic FN.name
+-- "Savannah Buckridge"
 -- @
 generateNonDeterministic :: Fake a -> IO a
 generateNonDeterministic = generateWithSettings $ setNonDeterministic defaultFakerSettings

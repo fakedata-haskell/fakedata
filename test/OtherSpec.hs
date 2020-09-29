@@ -1,5 +1,6 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module OtherSpec where
 
@@ -16,6 +17,7 @@ import Faker hiding (defaultFakerSettings)
 import qualified Faker.App as AP
 import qualified Faker.Educator as ED
 import Faker.Name
+import qualified Faker.Address as AD
 import Faker.Source
 import qualified Faker.WorldCup as WC
 import Test.Hspec
@@ -23,6 +25,17 @@ import TestImport
 
 isText :: Text -> Bool
 isText x = T.length x >= 1
+
+data Person = Person {
+    personName :: Text,
+    personAddress :: Text
+} deriving (Show, Eq)
+
+fakePerson :: Fake Person
+fakePerson = do
+    personName <- name
+    personAddress <- AD.fullAddress
+    pure $ Person{..}
 
 spec :: Spec
 spec = do
@@ -55,6 +68,14 @@ spec = do
       ga <-
         generateWithSettings (setDeterministic defaultFakerSettings) AP.author
       ga `shouldBe` "Schmidt, Breitenberg and Lowe"
+    it "Same Person generated" $ do
+      p1 <- generate fakePerson
+      p2 <- generate fakePerson 
+      p1 `shouldBe` p2
+    it "Different Person generated" $ do
+      p1 <- generate fakePerson
+      p2 <- generateNonDeterministic fakePerson 
+      p1 `shouldNotBe` p2
   describe "Semigroup instance of Fake" $
     it "can be appended and it is associative" $ do
       phraseL <- generate $ (pure "Hello " <> name) <> pure "!"
