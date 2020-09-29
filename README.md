@@ -134,6 +134,15 @@ main = do
     print person
 ```
 
+Or even better:
+
+``` {.haskell}
+main :: IO ()
+main = do
+    person <- generateNonDeterministic fakePerson
+    print person
+```
+
 ### Combinators
 
 #### listOf
