@@ -1,5 +1,13 @@
 # Changelog for fakedata
 
+## 0.8.1
+
+### Company
+
+* Add company email
+* Add company domain
+* Use quickcheck to verify both
+
 ## 0.8.0
 
 ### Breaking changes
@@ -92,11 +100,6 @@ The following data sources which the libraries uses has been updated:
 * fr.yml
 * id.yml
 * it.yml
-
-### Company
-
-* Add company email
-* Add company domain
 
 ## 0.7.1
 
