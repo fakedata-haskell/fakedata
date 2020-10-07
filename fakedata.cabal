@@ -709,6 +709,8 @@ test-suite fakedata-test
     , unordered-containers
     , vector
     , yaml
+    , regex-tdfa
+    , QuickCheck
   default-language: Haskell2010
 
 benchmark fakebench

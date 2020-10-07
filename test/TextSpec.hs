@@ -168,6 +168,13 @@ import qualified Faker.Vehicle as VE
 import qualified Faker.Verbs as VE
 import qualified Faker.WorldCup as WO
 import qualified Faker.Yoda as YO
+import           System.IO.Unsafe (unsafePerformIO)
+import qualified Faker
+import Faker (Fake)
+import System.Random (mkStdGen)
+import           Text.Regex.TDFA         hiding (empty)
+import Test.Hspec.QuickCheck(prop)
+import qualified Test.QuickCheck as Q
 import Test.Hspec
 import TestImport
 
@@ -188,6 +195,65 @@ verifyFakeInt funs = do
   let fs :: [IO Int] = map (generateWithSettings fakerSettings) funs
       gs :: [IO Bool] = map (\f -> (\x -> x >= 0) <$> f) fs
   sequence gs
+
+-- copied from https://github.com/parsonsmatt/hedgehog-fakedata/blob/d342c6eb5aeb9990bb36ede1d1f08becc7d71e16/src/Hedgehog/Gen/Faker.hs
+-- I need it for hedhog but it's a cyclic dependency
+-- made it work for quickeck instead of hedgehog.
+-- who needs side affects anyway?
+--
+--  Select a value 'Fake' program in 'Gen'.
+fakeQuickcheck :: Fake a -> Q.Gen a
+fakeQuickcheck f = do
+    randomGen <- mkStdGen <$> Q.choose (minBound, maxBound)
+    pure $!
+        unsafePerformIO $
+        -- (parsonsmatt): OK so `unsafePerformIO` is bad, unless you know exactly
+        -- what you're doing, so do I know exactly what I am doing? Perhaps I can
+        -- convince you.
+        --
+        -- The Faker library doesn't keep the data as Haskell values, but stores it
+        -- in `data-files`. The code that generates this fake data loads the values
+        -- from the `data-files` for the library. That's what happens in IO. It is
+        -- possible that the data-file is missing, and an exception will be thrown.
+        -- However, no mutating actions are performed. I believe this is a safe use
+        -- of 'unsafePerformIO'.
+        --
+        -- The alternative would be to lift it into `GenT IO a`, which is
+        -- undesirable, as it would harm composition with basically any other
+        -- generator.
+        Faker.generateWithSettings
+            (Faker.setRandomGen
+              randomGen
+              fakerSettings
+            )
+            f
+
+isDomain :: Text -> Bool
+isDomain = (=~ "^[A-Za-z_]+\\.[a-z]{1,4}$")
+
+isName :: Text -> Bool
+isName = (=~ "^[A-Za-z_]+$")
+
+isNum :: Text -> Bool
+isNum = (=~ "^[0-9]+$")
+
+isEmail :: Text -> Bool
+isEmail input =
+  if (length splitAt /= 2) || (length splitDash /= 2) then False
+  else
+      isDomain domain && isName name && isNum num
+  where
+    splitAt = T.splitOn at input
+    [nameNum, domain] = splitAt
+
+    splitDash = T.splitOn dash nameNum
+    [name, num] = splitDash
+
+    dash :: Text
+    dash = T.pack "-"
+
+    at :: Text
+    at = T.pack "@"
 
 spec :: Spec
 spec = do
@@ -440,26 +506,31 @@ spec = do
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
-    it "Company" $ do
-      let functions :: [Fake Text] =
-            [ CO.direction,
-              CO.abbreviation,
-              CO.azimuth,
-              CO.cardinalWord,
-              CO.cardinalAbbreviation,
-              CO.cardinalAzimuth,
-              CO.ordinalWord,
-              CO.ordinalAbbreviation,
-              CO.ordinalAzimuth,
-              CO.halfWindWord,
-              CO.halfWindAbbreviation,
-              CO.halfWindAzimuth,
-              CO.quarterWindWord,
-              CO.quarterWindAbbreviation,
-              CO.quarterWindAzimuth
-            ]
-      bools <- verifyFakes functions
-      (and bools) `shouldBe` True
+    describe "Company" $
+      it "generated verify fake functions" $ do
+        let functions :: [Fake Text] =
+              [ CO.direction
+              , CO.abbreviation
+              , CO.azimuth
+              , CO.cardinalWord
+              , CO.cardinalAbbreviation
+              , CO.cardinalAzimuth
+              , CO.ordinalWord
+              , CO.ordinalAbbreviation
+              , CO.ordinalAzimuth
+              , CO.halfWindWord
+              , CO.halfWindAbbreviation
+              , CO.halfWindAzimuth
+              , CO.quarterWindWord
+              , CO.quarterWindAbbreviation
+              , CO.quarterWindAzimuth
+              ]
+        bools <- verifyFakes functions
+        (and bools) `shouldBe` True
+    describe "Company domain" $
+      it "forall domain fullfils is a domain name regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.domain) isDomain
+    describe "Company email" $
+      it "forall email fullfils is an email regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.email) isEmail
     it "Construction" $ do
       let functions :: [Fake Text] =
             [ CO.materials,
