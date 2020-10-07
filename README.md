@@ -40,6 +40,7 @@ Tutorial
 
 ``` {.shellsession}
 ~/g/fakedata (master) $ stack ghci
+λ> import Faker
 λ> import Faker.Address
 λ> address <- generate fullAddress
 λ> address
