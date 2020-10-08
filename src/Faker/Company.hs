@@ -1,7 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE NumericUnderscores #-}
 {-# LANGUAGE TypeApplications #-}
 
 module Faker.Company
@@ -82,7 +81,7 @@ domain = do
 email :: Fake Text
 email = do
   humanName <-  F.name
-  number <- F.fromRange @Int (0, 999_999_999) -- reasonable uniqueness
+  number <- F.fromRange @Int (0, 999999999) -- reasonable uniqueness
   domainName <- domain
   let numText :: Text
       numText = pack $ show number
