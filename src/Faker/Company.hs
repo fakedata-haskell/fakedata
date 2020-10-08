@@ -66,6 +66,9 @@ $(generateFakeField "company" "type")
 $(generateFakeField "company" "sic_code")
 
 -- | Generates a domain name like "crazychairauction.com"
+--
+-- @since 0.8.1
+--
 domain :: Fake Text
 domain = do
   suffix <- F.domainSuffix
@@ -73,6 +76,9 @@ domain = do
   pure $ fixupName companyName <> "." <> suffix
 
 -- | Generates an email like "jappie_klooster@crazychairauction.com"
+--
+-- @since 0.8.1
+--
 email :: Fake Text
 email = do
   humanName <-  F.name
