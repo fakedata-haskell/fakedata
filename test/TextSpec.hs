@@ -229,13 +229,13 @@ fakeQuickcheck f = do
             f
 
 isDomain :: Text -> Bool
-isDomain = (=~ "^[A-Za-z_]+\\.[a-z]{1,4}$")
+isDomain = (=~ "^[A-Za-z_]+\\.[a-z]{1,4}$") . T.unpack
 
 isName :: Text -> Bool
-isName = (=~ "^[A-Za-z_]+$")
+isName = (=~ "^[A-Za-z_]+$") . T.unpack
 
 isNum :: Text -> Bool
-isNum = (=~ "^[0-9]+$")
+isNum = (=~ "^[0-9]+$") . T.unpack
 
 isEmail :: Text -> Bool
 isEmail input =
