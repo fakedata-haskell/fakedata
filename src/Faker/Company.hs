@@ -88,5 +88,9 @@ email = do
       numText = pack $ show number
   pure $ fixupName humanName <> "-" <> numText <> "@" <> domainName
 
+-- | Ensures the spaces are replaced by "_",
+--   and no special characters are in the name.
+--   So "Elizabeth Warder!" becomes "Elizabeth_Warder".
+--   Any fancy symbols such as "!@#$" etc are filtered out.
 fixupName :: Text -> Text
 fixupName = Data.Text.filter (\c -> isAlphaNum c || c == '_') . replace " " "_"
