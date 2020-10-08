@@ -92,5 +92,8 @@ email = do
 --   and no special characters are in the name.
 --   So "Elizabeth Warder!" becomes "Elizabeth_Warder".
 --   Any fancy symbols such as "!@#$" etc are filtered out.
+--
+-- @since 0.8.1
+--
 fixupName :: Text -> Text
 fixupName = Data.Text.filter (\c -> isAlphaNum c || c == '_') . replace " " "_"
