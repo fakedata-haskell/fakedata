@@ -1,8 +1,20 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
 
-module Faker.Company where
+module Faker.Company
+  ( buzzword
+  , suffix
+  , bs
+  , name
+  , industry
+  , profession
+  , type'
+  , sicCode
+  , email
+  , domain
+  ) where
 
 import Data.Monoid ((<>))
 import Data.Text
@@ -11,6 +23,10 @@ import Faker
 import Faker.Internal
 import Faker.Provider.Company
 import Faker.TH
+import qualified Faker.Internet as F
+import qualified Faker.Name as F
+import qualified Faker.Combinators as F
+import Data.Char(isAlphaNum)
 
 $(generateFakeField "company" "suffix")
 
@@ -47,3 +63,36 @@ $(generateFakeField "company" "type")
 -- @since 0.2.0
 --
 $(generateFakeField "company" "sic_code")
+
+-- | Generates a domain name like "crazychairauction.com"
+--
+-- @since 0.8.1
+--
+domain :: Fake Text
+domain = do
+  suffix <- F.domainSuffix
+  companyName <- name
+  pure $ fixupName companyName <> "." <> suffix
+
+-- | Generates an email like "jappie_klooster@crazychairauction.com"
+--
+-- @since 0.8.1
+--
+email :: Fake Text
+email = do
+  humanName <-  F.name
+  number <- F.fromRange @Int (0, 999999999) -- reasonable uniqueness
+  domainName <- domain
+  let numText :: Text
+      numText = pack $ show number
+  pure $ fixupName humanName <> "-" <> numText <> "@" <> domainName
+
+-- | Ensures the spaces are replaced by "_",
+--   and no special characters are in the name.
+--   So "Elizabeth Warder!" becomes "Elizabeth_Warder".
+--   Any fancy symbols such as "!@#$" etc are filtered out.
+--
+-- @since 0.8.1
+--
+fixupName :: Text -> Text
+fixupName = Data.Text.filter (\c -> isAlphaNum c || c == '_') . replace " " "_"
