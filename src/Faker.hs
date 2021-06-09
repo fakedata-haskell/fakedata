@@ -3,11 +3,13 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE InstanceSigs #-}
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE PatternSynonyms #-}
 
 module Faker
   (
     -- * Types
-    Fake(..)
+    Fake
+  , FakeT(.., Fake)
   , FakerSettings
   , FakerException(..)
   , defaultFakerSettings
@@ -172,58 +174,66 @@ replaceCacheFile cache fs = do
   ref <- newIORef cache
   pure $ fs {fsCacheFile = ref}
 
--- | Fake data type. This is the type you will be using to produce
--- fake values.
-newtype Fake a = Fake
-  { unFake :: FakerSettings -> IO a
+newtype FakeT m a = FakeT
+  { runFakeT :: FakerSettings -> m a
   }
 
-instance Functor Fake where
+-- | Fake data type. This is the type you will be using to produce
+-- fake values.
+type Fake a = FakeT IO a
+
+pattern Fake :: (FakerSettings -> IO a) -> Fake a
+pattern Fake f = FakeT f
+
+unFake :: Fake a -> FakerSettings -> IO a
+unFake = runFakeT
+
+instance Monad m => Functor (FakeT m) where
   {-# INLINE fmap #-}
-  fmap :: (a -> b) -> Fake a -> Fake b
-  fmap f (Fake h) =
-    Fake
+  fmap :: (a -> b) -> FakeT m a -> FakeT m b
+  fmap f (FakeT h) =
+    FakeT
       (\r -> do
          a <- h r
          let b = f a
          pure b)
 
-instance Applicative Fake where
+instance Monad m => Applicative (FakeT m) where
   {-# INLINE pure #-}    
-  pure x = Fake (\_ -> pure x)
+  pure x = FakeT (\_ -> pure x)
   {-# INLINE (<*>) #-}
   (<*>) = ap
 
-instance Monad Fake where
+instance Monad m => Monad (FakeT m) where
   {-# INLINE return #-}
-  return :: a -> Fake a
-  return x = Fake (\_ -> return x)
+  return :: a -> FakeT m a
+  return x = FakeT (\_ -> return x)
   {-# INLINE (>>=) #-}
-  (>>=) :: Fake a -> (a -> Fake b) -> Fake b
+  (>>=) :: FakeT m a -> (a -> FakeT m b) -> FakeT m b
   f >>= k = generateNewFake f k
 
-generateNewFake :: Fake a -> (a -> Fake b) -> Fake b
-generateNewFake (Fake h) k = Fake (\settings -> do
+generateNewFake :: Monad m => FakeT m a -> (a -> FakeT m b) -> FakeT m b
+generateNewFake (FakeT h) k = FakeT (\settings -> do
   let deterministic = getDeterministic settings
       currentStdGen = getRandomGen settings
       newStdGen = if deterministic
                   then currentStdGen
                   else fst $ split currentStdGen
   item <- h settings
-  let (Fake k1) = k item
+  let (FakeT k1) = k item
   k1 (setRandomGen newStdGen settings))
 {-# SPECIALIZE INLINE generateNewFake :: Fake Text -> (Text -> Fake Text) -> Fake Text #-}
 
-instance MonadIO Fake where
-  liftIO :: IO a -> Fake a
-  liftIO xs = Fake (\_ -> xs >>= pure)
+instance MonadIO m => MonadIO (FakeT m) where
+  liftIO :: IO a -> FakeT m a
+  liftIO xs = FakeT (\_ -> liftIO xs)
 
 -- | @since 0.6.1
-instance Semigroup a => Semigroup (Fake a) where
+instance (Semigroup a, Monad m) => Semigroup (FakeT m a) where
   mx <> my = (<>) <$> mx <*> my
 
 -- | @since 0.6.1
-instance Monoid a => Monoid (Fake a) where
+instance (Monoid a, Monad m) => Monoid (FakeT m a) where
   mempty = pure mempty
   mappend mx my = mappend <$> mx <*> my
 
@@ -234,10 +244,10 @@ instance Monoid a => Monoid (Fake a) where
 -- λ> generate FN.name
 -- "Antony Langosh"
 -- @
-generate :: Fake a -> IO a
-generate (Fake f) = do
-  cacheField <- newIORef HM.empty
-  cacheFile <- newIORef HM.empty
+generate :: MonadIO m => FakeT m a -> m a
+generate (FakeT f) = do
+  cacheField <- liftIO $ newIORef HM.empty
+  cacheFile <- liftIO $ newIORef HM.empty
   f $ defaultFakerSettings {fsCacheField = cacheField, fsCacheFile = cacheFile}
 
 -- | Generate fake value with 'defaultFakerSettings' but with non
@@ -252,7 +262,7 @@ generate (Fake f) = do
 -- λ> generateNonDeterministic FN.name
 -- "Savannah Buckridge"
 -- @
-generateNonDeterministic :: Fake a -> IO a
+generateNonDeterministic :: MonadIO m => FakeT m a -> m a
 generateNonDeterministic = generateWithSettings $ setNonDeterministic defaultFakerSettings
 
 -- | Generate fake value with supplied 'FakerSettings'
@@ -261,14 +271,14 @@ generateNonDeterministic = generateWithSettings $ setNonDeterministic defaultFak
 -- λ> generateWithSettings defaultFakerSettings FN.name
 -- "Antony Langosh"
 -- @
-generateWithSettings :: FakerSettings -> Fake a -> IO a
-generateWithSettings settings (Fake f) = do
+generateWithSettings :: MonadIO m => FakerSettings -> FakeT m a -> m a
+generateWithSettings settings (FakeT f) = do
   let deterministic = getDeterministic settings
   stdGen <-
     if deterministic
       then pure $ getRandomGen settings
-      else newStdGen
+      else liftIO newStdGen
   let newSettings = setRandomGen stdGen settings
-  cacheField <- newIORef HM.empty
-  cacheFile <- newIORef HM.empty
+  cacheField <- liftIO $ newIORef HM.empty
+  cacheFile <- liftIO $ newIORef HM.empty
   f $ newSettings {fsCacheField = cacheField, fsCacheFile = cacheFile}

@@ -4,7 +4,7 @@
 module Faker.Address where
 
 import Data.Text (Text)
-import Faker (Fake(..), FakerSettings(..), getLocale)
+import Faker (Fake, FakeT(..), FakerSettings(..), getLocale)
 import Faker.Internal (cachedRandomUnresolvedVec, cachedRandomVec, cachedRegex, RegexFakeValue(..))
 import Faker.Provider.Address
 import Faker.TH
