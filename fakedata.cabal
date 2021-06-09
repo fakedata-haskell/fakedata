@@ -271,6 +271,7 @@ library
       Faker.Cannabis
       Faker.Chiquito
       Faker.ChuckNorris
+      Faker.Class
       Faker.Code
       Faker.Coffee
       Faker.Coin
@@ -609,6 +610,7 @@ library
     , template-haskell
     , text
     , time
+    , transformers
     , unordered-containers
     , vector
     , yaml
@@ -708,6 +710,7 @@ test-suite fakedata-test
     , template-haskell
     , text
     , time
+    , transformers
     , unordered-containers
     , vector
     , yaml
@@ -741,6 +744,7 @@ benchmark fakebench
     , template-haskell
     , text
     , time
+    , transformers
     , unordered-containers
     , vector
     , yaml
