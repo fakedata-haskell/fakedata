@@ -42,6 +42,8 @@ dependencies:
 - string-random
 - fakedata-parser
 - attoparsec
+- regex-tdfa
+- QuickCheck
 
 library:
   source-dirs: src
