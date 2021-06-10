@@ -1,3 +1,4 @@
+{-# LANGUAGE ExplicitForAll #-}
 module Faker.Combinators where
 
 import Control.Monad
@@ -14,9 +15,9 @@ import System.Random
 -- 2
 -- @
 --
-fromRange :: Random a => (a, a) -> Fake a
+fromRange :: forall a m. (Monad m, Random a) => (a, a) -> FakeT m a
 fromRange rng =
-  Fake
+  FakeT
     (\r ->
        let (x, _) = randomR rng (getRandomGen r)
         in pure x)
@@ -25,14 +26,14 @@ fromRange rng =
 --
 -- @
 -- λ> import Data.Word
--- λ> item :: Word8 \<- 'generate' 'pickAny'
+-- λ> item :: forall a m. Word8 \<- 'generate' 'pickAny'
 -- λ> item
 -- 57
 -- @
 --
-pickAny :: Random a => Fake a
+pickAny :: forall a m. (Monad m, Random a) => FakeT m a
 pickAny =
-  Fake
+  FakeT
     (\settings ->
        let (x, _) = random (getRandomGen settings)
         in pure x)
@@ -41,12 +42,12 @@ pickAny =
 --
 -- @
 -- λ> import qualified Faker.Address as AD
--- λ> item :: Text \<- 'generate' $ 'suchThatMaybe' AD.country (\x -> (T.length x > 5))
+-- λ> item :: forall a m. Text \<- 'generate' $ 'suchThatMaybe' AD.country (\x -> (T.length x > 5))
 -- λ> item
 -- Just Ecuador
 -- @
 --
-suchThatMaybe :: Fake a -> (a -> Bool) -> Fake (Maybe a)
+suchThatMaybe :: forall a m. Monad m => FakeT m a -> (a -> Bool) -> FakeT m (Maybe a)
 gen `suchThatMaybe` p = do
   x <- gen
   return $
@@ -58,12 +59,12 @@ gen `suchThatMaybe` p = do
 --
 -- @
 -- λ> import qualified Faker.Address as AD
--- λ> item :: Text \<- 'generate' $ 'suchThat' AD.country (\\x -> (T.length x > 5))
+-- λ> item :: forall a m. Text \<- 'generate' $ 'suchThat' AD.country (\\x -> (T.length x > 5))
 -- λ> item
 -- Ecuador
 -- @
 --
-suchThat :: Fake a -> (a -> Bool) -> Fake a
+suchThat :: forall a m. Monad m => FakeT m a -> (a -> Bool) -> FakeT m a
 gen `suchThat` p = do
   mx <- gen `suchThatMaybe` p
   case mx of
@@ -80,7 +81,7 @@ gen `suchThat` p = do
 -- Montana
 -- @
 --
-oneof :: Foldable t => t (Fake a) -> Fake a
+oneof :: forall t a m. (Monad m, Foldable t) => t (FakeT m a) -> FakeT m a
 oneof xs = helper
   where
     items = toList xs
@@ -97,7 +98,7 @@ oneof xs = helper
 -- 22
 -- @
 --
-elements :: Foldable t => t a -> Fake a
+elements :: forall t a m. (Monad m, Foldable t) => t a -> FakeT m a
 elements xs =
   case items of
     [] -> error "Faker.Combinators.element used with empty list"
@@ -106,16 +107,16 @@ elements xs =
     items = toList xs
 
 -- | Generates a list of the given length.
-listOf :: Int -> Fake a -> Fake [a]
+listOf :: forall a m. Monad m => Int -> FakeT m a -> FakeT m [a]
 listOf = replicateM
 
 -- | Generates an ordered list.
-orderedList :: (Ord a) => Int -> Fake a -> Fake [a]
+orderedList :: forall a m. (Monad m, Ord a) => Int -> FakeT m a -> FakeT m [a]
 orderedList n gen = sort <$> listOf n gen
 
 -- | Chooses one of the given generators, with a weighted random distribution.
 -- The input list must be non-empty.
-frequency :: [(Int, Fake a)] -> Fake a
+frequency :: forall a m. Monad m => [(Int, FakeT m a)] -> FakeT m a
 frequency [] = error "Faker.Combinators.frequency used with empty list"
 frequency xs0 = fromRange (1, tot) >>= (`pick` xs0)
   where
@@ -123,7 +124,7 @@ frequency xs0 = fromRange (1, tot) >>= (`pick` xs0)
     pick n ((k, x):xs)
       | n <= k = x
       | otherwise = pick (n - k) xs
-    pick _ _ = error "Fake.pick used with empty list"
+    pick _ _ = error "FakeT m.pick used with empty list"
 
 -- | Generate a value of an enumeration in the range [from, to].
 --
@@ -135,7 +136,7 @@ frequency xs0 = fromRange (1, tot) >>= (`pick` xs0)
 -- Zebra
 -- @
 --
-fakeEnumFromTo :: Enum a => a -> a -> Fake a
+fakeEnumFromTo :: forall a m. (Monad m, Enum a) => a -> a -> FakeT m a
 fakeEnumFromTo from to = toEnum <$> fromRange (fromEnum from, fromEnum to)
 
 -- | A sumtype can just use this function directly. Defined as
@@ -143,5 +144,5 @@ fakeEnumFromTo from to = toEnum <$> fromRange (fromEnum from, fromEnum to)
 --
 -- @since 0.7.1
 --
-fakeBoundedEnum :: (Enum a, Bounded a) => Fake a
+fakeBoundedEnum :: forall a m. (Monad m, Enum a, Bounded a) => FakeT m a
 fakeBoundedEnum = fakeEnumFromTo minBound maxBound
