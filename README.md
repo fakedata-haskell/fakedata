@@ -178,6 +178,70 @@ main = do
 For seeing the full list of combinators, see the module documentation of
 `Faker.Combinators`.
 
+
+Using the `FakeT` transformer
+-----------------------------
+
+When generating values, you may want to perform some side-effects.
+
+```haskell
+import Control.Monad.IO.Class
+import Control.Monad.Logger
+import Data.Text
+import Data.Text.IO
+import Faker.ChuckNorris
+
+logQuote :: (MonadIO m, MonadLogger m) => m ()
+logQuote = do
+  userName <- liftIO getLine
+  quote <- generateNonDeterministic fact
+  $(logInfo) $ "Chuck Norris" userName quote
+```
+
+This works fine for one-off generation - but if you try to repeatedly
+generate values, you will run into performance trouble.
+
+```haskell
+import Control.Monad (replicateM)
+
+slowFunction :: (MonadIO m, MonadLogger m) => m ()
+slowFunction = replicateM 1000 logQuote
+```
+
+This is because generating a `Fake` parses the data files and builds a
+cache for future use. Using the `Monad` instance on `Fake` shares that
+cache between `Fake`s, making faking fast. But in the above code, a
+new `Fake` is generated each time - so the cache is discarded, and
+performance is much worse.
+
+It's better to use the `FakeT` monad transformer when writing such code,
+to get the benefits of sharing the cache, as well as being able to
+perform side effects. `FakeT` comes with the `mtl`-style `MonadFake`
+class, for easy use with your monad stack, which lets you lift `Fake`s
+with `liftFake`.
+
+```haskell
+import Faker.Class
+
+betterLogQuote :: (MonadIO m, MonadLogger m, MonadFake m) => m ()
+betterLogQuote = do
+  userName <- liftIO getLine
+  quote <- liftFake fact
+  $(logInfo) $ "Chuck Norris" userName quote
+```
+
+`slowFunction` can be rewritten to be much faster, because the `FakeT`
+is shared between all the calls to `fact`.
+
+```haskell
+fastFunction :: (MonadIO m, MonadLogger m) => m ()
+fastFunction = generateNonDeterministic go
+  where
+    go :: FakeT m ()
+    go = replicateM 1000 logQuote
+```
+
+
 Comparision with other libraries
 --------------------------------
 

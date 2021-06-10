@@ -1,10 +1,8 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
---
--- hash: 47d937a2bbf041ef0cb0b882d0bf7d68d1eb9504988a12d676e9e699288f2bda
 
 name:           fakedata
 version:        0.8.0
@@ -273,6 +271,7 @@ library
       Faker.Cannabis
       Faker.Chiquito
       Faker.ChuckNorris
+      Faker.Class
       Faker.Code
       Faker.Coffee
       Faker.Coin
@@ -595,7 +594,8 @@ library
   hs-source-dirs:
       src
   build-depends:
-      attoparsec
+      QuickCheck
+    , attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers
@@ -605,10 +605,12 @@ library
     , filepath
     , hashable
     , random
+    , regex-tdfa
     , string-random
     , template-haskell
     , text
     , time
+    , transformers
     , unordered-containers
     , vector
     , yaml
@@ -689,7 +691,8 @@ test-suite fakedata-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      attoparsec
+      QuickCheck
+    , attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers
@@ -702,15 +705,15 @@ test-suite fakedata-test
     , hspec
     , hspec-discover
     , random
+    , regex-tdfa
     , string-random
     , template-haskell
     , text
     , time
+    , transformers
     , unordered-containers
     , vector
     , yaml
-    , regex-tdfa
-    , QuickCheck
   default-language: Haskell2010
 
 benchmark fakebench
@@ -722,7 +725,8 @@ benchmark fakebench
       bench
   ghc-options: -O2
   build-depends:
-      attoparsec
+      QuickCheck
+    , attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers
@@ -735,10 +739,12 @@ benchmark fakebench
     , gauge
     , hashable
     , random
+    , regex-tdfa
     , string-random
     , template-haskell
     , text
     , time
+    , transformers
     , unordered-containers
     , vector
     , yaml
