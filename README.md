@@ -19,6 +19,7 @@ LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/pa
             - [listOf](#listof)
             - [oneOf](#oneof)
             - [suchThat](#suchthat)
+    - [Using the `FakeT` transformer](#using-the-faket-transformer)
     - [Comparision with other libraries](#comparision-with-other-libraries)
     - [Acknowledgments](#acknowledgments)
 
