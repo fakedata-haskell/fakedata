@@ -39,6 +39,7 @@ import qualified Faker.TvShow.FamilyGuy as FG
 import qualified Faker.University as FU
 import qualified Faker.Vehicle as FV
 import Faker.WorldCup
+import TestImport
 import Test.Hspec
 
 isText :: Text -> Bool
@@ -55,7 +56,7 @@ spec = do
   describe "Faker Compass Generate" $ do
     it "Resolver check" $ do
       ctries <- generate direction
-      (ctries) `shouldBe` "SE"
+      (ctries) `shouldBeOneOf` ["SE", "146.25"]
     it "Resolver check" $ do
       ctries <- generate $ listOf 5 direction
       (ctries) `shouldSatisfy` (\x -> Prelude.length x == 5)
@@ -115,13 +116,13 @@ spec = do
     describe "Restaurant" $ do
       it "name" $ do
         item <- generate FR.name
-        item `shouldBe` "Thirsty Pizza"
+        item `shouldBeOneOf` ["Thirsty Pizza", "Big Box"]
       it "name_suffix" $ do
         item <- generate FR.nameSuffix
         item `shouldSatisfy` isText
       it "type'" $ do
         item <- generate FR.type'
-        item `shouldBe` "Bakery"
+        item `shouldBeOneOf` ["Bakery", "Vegan"]
     describe "Vehicle" $ do
       it "license" $ do
         item <- generate FV.licensePlate
@@ -137,10 +138,13 @@ spec = do
     describe "Company" $ do
       it "bs" $ do
         item <- generate bs
-        item `shouldBe` "visualize efficient supply-chains"
+        item `shouldBeOneOf`
+          [ "visualize efficient supply-chains"
+          , "expedite distributed metrics"
+          ]
       it "buzzwords" $ do
         item <- generate buzzword
-        item `shouldBe` "info-mediaries"
+        item `shouldBeOneOf` ["info-mediaries", "framework"]
       it "sicCode" $ do
         item <- generate sicCode
         item `shouldSatisfy` isText
