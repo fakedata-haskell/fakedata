@@ -9,6 +9,7 @@ import qualified Data.Text as T
 import qualified Data.Vector as V
 import Faker
 import Faker.BossaNova
+import TestImport
 import Test.Hspec
 
 spec :: Spec
@@ -16,4 +17,4 @@ spec = do
   describe "BossaNova" $ do
     it "generates BossaNova artist (sanity TH check)" $ do
       aname <- generate artists
-      aname `shouldBe` "Johnny Alf"
+      aname `shouldBeOneOf` ["Johnny Alf", "Novos Baianos"]

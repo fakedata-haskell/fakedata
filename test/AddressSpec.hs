@@ -25,7 +25,7 @@ spec = do
           defaultFakerSettings
           (pure $ pure $ "32-????-####")
           (\s t -> pure t)
-      txt `shouldBe` "32-SZJX-4351"
+      txt `shouldBeOneOf` ["32-SZJX-4351", "32-GODI-8116"]
     it "doesn't get confused with garbage" $ do
       txt <-
         resolveUnresolved
@@ -36,14 +36,14 @@ spec = do
     describe "Address functions" $ do
       it "basic check" $ do
         fakeCountry <- generate country
-        fakeCountry `shouldBe` "Ecuador"
+        fakeCountry `shouldBeOneOf` ["Ecuador", "Macedonia"]
       it "Monad instance of Fake" $ do
         let someCountry :: Fake Text
             someCountry = do
               c1 <- country
               pure c1
         fakeCountry <- generate someCountry
-        fakeCountry `shouldBe` "Ecuador"
+        fakeCountry `shouldBeOneOf` ["Ecuador", "Macedonia"]
       it "Equality of normal generation and Monad" $ do
         fakeCountry <- generate country
         let someCountry :: Fake Text
@@ -59,7 +59,7 @@ spec = do
               c2 <- country
               pure (c1, c2)
         fakeCountry <- generate someCountry
-        fakeCountry `shouldBe` ("Ecuador", "Ecuador")
+        fakeCountry `shouldBeOneOf` [("Ecuador", "Ecuador"), ("Macedonia","Macedonia")]
       it "Monad instance of Fake (tuple)" $ do
         let someCountry :: Fake (Text, Text)
             someCountry = do
@@ -78,7 +78,7 @@ spec = do
         c1 `shouldBe` c2
       it "Resolver based function" $ do
         bno <- generate buildingNumber
-        bno `shouldBe` "351"
+        bno `shouldBeOneOf` ["351", "116"]
       it "Resolver fullAddress" $ do
         bno <- generate fullAddress
         bno `shouldSatisfy` (\x -> T.length x > 25)
@@ -98,65 +98,67 @@ spec = do
     describe "Functions in address module" $ do
       it "Country" $ do
         val <- generateWithSettings defaultFakerSettings country
-        val `shouldBe` "Ecuador"
+        val `shouldBeOneOf` ["Ecuador", "Macedonia"]
       it "cityPrefix" $ do
         val <- generateWithSettings defaultFakerSettings cityPrefix
-        val `shouldBe` "East"
+        val `shouldBeOneOf` ["East", "Port"]
       it "citySuffix" $ do
         val <- generateWithSettings defaultFakerSettings citySuffix
-        val `shouldBe` "burgh"
+        val `shouldBeOneOf` ["burgh", "borough"]
       it "countryCode" $ do
         val <- generateWithSettings defaultFakerSettings countryCode
-        val `shouldBe` "FJ"
+        val `shouldBeOneOf` ["FJ", "LB"]
       it "countryCodeLong" $ do
         val <- generateWithSettings defaultFakerSettings countryCodeLong
-        val `shouldBe` "CYM"
+        val `shouldBeOneOf` ["CYM", "LBY"]
       it "buildingNumber" $ do
         val <- generateWithSettings defaultFakerSettings buildingNumber
-        val `shouldBe` "351"
+        val `shouldBeOneOf` ["351", "116"]
       it "communityPrefix" $ do
         val <- generateWithSettings defaultFakerSettings communityPrefix
-        val `shouldBe` "Pine"
+        val `shouldBeOneOf` ["Pine", "Royal"]
       it "communitySuffix" $ do
         val <- generateWithSettings defaultFakerSettings communitySuffix
-        val `shouldBe` "Oaks"
+        val `shouldBeOneOf` ["Oaks", "Gardens"]
       it "community" $ do
         val <- generateWithSettings defaultFakerSettings community
-        val `shouldBe` "Pine Place"
+        val `shouldBeOneOf` ["Pine Place", "Royal Pointe"]
       it "streetSuffix" $ do
         val <- generateWithSettings defaultFakerSettings streetSuffix
-        val `shouldBe` "Way"
+        val `shouldBeOneOf` ["Way", "Parks"]
       it "secondaryAddress" $ do
         val <- generateWithSettings defaultFakerSettings secondaryAddress
-        val `shouldBe` "Suite 351"
+        val `shouldBeOneOf` ["Suite 351", "Suite 116"]
       it "postcode" $ do
         val <- generateWithSettings defaultFakerSettings postcode
-        val `shouldBe` "24351-4351"
+        val `shouldBeOneOf` ["24351-4351", "68116-8116"]
       it "state" $ do
         val <- generateWithSettings defaultFakerSettings state
-        val `shouldBe` "Michigan"
+        val `shouldBeOneOf` ["Michigan", "Rhode Island"]
       it "stateAbbr" $ do
         val <- generateWithSettings defaultFakerSettings stateAbbr
-        val `shouldBe` "MI"
+        val `shouldBeOneOf` ["MI", "RI"]
       it "timeZone" $ do
         val <- generateWithSettings defaultFakerSettings timeZone
-        val `shouldBe` "America/Chicago"
+        val `shouldBeOneOf` ["America/Chicago", "Australia/Brisbane"]
       it "city" $ do
         val <- generateWithSettings defaultFakerSettings city
-        val `shouldBe` "East Vernita"
+        val `shouldBeOneOf` ["East Vernita", "Goldnerton"]
       it "streetName" $ do
         val <- generateWithSettings defaultFakerSettings streetName
-        val `shouldBe` "Schmidt Ferry"
+        val `shouldBeOneOf` ["Schmidt Ferry", "Goldner Track"]
       it "streetAddress" $ do
         val <- generateWithSettings defaultFakerSettings streetAddress
-        val `shouldBe` "351 Vernita Avenue"
+        val `shouldBeOneOf` ["351 Vernita Avenue", "116 Will Manor"]
       it "fullAddress" $ do
         val <- generateWithSettings defaultFakerSettings fullAddress
-        val `shouldBe` "Suite 351 892 Donnelly Points, Kelleymouth, AK 66043-6043"
+        val `shouldBeOneOf`
+          [ "Suite 351 892 Donnelly Points, Kelleymouth, AK 66043-6043"
+          , "Suite 116 663 Russel Locks, Assuntamouth, UT 86075-6075"
+          ]
       it "mailBox" $ do
         val <- generateWithSettings defaultFakerSettings mailBox
-        val `shouldBe` "PO Box 4351"
+        val `shouldBeOneOf` ["PO Box 4351", "PO Box 8116"]
       it "cityWithState" $ do
         val <- generateWithSettings defaultFakerSettings cityWithState
-        val `shouldBe` "East Vernita, Minnesota"
-
+        val `shouldBeOneOf` ["East Vernita, Minnesota", "Goldnerton, Arkansas"]
