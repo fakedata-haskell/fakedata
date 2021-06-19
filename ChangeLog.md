@@ -8,6 +8,7 @@
   transformer.](https://github.com/fakedata-haskell/fakedata/pull/32).
 * Rename `celebrities` to `actors` in Faker.TvShow.Buffy module.
 * Rename `celebrities` to `actors` in Faker.TvShow.FreshPrinceOfBelAir module.
+* Remove module `Faker.Movie.Hobbit` (TODO: Actually remove it)
 
 ### New modules introduced
 
@@ -18,6 +19,7 @@
 * Faker.JapaneseMedia.Conan
 * Faker.JapaneseMedia.Doraemon
 * Faker.TvShow.FinalSpace
+* Faker.Movie.HowToTrainYourDragon
 
 ### Locale Improvements
 
@@ -46,6 +48,7 @@ The following data sources which the libraries uses has been updated:
 * en/football.yml
 * en/half_life.yml
 * en/heroes_of_the_storm.yml
+* en/horse.yml
 
 ## 0.8.0
 

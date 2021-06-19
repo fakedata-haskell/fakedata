@@ -97,6 +97,7 @@ data SourceData
   | Hobbit
   | House
   | HowIMetYourMother
+  | HowToTrainYourDragon
   | IdNumber
   | IndustrySegments
   | Internet
