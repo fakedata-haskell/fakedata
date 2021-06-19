@@ -74,6 +74,7 @@ data SourceData
   | Fallout
   | FamilyGuy
   | File
+  | FinalSpace
   | Finance
   | Food
   | Football

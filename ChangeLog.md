@@ -16,6 +16,7 @@
 * Faker.Game.ClashOfClans
 * Faker.JapaneseMedia.Conan
 * Faker.JapaneseMedia.Doraemon
+* Faker.TvShow.FinalSpace
 
 ### Locale Improvements
 
