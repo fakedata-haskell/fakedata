@@ -98,6 +98,7 @@ data SourceData
   | House
   | HowIMetYourMother
   | HowToTrainYourDragon
+  | JackHandey
   | IdNumber
   | IndustrySegments
   | Internet

@@ -20,6 +20,7 @@
 * Faker.JapaneseMedia.Doraemon
 * Faker.TvShow.FinalSpace
 * Faker.Movie.HowToTrainYourDragon
+* Faker.Quote.JackHandey
 
 ### Locale Improvements
 

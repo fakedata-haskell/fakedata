@@ -112,6 +112,7 @@ sourceFile Football = "football"
 sourceFile FreshPrinceOfBelAir = "fresh_prince_of_bel_air"
 sourceFile Friends = "friends"
 sourceFile FunnyName = "funny_name"
+sourceFile JackHandey = "jack_handey"
 sourceFile GameOfThrones = "game_of_thrones"
 sourceFile Gender = "gender"
 sourceFile GhostBusters = "ghostbusters"
@@ -405,6 +406,7 @@ mapSource "conan" = 'Conan
 mapSource "doraemon" = 'Doraemon
 mapSource "finalSpace" = 'FinalSpace
 mapSource "howToTrainYourDragon" = 'HowToTrainYourDragon
+mapSource "jackHandey" = 'JackHandey
 mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath
