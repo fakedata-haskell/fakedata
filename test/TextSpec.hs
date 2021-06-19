@@ -975,7 +975,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "JapaneseMedia.DragonBall" $ do
-      let functions :: [Fake Text] = [DR.characters]
+      let functions :: [Fake Text] = [DR.characters, DR.races, DR.planets]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "JapaneseMedia.OnePiece" $ do

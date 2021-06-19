@@ -33,3 +33,11 @@ parseDragonBallField settings txt val = do
 $(genParser "dragonBall" "characters")
 
 $(genProvider "dragonBall" "characters")
+
+$(genParser "dragonBall" "races")
+
+$(genProvider "dragonBall" "races")
+
+$(genParser "dragonBall" "planets")
+
+$(genProvider "dragonBall" "planets")

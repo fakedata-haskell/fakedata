@@ -20,6 +20,7 @@
 
 ### Module updates
 
+* Faker.JapaneseMedia.DragonBall: `races`, `planets` added.
 
 ### Data Update
 
@@ -29,6 +30,9 @@ The following data sources which the libraries uses has been updated:
 * en/animal.yml
 * en/book.yml
 * en/company.yml
+* en/demographic.yml
+* en/device.yml
+* en/dota.yml
 
 ## 0.8.0
 
