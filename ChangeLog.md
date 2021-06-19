@@ -23,6 +23,7 @@
 * Faker.TvShow.FinalSpace
 * Faker.Movie.HowToTrainYourDragon
 * Faker.Quote.JackHandey
+* Faker.Mountain
 
 ### Locale Improvements
 

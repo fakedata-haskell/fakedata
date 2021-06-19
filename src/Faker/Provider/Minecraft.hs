@@ -101,4 +101,4 @@ $(genProvider "minecraft" "game_mode")
 
 $(genParser "minecraft" "status_effect")
 
-     $(genProvider "minecraft" "status_effect")
+$(genProvider "minecraft" "status_effect")
