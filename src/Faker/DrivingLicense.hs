@@ -76,6 +76,8 @@ $(generateFakeFieldUnresolveds "drivingLicense" ["usa","new_york"])
 
 $(generateFakeFieldUnresolveds "drivingLicense" ["usa","north_carolina"])
 
+$(generateFakeFieldUnresolveds "drivingLicense" ["usa","north_dakota"])
+
 $(generateFakeFieldUnresolveds "drivingLicense" ["usa","ohio"])
 
 $(generateFakeFieldUnresolveds "drivingLicense" ["usa","oklahoma"])

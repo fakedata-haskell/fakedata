@@ -227,6 +227,9 @@ $(genProviderUnresolveds "drivingLicense" ["usa","wisconsin"])
 $(genParserUnresolveds "drivingLicense" ["usa","wyoming"])
 $(genProviderUnresolveds "drivingLicense" ["usa","wyoming"])
 
+$(genParserUnresolveds "drivingLicense" ["usa","north_dakota"])
+$(genProviderUnresolveds "drivingLicense" ["usa","north_dakota"])
+
 resolveDrivingLicenseText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveDrivingLicenseText = genericResolver' resolveDrivingLicenseField
 

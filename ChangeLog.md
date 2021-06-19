@@ -21,6 +21,7 @@
 ### Module updates
 
 * Faker.JapaneseMedia.DragonBall: `races`, `planets` added.
+* Faker.DrivingLicense: `usaNorthDakota` added.
 
 ### Data Update
 

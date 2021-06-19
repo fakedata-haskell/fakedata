@@ -688,7 +688,8 @@ spec = do
               DR.usaWashington,
               DR.usaWestVirginia,
               DR.usaWisconsin,
-              DR.usaWyoming
+              DR.usaWyoming,
+              DR.usaNorthDakota
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
