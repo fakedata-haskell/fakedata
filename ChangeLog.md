@@ -7,6 +7,7 @@
 * [Make `Fake` as monad
   transformer.](https://github.com/fakedata-haskell/fakedata/pull/32).
 * Rename `celebrities` to `actors` in Faker.TvShow.Buffy module.
+* Rename `celebrities` to `actors` in Faker.TvShow.FreshPrinceOfBelAir module.
 
 ### New modules introduced
 
@@ -41,6 +42,9 @@ The following data sources which the libraries uses has been updated:
 * en/device.yml
 * en/dota.yml
 * en/fallout.yml
+* en/football.yml
+* en/half_life.yml
+* en/heroes_of_the_storm.yml
 
 ## 0.8.0
 
