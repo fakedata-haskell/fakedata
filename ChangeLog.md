@@ -15,6 +15,7 @@
 * Faker.Camera
 * Faker.Game.ClashOfClans
 * Faker.JapaneseMedia.Conan
+* Faker.JapaneseMedia.Doraemon
 
 ### Locale Improvements
 

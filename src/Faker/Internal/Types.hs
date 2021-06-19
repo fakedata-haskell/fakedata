@@ -34,6 +34,7 @@ data SourceData
   | Control
   | Conan
   | DnD
+  | Doraemon
   | PearlJam
   | Departed
   | BossaNova
