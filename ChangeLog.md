@@ -45,6 +45,7 @@
   - gameMode
   - statusEffect
 * Faker.Music: `mamboNo5` added.
+* Various new functions added to Faker.Opera
 
 ### Data Update
 

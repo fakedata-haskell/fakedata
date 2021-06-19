@@ -57,3 +57,67 @@ $(genProviders "opera" ["italian", "by_gaetano_donizetti"])
 $(genParsers "opera" ["italian", "by_vincenzo_bellini"])
 
 $(genProviders "opera" ["italian", "by_vincenzo_bellini"])
+
+$(genParsers "opera" ["italian", "by_christoph_willibald_gluck"])
+
+$(genProviders "opera" ["italian", "by_christoph_willibald_gluck"])
+
+$(genParsers "opera" ["italian", "by_wolfgang_amadeus_mozart"])
+
+$(genProviders "opera" ["italian", "by_wolfgang_amadeus_mozart"])
+
+$(genParsers "opera" ["german", "by_wolfgang_amadeus_mozart"])
+
+$(genProviders "opera" ["german", "by_wolfgang_amadeus_mozart"])
+
+$(genParsers "opera" ["german", "by_ludwig_van_beethoven"])
+
+$(genProviders "opera" ["german", "by_ludwig_van_beethoven"])
+
+$(genParsers "opera" ["german", "by_carl_maria_von_weber"])
+
+$(genProviders "opera" ["german", "by_carl_maria_von_weber"])
+
+$(genParsers "opera" ["german", "by_richard_strauss"])
+
+$(genProviders "opera" ["german", "by_richard_strauss"])
+
+$(genParsers "opera" ["german", "by_richard_wagner"])
+
+$(genProviders "opera" ["german", "by_richard_wagner"])
+
+$(genParsers "opera" ["german", "by_robert_schumann"])
+
+$(genProviders "opera" ["german", "by_robert_schumann"])
+
+$(genParsers "opera" ["german", "by_franz_schubert"])
+
+$(genProviders "opera" ["german", "by_franz_schubert"])
+
+$(genParsers "opera" ["german", "by_alban_berg"])
+
+$(genProviders "opera" ["german", "by_alban_berg"])
+
+$(genParsers "opera" ["french", "by_christoph_willibald_gluck"])
+
+$(genProviders "opera" ["french", "by_christoph_willibald_gluck"])
+
+$(genParsers "opera" ["french", "by_maurice_ravel"])
+
+$(genProviders "opera" ["french", "by_maurice_ravel"])
+
+$(genParsers "opera" ["french", "by_hector_berlioz"])
+
+$(genProviders "opera" ["french", "by_hector_berlioz"])
+
+$(genParsers "opera" ["french", "by_georges_bizet"])
+
+$(genProviders "opera" ["french", "by_georges_bizet"])
+
+$(genParsers "opera" ["french", "by_charles_gounod"])
+
+$(genProviders "opera" ["french", "by_charles_gounod"])
+
+$(genParsers "opera" ["french", "by_camille_saint_saëns"])
+
+$(genProviders "opera" ["french", "by_camille_saint_saëns"])
