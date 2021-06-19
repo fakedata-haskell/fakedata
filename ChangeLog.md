@@ -25,6 +25,7 @@
 * Faker.Quote.JackHandey
 * Faker.Mountain
 * Faker.JapaneseMedia.Naruto
+* Faker.Movie.Room
 
 ### Locale Improvements
 
