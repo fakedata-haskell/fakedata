@@ -221,6 +221,7 @@ sourceFile Prince = "prince"
 sourceFile Rush = "rush"
 sourceFile StreetFighter = "street_fighter"
 sourceFile StudioGhibli = "studio_ghibli"
+sourceFile Bird = "bird"
 
 mapSource :: Text -> Name
 mapSource "studioGhibli" = 'StudioGhibli
@@ -391,6 +392,7 @@ mapSource "show" = 'Show
 mapSource "suits" = 'Suits
 mapSource "warhammerFantasy" = 'WarhammerFantasy
 mapSource "adjective" = 'Adjective
+mapSource "bird" = 'Bird
 mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath

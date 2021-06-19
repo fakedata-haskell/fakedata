@@ -2,16 +2,27 @@
 
 ## 1.0 (Unreleased)
 
+### Breaking changes
+
 * [Make `Fake` as monad
   transformer.](https://github.com/fakedata-haskell/fakedata/pull/32).
 
-## 0.8.1
+### New modules introduced
 
-### Company
+* Faker.Adjective
+* Faker.Bird
 
-* Add company email
-* Add company domain
-* Use quickcheck to verify both
+### Locale Improvements
+
+### Module updates
+
+
+### Data Update
+
+The following data sources which the libraries uses has been updated:
+
+* de.yml
+* en/animal.yml
 
 ## 0.8.0
 
