@@ -21,7 +21,7 @@ $(generateFakeFieldUnresolved "educator" "secondary_school")
 $(generateFakeFieldUnresolved "educator" "campus")
 
 -- | @since 1.0
-$(generateFakeFieldUnresolved "educator" "primary")
+$(generateFakeField "educator" "primary")
 
 -- | @since 1.0
 $(generateFakeFieldUnresolved "educator" "primary_school")

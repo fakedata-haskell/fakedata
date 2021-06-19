@@ -73,3 +73,11 @@ $(genProvider "elderScrolls" "first_name")
 $(genParser "elderScrolls" "last_name")
 
 $(genProvider "elderScrolls" "last_name")
+
+$(genParser "elderScrolls" "weapon")
+
+$(genProvider "elderScrolls" "weapon")
+
+$(genParser "elderScrolls" "jewelry")
+
+$(genProvider "elderScrolls" "jewelry")

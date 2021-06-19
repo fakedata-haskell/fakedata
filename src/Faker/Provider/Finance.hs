@@ -103,6 +103,14 @@ $(genParserUnresolved "finance" "laser")
 
 $(genProviderUnresolved "finance" "laser")
 
+$(genParsers "finance" ["ticker", "nasdaq"])
+
+$(genProviders "finance" ["ticker", "nasdaq"])
+
+$(genParsers "finance" ["ticker", "nyse"])
+
+$(genProviders "finance" ["ticker", "nyse"])
+
 resolveFinanceText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveFinanceText = genericResolver' resolveFinanceField

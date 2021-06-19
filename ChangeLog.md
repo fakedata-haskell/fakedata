@@ -25,6 +25,8 @@
 * Faker.DrivingLicense: `usaNorthDakota` added.
 * Faker.Book.Dune: `cities` added
 * Faker.Educator: `primary` and `primarySchool` added.
+* Faker.Game.ElderScrolls: `weapon` and `jewelry` added
+* Faker.Finance: `tickerNasdaq` and `tickerNyse` added
 
 ### Data Update
 
@@ -37,6 +39,7 @@ The following data sources which the libraries uses has been updated:
 * en/demographic.yml
 * en/device.yml
 * en/dota.yml
+* en/fallout.yml
 
 ## 0.8.0
 
