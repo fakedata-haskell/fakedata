@@ -112,11 +112,7 @@ $(genParsers "source" ["print_1_to_10", "c"])
 
 $(genProvidersSingle "source" ["print_1_to_10", "c"])
 
-$(genParsers "source" ["print_1_to_10", ""])
-
-$(genProvidersSingle "source" ["print_1_to_10", "php"])
-
-$(genParsers "source" ["print_1_to_10", ""])
+$(genParsers "source" ["print_1_to_10", "php"])
 
 $(genProvidersSingle "source" ["print_1_to_10", "php"])
 

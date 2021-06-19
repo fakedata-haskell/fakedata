@@ -232,6 +232,8 @@ sourceFile HowToTrainYourDragon = "how_to_train_your_dragon"
 sourceFile Mountain = "mountain"
 sourceFile Naruto = "naruto"
 sourceFile Room = "room"
+sourceFile SuperMario = "super_mario"
+sourceFile Tea = "tea"
 
 mapSource :: Text -> Name
 mapSource "studioGhibli" = 'StudioGhibli
@@ -413,6 +415,8 @@ mapSource "jackHandey" = 'JackHandey
 mapSource "mountain" = 'Mountain
 mapSource "naruto" = 'Naruto
 mapSource "room" = 'Room
+mapSource "superMario" = 'SuperMario
+mapSource "tea" = 'Tea
 mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath

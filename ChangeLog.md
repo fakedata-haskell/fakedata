@@ -27,6 +27,7 @@
 * Faker.JapaneseMedia.Naruto
 * Faker.Movie.Room
 * Faker.Game.SuperMario
+* Faker.Tea
 
 ### Locale Improvements
 
