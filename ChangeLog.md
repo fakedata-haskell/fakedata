@@ -10,6 +10,7 @@
 * Rename `celebrities` to `actors` in Faker.TvShow.FreshPrinceOfBelAir module.
 * Remove module `Faker.Movie.Hobbit` (TODO: Actually remove it)
 * Remove module `Faker.Movie.LordOfTheRings` (TODO: Actually remove it)
+* `Faker.Minecraft` moved to `Faker.Game.Minecraft`
 
 ### New modules introduced
 
@@ -35,6 +36,12 @@
 * Faker.Finance: `tickerNasdaq` and `tickerNyse` added
 * Faker.Game.Heroes: `artifacts` added.
 * Faker.Military: `coast_guard_rank` and `space_force_rank` added.
+* Faker.Game.Mincecraft: Following functions are added
+  - achievement
+  - biome
+  - enchantment
+  - gameMode
+  - statusEffect
 
 ### Data Update
 
