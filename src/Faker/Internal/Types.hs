@@ -27,6 +27,7 @@ data SourceData
   | BigBangTheory
   | Book
   | Blood
+  | Camera
   | Chiquito
   | Computer
   | Control
