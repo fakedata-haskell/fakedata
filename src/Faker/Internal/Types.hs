@@ -28,6 +28,7 @@ data SourceData
   | Book
   | Blood
   | Camera
+  | ClashOfClans
   | Chiquito
   | Computer
   | Control

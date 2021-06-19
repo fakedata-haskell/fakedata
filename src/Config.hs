@@ -223,6 +223,7 @@ sourceFile StreetFighter = "street_fighter"
 sourceFile StudioGhibli = "studio_ghibli"
 sourceFile Bird = "bird"
 sourceFile Camera = "camera"
+sourceFile ClashOfClans = "clash_of_clans"
 
 mapSource :: Text -> Name
 mapSource "studioGhibli" = 'StudioGhibli
@@ -395,6 +396,7 @@ mapSource "warhammerFantasy" = 'WarhammerFantasy
 mapSource "adjective" = 'Adjective
 mapSource "bird" = 'Bird
 mapSource "camera" = 'Camera
+mapSource "clashOfClans" = 'ClashOfClans
 mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath

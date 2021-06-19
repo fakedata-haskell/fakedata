@@ -6,11 +6,14 @@
 
 * [Make `Fake` as monad
   transformer.](https://github.com/fakedata-haskell/fakedata/pull/32).
+* Rename `celebrities` to `actors` in Faker.TvShow.Buffy module.
 
 ### New modules introduced
 
 * Faker.Adjective
 * Faker.Bird
+* Faker.Camera
+* Faker.Game.ClashOfClan
 
 ### Locale Improvements
 
@@ -23,6 +26,7 @@ The following data sources which the libraries uses has been updated:
 
 * de.yml
 * en/animal.yml
+* en/book.yml
 
 ## 0.8.0
 
