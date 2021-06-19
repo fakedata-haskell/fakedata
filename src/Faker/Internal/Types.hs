@@ -12,6 +12,7 @@ data SourceData
   = Address
   | Name
   | Ancient
+  | Adjective
   | Animal
   | App
   | Appliance

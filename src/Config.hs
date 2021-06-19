@@ -56,6 +56,7 @@ sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
 sourceFile Name = "name"
 sourceFile Ancient = "ancient"
+sourceFile Adjective = "adjective"
 sourceFile Animal = "animal"
 sourceFile App = "app"
 sourceFile Appliance = "appliance"
@@ -389,6 +390,7 @@ mapSource "rajnikanth" = 'Rajnikanth
 mapSource "show" = 'Show
 mapSource "suits" = 'Suits
 mapSource "warhammerFantasy" = 'WarhammerFantasy
+mapSource "adjective" = 'Adjective
 mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath
