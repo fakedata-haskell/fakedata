@@ -67,3 +67,7 @@ $(genProvider "quote" "singular_siegler")
 $(genParser "quote" "yoda")
 
 $(genProvider "quote" "yoda")
+
+$(genParser "quote" "fortune_cookie")
+
+$(genProvider "quote" "fortune_cookie")

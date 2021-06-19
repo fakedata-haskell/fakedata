@@ -46,6 +46,7 @@
   - statusEffect
 * Faker.Music: `mamboNo5` added.
 * Various new functions added to Faker.Opera
+* Faker.Quote: `fortuneCookie` added.
 
 ### Data Update
 
@@ -68,6 +69,8 @@ The following data sources which the libraries uses has been updated:
 * en/lebowski.yml
 * en/lovecraft.yml
 * en/myst.yml
+* en/overwatch.yml
+* en/pokemon.yml
 
 ## 0.8.0
 

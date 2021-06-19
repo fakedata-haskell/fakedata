@@ -1311,7 +1311,8 @@ spec = do
               QU.mostInterestingManInTheWorld,
               QU.robin,
               QU.singularSiegler,
-              QU.yoda
+              QU.yoda,
+              QU.fortuneCookie
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

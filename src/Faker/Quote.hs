@@ -20,3 +20,6 @@ $(generateFakeField "quote" "robin")
 $(generateFakeField "quote" "singular_siegler")
 
 $(generateFakeField "quote" "yoda")
+
+-- | @since 1.0
+$(generateFakeField "quote" "fortune_cookie")
