@@ -47,6 +47,7 @@
 * Faker.Music: `mamboNo5` added.
 * Various new functions added to Faker.Opera
 * Faker.Quote: `fortuneCookie` added.
+* Faker.Music.RockBand: `song` added.
 
 ### Data Update
 

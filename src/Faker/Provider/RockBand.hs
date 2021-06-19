@@ -47,3 +47,7 @@ parseRockBandFields settings txts val = do
 $(genParser "rockBand" "name")
 
 $(genProvider "rockBand" "name")
+
+$(genParser "rockBand" "song")
+
+$(genProvider "rockBand" "song")

@@ -1240,7 +1240,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.RockBand" $ do
-      let functions :: [Fake Text] = [RO.name]
+      let functions :: [Fake Text] = [RO.name, RO.song]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.UmphreysMcgee" $ do

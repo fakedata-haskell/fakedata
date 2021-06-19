@@ -10,3 +10,6 @@ import Faker.Provider.RockBand
 import Faker.TH
 
 $(generateFakeField "rockBand" "name")
+
+-- | @since 1.0
+$(generateFakeField "rockBand" "song")
