@@ -49,6 +49,7 @@
 * Various new functions added to Faker.Opera
 * Faker.Quote: `fortuneCookie` added.
 * Faker.Music.RockBand: `song` added.
+* Faker.Science: `elementState` and `elementSubCategory` added.
 
 ### Data Update
 

@@ -1340,7 +1340,8 @@ spec = do
       (and bools) `shouldBe` True
     it "Science" $ do
       let functions :: [Fake Text] =
-            [SC.element, SC.elementSymbol, SC.scientist]
+            [SC.element, SC.elementSymbol, SC.scientist
+            , SC.elementState, SC.elementSubcategory]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "SlackEmoji" $ do
