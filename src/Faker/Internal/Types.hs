@@ -120,6 +120,7 @@ data SourceData
   | Music
   | Myst
   | Nation
+  | Naruto
   | NatoPhoneticAlphabet
   | NewGirl
   | OnePiece

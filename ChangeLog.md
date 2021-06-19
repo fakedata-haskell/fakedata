@@ -24,6 +24,7 @@
 * Faker.Movie.HowToTrainYourDragon
 * Faker.Quote.JackHandey
 * Faker.Mountain
+* Faker.JapaneseMedia.Naruto
 
 ### Locale Improvements
 
@@ -65,6 +66,7 @@ The following data sources which the libraries uses has been updated:
 * en/league_of_legends.yml
 * en/lebowski.yml
 * en/lovecraft.yml
+* en/myst.yml
 
 ## 0.8.0
 
