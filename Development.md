@@ -48,7 +48,7 @@ know exactly what has changed since the last release, follow these:
 
 ``` shellsession
 $ cd scripts
-$ stack unpack fakedata-0.7.1
+$ stack unpack fakedata-0.8.0
 ```
 
 Now you may want to change the `ymlDiff.sh`'s `OLD_FAKER_DIR` variable.
@@ -121,6 +121,13 @@ irb(main):006:0> Faker::Address.city
 
 * Game.StreetFighter: moves function is breaking
 
+## Upstream issues
+
+- en/music.yml: hiphop should come under `music`
+
 ## Steps before release
 
 * Make sure you remove Provider modules from cabal
+* Check haddocks of newly introduced modules
+* Check if the hedgehog and quickcheck integrations require change
+* Check if locale files that are split are handled (eg: ja)
