@@ -50,9 +50,9 @@ $(genParser "buffy" "quotes")
 
 $(genProvider "buffy" "quotes")
 
-$(genParser "buffy" "celebrities")
+$(genParser "buffy" "actors")
 
-$(genProvider "buffy" "celebrities")
+$(genProvider "buffy" "actors")
 
 $(genParser "buffy" "big_bads")
 
