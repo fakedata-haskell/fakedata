@@ -52,6 +52,26 @@ $(genParsers "source" ["hello_world", "javascript"])
 
 $(genProvidersSingle "source" ["hello_world", "javascript"])
 
+$(genParsers "source" ["hello_world", "c"])
+
+$(genProvidersSingle "source" ["hello_world", "c"])
+
+$(genParsers "source" ["hello_world", "php"])
+
+$(genProvidersSingle "source" ["hello_world", "php"])
+
+$(genParsers "source" ["hello_world", "python"])
+
+$(genProvidersSingle "source" ["hello_world", "python"])
+
+$(genParsers "source" ["hello_world", "java"])
+
+$(genProvidersSingle "source" ["hello_world", "java"])
+
+$(genParsers "source" ["hello_world", "elixir"])
+
+$(genProvidersSingle "source" ["hello_world", "elixir"])
+
 $(genParsers "source" ["print", "ruby"])
 
 $(genProvidersSingle "source" ["print", "ruby"])
@@ -60,6 +80,26 @@ $(genParsers "source" ["print", "javascript"])
 
 $(genProvidersSingle "source" ["print", "javascript"])
 
+$(genParsers "source" ["print", "c"])
+
+$(genProvidersSingle "source" ["print", "c"])
+
+$(genParsers "source" ["print", "php"])
+
+$(genProvidersSingle "source" ["print", "php"])
+
+$(genParsers "source" ["print", "python"])
+
+$(genProvidersSingle "source" ["print", "python"])
+
+$(genParsers "source" ["print", "java"])
+
+$(genProvidersSingle "source" ["print", "java"])
+
+$(genParsers "source" ["print", "elixir"])
+
+$(genProvidersSingle "source" ["print", "elixir"])
+
 $(genParsers "source" ["print_1_to_10", "ruby"])
 
 $(genProvidersSingle "source" ["print_1_to_10", "ruby"])
@@ -67,3 +107,27 @@ $(genProvidersSingle "source" ["print_1_to_10", "ruby"])
 $(genParsers "source" ["print_1_to_10", "javascript"])
 
 $(genProvidersSingle "source" ["print_1_to_10", "javascript"])
+
+$(genParsers "source" ["print_1_to_10", "c"])
+
+$(genProvidersSingle "source" ["print_1_to_10", "c"])
+
+$(genParsers "source" ["print_1_to_10", ""])
+
+$(genProvidersSingle "source" ["print_1_to_10", "php"])
+
+$(genParsers "source" ["print_1_to_10", ""])
+
+$(genProvidersSingle "source" ["print_1_to_10", "php"])
+
+$(genParsers "source" ["print_1_to_10", "python"])
+
+$(genProvidersSingle "source" ["print_1_to_10", "python"])
+
+$(genParsers "source" ["print_1_to_10", "java"])
+
+$(genProvidersSingle "source" ["print_1_to_10", "java"])
+
+$(genParsers "source" ["print_1_to_10", "elixir"])
+
+$(genProvidersSingle "source" ["print_1_to_10", "elixir"])

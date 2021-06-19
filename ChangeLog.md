@@ -50,6 +50,7 @@
 * Faker.Quote: `fortuneCookie` added.
 * Faker.Music.RockBand: `song` added.
 * Faker.Science: `elementState` and `elementSubCategory` added.
+* Various new functions added to Faker.Source.
 
 ### Data Update
 
@@ -74,6 +75,7 @@ The following data sources which the libraries uses has been updated:
 * en/myst.yml
 * en/overwatch.yml
 * en/pokemon.yml
+* en/shakespeare.yml
 
 ## 0.8.0
 
