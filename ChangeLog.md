@@ -26,6 +26,7 @@
 * Faker.Mountain
 * Faker.JapaneseMedia.Naruto
 * Faker.Movie.Room
+* Faker.Game.SuperMario
 
 ### Locale Improvements
 
@@ -76,6 +77,10 @@ The following data sources which the libraries uses has been updated:
 * en/overwatch.yml
 * en/pokemon.yml
 * en/shakespeare.yml
+* en/space.yml
+* en/street_fighter.yml
+* en/studio_ghibli.yml
+* en/super_smash_bros.yml
 
 ## 0.8.0
 

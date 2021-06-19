@@ -156,6 +156,7 @@ data SourceData
   | Stripe
   | Subscription
   | SuperSmashBros
+  | SuperMario
   | SuperHero
   | SwordArtOnline
   | Team
