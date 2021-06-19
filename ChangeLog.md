@@ -9,6 +9,7 @@
 * Rename `celebrities` to `actors` in Faker.TvShow.Buffy module.
 * Rename `celebrities` to `actors` in Faker.TvShow.FreshPrinceOfBelAir module.
 * Remove module `Faker.Movie.Hobbit` (TODO: Actually remove it)
+* Remove module `Faker.Movie.LordOfTheRings` (TODO: Actually remove it)
 
 ### New modules introduced
 
@@ -33,6 +34,7 @@
 * Faker.Game.ElderScrolls: `weapon` and `jewelry` added
 * Faker.Finance: `tickerNasdaq` and `tickerNyse` added
 * Faker.Game.Heroes: `artifacts` added.
+* Faker.Military: `coast_guard_rank` and `space_force_rank` added.
 
 ### Data Update
 
@@ -50,6 +52,10 @@ The following data sources which the libraries uses has been updated:
 * en/half_life.yml
 * en/heroes_of_the_storm.yml
 * en/horse.yml
+* en/kpop.yml
+* en/league_of_legends.yml
+* en/lebowski.yml
+* en/lovecraft.yml
 
 ## 0.8.0
 

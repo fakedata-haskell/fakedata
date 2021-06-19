@@ -1071,7 +1071,9 @@ spec = do
               MI.marinesRank,
               MI.navyRank,
               MI.airForceRank,
-              MI.dodPaygrade
+              MI.dodPaygrade,
+              MI.coastGuardRank,
+              MI.spaceForceTank
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

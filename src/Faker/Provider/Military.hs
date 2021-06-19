@@ -63,3 +63,11 @@ $(genProvider "military" "air_force_rank")
 $(genParser "military" "dod_paygrade")
 
 $(genProvider "military" "dod_paygrade")
+
+$(genParser "military" "coast_guard_rank")
+
+$(genProvider "military" "coast_guard_rank")
+
+$(genParser "military" "space_force_rank")
+
+$(genProvider "military" "space_force_rank")
