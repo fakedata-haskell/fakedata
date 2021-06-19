@@ -1265,7 +1265,7 @@ spec = do
       (and bools) `shouldBe` True
     it "Music" $ do
       let functions :: [Fake Text] =
-            [MU.instruments, MU.bands, MU.albums, MU.genres]
+            [MU.instruments, MU.bands, MU.albums, MU.genres, MU.mamboNo5]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Name" $ do

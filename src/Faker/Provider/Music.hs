@@ -59,3 +59,7 @@ $(genProvider "music" "albums")
 $(genParser "music" "genres")
 
 $(genProvider "music" "genres")
+
+$(genParser "music" "mambo_no_5")
+
+$(genProvider "music" "mambo_no_5")

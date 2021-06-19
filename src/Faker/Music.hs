@@ -16,3 +16,6 @@ $(generateFakeField "music" "bands")
 $(generateFakeField "music" "albums")
 
 $(generateFakeField "music" "genres")
+
+-- | @since 1.0
+$(generateFakeField "music" "mambo_no_5")

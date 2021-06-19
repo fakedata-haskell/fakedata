@@ -43,6 +43,7 @@
   - enchantment
   - gameMode
   - statusEffect
+* Faker.Music: `mamboNo5` added.
 
 ### Data Update
 
