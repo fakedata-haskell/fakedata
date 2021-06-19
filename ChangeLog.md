@@ -29,6 +29,7 @@
 * Faker.Educator: `primary` and `primarySchool` added.
 * Faker.Game.ElderScrolls: `weapon` and `jewelry` added
 * Faker.Finance: `tickerNasdaq` and `tickerNyse` added
+* Faker.Game.Heroes: `artifacts` added.
 
 ### Data Update
 

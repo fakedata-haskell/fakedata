@@ -14,3 +14,6 @@ $(generateFakeField "heroes" "names")
 $(generateFakeField "heroes" "specialties")
 
 $(generateFakeField "heroes" "klasses")
+
+-- | @since 1.0
+$(generateFakeField "heroes" "artifacts")
