@@ -364,7 +364,8 @@ spec = do
               DU.sayingsFremen,
               DU.sayingsMentat,
               DU.sayingsMuaddib,
-              DU.sayingsOrangeCatholicBible
+              DU.sayingsOrangeCatholicBible,
+              DU.cities
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -719,7 +720,9 @@ spec = do
               ED.courseName,
               ED.tertiaryUniversityType,
               ED.tertiaryDegreeType,
-              ED.tertiaryDegreeCourseNumber
+              ED.tertiaryDegreeCourseNumber,
+              ED.primary,
+              ED.primarySchool
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

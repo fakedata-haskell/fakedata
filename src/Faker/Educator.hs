@@ -20,6 +20,12 @@ $(generateFakeFieldUnresolved "educator" "secondary_school")
 
 $(generateFakeFieldUnresolved "educator" "campus")
 
+-- | @since 1.0
+$(generateFakeFieldUnresolved "educator" "primary")
+
+-- | @since 1.0
+$(generateFakeFieldUnresolved "educator" "primary_school")
+
 -- | @since 0.6.0
 $(generateFakeField "educator" "subject")
 

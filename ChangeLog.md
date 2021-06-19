@@ -23,6 +23,8 @@
 
 * Faker.JapaneseMedia.DragonBall: `races`, `planets` added.
 * Faker.DrivingLicense: `usaNorthDakota` added.
+* Faker.Book.Dune: `cities` added
+* Faker.Educator: `primary` and `primarySchool` added.
 
 ### Data Update
 

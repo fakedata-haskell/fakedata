@@ -96,6 +96,10 @@ $(genParserUnresolved "educator" "university")
 
 $(genProviderUnresolved "educator" "university")
 
+$(genParserUnresolved "educator" "primary_school")
+
+$(genProviderUnresolved "educator" "primary_school")
+
 $(genParserUnresolved "educator" "secondary_school")
 
 $(genProviderUnresolved "educator" "secondary_school")
@@ -107,6 +111,10 @@ $(genProviderUnresolved "educator" "campus")
 $(genParser "educator" "subject")
 
 $(genProvider "educator" "subject")
+
+$(genParser "educator" "primary")
+
+$(genProvider "educator" "primary")
 
 $(genParserUnresolved "educator" "degree")
 
