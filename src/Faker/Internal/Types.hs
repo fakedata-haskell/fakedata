@@ -32,6 +32,7 @@ data SourceData
   | Chiquito
   | Computer
   | Control
+  | Conan
   | DnD
   | PearlJam
   | Departed

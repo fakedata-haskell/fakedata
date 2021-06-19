@@ -13,7 +13,8 @@
 * Faker.Adjective
 * Faker.Bird
 * Faker.Camera
-* Faker.Game.ClashOfClan
+* Faker.Game.ClashOfClans
+* Faker.JapaneseMedia.Conan
 
 ### Locale Improvements
 
@@ -27,6 +28,7 @@ The following data sources which the libraries uses has been updated:
 * de.yml
 * en/animal.yml
 * en/book.yml
+* en/company.yml
 
 ## 0.8.0
 
