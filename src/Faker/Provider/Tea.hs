@@ -91,8 +91,3 @@ $(genProviders "tea" ["variety","white"])
 
 $(genParsers "tea" ["variety","herbal"])
 $(genProviders "tea" ["variety","herbal"])
-
-$(genParsers "tea" ["variety","herbal"])
-$(genProviders "tea" ["variety","herbal"])
-
-
