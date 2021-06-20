@@ -93,6 +93,10 @@ $(genParser "team" "team_suffix")
 
 $(genProvider "team" "team_suffix")
 
+$(genParser "team" "team_prefix")
+
+$(genProvider "team" "team_prefix")
+
 resolveTeamText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveTeamText = genericResolver' resolveTeamField
 
@@ -119,5 +123,7 @@ resolveTeamField settings field@"name" =
     resolveTeamText
     settings
 resolveTeamField settings field@"team_suffix" =
-  cachedRandomVec "address" field teamSuffixProvider settings
+  cachedRandomVec "address" field teamTeamSuffixProvider settings
+resolveTeamField settings field@"team_prefix" =
+  cachedRandomVec "address" field teamTeamPrefixProvider settings
 resolveTeamField settings str = throwM $ InvalidField "team" str

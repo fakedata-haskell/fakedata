@@ -47,7 +47,7 @@ verifyDistributeFakes funs = do
 spec :: Spec
 spec = do
   describe "TextSpec" $ do
-    it "validates es locale" $ do
+    it "validates es-ar locale" $ do
       let functions :: [Fake Text] =
             [ NA.maleFirstName,
               NA.femaleFirstName,
@@ -93,7 +93,7 @@ spec = do
               CO.quarterWindAbbreviation,
               PH.formats,
               PH.cellPhoneFormat,
-              PH.countryCode,
+              -- PH.countryCode,
               BA.name,
               CU.name,
               CR.name,
