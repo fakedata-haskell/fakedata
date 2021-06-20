@@ -13,6 +13,7 @@
 * Removed module `Faker.Movie.LordOfTheRings`. Use
   `Faker.Fantasy.Tolkien` instead. (TODO: Actually remove it)
 * `Faker.Minecraft` moved to `Faker.Game.Minecraft`
+* Faker.Game.WorldOfWarcraft: `hero` function renamed to `heros`
 
 ### New modules introduced
 

@@ -124,6 +124,22 @@ irb(main):006:0> Faker::Address.city
 ## Upstream issues
 
 - en/music.yml: hiphop should come under `music`
+- touhou: spellCards
+- pt-BR: countryCode
+- bird:
+  - pluasible_common_names:
+    - Shold be colors instead of color
+    - /s/emotional_adjective/emotional_adjectives
+  - Same issue for implausible_common_names
+- es-BR:
+  - city - remove redundant fields
+  - countryCode: convert it to array
+
+## Todo
+
+- Implement fr and ja locale
+- Fix FrTextSpec
+- Figure out why JaTextSpec is not failing
 
 ## Steps before release
 
