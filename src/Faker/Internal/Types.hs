@@ -165,6 +165,7 @@ data SourceData
   | TheItCrowd
   | TheThickOfIt
   | TwinPeaks
+  | Tolkien
   | UmphreysMcgee
   | University
   | VForVendetta

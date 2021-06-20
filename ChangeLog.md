@@ -8,8 +8,10 @@
   transformer.](https://github.com/fakedata-haskell/fakedata/pull/32).
 * Rename `celebrities` to `actors` in Faker.TvShow.Buffy module.
 * Rename `celebrities` to `actors` in Faker.TvShow.FreshPrinceOfBelAir module.
-* Remove module `Faker.Movie.Hobbit` (TODO: Actually remove it)
-* Remove module `Faker.Movie.LordOfTheRings` (TODO: Actually remove it)
+* Removed module `Faker.Movie.Hobbit`. Use `Faker.Fantasy.Tolkien`
+  instead. (TODO: Actually remove it)
+* Removed module `Faker.Movie.LordOfTheRings`. Use
+  `Faker.Fantasy.Tolkien` instead. (TODO: Actually remove it)
 * `Faker.Minecraft` moved to `Faker.Game.Minecraft`
 
 ### New modules introduced
@@ -28,6 +30,7 @@
 * Faker.Movie.Room
 * Faker.Game.SuperMario
 * Faker.Tea
+* Faker.Fantasy.Tolkien
 
 ### Locale Improvements
 

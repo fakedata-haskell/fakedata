@@ -21,7 +21,3 @@ $(generateFakeFields "tea" ["variety","green"])
 $(generateFakeFields "tea" ["variety","white"])
 
 $(generateFakeFields "tea" ["variety","herbal"])
-
-$(generateFakeFields "tea" ["variety","herbal"])
-
-
