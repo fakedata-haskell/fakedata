@@ -56,6 +56,7 @@
 * Faker.Music.RockBand: `song` added.
 * Faker.Science: `elementState` and `elementSubCategory` added.
 * Various new functions added to Faker.Source.
+* Faker.Game.Witcher: `signs`, `potions` and `books` added.
 
 ### Data Update
 

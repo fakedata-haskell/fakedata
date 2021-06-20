@@ -907,7 +907,10 @@ spec = do
               WI.schools,
               WI.locations,
               WI.quotes,
-              WI.monsters
+              WI.monsters,
+              WI.signs,
+              WI.potions,
+              WI.books
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

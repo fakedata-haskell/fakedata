@@ -68,3 +68,15 @@ $(genProvider "witcher" "quotes")
 $(genParser "witcher" "monsters")
 
 $(genProvider "witcher" "monsters")
+
+$(genParser "witcher" "signs")
+
+$(genProvider "witcher" "signs")
+
+$(genParser "witcher" "potions")
+
+$(genProvider "witcher" "potions")
+
+$(genParser "witcher" "books")
+
+$(genProvider "witcher" "books")
