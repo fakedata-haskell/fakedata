@@ -31,6 +31,7 @@
 * Faker.Game.SuperMario
 * Faker.Tea
 * Faker.Fantasy.Tolkien
+* Faker.Game.Touhou
 
 ### Locale Improvements
 

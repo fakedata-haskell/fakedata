@@ -166,6 +166,7 @@ data SourceData
   | TheThickOfIt
   | TwinPeaks
   | Tolkien
+  | Touhou
   | UmphreysMcgee
   | University
   | VForVendetta
