@@ -12,3 +12,9 @@ import Faker.TH
 $(generateFakeField "worldOfWarcraft" "hero")
 
 $(generateFakeField "worldOfWarcraft" "quotes")
+
+-- | @since 1.0
+$(generateFakeField "worldOfWarcraft" "class_names")
+
+-- | @since 1.0
+$(generateFakeField "worldOfWarcraft" "races")

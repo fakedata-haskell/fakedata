@@ -57,6 +57,7 @@
 * Faker.Science: `elementState` and `elementSubCategory` added.
 * Various new functions added to Faker.Source.
 * Faker.Game.Witcher: `signs`, `potions` and `books` added.
+* Faker.Game.WorldOfWarcraft: `classNames` and `races` added.
 
 ### Data Update
 

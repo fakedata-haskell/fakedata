@@ -915,7 +915,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.WorldOfwarcraft" $ do
-      let functions :: [Fake Text] = [WO.hero, WO.quotes]
+      let functions :: [Fake Text] = [WO.hero, WO.quotes, WO.classNames, WO.races]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.Zelda" $ do

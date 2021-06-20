@@ -53,3 +53,11 @@ $(genProvider "worldOfWarcraft" "hero")
 $(genParser "worldOfWarcraft" "quotes")
 
 $(genProvider "worldOfWarcraft" "quotes")
+
+$(genParser "worldOfWarcraft" "class_names")
+
+$(genProvider "worldOfWarcraft" "class_names")
+
+$(genParser "worldOfWarcraft" "races")
+
+$(genProvider "worldOfWarcraft" "races")
