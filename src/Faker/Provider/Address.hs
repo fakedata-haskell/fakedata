@@ -53,6 +53,19 @@ placeNamesProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 placeNamesProvider settings = fetchData settings Address parsePlaceNames
 
+-- for es-AR locale
+parseFemaleCitySaintPrefix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseFemaleCitySaintPrefix settings = parseAddressField settings "female_city_saint_prefix"
+
+femaleCitySaintPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+femaleCitySaintPrefixProvider settings = fetchDataSingle settings Address parseFemaleCitySaintPrefix
+
+parseMaleCitySaintPrefix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseMaleCitySaintPrefix settings = parseAddressField settings "male_city_saint_prefix"
+
+maleCitySaintPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+maleCitySaintPrefixProvider settings = fetchDataSingle settings Address parseMaleCitySaintPrefix
+
 parseCitySuffix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseCitySuffix settings = parseAddressField settings "city_suffix"
 
@@ -501,4 +514,10 @@ resolveAddressField settings field@"the" =
       parser settings = parseAddressField settings field
       provider settings = fetchData settings Address parser
    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"female_city_saint_prefix" =
+  cachedRandomVec "address" field femaleCitySaintPrefixProvider settings
+resolveAddressField settings field@"male_city_saint_prefix" =
+  cachedRandomVec "address" field maleCitySaintPrefixProvider settings
+resolveAddressField settings field@"Name.female_first_name" =
+  resolveNameField settings "female_first_name"
 resolveAddressField settings str = throwM $ InvalidField "address" str

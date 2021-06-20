@@ -88,6 +88,11 @@ $(genParserUnresolved "team" "name")
 
 $(genProviderUnresolved "team" "name")
 
+-- For es-AR locale
+$(genParser "team" "team_suffix")
+
+$(genProvider "team" "team_suffix")
+
 resolveTeamText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveTeamText = genericResolver' resolveTeamField
 
@@ -113,4 +118,6 @@ resolveTeamField settings field@"name" =
     teamNameProvider
     resolveTeamText
     settings
+resolveTeamField settings field@"team_suffix" =
+  cachedRandomVec "address" field teamSuffixProvider settings
 resolveTeamField settings str = throwM $ InvalidField "team" str
