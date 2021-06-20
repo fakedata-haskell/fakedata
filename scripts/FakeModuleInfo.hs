@@ -2295,5 +2295,65 @@ tea =
       unresolvedNestedFields = []
     }
 
+tolkien :: ModuleInfo
+tolkien =
+  ModuleInfo
+    { mmoduleName = "tolkien",
+      jsonField = "tea",
+      fields =
+        [ "poems",
+          "locations",
+          "races",
+          "characters"
+        ],
+      unresolvedFields = [],
+      nestedFields =
+        [ ["lord_of_the_rings", "characters"],
+          ["lord_of_the_rings", "locations"],
+          ["lord_of_the_rings", "quotes"],
+          ["hobbit", "character"],
+          ["hobbit", "thorins_company"],
+          ["hobbit", "quote"],
+          ["hobbit", "location"]
+        ],
+      unresolvedNestedFields = []
+    }
+
+touhou :: ModuleInfo
+touhou =
+  ModuleInfo
+    { mmoduleName = "touhou",
+      jsonField = "touhou",
+      fields =
+        [ "games",
+          "characters",
+          "spell_cards",
+          "locations",
+          "songs"
+        ],
+      unresolvedFields = [],
+      nestedFields =
+        [],
+      unresolvedNestedFields = []
+    }
+
+volleyball :: ModuleInfo
+volleyball =
+  ModuleInfo
+    { mmoduleName = "volleyball",
+      jsonField = "volleyball",
+      fields =
+        [ "team",
+          "player",
+          "coach",
+          "position",
+          "formation"
+        ],
+      unresolvedFields = [],
+      nestedFields =
+        [],
+      unresolvedNestedFields = []
+    }
+
 currentOne :: ModuleInfo
-currentOne = tea
+currentOne = volleyball

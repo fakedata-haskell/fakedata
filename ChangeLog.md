@@ -32,8 +32,7 @@
 * Faker.Tea
 * Faker.Fantasy.Tolkien
 * Faker.Game.Touhou
-
-### Locale Improvements
+* Faker.Sport.Volleyball
 
 ### Module updates
 
@@ -86,6 +85,7 @@ The following data sources which the libraries uses has been updated:
 * en/street_fighter.yml
 * en/studio_ghibli.yml
 * en/super_smash_bros.yml
+* en-us.yml
 
 ## 0.8.0
 
