@@ -18,7 +18,8 @@ parseSuperMario :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSuperMario settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  superMario <- faker .: "super_mario"
+  games <- faker .: "games"
+  superMario <- games .: "super_mario"
   pure superMario
 parseSuperMario settings val = fail $ "expected Object, but got " <> (show val)
 
@@ -78,11 +79,3 @@ $(genProvider "superMario" "games")
 $(genParser "superMario" "locations")
 
 $(genProvider "superMario" "locations")
-
-
-
-
-
-
-
-

@@ -9,7 +9,8 @@ import Faker.Internal
 import Faker.Provider.WorldOfWarcraft
 import Faker.TH
 
-$(generateFakeField "worldOfWarcraft" "hero")
+-- | @since 1.0
+$(generateFakeField "worldOfWarcraft" "heros")
 
 $(generateFakeField "worldOfWarcraft" "quotes")
 

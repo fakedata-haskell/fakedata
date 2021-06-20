@@ -31,7 +31,10 @@ spec = do
     it "sanity checking" $ do
       let functions :: [Fake Text] =
                        [
-                        games, characters, spellCards, locations, songs
+                        games
+                       , characters
+                       -- , spellCards
+                       , locations, songs
                        ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

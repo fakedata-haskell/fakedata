@@ -166,4 +166,8 @@ resolveEducatorField settings field@"Educator.tertiary.degree.course_number" =
     educatorTertiaryDegreeCourseNumberProvider
     resolveEducatorText
     settings
+resolveEducatorField settings field@"primary" =
+  cachedRandomVec "educator" field educatorPrimaryProvider settings
+resolveEducatorField settings field@"school_name" =
+  cachedRandomVec "educator" "school_name" educatorSchoolNameProvider settings
 resolveEducatorField settings str = throwM $ InvalidField "educator" str

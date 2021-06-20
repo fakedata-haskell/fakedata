@@ -31,7 +31,9 @@ spec = do
     it "sanity checking" $ do
       let functions :: [Fake Text] =
                        [
-                        troops, ranks, defensiveBuildings
+                        troops
+                       , ranks
+                       , defensiveBuildings
                        ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

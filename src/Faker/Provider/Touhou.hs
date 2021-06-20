@@ -18,7 +18,8 @@ parseTouhou :: FromJSON a => FakerSettings -> Value -> Parser a
 parseTouhou settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  touhou <- faker .: "touhou"
+  games <- faker .: "games"
+  touhou <- games .: "touhou"
   pure touhou
 parseTouhou settings val = fail $ "expected Object, but got " <> (show val)
 
@@ -86,11 +87,3 @@ $(genProvider "touhou" "locations")
 $(genParser "touhou" "songs")
 
 $(genProvider "touhou" "songs")
-
-
-
-
-
-
-
-

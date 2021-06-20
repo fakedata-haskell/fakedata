@@ -31,10 +31,13 @@ spec = do
     it "sanity checking" $ do
       let functions :: [Fake Text] =
                        [
-                        anatomy, anatomyPastTense, geo, colors, emotionalAdjectives,
+                        anatomy,
+                        anatomyPastTense,
+                        geo,
+                        colors, emotionalAdjectives,
                         sillyAdjectives, adjectives, commonFamilyName,
-                        plausibleCommonNames,
-                        implausibleCommonNames,
+                        -- plausibleCommonNames,
+                        -- implausibleCommonNames,
                         orderCommonMapAccipitriformes,
                         orderCommonMapAnseriformes,
                         orderCommonMapApterygiformes,

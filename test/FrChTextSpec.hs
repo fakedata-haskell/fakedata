@@ -43,13 +43,13 @@ spec = do
   describe "TextSpec" $ do
     it "validates fr-CH locale" $ do
       let functions :: [Fake Text] =
-            [ 
+            [
               NA.lastName
             , NA.firstName
             , NA.prefix
             , NA.name
             , NA.nameWithMiddle
-              
+
             , BO.title
             , BO.author
             , BO.publisher
@@ -69,7 +69,7 @@ spec = do
             , FA.streetName
             , FA.streetAddress
             , FA.postcode
-              
+
             , IN.freeEmail
             , IN.domainSuffix
 

@@ -46,9 +46,9 @@ parseWorldOfWarcraftFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
-$(genParser "worldOfWarcraft" "hero")
+$(genParser "worldOfWarcraft" "heros")
 
-$(genProvider "worldOfWarcraft" "hero")
+$(genProvider "worldOfWarcraft" "heros")
 
 $(genParser "worldOfWarcraft" "quotes")
 

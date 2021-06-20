@@ -18,7 +18,8 @@ parseClashOfClans :: FromJSON a => FakerSettings -> Value -> Parser a
 parseClashOfClans settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  clashOfClans <- faker .: "clash_of_clans"
+  games <- faker .: "games"
+  clashOfClans <- games .: "clash_of_clans"
   pure clashOfClans
 parseClashOfClans settings val = fail $ "expected Object, but got " <> (show val)
 
@@ -78,11 +79,3 @@ $(genProvider "clashOfClans" "ranks")
 $(genParser "clashOfClans" "defensive_buildings")
 
 $(genProvider "clashOfClans" "defensive_buildings")
-
-
-
-
-
-
-
-

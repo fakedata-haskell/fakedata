@@ -18,7 +18,7 @@ parseTolkien :: FromJSON a => FakerSettings -> Value -> Parser a
 parseTolkien settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  tolkien <- faker .: "tea"
+  tolkien <- faker .: "tolkien"
   pure tolkien
 parseTolkien settings val = fail $ "expected Object, but got " <> (show val)
 
@@ -109,5 +109,3 @@ $(genProviders "tolkien" ["hobbit","quote"])
 
 $(genParsers "tolkien" ["hobbit","location"])
 $(genProviders "tolkien" ["hobbit","location"])
-
-

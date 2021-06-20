@@ -47,6 +47,7 @@ data-files:
     faker/lib/locales/en-US.yml
     faker/lib/locales/en-ZA.yml
     faker/lib/locales/en.yml
+    faker/lib/locales/es-AR.yml
     faker/lib/locales/es-MX.yml
     faker/lib/locales/es.yml
     faker/lib/locales/fa.yml
@@ -58,7 +59,6 @@ data-files:
     faker/lib/locales/hy.yml
     faker/lib/locales/id.yml
     faker/lib/locales/it.yml
-    faker/lib/locales/ja.yml
     faker/lib/locales/ko.yml
     faker/lib/locales/lv.yml
     faker/lib/locales/nb-NO.yml
@@ -77,6 +77,7 @@ data-files:
     faker/lib/locales/zh-CN.yml
     faker/lib/locales/zh-TW.yml
     faker/lib/locales/en/address.yml
+    faker/lib/locales/en/adjective.yml
     faker/lib/locales/en/ancient.yml
     faker/lib/locales/en/animal.yml
     faker/lib/locales/en/app.yml
@@ -89,6 +90,7 @@ data-files:
     faker/lib/locales/en/basketball.yml
     faker/lib/locales/en/beer.yml
     faker/lib/locales/en/big_bang_theory.yml
+    faker/lib/locales/en/bird.yml
     faker/lib/locales/en/blood.yml
     faker/lib/locales/en/bojack_horseman.yml
     faker/lib/locales/en/book.yml
@@ -96,10 +98,12 @@ data-files:
     faker/lib/locales/en/breaking_bad.yml
     faker/lib/locales/en/buffy.yml
     faker/lib/locales/en/business.yml
+    faker/lib/locales/en/camera.yml
     faker/lib/locales/en/cannabis.yml
     faker/lib/locales/en/cat.yml
     faker/lib/locales/en/chiquito.yml
     faker/lib/locales/en/chuck_norris.yml
+    faker/lib/locales/en/clash_of_clan.yml
     faker/lib/locales/en/code.yml
     faker/lib/locales/en/coffee.yml
     faker/lib/locales/en/coin.yml
@@ -109,6 +113,7 @@ data-files:
     faker/lib/locales/en/company.yml
     faker/lib/locales/en/compass.yml
     faker/lib/locales/en/computer.yml
+    faker/lib/locales/en/conan.yml
     faker/lib/locales/en/construction.yml
     faker/lib/locales/en/control.yml
     faker/lib/locales/en/cosmere.yml
@@ -122,6 +127,7 @@ data-files:
     faker/lib/locales/en/device.yml
     faker/lib/locales/en/dnd.yml
     faker/lib/locales/en/dog.yml
+    faker/lib/locales/en/doraemon.yml
     faker/lib/locales/en/dota.yml
     faker/lib/locales/en/dr_who.yml
     faker/lib/locales/en/dragon_ball.yml
@@ -136,6 +142,7 @@ data-files:
     faker/lib/locales/en/fallout.yml
     faker/lib/locales/en/family_guy.yml
     faker/lib/locales/en/file.yml
+    faker/lib/locales/en/final_space.yml
     faker/lib/locales/en/finance.yml
     faker/lib/locales/en/food.yml
     faker/lib/locales/en/football.yml
@@ -157,19 +164,19 @@ data-files:
     faker/lib/locales/en/hey_arnold.yml
     faker/lib/locales/en/hipster.yml
     faker/lib/locales/en/hitchhikers_guide_to_the_galaxy.yml
-    faker/lib/locales/en/hobbit.yml
     faker/lib/locales/en/horse.yml
     faker/lib/locales/en/house.yml
     faker/lib/locales/en/how_i_met_your_mother.yml
+    faker/lib/locales/en/how_to_train_your_dragon.yml
     faker/lib/locales/en/id_number.yml
     faker/lib/locales/en/industry_segments.yml
     faker/lib/locales/en/internet.yml
     faker/lib/locales/en/invoice.yml
+    faker/lib/locales/en/jack_handey.yml
     faker/lib/locales/en/job.yml
     faker/lib/locales/en/kpop.yml
     faker/lib/locales/en/league_of_legends.yml
     faker/lib/locales/en/lebowski.yml
-    faker/lib/locales/en/lord_of_the_rings.yml
     faker/lib/locales/en/lorem.yml
     faker/lib/locales/en/lovecraft.yml
     faker/lib/locales/en/markdown.yml
@@ -178,10 +185,12 @@ data-files:
     faker/lib/locales/en/michael_scott.yml
     faker/lib/locales/en/military.yml
     faker/lib/locales/en/minecraft.yml
+    faker/lib/locales/en/mountain.yml
     faker/lib/locales/en/movie.yml
     faker/lib/locales/en/music.yml
     faker/lib/locales/en/myst.yml
     faker/lib/locales/en/name.yml
+    faker/lib/locales/en/naruto.yml
     faker/lib/locales/en/nation.yml
     faker/lib/locales/en/nato_phonetic_alphabet.yml
     faker/lib/locales/en/new_girl.yml
@@ -202,6 +211,7 @@ data-files:
     faker/lib/locales/en/restaurant.yml
     faker/lib/locales/en/rick_and_morty.yml
     faker/lib/locales/en/rock_band.yml
+    faker/lib/locales/en/room.yml
     faker/lib/locales/en/rupaul.yml
     faker/lib/locales/en/rush.yml
     faker/lib/locales/en/science.yml
@@ -224,13 +234,17 @@ data-files:
     faker/lib/locales/en/studio_ghibli.yml
     faker/lib/locales/en/subscription.yml
     faker/lib/locales/en/suits.yml
+    faker/lib/locales/en/super_mario.yml
     faker/lib/locales/en/super_smash_bros.yml
     faker/lib/locales/en/superhero.yml
     faker/lib/locales/en/sword_art_online.yml
+    faker/lib/locales/en/tea.yml
     faker/lib/locales/en/team.yml
     faker/lib/locales/en/the_expanse.yml
     faker/lib/locales/en/the_it_crowd.yml
     faker/lib/locales/en/the_thick_of_it.yml
+    faker/lib/locales/en/tolkien.yml
+    faker/lib/locales/en/touhou.yml
     faker/lib/locales/en/twin_peaks.yml
     faker/lib/locales/en/umphreys_mcgee.yml
     faker/lib/locales/en/university.yml
@@ -238,6 +252,7 @@ data-files:
     faker/lib/locales/en/vehicle.yml
     faker/lib/locales/en/venture_bros.yml
     faker/lib/locales/en/verbs.yml
+    faker/lib/locales/en/volleyball.yml
     faker/lib/locales/en/warhammer_fantasy.yml
     faker/lib/locales/en/witcher.yml
     faker/lib/locales/en/world_cup.yml
@@ -254,6 +269,7 @@ library
   exposed-modules:
       Faker
       Faker.Address
+      Faker.Adjective
       Faker.Ancient
       Faker.App
       Faker.Appliance
@@ -261,6 +277,7 @@ library
       Faker.Bank
       Faker.Barcode
       Faker.Beer
+      Faker.Bird
       Faker.Blood
       Faker.Book
       Faker.Book.CultureSeries
@@ -268,6 +285,7 @@ library
       Faker.Book.Lovecraft
       Faker.BossaNova
       Faker.Business
+      Faker.Camera
       Faker.Cannabis
       Faker.Chiquito
       Faker.ChuckNorris
@@ -299,10 +317,12 @@ library
       Faker.Educator
       Faker.ElectricalComponents
       Faker.Esport
+      Faker.Fantasy.Tolkien
       Faker.File
       Faker.Finance
       Faker.Food
       Faker.FunnyName
+      Faker.Game.ClashOfClans
       Faker.Game.Control
       Faker.Game.Dota
       Faker.Game.ElderScrolls
@@ -316,7 +336,9 @@ library
       Faker.Game.Pokemon
       Faker.Game.SonicTheHedgehog
       Faker.Game.StreetFighter
+      Faker.Game.SuperMario
       Faker.Game.SuperSmashBros
+      Faker.Game.Touhou
       Faker.Game.WarhammerFantasy
       Faker.Game.Witcher
       Faker.Game.WorldOfWarcraft
@@ -330,7 +352,10 @@ library
       Faker.Internal
       Faker.Internal.Types
       Faker.Internet
+      Faker.JapaneseMedia.Conan
+      Faker.JapaneseMedia.Doraemon
       Faker.JapaneseMedia.DragonBall
+      Faker.JapaneseMedia.Naruto
       Faker.JapaneseMedia.OnePiece
       Faker.JapaneseMedia.StudioGhibli
       Faker.JapaneseMedia.SwordArtOnline
@@ -342,7 +367,7 @@ library
       Faker.Marketing
       Faker.Measurement
       Faker.Military
-      Faker.Minecraft
+      Faker.Mountain
       Faker.Movie
       Faker.Movie.BackToTheFuture
       Faker.Movie.Departed
@@ -351,9 +376,11 @@ library
       Faker.Movie.HarryPotter
       Faker.Movie.HitchhikersGuideToTheGalaxy
       Faker.Movie.Hobbit
+      Faker.Movie.HowToTrainYourDragon
       Faker.Movie.Lebowski
       Faker.Movie.LordOfTheRings
       Faker.Movie.PrincessBride
+      Faker.Movie.Room
       Faker.Movie.StarWars
       Faker.Movie.VForVendetta
       Faker.Music
@@ -369,8 +396,26 @@ library
       Faker.NatoPhoneticAlphabet
       Faker.PhoneNumber
       Faker.ProgrammingLanguage
+      Faker.Provider.Adjective
+      Faker.Provider.Bird
+      Faker.Provider.Camera
+      Faker.Provider.ClashOfClans
+      Faker.Provider.Conan
+      Faker.Provider.Doraemon
+      Faker.Provider.FinalSpace
+      Faker.Provider.HowToTrainYourDragon
+      Faker.Provider.JackHandey
+      Faker.Provider.Mountain
+      Faker.Provider.Naruto
       Faker.Provider.Prince
+      Faker.Provider.Room
+      Faker.Provider.SuperMario
+      Faker.Provider.Tea
+      Faker.Provider.Tolkien
+      Faker.Provider.Touhou
+      Faker.Provider.Volleyball
       Faker.Quote
+      Faker.Quote.JackHandey
       Faker.Quote.Shakespeare
       Faker.Rajnikanth
       Faker.Relationship
@@ -382,8 +427,10 @@ library
       Faker.Space
       Faker.Sport.Basketball
       Faker.Sport.Football
+      Faker.Sport.Volleyball
       Faker.Subscription
       Faker.Superhero
+      Faker.Tea
       Faker.Team
       Faker.TvShow.AquaTeenHungerForce
       Faker.TvShow.BigBangTheory
@@ -394,6 +441,7 @@ library
       Faker.TvShow.DrWho
       Faker.TvShow.DumbAndDumber
       Faker.TvShow.FamilyGuy
+      Faker.TvShow.FinalSpace
       Faker.TvShow.FreshPrinceOfBelAir
       Faker.TvShow.Friends
       Faker.TvShow.Futurama
@@ -621,18 +669,24 @@ test-suite fakedata-test
   main-is: Spec.hs
   other-modules:
       AddressSpec
+      AdjectiveSpec
       ArTextSpec
       BgTextSpec
+      BirdSpec
       BookSpec
       BossaNovaSpec
       CaCatTextSpec
+      CameraSpec
       CaTextSpec
+      ClashOfClansSpec
       CoffeeSpec
       CombinatorsSpec
+      ConanSpec
       DaDkTextSpec
       DeAtTextSpec
       DeChTextSpec
       DeTextSpec
+      DoraemonSpec
       EeTextSpec
       EnAuOckerTextSpec
       EnAuTextSpec
@@ -649,24 +703,30 @@ test-suite fakedata-test
       EnUgTextSpec
       EnUsTextSpec
       EnZaTextSpec
+      EsArTextSpec
       EsMxTextSpec
       EsTextSpec
       FakerSpec
       FaTextSpec
       FiFiTextSpec
+      FinalSpaceSpec
       FrCaTextSpec
       FrChTextSpec
       FrTextSpec
       GamesSpec
       HeTextSpec
+      HowToTrainYourDragonSpec
       HyTextSpec
       IdTextSpec
       InternalSpec
       ItTextSpec
+      JackHandeySpec
       JaTextSpec
       KoTextSpec
       LvTextSpec
+      MountainSpec
       NameSpec
+      NarutoSpec
       NbNoTextSpec
       NlTextSpec
       OperaSpec
@@ -675,15 +735,21 @@ test-suite fakedata-test
       ProviderSpec
       PtBrTextSpec
       PtTextSpec
+      RoomSpec
       RuTextSpec
       SkTextSpec
+      SuperMarioSpec
       SvTextSpec
+      TeaSpec
       TestImport
       TextSpec
       ThTextSpec
+      TolkienSpec
+      TouhouSpec
       TrTextSpec
       UkTextSpec
       ViTextSpec
+      VolleyballSpec
       ZhCnTextSpec
       ZhTwTextSpec
       Paths_fakedata

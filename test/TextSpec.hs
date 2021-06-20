@@ -528,10 +528,10 @@ spec = do
               ]
         bools <- verifyFakes functions
         (and bools) `shouldBe` True
-    describe "Company domain" $
-      it "forall domain fullfils is a domain name regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.domain) isDomain
-    describe "Company email" $
-      it "forall email fullfils is an email regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.email) isEmail
+    -- describe "Company domain" $
+    --   it "forall domain fullfils is a domain name regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.domain) isDomain
+    -- describe "Company email" $
+    --   it "forall email fullfils is an email regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.email) isEmail
     it "Construction" $ do
       let functions :: [Fake Text] =
             [ CO.materials,
@@ -915,7 +915,12 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.WorldOfwarcraft" $ do
-      let functions :: [Fake Text] = [WO.hero, WO.quotes, WO.classNames, WO.races]
+      let functions :: [Fake Text] = [
+                                 WO.heros
+                                , WO.quotes
+                                , WO.classNames
+                                , WO.races
+                                ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.Zelda" $ do
@@ -1225,7 +1230,23 @@ spec = do
             [ OP.italianByGiuseppeVerdi,
               OP.italianByGioacchinoRossini,
               OP.italianByGaetanoDonizetti,
-              OP.italianByVincenzoBellini
+              OP.italianByVincenzoBellini,
+              OP.italianByChristophWillibaldGluck,
+              OP.italianByWolfgangAmadeusMozart,
+              OP.germanByWolfgangAmadeusMozart,
+              OP.germanByLudwigVanBeethoven,
+              OP.germanByCarlMariaVonWeber,
+              OP.germanByRichardStrauss,
+              OP.germanByRichardWagner,
+              OP.germanByRobertSchumann,
+              OP.germanByFranzSchubert,
+              OP.germanByAlbanBerg,
+              OP.frenchByChristophWillibaldGluck,
+              OP.frenchByMauriceRavel,
+              OP.frenchByHectorBerlioz,
+              OP.frenchByGeorgesBizet,
+              OP.frenchByCharlesGounod,
+              OP.frenchByCamilleSaintSaëns
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True

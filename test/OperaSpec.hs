@@ -33,6 +33,3 @@ spec = do
     it "italianByVincenzoBellini" $ do
       item <- generate italianByVincenzoBellini
       item `shouldSatisfy` isText
-    it "todo" $ do
-      item <- generate undefined
-      item `shouldSatisfy` isText

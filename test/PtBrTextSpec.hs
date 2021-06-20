@@ -78,7 +78,7 @@ spec = do
             , GE.binaryTypes
             , FA.city
             , FA.country
-            , FA.countryCode
+            -- , FA.countryCode
             , FA.postcode
             , FA.buildingNumber
             , FA.streetSuffix

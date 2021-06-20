@@ -19,7 +19,8 @@ parseBird :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBird settings (Object obj) = do
   en <- obj .: (getLocale settings)
   faker <- en .: "faker"
-  bird <- faker .: "bird"
+  creature <- faker .: "creature"
+  bird <- creature .: "bird"
   pure bird
 parseBird settings val = fail $ "expected Object, but got " <> (show val)
 
@@ -123,6 +124,8 @@ resolveBirdText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
 resolveBirdText = genericResolver' resolveBirdField
 
 resolveBirdField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveBirdField settings field@"geo" =
+  cachedRandomVec "bird" field birdGeoProvider settings
 resolveBirdField settings str = throwM $ InvalidField "bird" str
 
 
