@@ -16,12 +16,65 @@ import Faker.Internal
 isText :: Text -> Bool
 isText x = T.length x >= 1
 
+fakerSettings :: FakerSettings
+fakerSettings = defaultFakerSettings
+
+verifyFakes :: [Fake Text] -> IO [Bool]
+verifyFakes funs = do
+  let fs :: [IO Text] = map (generateWithSettings fakerSettings) funs
+      gs :: [IO Bool] = map (\f -> isText <$> f) fs
+  sequence gs
+
 spec :: Spec
 spec = do
   describe "Bird" $ do
-    it "positive" $ do
-      item <- generate positive
-      item `shouldSatisfy` isText
-    it "negative" $ do
-      item <- generate negative
-      item `shouldSatisfy` isText
+    it "sanity checking" $ do
+      let functions :: [Fake Text] =
+                       [
+                        anatomy, anatomyPastTense, geo, colors, emotionalAdjectives,
+                        sillyAdjectives, adjectives, commonFamilyName,
+                        plausibleCommonNames,
+                        implausibleCommonNames,
+                        orderCommonMapAccipitriformes,
+                        orderCommonMapAnseriformes,
+                        orderCommonMapApterygiformes,
+                        orderCommonMapBucerotiformes,
+                        orderCommonMapCaprimulgiformes,
+                        orderCommonMapCariamiformes,
+                        orderCommonMapCasuariiformes,
+                        orderCommonMapCathartiformes,
+                        orderCommonMapCharadriiformes,
+                        orderCommonMapCiconiiformes,
+                        orderCommonMapColiiformes,
+                        orderCommonMapColumbiformes,
+                        orderCommonMapCoraciiformes,
+                        orderCommonMapCuculiformes,
+                        orderCommonMapEurypygiformes,
+                        orderCommonMapFalconiformes,
+                        orderCommonMapGalbuliformes,
+                        orderCommonMapGalliformes,
+                        orderCommonMapGaviiformes,
+                        orderCommonMapGruiformes,
+                        orderCommonMapMesitornithiformes,
+                        orderCommonMapMusophagiformes,
+                        orderCommonMapOpisthocomiformes,
+                        orderCommonMapOtidiformes,
+                        orderCommonMapPasseriformes,
+                        orderCommonMapPelecaniformes,
+                        orderCommonMapPhaethontiformes,
+                        orderCommonMapPhoenicopteriformes,
+                        orderCommonMapPiciformes,
+                        orderCommonMapPodicipediformes,
+                        orderCommonMapProcellariiformes,
+                        orderCommonMapPsittaciformes,
+                        orderCommonMapPterocliformes,
+                        orderCommonMapRheiformes,
+                        orderCommonMapSphenisciformes,
+                        orderCommonMapStrigiformes,
+                        orderCommonMapStruthioniformes,
+                        orderCommonMapSuliformes,
+                        orderCommonMapTinamiformes,
+                        orderCommonMapTrogoniformes
+                       ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True

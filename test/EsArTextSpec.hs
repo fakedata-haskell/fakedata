@@ -104,7 +104,7 @@ spec = do
               CY.bs,
               CY.name,
               CY.industry,
-              CY.profession
+              CY.profession,
               CY.type'
             ]
       bools <- verifyDistributeFakes functions

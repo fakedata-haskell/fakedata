@@ -1076,7 +1076,7 @@ spec = do
               MI.airForceRank,
               MI.dodPaygrade,
               MI.coastGuardRank,
-              MI.spaceForceTank
+              MI.spaceForceRank
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1660,7 +1660,7 @@ spec = do
       (and bools) `shouldBe` True
     it "TvShow.Buffy" $ do
       let functions :: [Fake Text] =
-            [BU.characters, BU.quotes, BU.celebrities, BU.bigBads, BU.episodes]
+            [BU.characters, BU.quotes, BU.actors, BU.bigBads, BU.episodes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.Community" $ do
@@ -1688,7 +1688,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.FreshPrinceOfBelAir" $ do
-      let functions :: [Fake Text] = [FR.characters, FR.celebrities, FR.quotes]
+      let functions :: [Fake Text] = [FR.characters, FR.actors, FR.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.Friends" $ do

@@ -16,12 +16,27 @@ import Faker.Internal
 isText :: Text -> Bool
 isText x = T.length x >= 1
 
+fakerSettings :: FakerSettings
+fakerSettings = defaultFakerSettings
+
+verifyFakes :: [Fake Text] -> IO [Bool]
+verifyFakes funs = do
+  let fs :: [IO Text] = map (generateWithSettings fakerSettings) funs
+      gs :: [IO Bool] = map (\f -> isText <$> f) fs
+  sequence gs
+
 spec :: Spec
 spec = do
   describe "Tea" $ do
-    it "positive" $ do
-      item <- generate positive
-      item `shouldSatisfy` isText
-    it "negative" $ do
-      item <- generate negative
-      item `shouldSatisfy` isText
+    it "sanity checking" $ do
+      let functions :: [Fake Text] =
+                       [
+                        type',
+                        varietyBlack,
+                        varietyOolong,
+                        varietyGreen,
+                        varietyWhite,
+                        varietyHerbal
+                       ]
+      bools <- verifyFakes functions
+      (and bools) `shouldBe` True
