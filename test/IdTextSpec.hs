@@ -47,12 +47,12 @@ spec = do
   describe "TextSpec" $ do
     it "validates id locale" $ do
       let functions :: [Fake Text] =
-            [ 
+            [
               NA.lastName
             , NA.firstName
             , NA.name
             , NA.nameWithMiddle
-              
+
             , PH.formats
             , PH.countryCode
 
@@ -61,6 +61,7 @@ spec = do
             , FA.buildingNumber
             , FA.streetName
             , FA.streetAddress
+            , FA.stateAbbr
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

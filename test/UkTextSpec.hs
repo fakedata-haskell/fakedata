@@ -58,20 +58,20 @@ spec = do
   describe "TextSpec" $ do
     it "validates uk locale" $ do
       let functions :: [Fake Text] =
-            [ 
+            [
               NA.firstName
             , NA.lastName
             , NA.maleFirstName
             , NA.femaleFirstName
             , NA.name
             , NA.nameWithMiddle
-              
+
             , IN.freeEmail
             , IN.domainSuffix
-              
+
             , PH.formats
             , PH.cellPhoneFormat
-              
+
             , FA.city
             , FA.country
             , FA.buildingNumber
@@ -84,7 +84,8 @@ spec = do
             -- , FA.citySuffix (Data source is empty)
             , FA.streetName
             , FA.streetAddress
-              
+            , FA.fullAddress
+
             , CE.department
             , CE.productNameAdjective
             , CE.productNameProduct

@@ -62,6 +62,10 @@
 ### Locale Improvements
 
 * es-AR localed added
+* id.yml: stateAbbr added
+* pt-BR: countryCode added, ingredients and licensePlate updated.
+* ru: Faker.Yoda.quotes added
+* uk: Faker.Address.fullAddress added
 
 ### Data Update
 
