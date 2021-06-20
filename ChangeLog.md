@@ -59,6 +59,10 @@
 * Faker.Game.Witcher: `signs`, `potions` and `books` added.
 * Faker.Game.WorldOfWarcraft: `classNames` and `races` added.
 
+### Locale Improvements
+
+* es-AR localed added
+
 ### Data Update
 
 The following data sources which the libraries uses has been updated:
@@ -88,6 +92,7 @@ The following data sources which the libraries uses has been updated:
 * en/studio_ghibli.yml
 * en/super_smash_bros.yml
 * en-us.yml
+* en/zelda.yml
 
 ## 0.8.0
 
