@@ -9,9 +9,9 @@
 * Rename `celebrities` to `actors` in Faker.TvShow.Buffy module.
 * Rename `celebrities` to `actors` in Faker.TvShow.FreshPrinceOfBelAir module.
 * Removed module `Faker.Movie.Hobbit`. Use `Faker.Fantasy.Tolkien`
-  instead. (TODO: Actually remove it)
+  instead.
 * Removed module `Faker.Movie.LordOfTheRings`. Use
-  `Faker.Fantasy.Tolkien` instead. (TODO: Actually remove it)
+  `Faker.Fantasy.Tolkien` instead.
 * `Faker.Minecraft` moved to `Faker.Game.Minecraft`
 * Faker.Game.WorldOfWarcraft: `hero` function renamed to `heros`
 
