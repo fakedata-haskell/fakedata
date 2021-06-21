@@ -96,9 +96,7 @@ import qualified Faker.Movie.Ghostbusters as GH
 import qualified Faker.Movie.GratefulDead as GR
 import qualified Faker.Movie.HarryPotter as HA
 import qualified Faker.Movie.HitchhikersGuideToTheGalaxy as HI
-import qualified Faker.Movie.Hobbit as HO
 import qualified Faker.Movie.Lebowski as LE
-import qualified Faker.Movie.LordOfTheRings as LO
 import qualified Faker.Movie.PrincessBride as PR
 import qualified Faker.Movie.StarWars as ST
 import qualified Faker.Movie.VForVendetta as VF
@@ -1124,17 +1122,8 @@ spec = do
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
-    it "Movie.Hobbit" $ do
-      let functions :: [Fake Text] =
-            [HO.character, HO.thorinsCompany, HO.quote, HO.location]
-      bools <- verifyFakes functions
-      (and bools) `shouldBe` True
     it "Movie.Lebowski" $ do
       let functions :: [Fake Text] = [LE.actors, LE.characters, LE.quotes]
-      bools <- verifyFakes functions
-      (and bools) `shouldBe` True
-    it "Movie.LordOfTheRings" $ do
-      let functions :: [Fake Text] = [LO.characters, LO.locations, LO.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Movie.PrincessBride" $ do

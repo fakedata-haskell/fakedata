@@ -33,7 +33,7 @@ spec = do
                        [
                         games
                        , characters
-                       -- , spellCards
+                       , spellCards
                        , locations, songs
                        ]
       bools <- verifyFakes functions

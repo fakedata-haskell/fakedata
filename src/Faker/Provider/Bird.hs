@@ -126,6 +126,20 @@ resolveBirdText = genericResolver' resolveBirdField
 resolveBirdField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveBirdField settings field@"geo" =
   cachedRandomVec "bird" field birdGeoProvider settings
+resolveBirdField settings field@"adjectives" =
+  cachedRandomVec "bird" field birdAdjectivesProvider settings
+resolveBirdField settings field@"anatomy" =
+  cachedRandomVec "bird" field birdAnatomyProvider settings
+resolveBirdField settings field@"anatomy_past_tense" =
+  cachedRandomVec "bird" field birdAnatomyPastTenseProvider settings
+resolveBirdField settings field@"common_family_name" =
+  cachedRandomVec "bird" field birdCommonFamilyNameProvider settings
+resolveBirdField settings field@"colors" =
+  cachedRandomVec "bird" field birdColorsProvider settings
+resolveBirdField settings field@"emotional_adjectives" =
+  cachedRandomVec "bird" field birdEmotionalAdjectivesProvider settings
+resolveBirdField settings field@"silly_adjectives" =
+  cachedRandomVec "bird" field birdSillyAdjectivesProvider settings
 resolveBirdField settings str = throwM $ InvalidField "bird" str
 
 

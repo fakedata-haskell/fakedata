@@ -432,6 +432,8 @@ guessSourceFile sdata sysloc =
       case sdata of
         Finance -> localesCustomEnDirectory </> (sourceFile sdata) <.> "yml"
         sdata' -> localesEnDirectory </> (sourceFile sdata') <.> "yml"
+    "ja" -> localesDirectory </> "ja" </> (sourceFile sdata) <> ".yml"
+    "fr" -> localesDirectory </> "fr" </> (sourceFile sdata) <> ".yml"
     oth -> localesDirectory </> (unpack oth <> ".yml")
 
 getSourceFile :: (MonadThrow m, MonadIO m) => FilePath -> m FilePath

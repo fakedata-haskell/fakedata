@@ -93,7 +93,7 @@ spec = do
               CO.quarterWindAbbreviation,
               PH.formats,
               PH.cellPhoneFormat,
-              -- PH.countryCode,
+              PH.countryCode,
               BA.name,
               CU.name,
               CR.name,

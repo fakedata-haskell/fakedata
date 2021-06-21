@@ -7,6 +7,7 @@ import Data.Text (Text)
 import qualified Data.Text as T
 import Faker hiding (defaultFakerSettings)
 import qualified Faker.Address as FA
+import qualified Faker.Creature.Animal as CA
 import Faker.Combinators (listOf)
 import qualified Faker.Company as CO
 import qualified Faker.Internet as IN
@@ -18,7 +19,9 @@ import qualified Faker.Game.Pokemon as PO
 import qualified Faker.Appliance as AP
 import qualified Faker.Measurement as ME
 import qualified Faker.Compass as CE
+import qualified Faker.Demographic as DE
 import qualified Faker.Color as CL
+import qualified Faker.Gender as GE
 
 import Test.Hspec
 import TestImport
@@ -48,60 +51,72 @@ spec = do
     it "validates fr locale" $ do
       let functions :: [Fake Text] =
             [
-            --   NA.lastName
-            -- , NA.firstName
-            -- , NA.prefix
-            -- , NA.name
-            -- , NA.nameWithMiddle
 
-            -- , BO.title
-            -- , BO.author
-            -- , BO.publisher
+              NA.femaleFirstName
+            , NA.maleFirstName
+            , NA.lastName
+            , NA.firstName
+            , NA.name
+            , NA.nameWithMiddle
 
-            -- , PO.names
-            -- , PO.locations
-            -- , PO.moves
+            , BO.title
+            , BO.author
+            , BO.publisher
 
-            -- , PH.formats
-            -- , PH.cellPhoneFormat
-            -- , PH.countryCode
+            , PO.names
+            , PO.locations
+            , PO.moves
 
-            -- , FA.city
-            -- , FA.state
-            -- , FA.countryCode
-            -- , FA.buildingNumber
-            -- , FA.secondaryAddress
-            -- , FA.streetSuffix
-            -- , FA.streetName
-            -- , FA.streetAddress
-            -- , FA.fullAddress
-            -- , FA.postcode
+            , PH.formats
+            , PH.cellPhoneFormat
 
-            -- , CL.name
-            -- , CE.cardinalWord
-            -- , CE.cardinalAbbreviation
-            -- , CE.ordinalWord
-            -- , CE.ordinalAbbreviation
-            -- , CE.halfWindWord
-            -- , CE.halfWindAbbreviation
-            -- , CE.direction
-            -- , CE.abbreviation
+            , FA.city
+            , FA.state
+            , FA.countryCode
+            , FA.buildingNumber
+            , FA.secondaryAddress
+            , FA.streetSuffix
+            , FA.streetName
+            , FA.streetAddress
+            , FA.fullAddress
+            , FA.postcode
 
-            -- , IN.freeEmail
-            -- , IN.domainSuffix
+            , CL.name
+            , CE.cardinalWord
+            , CE.cardinalAbbreviation
+            , CE.cardinalAzimuth
+            , CE.ordinalWord
+            , CE.ordinalAbbreviation
+            , CE.ordinalAzimuth
+            , CE.halfWindWord
+            , CE.halfWindAbbreviation
+            , CE.halfWindAzimuth
+            , CE.direction
+            , CE.abbreviation
 
-            -- , CO.suffix
-            -- , CO.name
-            -- , CO.buzzword
-            -- , CO.bs
+            , IN.freeEmail
+            , IN.domainSuffix
 
-            -- , LO.words
-            -- , LO.supplemental
-            -- , ME.metricHeight
-            -- , ME.metricLength
-            -- , ME.metricVolume
-            -- , ME.metricWeight
-            -- , AP.equipment
+            , CO.suffix
+            , CO.name
+            , CO.buzzword
+            , CO.bs
+
+            , LO.words
+            , LO.supplemental
+            , ME.metricHeight
+            , ME.metricLength
+            , ME.metricVolume
+            , ME.metricWeight
+            , AP.equipment
+
+            , CA.name
+
+            , DE.sex
+
+            , GE.types
+            , GE.shortBinaryTypes
+            , GE.binaryTypes
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True
