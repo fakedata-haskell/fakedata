@@ -1,5 +1,6 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Faker.Provider.Address where
 
@@ -14,6 +15,7 @@ import qualified Data.Vector as V
 import Data.Yaml
 import Faker
 import Faker.Internal
+import Faker.Provider.TH
 import Faker.Provider.Name (nameNameProvider, resolveNameField)
 
 parseAddress :: FromJSON a => FakerSettings -> Value -> Parser a
@@ -303,6 +305,14 @@ fullAddressProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
 fullAddressProvider settings = fetchData settings Address parseFullAddress
 
+-- For es-ar locale
+$(genParserUnresolved "address" "road_suffix")
+$(genProviderUnresolved "address" "road_suffix")
+
+$(genParserUnresolved "address" "road_name")
+$(genProviderUnresolved "address" "road_name")
+
+
 -- > resolveCommunityText "#{community_prefix} #{community_suffix}"
 resolveAddressText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
@@ -530,4 +540,23 @@ resolveAddressField settings field@"Name.female_first_name" =
   resolveNameField settings "female_first_name"
 resolveAddressField settings field@"Name.male_first_name" =
   resolveNameField settings "male_first_name"
+resolveAddressField settings field@"road_prefix" =
+  let parser :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+      parser settings = parseAddressField settings field
+      provider settings = fetchData settings Address parser
+   in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"road_suffix" =
+  cachedRandomUnresolvedVec
+    "address"
+    field
+    addressRoadSuffixProvider
+    resolveAddressText
+    settings
+resolveAddressField settings field@"road_name" =
+  cachedRandomUnresolvedVec
+    "address"
+    field
+    addressRoadNameProvider
+    resolveAddressText
+    settings
 resolveAddressField settings str = throwM $ InvalidField "address" str
