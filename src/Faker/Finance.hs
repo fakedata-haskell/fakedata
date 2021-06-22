@@ -32,3 +32,9 @@ $(generateFakeFieldUnresolved "finance" "maestro")
 $(generateFakeFieldUnresolved "finance" "forbrugsforeningen")
 
 $(generateFakeFieldUnresolved "finance" "laser")
+
+-- | @since 1.0
+$(generateFakeFields "finance" ["ticker", "nasdaq"])
+
+-- | @since 1.0
+$(generateFakeFields "finance" ["ticker", "nyse"])

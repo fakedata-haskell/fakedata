@@ -77,7 +77,7 @@ spec = do
       item <- generate GW.monsters
       item `shouldSatisfy` isText
     it "WorldOfWarcraft" $ do
-      item <- generate GWOW.hero
+      item <- generate GWOW.heros
       item `shouldSatisfy` isText
     it "Zelda" $ do
       item <- generate GZ.items

@@ -12,6 +12,7 @@ data SourceData
   = Address
   | Name
   | Ancient
+  | Adjective
   | Animal
   | App
   | Appliance
@@ -20,15 +21,20 @@ data SourceData
   | Basketball
   | BTTF
   | Bank
+  | Bird
   | Beer
   | BoJackHorseman
   | BigBangTheory
   | Book
   | Blood
+  | Camera
+  | ClashOfClans
   | Chiquito
   | Computer
   | Control
+  | Conan
   | DnD
+  | Doraemon
   | PearlJam
   | Departed
   | BossaNova
@@ -68,6 +74,7 @@ data SourceData
   | Fallout
   | FamilyGuy
   | File
+  | FinalSpace
   | Finance
   | Food
   | Football
@@ -90,6 +97,8 @@ data SourceData
   | Hobbit
   | House
   | HowIMetYourMother
+  | HowToTrainYourDragon
+  | JackHandey
   | IdNumber
   | IndustrySegments
   | Internet
@@ -107,9 +116,11 @@ data SourceData
   | MichaelScott
   | Military
   | Movie
+  | Mountain
   | Music
   | Myst
   | Nation
+  | Naruto
   | NatoPhoneticAlphabet
   | NewGirl
   | OnePiece
@@ -126,6 +137,7 @@ data SourceData
   | Restaurant
   | RickAndMorty
   | RockBand
+  | Room
   | Rupaul
   | Science
   | Seinfeld
@@ -144,19 +156,24 @@ data SourceData
   | Stripe
   | Subscription
   | SuperSmashBros
+  | SuperMario
   | SuperHero
   | SwordArtOnline
+  | Tea
   | Team
   | TheExpanse
   | TheItCrowd
   | TheThickOfIt
   | TwinPeaks
+  | Tolkien
+  | Touhou
   | UmphreysMcgee
   | University
   | VForVendetta
   | Vehicle
   | VentureBros
   | Verbs
+  | Volleyball
   | Witcher
   | WorldCup
   | WorldOfWarcraft

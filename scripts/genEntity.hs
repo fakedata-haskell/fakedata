@@ -1,10 +1,11 @@
 #!/usr/bin/env stack
--- stack script --resolver lts-12.7
+-- stack script --resolver lts-18.0
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE PackageImports #-}
 
 import Data.Char (toUpper)
-import Data.String.Interpolate
+import "interpolate" Data.String.Interpolate
 import FakeModuleInfo
 import System.FilePath ((<.>))
 

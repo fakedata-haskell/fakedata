@@ -55,3 +55,7 @@ $(genProvider "heroes" "specialties")
 $(genParser "heroes" "klasses")
 
 $(genProvider "heroes" "klasses")
+
+$(genParser "heroes" "artifacts")
+
+$(genProvider "heroes" "artifacts")

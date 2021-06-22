@@ -22,3 +22,9 @@ $(generateFakeField "elderScrolls" "city")
 $(generateFakeField "elderScrolls" "first_name")
 
 $(generateFakeField "elderScrolls" "last_name")
+
+-- | @since 1.0
+$(generateFakeField "elderScrolls" "weapon")
+
+-- | @since 1.0
+$(generateFakeField "elderScrolls" "jewelry")

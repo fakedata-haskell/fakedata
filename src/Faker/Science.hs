@@ -14,3 +14,9 @@ $(generateFakeField "science" "element")
 $(generateFakeField "science" "element_symbol")
 
 $(generateFakeField "science" "scientist")
+
+-- | @since 1.0
+$(generateFakeField "science" "element_state")
+
+-- | @since 1.0
+$(generateFakeField "science" "element_subcategory")

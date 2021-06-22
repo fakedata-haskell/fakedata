@@ -13,6 +13,8 @@ extra-source-files:
 data-files:
 - faker/lib/locales/*yml
 - faker/lib/locales/en/*yml
+- faker/lib/locales/ja/*yml
+- faker/lib/locales/fr/*yml
 - customFakeSource/en/*yml
 
 # Metadata used when publishing your package
@@ -53,18 +55,20 @@ library:
   - Config
   - Faker.TH
   - Faker.Provider.Address
+  - Faker.Provider.Adjective
   - Faker.Provider.Ancient
   - Faker.Provider.Animal
-  - Faker.Provider.Barcode
   - Faker.Provider.App
   - Faker.Provider.Appliance
   - Faker.Provider.AquaTeenHungerForce
   - Faker.Provider.Artist
   - Faker.Provider.BackToTheFuture
   - Faker.Provider.Bank
+  - Faker.Provider.Barcode
   - Faker.Provider.Basketball
-  - Faker.Provider.BigBangTheory
   - Faker.Provider.Beer
+  - Faker.Provider.BigBangTheory
+  - Faker.Provider.Bird
   - Faker.Provider.Blood
   - Faker.Provider.BoJackHorseman
   - Faker.Provider.Book
@@ -72,10 +76,12 @@ library:
   - Faker.Provider.BreakingBad
   - Faker.Provider.Buffy
   - Faker.Provider.Business
+  - Faker.Provider.Camera
   - Faker.Provider.Cannabis
   - Faker.Provider.Cat
   - Faker.Provider.Chiquito
   - Faker.Provider.ChuckNorris
+  - Faker.Provider.ClashOfClans
   - Faker.Provider.Code
   - Faker.Provider.Coffee
   - Faker.Provider.Coin
@@ -85,14 +91,13 @@ library:
   - Faker.Provider.Company
   - Faker.Provider.Compass
   - Faker.Provider.Computer
+  - Faker.Provider.Conan
   - Faker.Provider.Construction
   - Faker.Provider.Control
   - Faker.Provider.Cosmere
   - Faker.Provider.CryptoCoin
   - Faker.Provider.CultureSeries
   - Faker.Provider.Currency
-  - Faker.Provider.DrivingLicense
-  - Faker.Provider.Drone
   - Faker.Provider.DcComics
   - Faker.Provider.Demographic
   - Faker.Provider.Departed
@@ -100,8 +105,11 @@ library:
   - Faker.Provider.Device
   - Faker.Provider.Dnd
   - Faker.Provider.Dog
+  - Faker.Provider.Doraemon
   - Faker.Provider.Dota
   - Faker.Provider.DragonBall
+  - Faker.Provider.DrivingLicense
+  - Faker.Provider.Drone
   - Faker.Provider.DrWho
   - Faker.Provider.DumbAndDumber
   - Faker.Provider.Dune
@@ -112,6 +120,7 @@ library:
   - Faker.Provider.Fallout
   - Faker.Provider.FamilyGuy
   - Faker.Provider.File
+  - Faker.Provider.FinalSpace
   - Faker.Provider.Finance
   - Faker.Provider.Food
   - Faker.Provider.Football
@@ -132,17 +141,17 @@ library:
   - Faker.Provider.HeyArnold
   - Faker.Provider.Hipster
   - Faker.Provider.HitchhikersGuideToTheGalaxy
-  - Faker.Provider.Hobbit
   - Faker.Provider.Horse
   - Faker.Provider.House
   - Faker.Provider.HowIMetYourMother
+  - Faker.Provider.HowToTrainYourDragon
   - Faker.Provider.IndustrySegments
   - Faker.Provider.Internet
+  - Faker.Provider.JackHandey
   - Faker.Provider.Job
   - Faker.Provider.Kpop
   - Faker.Provider.LeagueOfLegends
   - Faker.Provider.Lebowski
-  - Faker.Provider.LordOfTheRings
   - Faker.Provider.Lorem
   - Faker.Provider.Lovecraft
   - Faker.Provider.Markdown
@@ -150,11 +159,13 @@ library:
   - Faker.Provider.Measurement
   - Faker.Provider.MichaelScott
   - Faker.Provider.Military
+  - Faker.Provider.Minecraft
+  - Faker.Provider.Mountain
   - Faker.Provider.Movie
   - Faker.Provider.Music
   - Faker.Provider.Myst
-  - Faker.Provider.Minecraft
   - Faker.Provider.Name
+  - Faker.Provider.Naruto
   - Faker.Provider.Nation
   - Faker.Provider.NatoPhoneticAlphabet
   - Faker.Provider.NewGirl
@@ -166,6 +177,7 @@ library:
   - Faker.Provider.Phish
   - Faker.Provider.PhoneNumber
   - Faker.Provider.Pokemon
+  - Faker.Provider.Prince
   - Faker.Provider.PrincessBride
   - Faker.Provider.ProgrammingLanguage
   - Faker.Provider.Quote
@@ -174,6 +186,7 @@ library:
   - Faker.Provider.Restaurant
   - Faker.Provider.RickAndMorty
   - Faker.Provider.RockBand
+  - Faker.Provider.Room
   - Faker.Provider.Rupaul
   - Faker.Provider.Rush
   - Faker.Provider.Science
@@ -192,17 +205,21 @@ library:
   - Faker.Provider.StarWars
   - Faker.Provider.StrangerThings
   - Faker.Provider.StreetFighter
+  - Faker.Provider.StudioGhibli
   - Faker.Provider.Subscription
   - Faker.Provider.Suits
   - Faker.Provider.Superhero
+  - Faker.Provider.SuperMario
   - Faker.Provider.SuperSmashBros
   - Faker.Provider.SwordArtOnline
-  - Faker.Provider.StudioGhibli
+  - Faker.Provider.Tea
   - Faker.Provider.Team
+  - Faker.Provider.TH
   - Faker.Provider.TheExpanse
   - Faker.Provider.TheItCrowd
   - Faker.Provider.TheThickOfIt
-  - Faker.Provider.TH
+  - Faker.Provider.Tolkien
+  - Faker.Provider.Touhou
   - Faker.Provider.TwinPeaks
   - Faker.Provider.UmphreysMcgee
   - Faker.Provider.University
@@ -210,6 +227,7 @@ library:
   - Faker.Provider.VentureBros
   - Faker.Provider.Verbs
   - Faker.Provider.VForVendetta
+  - Faker.Provider.Volleyball
   - Faker.Provider.WarhammerFantasy
   - Faker.Provider.Witcher
   - Faker.Provider.WorldCup

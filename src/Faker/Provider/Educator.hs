@@ -96,6 +96,10 @@ $(genParserUnresolved "educator" "university")
 
 $(genProviderUnresolved "educator" "university")
 
+$(genParserUnresolved "educator" "primary_school")
+
+$(genProviderUnresolved "educator" "primary_school")
+
 $(genParserUnresolved "educator" "secondary_school")
 
 $(genProviderUnresolved "educator" "secondary_school")
@@ -107,6 +111,10 @@ $(genProviderUnresolved "educator" "campus")
 $(genParser "educator" "subject")
 
 $(genProvider "educator" "subject")
+
+$(genParser "educator" "primary")
+
+$(genProvider "educator" "primary")
 
 $(genParserUnresolved "educator" "degree")
 
@@ -158,4 +166,8 @@ resolveEducatorField settings field@"Educator.tertiary.degree.course_number" =
     educatorTertiaryDegreeCourseNumberProvider
     resolveEducatorText
     settings
+resolveEducatorField settings field@"primary" =
+  cachedRandomVec "educator" field educatorPrimaryProvider settings
+resolveEducatorField settings field@"school_name" =
+  cachedRandomVec "educator" "school_name" educatorSchoolNameProvider settings
 resolveEducatorField settings str = throwM $ InvalidField "educator" str

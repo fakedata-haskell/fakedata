@@ -27,6 +27,7 @@ import qualified Faker.Food as FO
 import qualified Faker.Team as TE
 import qualified Faker.Job as JO
 import qualified Faker.University as UN
+import qualified Faker.Yoda as YO
 
 import Test.Hspec
 import TestImport
@@ -55,7 +56,7 @@ spec = do
   describe "TextSpec" $ do
     it "validates ru locale" $ do
       let functions :: [Fake Text] =
-            [ 
+            [
               NA.lastName
             , NA.maleFirstName
             , NA.femaleFirstName
@@ -76,16 +77,18 @@ spec = do
             , FA.streetSuffix
             , FA.secondaryAddress
             , FA.state
-              
+
             , CE.department
             , CE.productNameAdjective
             , CE.productNameProduct
             , CE.productNameMaterial
-              
+
             , IN.domainSuffix
             , IN.freeEmail
 
             , CO.name
+
+            , YO.quotes
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

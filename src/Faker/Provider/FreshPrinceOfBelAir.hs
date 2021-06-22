@@ -49,9 +49,9 @@ $(genParser "freshPrinceOfBelAir" "characters")
 
 $(genProvider "freshPrinceOfBelAir" "characters")
 
-$(genParser "freshPrinceOfBelAir" "celebrities")
+$(genParser "freshPrinceOfBelAir" "actors")
 
-$(genProvider "freshPrinceOfBelAir" "celebrities")
+$(genProvider "freshPrinceOfBelAir" "actors")
 
 $(genParser "freshPrinceOfBelAir" "quotes")
 

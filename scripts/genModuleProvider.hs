@@ -1,10 +1,11 @@
 #!/usr/bin/env stack
--- stack script --resolver lts-12.7
+-- stack script --resolver lts-18.0
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE PackageImports #-}
 
 import Data.Char (toUpper)
-import Data.String.Interpolate
+import "interpolate" Data.String.Interpolate
 import FakeModuleInfo
 import System.FilePath ((<.>))
 
@@ -75,9 +76,7 @@ parse#{capModname}Fields settings txts val = do
 
 #{generateNestedField1}
 
-#{unresolvedFns2}
-
-|]
+#{unresolvedFns2}|]
   where
     unresolvedNested :: String
     unresolvedNested =
@@ -101,8 +100,7 @@ parseUnresolved#{capModname}Fields settings txts val = do
       helper field xs
     helper a _ = fail $ "expect Object, but got " <> (show a)
 
-#{unresolvedFns1}
-|]
+#{unresolvedFns1}|]
     -- unresolvedNFn :: [String] -> String
     -- unresolvedNFn
     unresolvedFn :: [String] -> String
@@ -129,7 +127,6 @@ $(genProviderUnresolveds "#{mmoduleName}" #{show field})
 $(genParser "#{mmoduleName}" "#{field}")
 
 $(genProvider "#{mmoduleName}" "#{field}")
-
 |]
     genFields :: [String]
     genFields = map genField fields
@@ -139,8 +136,7 @@ $(genProvider "#{mmoduleName}" "#{field}")
     unresolvedField field =
       [i|
 $(genParserUnresolved "#{mmoduleName}" "#{field}")
-$(genProviderUnresolved "#{mmoduleName}" "#{field}")
-|]
+$(genProviderUnresolved "#{mmoduleName}" "#{field}")|]
     unres :: [String]
     unres = map unresolvedField unresolvedFields
     unresolved :: String
@@ -158,22 +154,19 @@ resolve#{capModname}Text = genericResolver' resolve#{capModname}Field
 
 resolve#{capModname}Field :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 #{generateresolveFieldFns}
-resolve#{capModname}Field settings str = throwM $ InvalidField "#{mmoduleName}" str
-|]
+resolve#{capModname}Field settings str = throwM $ InvalidField "#{mmoduleName}" str|]
     generateresolveFieldFn :: String -> String
     generateresolveFieldFn field =
       let cf = capitalize field
        in [i|
 resolve#{capModname}Field settings undefined =
-  cacheRandomUnresolvedVec settings #{field}Provider resolve#{cf}Text
-|]
+  cacheRandomUnresolvedVec settings #{field}Provider resolve#{cf}Text|]
     generateNestedField1 = concat $ map generateNestedField nestedFields
     generateNestedField :: [String] -> String
     generateNestedField field =
       [i|
 $(genParsers "#{mmoduleName}" #{show field})
 $(genProviders "#{mmoduleName}" #{show field})
-
 |]
     generateresolveFieldFnsString :: String
     generateresolveFieldFnsString =

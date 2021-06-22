@@ -56,6 +56,10 @@ $(genParser "dune" "planets")
 
 $(genProvider "dune" "planets")
 
+$(genParser "dune" "cities")
+
+$(genProvider "dune" "cities")
+
 $(genParsers "dune" ["quotes", "guild_navigator"])
 
 $(genProviders "dune" ["quotes", "guild_navigator"])

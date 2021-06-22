@@ -56,6 +56,7 @@ sourceFile :: SourceData -> FilePath
 sourceFile Address = "address"
 sourceFile Name = "name"
 sourceFile Ancient = "ancient"
+sourceFile Adjective = "adjective"
 sourceFile Animal = "animal"
 sourceFile App = "app"
 sourceFile Appliance = "appliance"
@@ -111,6 +112,7 @@ sourceFile Football = "football"
 sourceFile FreshPrinceOfBelAir = "fresh_prince_of_bel_air"
 sourceFile Friends = "friends"
 sourceFile FunnyName = "funny_name"
+sourceFile JackHandey = "jack_handey"
 sourceFile GameOfThrones = "game_of_thrones"
 sourceFile Gender = "gender"
 sourceFile GhostBusters = "ghostbusters"
@@ -220,6 +222,21 @@ sourceFile Prince = "prince"
 sourceFile Rush = "rush"
 sourceFile StreetFighter = "street_fighter"
 sourceFile StudioGhibli = "studio_ghibli"
+sourceFile Bird = "bird"
+sourceFile Camera = "camera"
+sourceFile ClashOfClans = "clash_of_clan"
+sourceFile Conan = "conan"
+sourceFile Doraemon = "doraemon"
+sourceFile FinalSpace = "final_space"
+sourceFile HowToTrainYourDragon = "how_to_train_your_dragon"
+sourceFile Mountain = "mountain"
+sourceFile Naruto = "naruto"
+sourceFile Room = "room"
+sourceFile SuperMario = "super_mario"
+sourceFile Tea = "tea"
+sourceFile Tolkien = "tolkien"
+sourceFile Touhou = "touhou"
+sourceFile Volleyball = "volleyball"
 
 mapSource :: Text -> Name
 mapSource "studioGhibli" = 'StudioGhibli
@@ -389,6 +406,23 @@ mapSource "rajnikanth" = 'Rajnikanth
 mapSource "show" = 'Show
 mapSource "suits" = 'Suits
 mapSource "warhammerFantasy" = 'WarhammerFantasy
+mapSource "adjective" = 'Adjective
+mapSource "bird" = 'Bird
+mapSource "camera" = 'Camera
+mapSource "clashOfClans" = 'ClashOfClans
+mapSource "conan" = 'Conan
+mapSource "doraemon" = 'Doraemon
+mapSource "finalSpace" = 'FinalSpace
+mapSource "howToTrainYourDragon" = 'HowToTrainYourDragon
+mapSource "jackHandey" = 'JackHandey
+mapSource "mountain" = 'Mountain
+mapSource "naruto" = 'Naruto
+mapSource "room" = 'Room
+mapSource "superMario" = 'SuperMario
+mapSource "tea" = 'Tea
+mapSource "tolkien" = 'Tolkien
+mapSource "touhou" = 'Touhou
+mapSource "volleyball" = 'Volleyball
 mapSource item = error $ "mapSource: Invalid argument passed " <> (show item)
 
 guessSourceFile :: SourceData -> Text -> FilePath
@@ -398,6 +432,8 @@ guessSourceFile sdata sysloc =
       case sdata of
         Finance -> localesCustomEnDirectory </> (sourceFile sdata) <.> "yml"
         sdata' -> localesEnDirectory </> (sourceFile sdata') <.> "yml"
+    "ja" -> localesDirectory </> "ja" </> (sourceFile sdata) <> ".yml"
+    "fr" -> localesDirectory </> "fr" </> (sourceFile sdata) <> ".yml"
     oth -> localesDirectory </> (unpack oth <> ".yml")
 
 getSourceFile :: (MonadThrow m, MonadIO m) => FilePath -> m FilePath

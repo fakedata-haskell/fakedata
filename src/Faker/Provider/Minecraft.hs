@@ -83,13 +83,22 @@ $(genParser "minecraft" "mobs")
 
 $(genProvider "minecraft" "mobs")
 
+$(genParser "minecraft" "achievement")
 
+$(genProvider "minecraft" "achievement")
 
+$(genParser "minecraft" "biome")
 
+$(genProvider "minecraft" "biome")
 
+$(genParser "minecraft" "enchantment")
 
+$(genProvider "minecraft" "enchantment")
 
+$(genParser "minecraft" "game_mode")
 
+$(genProvider "minecraft" "game_mode")
 
+$(genParser "minecraft" "status_effect")
 
-
+$(genProvider "minecraft" "status_effect")

@@ -10,3 +10,9 @@ import Faker.Provider.DragonBall
 import Faker.TH
 
 $(generateFakeField "dragonBall" "characters")
+
+-- | @since 1.0
+$(generateFakeField "dragonBall" "races")
+
+-- | @since 1.0
+$(generateFakeField "dragonBall" "planets")

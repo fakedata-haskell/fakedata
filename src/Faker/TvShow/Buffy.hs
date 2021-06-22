@@ -13,7 +13,8 @@ $(generateFakeField "buffy" "characters")
 
 $(generateFakeField "buffy" "quotes")
 
-$(generateFakeField "buffy" "celebrities")
+-- | @since 1.0
+$(generateFakeField "buffy" "actors")
 
 $(generateFakeField "buffy" "big_bads")
 

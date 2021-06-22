@@ -15,12 +15,16 @@ import qualified Faker.PhoneNumber as PH
 import qualified Faker.Book as BO
 import qualified Faker.Lorem as LO
 import qualified Faker.Game.Pokemon as PO
+import qualified Faker.Game.Overwatch as OW
+import qualified Faker.Game.SuperMario as SM
 import qualified Faker.Appliance as AP
 import qualified Faker.Measurement as ME
+import qualified Faker.Subscription as SU
 import qualified Faker.Compass as CE
 import qualified Faker.Color as CL
 import qualified Faker.University as UN
 import qualified Faker.Space as SP
+import qualified Faker.Commerce as CU
 import Faker.Ancient
 import Faker.Food
 import Faker.Game.Zelda
@@ -58,17 +62,17 @@ spec = do
   describe "TextSpec" $ do
     it "validates ja locale" $ do
       let functions :: [Fake Text] =
-            [ 
+            [
               NA.lastName
             , NA.firstName
             , NA.name
             , NA.nameWithMiddle
-              
+
             , RE.namePrefix
             , RE.nameSuffix
             , RE.name
             , RE.type'
-              
+
             , PH.formats
             , PH.cellPhoneFormat
             , CL.name
@@ -76,7 +80,7 @@ spec = do
 
             , SP.planet
             , SP.galaxy
-              
+
             , UN.prefix
             , UN.suffix
             , UN.name
@@ -88,13 +92,19 @@ spec = do
             , FA.state
             , FA.stateAbbr
             , FA.streetName
-              
+
             , Faker.Bank.name
             , Faker.Creature.Animal.name
             , Faker.Creature.Cat.breed
             , Faker.Creature.Dog.breed
             , Faker.Ancient.god
-              
+
+            , BO.title
+            , BO.author
+            , BO.publisher
+            , BO.genre
+
+
             , CO.suffix
             , CO.name
 
@@ -103,12 +113,30 @@ spec = do
             , PO.names
             , PO.locations
             , PO.moves
-            
+            , OW.heroes
+            , SM.characters
+            , SM.games
+            , SM.locations
+
             , Faker.Game.Zelda.games
+
             , Faker.Gender.binaryTypes
 
             , LO.words
             , LO.supplemental
+
+            , CU.department
+            , CU.productNameAdjective
+            , CU.productNameMaterial
+            , CU.productNameProduct
+            , CU.promotionCodeNoun
+            , CU.promotionCodeAdjective
+
+            , SU.plans
+            , SU.statuses
+            , SU.paymentMethods
+            , SU.subscriptionTerms
+            , SU.paymentTerms
             ]
       bools <- verifyDistributeFakes functions
       (and bools) `shouldBe` True

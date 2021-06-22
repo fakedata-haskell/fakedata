@@ -2,16 +2,105 @@
 
 ## 1.0 (Unreleased)
 
+### Breaking changes
+
 * [Make `Fake` as monad
-  transformer.](https://github.com/fakedata-haskell/fakedata/pull/32).
+  transformer.](https://github.com/fakedata-haskell/fakedata/pull/32). This
+  makes writing code with good performance easily.
+* Rename `celebrities` to `actors` in Faker.TvShow.Buffy module.
+* Rename `celebrities` to `actors` in Faker.TvShow.FreshPrinceOfBelAir module.
+* Removed module `Faker.Movie.Hobbit`. Use `Faker.Fantasy.Tolkien`
+  instead.
+* Removed module `Faker.Movie.LordOfTheRings`. Use
+  `Faker.Fantasy.Tolkien` instead.
+* `Faker.Minecraft` moved to `Faker.Game.Minecraft`
+* Faker.Game.WorldOfWarcraft: `hero` function renamed to `heros`
 
-## 0.8.1
+### New modules introduced
 
-### Company
+* Faker.Adjective
+* Faker.Creature.Bird
+* Faker.Camera
+* Faker.Game.ClashOfClans
+* Faker.JapaneseMedia.Conan
+* Faker.JapaneseMedia.Doraemon
+* Faker.TvShow.FinalSpace
+* Faker.Movie.HowToTrainYourDragon
+* Faker.Quote.JackHandey
+* Faker.Mountain
+* Faker.JapaneseMedia.Naruto
+* Faker.Movie.Room
+* Faker.Game.SuperMario
+* Faker.Tea
+* Faker.Fantasy.Tolkien
+* Faker.Game.Touhou
+* Faker.Sport.Volleyball
 
-* Add company email
-* Add company domain
-* Use quickcheck to verify both
+### Module updates
+
+* Faker.JapaneseMedia.DragonBall: `races`, `planets` added.
+* Faker.DrivingLicense: `usaNorthDakota` added.
+* Faker.Book.Dune: `cities` added
+* Faker.Educator: `primary` and `primarySchool` added.
+* Faker.Game.ElderScrolls: `weapon` and `jewelry` added
+* Faker.Finance: `tickerNasdaq` and `tickerNyse` added
+* Faker.Game.Heroes: `artifacts` added.
+* Faker.Military: `coast_guard_rank` and `space_force_rank` added.
+* Faker.Game.Mincecraft: Following functions are added
+  - achievement
+  - biome
+  - enchantment
+  - gameMode
+  - statusEffect
+* Faker.Music: `mamboNo5` and hiphop functions added.
+* Various new functions added to Faker.Opera
+* Faker.Quote: `fortuneCookie` added.
+* Faker.Music.RockBand: `song` added.
+* Faker.Science: `elementState` and `elementSubCategory` added.
+* Various new functions added to Faker.Source.
+* Faker.Game.Witcher: `signs`, `potions` and `books` added.
+* Faker.Game.WorldOfWarcraft: `classNames` and `races` added.
+
+### Locale Improvements
+
+* es-AR localed added
+* id.yml: stateAbbr added
+* pt-BR: countryCode added, ingredients and licensePlate updated.
+* ru: Faker.Yoda.quotes added
+* uk: Faker.Address.fullAddress added
+* ja: Faker.Book, Faker.Commerce and Faker.Subscription module works now
+* fr: Faker.Creature.Animal, Faker.Gender works now
+
+### Data Update
+
+The following data sources which the libraries uses has been updated:
+
+* de.yml
+* en/animal.yml
+* en/book.yml
+* en/company.yml
+* en/demographic.yml
+* en/device.yml
+* en/dota.yml
+* en/fallout.yml
+* en/football.yml
+* en/half_life.yml
+* en/heroes_of_the_storm.yml
+* en/horse.yml
+* en/kpop.yml
+* en/league_of_legends.yml
+* en/lebowski.yml
+* en/lovecraft.yml
+* en/myst.yml
+* en/overwatch.yml
+* en/pokemon.yml
+* en/shakespeare.yml
+* en/space.yml
+* en/street_fighter.yml
+* en/studio_ghibli.yml
+* en/super_smash_bros.yml
+* en-us.yml
+* en/zelda.yml
 
 ## 0.8.0
 

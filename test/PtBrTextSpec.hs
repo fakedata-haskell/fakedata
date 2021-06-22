@@ -67,6 +67,7 @@ spec = do
             , NA.nameWithMiddle
             , PH.formats
             , PH.cellPhoneFormat
+            , PH.countryCode
             , TE.name
             , TE.sport
             , FO.ingredients

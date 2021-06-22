@@ -15,6 +15,9 @@ $(generateFakeField "dune" "titles")
 
 $(generateFakeField "dune" "planets")
 
+-- | @since 1.0
+$(generateFakeField "dune" "cities")
+
 $(generateFakeFields "dune" ["quotes", "guild_navigator"])
 
 $(generateFakeFields "dune" ["quotes", "emperor"])

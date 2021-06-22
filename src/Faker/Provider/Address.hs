@@ -1,5 +1,6 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Faker.Provider.Address where
 
@@ -14,6 +15,7 @@ import qualified Data.Vector as V
 import Data.Yaml
 import Faker
 import Faker.Internal
+import Faker.Provider.TH
 import Faker.Provider.Name (nameNameProvider, resolveNameField)
 
 parseAddress :: FromJSON a => FakerSettings -> Value -> Parser a
@@ -52,6 +54,25 @@ parsePlaceNames settings = parseAddressField settings "place_names"
 placeNamesProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
 placeNamesProvider settings = fetchData settings Address parsePlaceNames
+
+-- for es-AR locale
+parseFemaleCitySaintPrefix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseFemaleCitySaintPrefix settings = parseAddressField settings "female_city_saint_prefix"
+
+femaleCitySaintPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+femaleCitySaintPrefixProvider settings = fetchDataSingle settings Address parseFemaleCitySaintPrefix
+
+parseMaleCitySaintPrefix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseMaleCitySaintPrefix settings = parseAddressField settings "male_city_saint_prefix"
+
+maleCitySaintPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+maleCitySaintPrefixProvider settings = fetchDataSingle settings Address parseMaleCitySaintPrefix
+
+parseArmyCityPrefix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+parseArmyCityPrefix settings = parseAddressField settings "army_city_prefix"
+
+armyCityPrefixProvider :: (MonadThrow m, MonadIO m) => FakerSettings -> m (Vector Text)
+armyCityPrefixProvider settings = fetchDataSingle settings Address parseArmyCityPrefix
 
 parseCitySuffix :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
 parseCitySuffix settings = parseAddressField settings "city_suffix"
@@ -284,6 +305,14 @@ fullAddressProvider ::
      (MonadThrow m, MonadIO m) => FakerSettings -> m (Unresolved (Vector Text))
 fullAddressProvider settings = fetchData settings Address parseFullAddress
 
+-- For es-ar locale
+$(genParserUnresolved "address" "road_suffix")
+$(genProviderUnresolved "address" "road_suffix")
+
+$(genParserUnresolved "address" "road_name")
+$(genProviderUnresolved "address" "road_name")
+
+
 -- > resolveCommunityText "#{community_prefix} #{community_suffix}"
 resolveAddressText ::
      (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
@@ -501,4 +530,33 @@ resolveAddressField settings field@"the" =
       parser settings = parseAddressField settings field
       provider settings = fetchData settings Address parser
    in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"female_city_saint_prefix" =
+  cachedRandomVec "address" field femaleCitySaintPrefixProvider settings
+resolveAddressField settings field@"male_city_saint_prefix" =
+  cachedRandomVec "address" field maleCitySaintPrefixProvider settings
+resolveAddressField settings field@"army_city_prefix" =
+  cachedRandomVec "address" field armyCityPrefixProvider settings
+resolveAddressField settings field@"Name.female_first_name" =
+  resolveNameField settings "female_first_name"
+resolveAddressField settings field@"Name.male_first_name" =
+  resolveNameField settings "male_first_name"
+resolveAddressField settings field@"road_prefix" =
+  let parser :: (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a
+      parser settings = parseAddressField settings field
+      provider settings = fetchData settings Address parser
+   in cachedRandomVec "address" field provider settings
+resolveAddressField settings field@"road_suffix" =
+  cachedRandomUnresolvedVec
+    "address"
+    field
+    addressRoadSuffixProvider
+    resolveAddressText
+    settings
+resolveAddressField settings field@"road_name" =
+  cachedRandomUnresolvedVec
+    "address"
+    field
+    addressRoadNameProvider
+    resolveAddressText
+    settings
 resolveAddressField settings str = throwM $ InvalidField "address" str

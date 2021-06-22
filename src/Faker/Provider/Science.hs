@@ -55,3 +55,11 @@ $(genProvider "science" "element_symbol")
 $(genParser "science" "scientist")
 
 $(genProvider "science" "scientist")
+
+$(genParser "science" "element_state")
+
+$(genProvider "science" "element_state")
+
+$(genParser "science" "element_subcategory")
+
+$(genProvider "science" "element_subcategory")

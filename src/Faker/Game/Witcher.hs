@@ -20,3 +20,12 @@ $(generateFakeField "witcher" "locations")
 $(generateFakeField "witcher" "quotes")
 
 $(generateFakeField "witcher" "monsters")
+
+-- | @since 1.0
+$(generateFakeField "witcher" "signs")
+
+-- | @since 1.0
+$(generateFakeField "witcher" "potions")
+
+-- | @since 1.0
+$(generateFakeField "witcher" "books")

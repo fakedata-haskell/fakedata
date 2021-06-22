@@ -11,6 +11,7 @@ import Faker.TH
 
 $(generateFakeField "freshPrinceOfBelAir" "characters")
 
-$(generateFakeField "freshPrinceOfBelAir" "celebrities")
+-- | @since 1.0
+$(generateFakeField "freshPrinceOfBelAir" "actors")
 
 $(generateFakeField "freshPrinceOfBelAir" "quotes")

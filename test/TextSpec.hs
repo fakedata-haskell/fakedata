@@ -96,9 +96,7 @@ import qualified Faker.Movie.Ghostbusters as GH
 import qualified Faker.Movie.GratefulDead as GR
 import qualified Faker.Movie.HarryPotter as HA
 import qualified Faker.Movie.HitchhikersGuideToTheGalaxy as HI
-import qualified Faker.Movie.Hobbit as HO
 import qualified Faker.Movie.Lebowski as LE
-import qualified Faker.Movie.LordOfTheRings as LO
 import qualified Faker.Movie.PrincessBride as PR
 import qualified Faker.Movie.StarWars as ST
 import qualified Faker.Movie.VForVendetta as VF
@@ -207,20 +205,6 @@ fakeQuickcheck f = do
     randomGen <- mkStdGen <$> Q.choose (minBound, maxBound)
     pure $!
         unsafePerformIO $
-        -- (parsonsmatt): OK so `unsafePerformIO` is bad, unless you know exactly
-        -- what you're doing, so do I know exactly what I am doing? Perhaps I can
-        -- convince you.
-        --
-        -- The Faker library doesn't keep the data as Haskell values, but stores it
-        -- in `data-files`. The code that generates this fake data loads the values
-        -- from the `data-files` for the library. That's what happens in IO. It is
-        -- possible that the data-file is missing, and an exception will be thrown.
-        -- However, no mutating actions are performed. I believe this is a safe use
-        -- of 'unsafePerformIO'.
-        --
-        -- The alternative would be to lift it into `GenT IO a`, which is
-        -- undesirable, as it would harm composition with basically any other
-        -- generator.
         Faker.generateWithSettings
             (Faker.setRandomGen
               randomGen
@@ -364,7 +348,8 @@ spec = do
               DU.sayingsFremen,
               DU.sayingsMentat,
               DU.sayingsMuaddib,
-              DU.sayingsOrangeCatholicBible
+              DU.sayingsOrangeCatholicBible,
+              DU.cities
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -688,7 +673,8 @@ spec = do
               DR.usaWashington,
               DR.usaWestVirginia,
               DR.usaWisconsin,
-              DR.usaWyoming
+              DR.usaWyoming,
+              DR.usaNorthDakota
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -718,7 +704,9 @@ spec = do
               ED.courseName,
               ED.tertiaryUniversityType,
               ED.tertiaryDegreeType,
-              ED.tertiaryDegreeCourseNumber
+              ED.tertiaryDegreeCourseNumber,
+              ED.primary,
+              ED.primarySchool
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -903,12 +891,20 @@ spec = do
               WI.schools,
               WI.locations,
               WI.quotes,
-              WI.monsters
+              WI.monsters,
+              WI.signs,
+              WI.potions,
+              WI.books
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.WorldOfwarcraft" $ do
-      let functions :: [Fake Text] = [WO.hero, WO.quotes]
+      let functions :: [Fake Text] = [
+                                 WO.heros
+                                , WO.quotes
+                                , WO.classNames
+                                , WO.races
+                                ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Game.Zelda" $ do
@@ -928,8 +924,8 @@ spec = do
       let functions :: [Fake Text] =
             [ SF.characters,
               SF.stages,
-              SF.quotes
-              -- SF.moves
+              SF.quotes,
+              SF.moves
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -975,7 +971,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "JapaneseMedia.DragonBall" $ do
-      let functions :: [Fake Text] = [DR.characters]
+      let functions :: [Fake Text] = [DR.characters, DR.races, DR.planets]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "JapaneseMedia.OnePiece" $ do
@@ -1067,7 +1063,9 @@ spec = do
               MI.marinesRank,
               MI.navyRank,
               MI.airForceRank,
-              MI.dodPaygrade
+              MI.dodPaygrade,
+              MI.coastGuardRank,
+              MI.spaceForceRank
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1110,17 +1108,8 @@ spec = do
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
-    it "Movie.Hobbit" $ do
-      let functions :: [Fake Text] =
-            [HO.character, HO.thorinsCompany, HO.quote, HO.location]
-      bools <- verifyFakes functions
-      (and bools) `shouldBe` True
     it "Movie.Lebowski" $ do
       let functions :: [Fake Text] = [LE.actors, LE.characters, LE.quotes]
-      bools <- verifyFakes functions
-      (and bools) `shouldBe` True
-    it "Movie.LordOfTheRings" $ do
-      let functions :: [Fake Text] = [LO.characters, LO.locations, LO.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Movie.PrincessBride" $ do
@@ -1216,7 +1205,23 @@ spec = do
             [ OP.italianByGiuseppeVerdi,
               OP.italianByGioacchinoRossini,
               OP.italianByGaetanoDonizetti,
-              OP.italianByVincenzoBellini
+              OP.italianByVincenzoBellini,
+              OP.italianByChristophWillibaldGluck,
+              OP.italianByWolfgangAmadeusMozart,
+              OP.germanByWolfgangAmadeusMozart,
+              OP.germanByLudwigVanBeethoven,
+              OP.germanByCarlMariaVonWeber,
+              OP.germanByRichardStrauss,
+              OP.germanByRichardWagner,
+              OP.germanByRobertSchumann,
+              OP.germanByFranzSchubert,
+              OP.germanByAlbanBerg,
+              OP.frenchByChristophWillibaldGluck,
+              OP.frenchByMauriceRavel,
+              OP.frenchByHectorBerlioz,
+              OP.frenchByGeorgesBizet,
+              OP.frenchByCharlesGounod,
+              OP.frenchByCamilleSaintSaëns
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1234,7 +1239,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.RockBand" $ do
-      let functions :: [Fake Text] = [RO.name]
+      let functions :: [Fake Text] = [RO.name, RO.song]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Music.UmphreysMcgee" $ do
@@ -1259,7 +1264,9 @@ spec = do
       (and bools) `shouldBe` True
     it "Music" $ do
       let functions :: [Fake Text] =
-            [MU.instruments, MU.bands, MU.albums, MU.genres]
+            [MU.instruments, MU.bands, MU.albums, MU.genres, MU.mamboNo5, MU.hiphopSubgenres
+            , MU.hiphopGroups
+            , MU.hiphopArtist]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Name" $ do
@@ -1305,7 +1312,8 @@ spec = do
               QU.mostInterestingManInTheWorld,
               QU.robin,
               QU.singularSiegler,
-              QU.yoda
+              QU.yoda,
+              QU.fortuneCookie
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1333,7 +1341,8 @@ spec = do
       (and bools) `shouldBe` True
     it "Science" $ do
       let functions :: [Fake Text] =
-            [SC.element, SC.elementSymbol, SC.scientist]
+            [SC.element, SC.elementSymbol, SC.scientist
+            , SC.elementState, SC.elementSubcategory]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "SlackEmoji" $ do
@@ -1649,7 +1658,7 @@ spec = do
       (and bools) `shouldBe` True
     it "TvShow.Buffy" $ do
       let functions :: [Fake Text] =
-            [BU.characters, BU.quotes, BU.celebrities, BU.bigBads, BU.episodes]
+            [BU.characters, BU.quotes, BU.actors, BU.bigBads, BU.episodes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.Community" $ do
@@ -1677,7 +1686,7 @@ spec = do
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.FreshPrinceOfBelAir" $ do
-      let functions :: [Fake Text] = [FR.characters, FR.celebrities, FR.quotes]
+      let functions :: [Fake Text] = [FR.characters, FR.actors, FR.quotes]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "TvShow.Friends" $ do
