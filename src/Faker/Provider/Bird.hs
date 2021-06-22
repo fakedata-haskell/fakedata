@@ -14,6 +14,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import Faker.Provider.Name (resolveNameField)
 
 parseBird :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBird settings (Object obj) = do
@@ -126,20 +127,22 @@ resolveBirdText = genericResolver' resolveBirdField
 resolveBirdField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
 resolveBirdField settings field@"geo" =
   cachedRandomVec "bird" field birdGeoProvider settings
-resolveBirdField settings field@"adjectives" =
+resolveBirdField settings field@"adjective" =
   cachedRandomVec "bird" field birdAdjectivesProvider settings
 resolveBirdField settings field@"anatomy" =
   cachedRandomVec "bird" field birdAnatomyProvider settings
 resolveBirdField settings field@"anatomy_past_tense" =
   cachedRandomVec "bird" field birdAnatomyPastTenseProvider settings
-resolveBirdField settings field@"common_family_name" =
+resolveBirdField settings field@"common_name" =
   cachedRandomVec "bird" field birdCommonFamilyNameProvider settings
-resolveBirdField settings field@"colors" =
+resolveBirdField settings field@"color" =
   cachedRandomVec "bird" field birdColorsProvider settings
-resolveBirdField settings field@"emotional_adjectives" =
+resolveBirdField settings field@"emotional_adjective" =
   cachedRandomVec "bird" field birdEmotionalAdjectivesProvider settings
-resolveBirdField settings field@"silly_adjectives" =
+resolveBirdField settings field@"silly_adjective" =
   cachedRandomVec "bird" field birdSillyAdjectivesProvider settings
+resolveBirdField settings field@"Name.last_name" =
+  resolveNameField settings "last_name"
 resolveBirdField settings str = throwM $ InvalidField "bird" str
 
 
