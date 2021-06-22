@@ -1,6 +1,6 @@
 # Changelog for fakedata
 
-## 1.0 (Unreleased)
+## 1.0
 
 ### Breaking changes
 
