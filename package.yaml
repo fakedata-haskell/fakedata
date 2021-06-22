@@ -44,8 +44,6 @@ dependencies:
 - string-random
 - fakedata-parser
 - attoparsec
-- regex-tdfa
-- QuickCheck
 - transformers
 
 library:
@@ -259,5 +257,6 @@ benchmarks:
     - fakedata
     - gauge
     - deepseq
+    - QuickCheck
     ghc-options:
     - -O2
