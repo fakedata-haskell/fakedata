@@ -792,7 +792,8 @@ test-suite fakedata-test
   build-tool-depends:
       hspec-discover:hspec-discover
   build-depends:
-      attoparsec
+      QuickCheck
+    , attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers
@@ -804,6 +805,7 @@ test-suite fakedata-test
     , hashable
     , hspec
     , random
+    , regex-tdfa
     , string-random
     , template-haskell
     , text
@@ -823,8 +825,7 @@ benchmark fakebench
       bench
   ghc-options: -O2
   build-depends:
-      QuickCheck
-    , attoparsec
+      attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers

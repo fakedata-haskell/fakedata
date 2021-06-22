@@ -248,6 +248,8 @@ tests:
     - hspec
     - vector
     - time
+    - QuickCheck
+    - regex-tdfa
 
 benchmarks:
   fakebench:
@@ -257,6 +259,5 @@ benchmarks:
     - fakedata
     - gauge
     - deepseq
-    - QuickCheck
     ghc-options:
     - -O2
