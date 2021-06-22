@@ -5,11 +5,9 @@ module Faker.Provider.Music where
 
 import Config
 import Control.Monad.Catch
-import Control.Monad.IO.Class
-import Data.Map.Strict (Map)
-import Data.Monoid ((<>))
 import Data.Text (Text)
 import Data.Vector (Vector)
+import Data.Monoid ((<>))
 import Data.Yaml
 import Faker
 import Faker.Internal
@@ -44,6 +42,31 @@ parseMusicFields settings txts val = do
       helper field xs
     helper a (x:xs) = fail $ "expect Object, but got " <> (show a)
 
+
+
+
+parseUnresolvedMusicFields ::
+     (FromJSON a, Monoid a)
+  => FakerSettings
+  -> [Text]
+  -> Value
+  -> Parser (Unresolved a)
+parseUnresolvedMusicFields settings txts val = do
+  music <- parseMusic settings val
+  helper music txts
+  where
+    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper a [] = do
+      v <- parseJSON a
+      pure $ pure v
+    helper (Object a) (x:xs) = do
+      field <- a .: x
+      helper field xs
+    helper a _ = fail $ "expect Object, but got " <> (show a)
+
+
+
+
 $(genParser "music" "instruments")
 
 $(genProvider "music" "instruments")
@@ -63,3 +86,20 @@ $(genProvider "music" "genres")
 $(genParser "music" "mambo_no_5")
 
 $(genProvider "music" "mambo_no_5")
+
+
+
+
+
+
+
+$(genParsers "music" ["hiphop","subgenres"])
+$(genProviders "music" ["hiphop","subgenres"])
+
+$(genParsers "music" ["hiphop","groups"])
+$(genProviders "music" ["hiphop","groups"])
+
+$(genParsers "music" ["hiphop","artist"])
+$(genProviders "music" ["hiphop","artist"])
+
+

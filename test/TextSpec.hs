@@ -938,8 +938,8 @@ spec = do
       let functions :: [Fake Text] =
             [ SF.characters,
               SF.stages,
-              SF.quotes
-              -- SF.moves
+              SF.quotes,
+              SF.moves
             ]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
@@ -1278,7 +1278,9 @@ spec = do
       (and bools) `shouldBe` True
     it "Music" $ do
       let functions :: [Fake Text] =
-            [MU.instruments, MU.bands, MU.albums, MU.genres, MU.mamboNo5]
+            [MU.instruments, MU.bands, MU.albums, MU.genres, MU.mamboNo5, MU.hiphopSubgenres
+            , MU.hiphopGroups
+            , MU.hiphopArtist]
       bools <- verifyFakes functions
       (and bools) `shouldBe` True
     it "Name" $ do

@@ -259,6 +259,45 @@ data-files:
     faker/lib/locales/en/world_of_warcraft.yml
     faker/lib/locales/en/yoda.yml
     faker/lib/locales/en/zelda.yml
+    faker/lib/locales/ja/address.yml
+    faker/lib/locales/ja/ancient.yml
+    faker/lib/locales/ja/animal.yml
+    faker/lib/locales/ja/bank.yml
+    faker/lib/locales/ja/book.yml
+    faker/lib/locales/ja/cat.yml
+    faker/lib/locales/ja/coffee.yml
+    faker/lib/locales/ja/color.yml
+    faker/lib/locales/ja/commerce.yml
+    faker/lib/locales/ja/company.yml
+    faker/lib/locales/ja/dog.yml
+    faker/lib/locales/ja/food.yml
+    faker/lib/locales/ja/gender.yml
+    faker/lib/locales/ja/lorem.yml
+    faker/lib/locales/ja/name.yml
+    faker/lib/locales/ja/overwatch.yml
+    faker/lib/locales/ja/phone_number.yml
+    faker/lib/locales/ja/pokemon.yml
+    faker/lib/locales/ja/restaurant.yml
+    faker/lib/locales/ja/space.yml
+    faker/lib/locales/ja/subscription.yml
+    faker/lib/locales/ja/super_mario.yml
+    faker/lib/locales/ja/university.yml
+    faker/lib/locales/ja/zelda.yml
+    faker/lib/locales/fr/address.yml
+    faker/lib/locales/fr/animal.yml
+    faker/lib/locales/fr/appliance.yml
+    faker/lib/locales/fr/book.yml
+    faker/lib/locales/fr/color.yml
+    faker/lib/locales/fr/company.yml
+    faker/lib/locales/fr/compass.yml
+    faker/lib/locales/fr/demographic.yml
+    faker/lib/locales/fr/gender.yml
+    faker/lib/locales/fr/internet.yml
+    faker/lib/locales/fr/lorem.yml
+    faker/lib/locales/fr/measurement.yml
+    faker/lib/locales/fr/name.yml
+    faker/lib/locales/fr/phone_number.yml
+    faker/lib/locales/fr/pokemon.yml
     customFakeSource/en/finance.yml
 
 source-repository head
@@ -277,7 +316,6 @@ library
       Faker.Bank
       Faker.Barcode
       Faker.Beer
-      Faker.Bird
       Faker.Blood
       Faker.Book
       Faker.Book.CultureSeries
@@ -302,6 +340,7 @@ library
       Faker.Construction
       Faker.Cosmere
       Faker.Creature.Animal
+      Faker.Creature.Bird
       Faker.Creature.Cat
       Faker.Creature.Dog
       Faker.Creature.Horse
@@ -375,10 +414,8 @@ library
       Faker.Movie.GratefulDead
       Faker.Movie.HarryPotter
       Faker.Movie.HitchhikersGuideToTheGalaxy
-      Faker.Movie.Hobbit
       Faker.Movie.HowToTrainYourDragon
       Faker.Movie.Lebowski
-      Faker.Movie.LordOfTheRings
       Faker.Movie.PrincessBride
       Faker.Movie.Room
       Faker.Movie.StarWars
@@ -555,7 +592,6 @@ library
       Faker.Provider.HeyArnold
       Faker.Provider.Hipster
       Faker.Provider.HitchhikersGuideToTheGalaxy
-      Faker.Provider.Hobbit
       Faker.Provider.Horse
       Faker.Provider.House
       Faker.Provider.HowIMetYourMother
@@ -565,7 +601,6 @@ library
       Faker.Provider.Kpop
       Faker.Provider.LeagueOfLegends
       Faker.Provider.Lebowski
-      Faker.Provider.LordOfTheRings
       Faker.Provider.Lorem
       Faker.Provider.Lovecraft
       Faker.Provider.Markdown

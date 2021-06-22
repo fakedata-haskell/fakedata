@@ -18,7 +18,7 @@
 ### New modules introduced
 
 * Faker.Adjective
-* Faker.Bird
+* Faker.Creature.Bird
 * Faker.Camera
 * Faker.Game.ClashOfClans
 * Faker.JapaneseMedia.Conan
@@ -51,7 +51,7 @@
   - enchantment
   - gameMode
   - statusEffect
-* Faker.Music: `mamboNo5` added.
+* Faker.Music: `mamboNo5` and hiphop functions added.
 * Various new functions added to Faker.Opera
 * Faker.Quote: `fortuneCookie` added.
 * Faker.Music.RockBand: `song` added.
@@ -67,6 +67,8 @@
 * pt-BR: countryCode added, ingredients and licensePlate updated.
 * ru: Faker.Yoda.quotes added
 * uk: Faker.Address.fullAddress added
+* ja: Faker.Book, Faker.Commerce and Faker.Subscription module works now
+* fr: Faker.Creature.Animal, Faker.Gender works now
 
 ### Data Update
 

@@ -690,9 +690,12 @@ music =
   ModuleInfo
     { mmoduleName = "music",
       jsonField = "music",
-      fields = ["instruments", "bands", "albums", "genres"],
+      fields = ["instruments", "bands", "albums", "genres", "mambo_no_5"],
       unresolvedFields = [],
-      nestedFields = [],
+      nestedFields = [["hiphop","subgenres"],
+                      ["hiphop","groups"],
+                      ["hiphop","artist"]
+                     ],
       unresolvedNestedFields = []
     }
 
@@ -2356,4 +2359,4 @@ volleyball =
     }
 
 currentOne :: ModuleInfo
-currentOne = volleyball
+currentOne = music

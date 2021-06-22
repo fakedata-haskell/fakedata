@@ -1,7 +1,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Faker.Bird where
+module Faker.Creature.Bird where
 
 import Data.Text (Text)
 import Faker (Fake(..))
@@ -109,5 +109,3 @@ $(generateFakeFields "bird" ["order_common_map","Suliformes"])
 $(generateFakeFields "bird" ["order_common_map","Tinamiformes"])
 
 $(generateFakeFields "bird" ["order_common_map","Trogoniformes"])
-
-
