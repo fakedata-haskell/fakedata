@@ -6,6 +6,9 @@ in two of the changes:
 * Addition/Deletion of any yml files
 * Update in any of the existing yml files
 
+**TODO**: You might have to update `changes.sh` script since we have new
+directory `ja` and `fr` under it now.
+
 ``` shellsession
 $ cd scripts
 $ ./changes.sh > current.dat
@@ -105,7 +108,7 @@ value generation, see `Faker.Barcode` module.
 ``` shellsession
 $ cd faker
 $ gem build faker.gemspec
-$ sudo gem install ./faker-2.3.0.gem
+$ sudo gem install ./faker-2.18.0.gem
 $ irb
 irb(main):001:0> require 'faker'
 => true
@@ -117,33 +120,8 @@ irb(main):006:0> Faker::Address.city
 => "ميناء حاتم"
 ```
 
-## Known locale issues
-
-* Game.StreetFighter: moves function is breaking
-
-## Upstream issues
-
-- en/music.yml: hiphop should come under `music`
-- touhou: spellCards
-- pt-BR: countryCode
-- bird:
-  - pluasible_common_names:
-    - Shold be colors instead of color
-    - /s/emotional_adjective/emotional_adjectives
-  - Same issue for implausible_common_names
-- es-BR:
-  - city - remove redundant fields
-  - countryCode: convert it to array
-
-## Todo
-
-- Implement fr and ja locale
-- Fix FrTextSpec
-- Figure out why JaTextSpec is not failing
-
 ## Steps before release
 
 * Make sure you remove Provider modules from cabal
 * Check haddocks of newly introduced modules
 * Check if the hedgehog and quickcheck integrations require change
-* Check if locale files that are split are handled (eg: ja)

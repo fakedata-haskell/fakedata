@@ -1,6 +1,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+-- | @since 1.0
 module Faker.Quote.JackHandey where
 
 import Data.Text (Text)

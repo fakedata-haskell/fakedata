@@ -205,20 +205,6 @@ fakeQuickcheck f = do
     randomGen <- mkStdGen <$> Q.choose (minBound, maxBound)
     pure $!
         unsafePerformIO $
-        -- (parsonsmatt): OK so `unsafePerformIO` is bad, unless you know exactly
-        -- what you're doing, so do I know exactly what I am doing? Perhaps I can
-        -- convince you.
-        --
-        -- The Faker library doesn't keep the data as Haskell values, but stores it
-        -- in `data-files`. The code that generates this fake data loads the values
-        -- from the `data-files` for the library. That's what happens in IO. It is
-        -- possible that the data-file is missing, and an exception will be thrown.
-        -- However, no mutating actions are performed. I believe this is a safe use
-        -- of 'unsafePerformIO'.
-        --
-        -- The alternative would be to lift it into `GenT IO a`, which is
-        -- undesirable, as it would harm composition with basically any other
-        -- generator.
         Faker.generateWithSettings
             (Faker.setRandomGen
               randomGen
@@ -526,10 +512,10 @@ spec = do
               ]
         bools <- verifyFakes functions
         (and bools) `shouldBe` True
-    -- describe "Company domain" $
-    --   it "forall domain fullfils is a domain name regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.domain) isDomain
-    -- describe "Company email" $
-    --   it "forall email fullfils is an email regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.email) isEmail
+    describe "Company domain" $
+      it "forall domain fullfils is a domain name regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.domain) isDomain
+    describe "Company email" $
+      it "forall email fullfils is an email regex" $ Q.property $ Q.forAll (fakeQuickcheck CM.email) isEmail
     it "Construction" $ do
       let functions :: [Fake Text] =
             [ CO.materials,

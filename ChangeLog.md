@@ -5,7 +5,8 @@
 ### Breaking changes
 
 * [Make `Fake` as monad
-  transformer.](https://github.com/fakedata-haskell/fakedata/pull/32).
+  transformer.](https://github.com/fakedata-haskell/fakedata/pull/32). This
+  makes writing code with good performance easily.
 * Rename `celebrities` to `actors` in Faker.TvShow.Buffy module.
 * Rename `celebrities` to `actors` in Faker.TvShow.FreshPrinceOfBelAir module.
 * Removed module `Faker.Movie.Hobbit`. Use `Faker.Fantasy.Tolkien`

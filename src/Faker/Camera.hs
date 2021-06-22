@@ -1,6 +1,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+-- | @since 1.0
 module Faker.Camera where
 
 import Data.Text (Text)
@@ -13,7 +14,3 @@ $(generateFakeField "camera" "brand")
 $(generateFakeField "camera" "model")
 
 $(generateFakeField "camera" "brand_with_model")
-
-
-
-
