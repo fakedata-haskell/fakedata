@@ -1,12 +1,15 @@
 # Changelog for fakedata
 
+## 1.0.1
+
+* Improve README with use cases
+* [Cleanup dependencies](https://github.com/fakedata-haskell/fakedata/pull/38)
+
 ## 1.0
 
 ### Breaking changes
 
-* [Make `Fake` as monad
-  transformer.](https://github.com/fakedata-haskell/fakedata/pull/32). This
-  makes writing code with good performance easily.
+* [Make `Fake` as monad transformer](https://github.com/fakedata-haskell/fakedata/pull/32). This makes writing code with good performance easily.
 * Rename `celebrities` to `actors` in Faker.TvShow.Buffy module.
 * Rename `celebrities` to `actors` in Faker.TvShow.FreshPrinceOfBelAir module.
 * Removed module `Faker.Movie.Hobbit`. Use `Faker.Fantasy.Tolkien`

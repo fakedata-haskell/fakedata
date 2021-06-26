@@ -1,4 +1,4 @@
-![fakedata](https://user-images.githubusercontent.com/737477/53658993-54575200-3c80-11e9-9125-fbcf9e54660f.png)
+![fakedata](https://user-images.githubusercontent.com/737477/53658993-54575200-3c80-11e9-9125-nfbcf9e54660f.png)
 [![Hackage](https://img.shields.io/hackage/v/fakedata.svg)](https://hackage.haskell.org/package/fakedata)
 [![Stackage
 Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.org/nightly/package/fakedata)
@@ -33,6 +33,19 @@ This library is a port of Ruby's
 fake data such as names, addressess and phone numbers. Note that it
 directly uses the source data from that library, so the quality of
 fake data is quite high!
+
+This packages comes in handy when you have to generate large amount of
+real like data for various purposes. I have personally used it for
+websites where it needs some realistic data in the initial stage,
+loading database with real like values etc. There are companies which
+have used this [for sophisphicated testing
+purpose](https://www.reddit.com/r/haskell/comments/o5n71e/fakedata10_haskell_library_for_producing_quality/h2qxw8a?utm_source=share&utm_medium=web2x&context=3).
+
+Additionly, there are two other packages for creating generators which
+is useful property testing:
+
+* [fakedata-quickcheck](https://github.com/fakedata-haskell/fakedata-quickcheck)
+* [hedgehog-fakedata](https://github.com/parsonsmatt/hedgehog-fakedata)
 
 Tutorial
 --------
