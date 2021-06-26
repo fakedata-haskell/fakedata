@@ -44,8 +44,6 @@ dependencies:
 - string-random
 - fakedata-parser
 - attoparsec
-- regex-tdfa
-- QuickCheck
 - transformers
 
 library:
@@ -250,6 +248,8 @@ tests:
     - hspec
     - vector
     - time
+    - QuickCheck
+    - regex-tdfa
 
 benchmarks:
   fakebench:

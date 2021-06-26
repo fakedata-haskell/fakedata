@@ -677,8 +677,7 @@ library
   hs-source-dirs:
       src
   build-depends:
-      QuickCheck
-    , attoparsec
+      attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers
@@ -688,7 +687,6 @@ library
     , filepath
     , hashable
     , random
-    , regex-tdfa
     , string-random
     , template-haskell
     , text
@@ -827,8 +825,7 @@ benchmark fakebench
       bench
   ghc-options: -O2
   build-depends:
-      QuickCheck
-    , attoparsec
+      attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers
@@ -841,7 +838,6 @@ benchmark fakebench
     , gauge
     , hashable
     , random
-    , regex-tdfa
     , string-random
     , template-haskell
     , text
