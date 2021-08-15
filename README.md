@@ -1,4 +1,4 @@
-![fakedata](https://user-images.githubusercontent.com/737477/53658993-54575200-3c80-11e9-9125-nfbcf9e54660f.png)
+![fakedata](https://user-images.githubusercontent.com/737477/53658993-54575200-3c80-11e9-9125-fbcf9e54660f.png)
 [![Hackage](https://img.shields.io/hackage/v/fakedata.svg)](https://hackage.haskell.org/package/fakedata)
 [![Stackage
 Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.org/nightly/package/fakedata)
