@@ -15,17 +15,18 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseBreakingBad :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBreakingBad settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   breakingBad <- faker .: "breaking_bad"
   pure breakingBad
 parseBreakingBad settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBreakingBadField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseBreakingBadField settings txt val = do
   breakingBad <- parseBreakingBad settings val
   field <- breakingBad .:? txt .!= mempty

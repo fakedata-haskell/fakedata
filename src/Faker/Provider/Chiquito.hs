@@ -13,29 +13,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseChiquito :: FromJSON a => FakerSettings -> Value -> Parser a
 parseChiquito settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   chiquito <- faker .: "chiquito"
   pure chiquito
 parseChiquito settings val = fail $ "expected Object, but got " <> (show val)
 
 parseChiquitoField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseChiquitoField settings txt val = do
   chiquito <- parseChiquito settings val
   field <- chiquito .:? txt .!= mempty
   pure field
 
 parseChiquitoFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseChiquitoFields settings txts val = do
   chiquito <- parseChiquito settings val
   helper chiquito txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -63,14 +64,3 @@ $(genProvider "chiquito" "sentences")
 $(genParser "chiquito" "jokes")
 
 $(genProvider "chiquito" "jokes")
-
-
-
-
-
-
-
-
-
-
-

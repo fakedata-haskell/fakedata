@@ -15,10 +15,11 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseSuperSmashBros :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSuperSmashBros settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   games <- faker .: "games"
   superSmashBros <- games .: "super_smash_bros"
@@ -27,19 +28,19 @@ parseSuperSmashBros settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseSuperSmashBrosField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseSuperSmashBrosField settings txt val = do
   superSmashBros <- parseSuperSmashBros settings val
   field <- superSmashBros .:? txt .!= mempty
   pure field
 
 parseSuperSmashBrosFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseSuperSmashBrosFields settings txts val = do
   superSmashBros <- parseSuperSmashBros settings val
   helper superSmashBros txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

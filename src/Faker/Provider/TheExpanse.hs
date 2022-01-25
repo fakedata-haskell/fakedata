@@ -15,29 +15,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseTheExpanse :: FromJSON a => FakerSettings -> Value -> Parser a
 parseTheExpanse settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   theExpanse <- faker .: "the_expanse"
   pure theExpanse
 parseTheExpanse settings val = fail $ "expected Object, but got " <> (show val)
 
 parseTheExpanseField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseTheExpanseField settings txt val = do
   theExpanse <- parseTheExpanse settings val
   field <- theExpanse .:? txt .!= mempty
   pure field
 
 parseTheExpanseFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseTheExpanseFields settings txts val = do
   theExpanse <- parseTheExpanse settings val
   helper theExpanse txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

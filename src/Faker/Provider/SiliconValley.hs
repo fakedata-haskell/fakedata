@@ -15,10 +15,11 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseSiliconValley :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSiliconValley settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   siliconValley <- faker .: "silicon_valley"
   pure siliconValley
@@ -26,19 +27,19 @@ parseSiliconValley settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseSiliconValleyField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseSiliconValleyField settings txt val = do
   siliconValley <- parseSiliconValley settings val
   field <- siliconValley .:? txt .!= mempty
   pure field
 
 parseSiliconValleyFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseSiliconValleyFields settings txts val = do
   siliconValley <- parseSiliconValley settings val
   helper siliconValley txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

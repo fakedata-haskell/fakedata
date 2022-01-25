@@ -15,29 +15,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseOnePiece :: FromJSON a => FakerSettings -> Value -> Parser a
 parseOnePiece settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   onePiece <- faker .: "one_piece"
   pure onePiece
 parseOnePiece settings val = fail $ "expected Object, but got " <> (show val)
 
 parseOnePieceField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseOnePieceField settings txt val = do
   onePiece <- parseOnePiece settings val
   field <- onePiece .:? txt .!= mempty
   pure field
 
 parseOnePieceFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseOnePieceFields settings txts val = do
   onePiece <- parseOnePiece settings val
   helper onePiece txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

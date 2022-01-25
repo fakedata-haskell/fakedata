@@ -13,29 +13,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseMusic :: FromJSON a => FakerSettings -> Value -> Parser a
 parseMusic settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   music <- faker .: "music"
   pure music
 parseMusic settings val = fail $ "expected Object, but got " <> (show val)
 
 parseMusicField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseMusicField settings txt val = do
   music <- parseMusic settings val
   field <- music .:? txt .!= mempty
   pure field
 
 parseMusicFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseMusicFields settings txts val = do
   music <- parseMusic settings val
   helper music txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseMusicFields settings txts val = do
 parseUnresolvedMusicFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [K.Key]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedMusicFields settings txts val = do
   music <- parseMusic settings val
   helper music txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -101,5 +102,3 @@ $(genProviders "music" ["hiphop","groups"])
 
 $(genParsers "music" ["hiphop","artist"])
 $(genProviders "music" ["hiphop","artist"])
-
-

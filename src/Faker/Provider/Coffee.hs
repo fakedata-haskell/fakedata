@@ -15,29 +15,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseCoffee :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCoffee settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   coffee <- faker .: "coffee"
   pure coffee
 parseCoffee settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCoffeeField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseCoffeeField settings txt val = do
   coffee <- parseCoffee settings val
   field <- coffee .:? txt .!= mempty
   pure field
 
 parseCoffeeFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseCoffeeFields settings txts val = do
   coffee <- parseCoffee settings val
   helper coffee txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -47,7 +48,7 @@ parseCoffeeFields settings txts val = do
 parseUnresolvedCoffeeField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> K.Key
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedCoffeeField settings txt val = do
@@ -177,11 +178,11 @@ $(genParsers "coffee" ["regions", "india"])
 $(genProviders "coffee" ["regions", "india"])
 
 resolveCoffeeText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
 resolveCoffeeText = genericResolver' resolveCoffeeField
 
 resolveCoffeeField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
 resolveCoffeeField settings field@"name_1" =
   cachedRandomVec "coffee" field coffeeName1Provider settings
 resolveCoffeeField settings field@"name_2" =

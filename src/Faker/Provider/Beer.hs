@@ -14,17 +14,18 @@ import Data.Yaml
 import Faker
 import Faker.Internal
 import Faker.Provider.TH
+import qualified Data.Aeson.Key as K
 
 parseBeer :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBeer settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   beer <- faker .: "beer"
   pure beer
 parseBeer settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBeerField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseBeerField settings txt val = do
   beer <- parseBeer settings val
   field <- beer .:? txt .!= mempty

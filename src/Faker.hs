@@ -25,6 +25,7 @@ module Faker
     -- * Getters
   , getRandomGen
   , getLocale
+  , getLocaleKey
   , getDeterministic
   , getCacheField
   , getCacheFile
@@ -47,6 +48,7 @@ import Data.Word (Word64)
 import Data.Yaml (Value)
 import Faker.Internal.Types (CacheFieldKey, CacheFileKey)
 import System.Random (StdGen, mkStdGen, newStdGen, split)
+import qualified Data.Aeson.Key as K
 
 data FakerSettings = FakerSettings
   { fslocale :: !Text -- ^ Locale settings for your fake data source.
@@ -71,9 +73,9 @@ data FakerException
                          -- find the fake data source for your
                          -- localization.
   | InvalidField String
-                 Text -- ^ The 'String' represents the field it is
-                             -- trying to resolve and the 'Text' field
-                             -- is something you passed on.
+                 K.Key -- ^ The 'String' represents the field it is
+                       -- trying to resolve and the 'Key' field
+                       -- is something you passed on.
   | NoDataFound FakerSettings -- ^ This is thrown when you have no
                               -- data. This may likely happen for
                               -- locales other than `en`.
@@ -115,6 +117,10 @@ getRandomGen settings = fsrandomGen settings
 -- | Get the Locale settings for your fake data source
 getLocale :: FakerSettings -> Text
 getLocale FakerSettings {..} = fslocale
+
+-- | Get the Locale settings for your fake data source as a YAML  key.
+getLocaleKey :: FakerSettings -> K.Key
+getLocaleKey FakerSettings {..} = K.fromText fslocale
 
 -- | Set the output of fakedata to be deterministic. With this you
 -- will get the same ouput for the functions every time.
@@ -199,7 +205,7 @@ instance Monad m => Functor (FakeT m) where
          pure b)
 
 instance Monad m => Applicative (FakeT m) where
-  {-# INLINE pure #-}    
+  {-# INLINE pure #-}
   pure x = FakeT (\_ -> pure x)
   {-# INLINE (<*>) #-}
   (<*>) = ap

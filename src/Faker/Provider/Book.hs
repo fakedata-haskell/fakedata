@@ -16,17 +16,18 @@ import Faker.Internal
 import Faker.Provider.Name (nameNameProvider, resolveNameField, resolveNameText)
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseBook :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBook settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   book <- faker .: "book"
   pure book
 parseBook settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBookField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseBookField settings txt val = do
   book <- parseBook settings val
   field <- book .:? txt .!= mempty
@@ -35,7 +36,7 @@ parseBookField settings txt val = do
 parseUnresolvedBookField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> K.Key
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedBookField settings txt val = do
@@ -82,10 +83,10 @@ authorResolver settings =
          resolveBookText
          settings)
 
-resolveBookText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolveBookText :: (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
 resolveBookText = genericResolver' resolveBookField
 
-resolveBookField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveBookField :: (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
 resolveBookField settings "Name.name" =
   cachedRandomUnresolvedVec
     "name"

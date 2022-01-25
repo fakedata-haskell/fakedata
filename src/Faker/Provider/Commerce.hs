@@ -14,29 +14,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseCommerce :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCommerce settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   commerce <- faker .: "commerce"
   pure commerce
 parseCommerce settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCommerceField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseCommerceField settings txt val = do
   commerce <- parseCommerce settings val
   field <- commerce .:? txt .!= mempty
   pure field
 
 parseCommerceFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseCommerceFields settings txts val = do
   commerce <- parseCommerce settings val
   helper commerce txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

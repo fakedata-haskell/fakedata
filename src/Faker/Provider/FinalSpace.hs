@@ -13,29 +13,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseFinalSpace :: FromJSON a => FakerSettings -> Value -> Parser a
 parseFinalSpace settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   finalSpace <- faker .: "final_space"
   pure finalSpace
 parseFinalSpace settings val = fail $ "expected Object, but got " <> (show val)
 
 parseFinalSpaceField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseFinalSpaceField settings txt val = do
   finalSpace <- parseFinalSpace settings val
   field <- finalSpace .:? txt .!= mempty
   pure field
 
 parseFinalSpaceFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseFinalSpaceFields settings txts val = do
   finalSpace <- parseFinalSpace settings val
   helper finalSpace txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseFinalSpaceFields settings txts val = do
 parseUnresolvedFinalSpaceFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [K.Key]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedFinalSpaceFields settings txts val = do
   finalSpace <- parseFinalSpace settings val
   helper finalSpace txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -78,11 +79,3 @@ $(genProvider "finalSpace" "vehicles")
 $(genParser "finalSpace" "quotes")
 
 $(genProvider "finalSpace" "quotes")
-
-
-
-
-
-
-
-

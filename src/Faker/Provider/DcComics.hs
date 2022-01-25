@@ -14,17 +14,18 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseDcComics :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDcComics settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   dcComics <- faker .: "dc_comics"
   pure dcComics
 parseDcComics settings val = fail $ "expected Object, but got " <> (show val)
 
 parseDcComicsField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseDcComicsField settings txt val = do
   dcComics <- parseDcComics settings val
   field <- dcComics .:? txt .!= mempty

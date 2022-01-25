@@ -14,17 +14,18 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseCosmere :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCosmere settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   cosmere <- faker .: "cosmere"
   pure cosmere
 parseCosmere settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCosmereField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseCosmereField settings txt val = do
   cosmere <- parseCosmere settings val
   field <- cosmere .:? txt .!= mempty

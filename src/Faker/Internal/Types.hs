@@ -7,6 +7,7 @@ module Faker.Internal.Types where
 import Data.Hashable
 import Data.Text (Text)
 import GHC.Generics
+import qualified Data.Aeson.Key as K
 
 data SourceData
   = Address
@@ -199,7 +200,7 @@ data SourceData
 data CacheFieldKey =
   CacheFieldKey
     { ckSource :: !Text
-    , ckField :: !Text
+    , ckField :: !K.Key
     , ckLocale :: !Text
     }
   deriving (Show, Eq, Ord, Generic, Hashable)

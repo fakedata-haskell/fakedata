@@ -14,29 +14,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseBarcode :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBarcode settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   barcode <- faker .: "barcode"
   pure barcode
 parseBarcode settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBarcodeField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseBarcodeField settings txt val = do
   barcode <- parseBarcode settings val
   field <- barcode .:? txt .!= mempty
   pure field
 
 parseBarcodeFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseBarcodeFields settings txts val = do
   barcode <- parseBarcode settings val
   helper barcode txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -46,7 +47,7 @@ parseBarcodeFields settings txts val = do
 parseUnresolvedBarcodeField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> K.Key
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedBarcodeField settings txt val = do
@@ -87,8 +88,8 @@ $(genParserSingleUnresolved "barcode" "issn")
 
 $(genProvidersSingleUnresolved "barcode" ["issn"])
 
-resolveBarcodeText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolveBarcodeText :: (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
 resolveBarcodeText = genericResolver' resolveBarcodeField
 
-resolveBarcodeField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveBarcodeField :: (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
 resolveBarcodeField settings str = throwM $ InvalidField "barcode" str

@@ -15,10 +15,11 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseStrangerThings :: FromJSON a => FakerSettings -> Value -> Parser a
 parseStrangerThings settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   strangerThings <- faker .: "stranger_things"
   pure strangerThings
@@ -26,19 +27,19 @@ parseStrangerThings settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseStrangerThingsField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseStrangerThingsField settings txt val = do
   strangerThings <- parseStrangerThings settings val
   field <- strangerThings .:? txt .!= mempty
   pure field
 
 parseStrangerThingsFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseStrangerThingsFields settings txts val = do
   strangerThings <- parseStrangerThings settings val
   helper strangerThings txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

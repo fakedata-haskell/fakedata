@@ -15,10 +15,11 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseSubscription :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSubscription settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   subscription <- faker .: "subscription"
   pure subscription
@@ -26,19 +27,19 @@ parseSubscription settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseSubscriptionField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseSubscriptionField settings txt val = do
   subscription <- parseSubscription settings val
   field <- subscription .:? txt .!= mempty
   pure field
 
 parseSubscriptionFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseSubscriptionFields settings txts val = do
   subscription <- parseSubscription settings val
   helper subscription txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

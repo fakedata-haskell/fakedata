@@ -13,29 +13,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseConan :: FromJSON a => FakerSettings -> Value -> Parser a
 parseConan settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   conan <- faker .: "conan"
   pure conan
 parseConan settings val = fail $ "expected Object, but got " <> (show val)
 
 parseConanField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseConanField settings txt val = do
   conan <- parseConan settings val
   field <- conan .:? txt .!= mempty
   pure field
 
 parseConanFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseConanFields settings txts val = do
   conan <- parseConan settings val
   helper conan txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseConanFields settings txts val = do
 parseUnresolvedConanFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [K.Key]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedConanFields settings txts val = do
   conan <- parseConan settings val
   helper conan txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -78,11 +79,3 @@ $(genProvider "conan" "gadgets")
 $(genParser "conan" "vehicles")
 
 $(genProvider "conan" "vehicles")
-
-
-
-
-
-
-
-

@@ -12,17 +12,18 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
+import qualified Data.Aeson.Key as K
 
 parseBank :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBank settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   bank <- faker .: "bank"
   pure bank
 parseBank settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBankField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseBankField settings txt val = do
   bank <- parseBank settings val
   field <- bank .:? txt .!= mempty

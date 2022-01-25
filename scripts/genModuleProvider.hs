@@ -38,26 +38,26 @@ import Language.Haskell.TH
 
 parse#{capModname} :: FromJSON a => FakerSettings -> Value -> Parser a
 parse#{capModname} settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   #{mmoduleName} <- faker .: "#{jsonField}"
   pure #{mmoduleName}
 parse#{capModname} settings val = fail $ "expected Object, but got " <> (show val)
 
 parse#{capModname}Field ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parse#{capModname}Field settings txt val = do
   #{mmoduleName} <- parse#{capModname} settings val
   field <- #{mmoduleName} .:? txt .!= mempty
   pure field
 
 parse#{capModname}Fields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parse#{capModname}Fields settings txts val = do
   #{mmoduleName} <- parse#{capModname} settings val
   helper #{mmoduleName} txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -91,7 +91,7 @@ parseUnresolved#{capModname}Fields settings txts val = do
   #{mmoduleName} <- parse#{capModname} settings val
   helper #{mmoduleName} txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -149,10 +149,10 @@ $(genProviderUnresolved "#{mmoduleName}" "#{field}")|]
     unresolverFunction1 :: String
     unresolverFunction1 =
       [i|
-resolve#{capModname}Text :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolve#{capModname}Text :: (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
 resolve#{capModname}Text = genericResolver' resolve#{capModname}Field
 
-resolve#{capModname}Field :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolve#{capModname}Field :: (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
 #{generateresolveFieldFns}
 resolve#{capModname}Field settings str = throwM $ InvalidField "#{mmoduleName}" str|]
     generateresolveFieldFn :: String -> String

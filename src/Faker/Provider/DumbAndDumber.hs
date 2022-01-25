@@ -15,10 +15,11 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseDumbAndDumber :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDumbAndDumber settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   dumbAndDumber <- faker .: "dumb_and_dumber"
   pure dumbAndDumber
@@ -26,7 +27,7 @@ parseDumbAndDumber settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseDumbAndDumberField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseDumbAndDumberField settings txt val = do
   dumbAndDumber <- parseDumbAndDumber settings val
   field <- dumbAndDumber .:? txt .!= mempty

@@ -15,29 +15,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseSuperhero :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSuperhero settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   superhero <- faker .: "superhero"
   pure superhero
 parseSuperhero settings val = fail $ "expected Object, but got " <> (show val)
 
 parseSuperheroField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseSuperheroField settings txt val = do
   superhero <- parseSuperhero settings val
   field <- superhero .:? txt .!= mempty
   pure field
 
 parseSuperheroFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseSuperheroFields settings txts val = do
   superhero <- parseSuperhero settings val
   helper superhero txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -47,7 +48,7 @@ parseSuperheroFields settings txts val = do
 parseUnresolvedSuperheroField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> K.Key
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedSuperheroField settings txt val = do
@@ -76,11 +77,11 @@ $(genParserUnresolved "superhero" "name")
 $(genProviderUnresolved "superhero" "name")
 
 resolveSuperheroText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
 resolveSuperheroText settings txt = genericResolver settings txt resolveSuperheroField
 
 resolveSuperheroField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
 resolveSuperheroField settings field@"Superhero.prefix" =
   cachedRandomVec "superhero" field superheroPrefixProvider settings
 resolveSuperheroField settings field@"Superhero.suffix" =

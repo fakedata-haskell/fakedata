@@ -15,29 +15,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseSlackEmoji :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSlackEmoji settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   slackEmoji <- faker .: "slack_emoji"
   pure slackEmoji
 parseSlackEmoji settings val = fail $ "expected Object, but got " <> (show val)
 
 parseSlackEmojiField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseSlackEmojiField settings txt val = do
   slackEmoji <- parseSlackEmoji settings val
   field <- slackEmoji .:? txt .!= mempty
   pure field
 
 parseSlackEmojiFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseSlackEmojiFields settings txts val = do
   slackEmoji <- parseSlackEmoji settings val
   helper slackEmoji txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -47,7 +48,7 @@ parseSlackEmojiFields settings txts val = do
 parseUnresolvedSlackEmojiField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> K.Key
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedSlackEmojiField settings txt val = do
@@ -92,11 +93,11 @@ $(genParserUnresolved "slackEmoji" "emoji")
 $(genProviderUnresolved "slackEmoji" "emoji")
 
 resolveSlackEmojiText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
 resolveSlackEmojiText = genericResolver' resolveSlackEmojiField
 
 resolveSlackEmojiField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
 resolveSlackEmojiField settings field@"people" =
   cachedRandomVec "slackEmoji" field slackEmojiPeopleProvider settings
 resolveSlackEmojiField settings field@"nature" =

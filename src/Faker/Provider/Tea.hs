@@ -13,29 +13,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseTea :: FromJSON a => FakerSettings -> Value -> Parser a
 parseTea settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   tea <- faker .: "tea"
   pure tea
 parseTea settings val = fail $ "expected Object, but got " <> (show val)
 
 parseTeaField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseTeaField settings txt val = do
   tea <- parseTea settings val
   field <- tea .:? txt .!= mempty
   pure field
 
 parseTeaFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseTeaFields settings txts val = do
   tea <- parseTea settings val
   helper tea txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseTeaFields settings txts val = do
 parseUnresolvedTeaFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [K.Key]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedTeaFields settings txts val = do
   tea <- parseTea settings val
   helper tea txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

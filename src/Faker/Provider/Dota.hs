@@ -14,10 +14,11 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseDota :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDota settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   games <- faker .: "games"
   dota <- games .: "dota"
@@ -25,19 +26,19 @@ parseDota settings (Object obj) = do
 parseDota settings val = fail $ "expected Object, but got " <> (show val)
 
 parseDotaField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseDotaField settings txt val = do
   dota <- parseDota settings val
   field <- dota .:? txt .!= mempty
   pure field
 
 parseDotaFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseDotaFields settings txts val = do
   dota <- parseDota settings val
   helper dota txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

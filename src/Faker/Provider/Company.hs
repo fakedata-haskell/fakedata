@@ -17,17 +17,18 @@ import Faker.Provider.Name (nameLastNameProvider, resolveNameText, resolveNameFi
 import Faker.Provider.Address (villageProvider, communityProvider2, cityProvider2, resolveAddressField)
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseCompany :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCompany settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   company <- faker .: "company"
   pure company
 parseCompany settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCompanyField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseCompanyField settings txt val = do
   company <- parseCompany settings val
   field <- company .:? txt .!= mempty
@@ -36,7 +37,7 @@ parseCompanyField settings txt val = do
 parseUnresolvedCompanyField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> K.Key
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedCompanyField settings txt val = do
@@ -98,11 +99,11 @@ $(genParser "company" "category")
 $(genProvider "company" "category")
 
 resolveCompanyText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
 resolveCompanyText = genericResolver' resolveCompanyField
 
 resolveCompanyField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
 resolveCompanyField settings "Name.last_name" =
   cachedRandomVec "name" "last_name" nameLastNameProvider settings
 resolveCompanyField settings "Name.first_name" =

@@ -14,10 +14,11 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseConstruction :: FromJSON a => FakerSettings -> Value -> Parser a
 parseConstruction settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   construction <- faker .: "construction"
   pure construction
@@ -25,7 +26,7 @@ parseConstruction settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseConstructionField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseConstructionField settings txt val = do
   construction <- parseConstruction settings val
   field <- construction .:? txt .!= mempty

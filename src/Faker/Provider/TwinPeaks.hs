@@ -15,29 +15,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseTwinPeaks :: FromJSON a => FakerSettings -> Value -> Parser a
 parseTwinPeaks settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   twinPeaks <- faker .: "twin_peaks"
   pure twinPeaks
 parseTwinPeaks settings val = fail $ "expected Object, but got " <> (show val)
 
 parseTwinPeaksField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseTwinPeaksField settings txt val = do
   twinPeaks <- parseTwinPeaks settings val
   field <- twinPeaks .:? txt .!= mempty
   pure field
 
 parseTwinPeaksFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseTwinPeaksFields settings txts val = do
   twinPeaks <- parseTwinPeaks settings val
   helper twinPeaks txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

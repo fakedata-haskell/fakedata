@@ -14,10 +14,11 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseDog :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDog settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   creature <- faker .: "creature"
   dog <- creature .: "dog"
@@ -25,7 +26,7 @@ parseDog settings (Object obj) = do
 parseDog settings val = fail $ "expected Object, but got " <> (show val)
 
 parseDogField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseDogField settings txt val = do
   dog <- parseDog settings val
   field <- dog .:? txt .!= mempty

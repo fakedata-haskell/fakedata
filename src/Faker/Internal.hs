@@ -43,6 +43,7 @@ import Text.StringRandom (stringRandom)
 import Fakedata.Parser
 import Data.Attoparsec.Text as P
 import Control.Monad (when)
+import qualified Data.Aeson.Key as K
 
 newtype Unresolved a = Unresolved
   { unresolvedField :: a
@@ -73,7 +74,7 @@ rvec settings vec =
 cachedRandomVec ::
      (MonadThrow m, MonadIO m)
   => Text
-  -> Text
+  -> K.Key
   -> (FakerSettings -> m (Vector Text))
   -> FakerSettings
   -> m Text
@@ -103,9 +104,9 @@ randomVec settings provider = do
 cachedRandomUnresolvedVec ::
      (MonadThrow m, MonadIO m)
   => Text
-  -> Text
+  -> K.Key
   -> (FakerSettings -> m (Unresolved (Vector Text)))
-  -> (FakerSettings -> Text -> m Text)
+  -> (FakerSettings -> K.Key -> m Text)
   -> FakerSettings
   -> m Text
 cachedRandomUnresolvedVec sdata field provider resolverFn settings = do
@@ -123,7 +124,7 @@ randomUnresolvedVec ::
      (MonadThrow m, MonadIO m)
   => FakerSettings
   -> (FakerSettings -> m (Unresolved (Vector Text)))
-  -> (FakerSettings -> Text -> m Text)
+  -> (FakerSettings -> K.Key -> m Text)
   -> m Text
 randomUnresolvedVec settings provider resolverFn = do
   items <- provider settings
@@ -132,9 +133,9 @@ randomUnresolvedVec settings provider resolverFn = do
 cachedRandomUnresolvedVecWithoutVector ::
      (MonadThrow m, MonadIO m)
   => Text
-  -> Text
+  -> K.Key
   -> (FakerSettings -> m (Unresolved Text))
-  -> (FakerSettings -> Text -> m Text)
+  -> (FakerSettings -> K.Key -> m Text)
   -> FakerSettings
   -> m Text
 cachedRandomUnresolvedVecWithoutVector sdata field provider resolverFn settings = do
@@ -152,7 +153,7 @@ randomUnresolvedVecWithoutVector ::
      (MonadThrow m, MonadIO m)
   => FakerSettings
   -> (FakerSettings -> m (Unresolved Text))
-  -> (FakerSettings -> Text -> m Text)
+  -> (FakerSettings -> K.Key -> m Text)
   -> m Text
 randomUnresolvedVecWithoutVector settings provider resolverFn = do
   items <- provider settings
@@ -162,7 +163,7 @@ resolveUnresolved ::
      (MonadThrow m, MonadIO m)
   => FakerSettings
   -> Unresolved (Vector Text)
-  -> (FakerSettings -> Text -> m Text)
+  -> (FakerSettings -> K.Key -> m Text)
   -> m Text
 resolveUnresolved settings (Unresolved unres) resolverFn = do
   let unresLen = V.length unres
@@ -174,13 +175,13 @@ resolveUnresolved settings (Unresolved unres) resolverFn = do
        Left err -> throwM $ ParseError err
        Right vals -> combineFakeIRValue settings resolverFn vals
 
-resolveFakeIRValue :: (MonadIO m) => FakerSettings -> (FakerSettings -> Text -> m Text) -> (FakeIRValue,StdGen) -> m Text
+resolveFakeIRValue :: (MonadIO m) => FakerSettings -> (FakerSettings -> K.Key -> m Text) -> (FakeIRValue,StdGen) -> m Text
 resolveFakeIRValue _ _ (Literal txt,_) = pure txt
 resolveFakeIRValue settings _ (Hash num,_) = pure $ resolveHash settings num
 resolveFakeIRValue settings _ (Ques num,_) = pure $ resolveQues settings num
-resolveFakeIRValue settings resolverFn (Resolve text,gen) = resolverFn (setRandomGen gen settings) text
+resolveFakeIRValue settings resolverFn (Resolve text,gen) = resolverFn (setRandomGen gen settings) (K.fromText text)
 
-combineFakeIRValue :: (MonadIO m) => FakerSettings -> (FakerSettings -> Text -> m Text) -> [FakeIRValue] -> m Text
+combineFakeIRValue :: (MonadIO m) => FakerSettings -> (FakerSettings -> K.Key -> m Text) -> [FakeIRValue] -> m Text
 combineFakeIRValue settings resolverFn xs = do
   vals <- mapM (resolveFakeIRValue settings resolverFn) (zip xs (stdgens (getRandomGen settings)))
   pure $ T.concat vals
@@ -190,14 +191,14 @@ resolveFields text = case P.parseOnly parseFakedata text of
                        Left err -> throwM $ ParseError err
                        Right vals -> pure vals
 
-genericResolver :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> (FakerSettings -> Text -> m Text) -> m Text
-genericResolver settings txt resolverFn = combineFakeIRValue settings resolverFn [Resolve txt]
+genericResolver :: (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> (FakerSettings -> K.Key -> m Text) -> m Text
+genericResolver settings txt resolverFn = combineFakeIRValue settings resolverFn [Resolve (K.toText txt)]
 
-genericResolver' :: (MonadIO m, MonadThrow m) => (FakerSettings -> Text -> m Text) -> FakerSettings -> Text -> m Text
+genericResolver' :: (MonadIO m, MonadThrow m) => (FakerSettings -> K.Key -> m Text) -> FakerSettings -> K.Key -> m Text
 genericResolver' resolverFn settings txt = genericResolver settings txt resolverFn
 
 -- resolveHash settings 3
--- "234"                                             
+-- "234"
 resolveHash :: FakerSettings -> Int -> Text
 resolveHash settings num = T.pack $ helper settings num mempty
     where
@@ -237,7 +238,7 @@ resolver provider = \settings -> randomVec settings provider
 unresolvedResolver ::
      (MonadThrow m, MonadIO m)
   => (FakerSettings -> m (Unresolved (Vector Text)))
-  -> (FakerSettings -> Text -> m Text)
+  -> (FakerSettings -> K.Key -> m Text)
   -> (FakerSettings -> m Text)
 unresolvedResolver provider resolverFn =
   \settings -> randomUnresolvedVec settings provider resolverFn
@@ -245,7 +246,7 @@ unresolvedResolver provider resolverFn =
 unresolvedResolverWithoutVector ::
      (MonadThrow m, MonadIO m)
   => (FakerSettings -> m (Unresolved Text))
-  -> (FakerSettings -> Text -> m Text)
+  -> (FakerSettings -> K.Key -> m Text)
   -> (FakerSettings -> m Text)
 unresolvedResolverWithoutVector provider resolverFn =
   \settings -> randomUnresolvedVecWithoutVector settings provider resolverFn
@@ -270,7 +271,7 @@ refinedString xs = aux xs []
 refinedText :: Text -> Text
 refinedText = T.pack . refinedString . T.unpack
 
-presentInCache :: Text -> Text -> FakerSettings -> IO (Maybe (Vector Text))
+presentInCache :: Text -> K.Key -> FakerSettings -> IO (Maybe (Vector Text))
 presentInCache sdata field settings = do
   let key =
         CacheFieldKey
@@ -278,7 +279,7 @@ presentInCache sdata field settings = do
   hmap <- getCacheField settings
   pure $ HM.lookup key hmap
 
-insertToCache :: Text -> Text -> FakerSettings -> (Vector Text) -> IO ()
+insertToCache :: Text -> K.Key -> FakerSettings -> (Vector Text) -> IO ()
 insertToCache sdata field settings vec = do
   let key =
         CacheFieldKey
@@ -308,7 +309,7 @@ modifyRandomGen settings seed =
 cachedRegex ::
      (MonadThrow m, MonadIO m)
   => Text
-  -> Text
+  -> K.Key
   -> (FakerSettings -> m Regex)
   -> FakerSettings
   -> m RegexFakeValue
@@ -337,4 +338,3 @@ generateRegexData ::
 generateRegexData settings provider = do
   items <- provider settings
   pure $ generateRegex settings items
-

@@ -14,17 +14,18 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseDrWho :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDrWho settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   drWho <- faker .: "dr_who"
   pure drWho
 parseDrWho settings val = fail $ "expected Object, but got " <> (show val)
 
 parseDrWhoField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseDrWhoField settings txt val = do
   drWho <- parseDrWho settings val
   field <- drWho .:? txt .!= mempty

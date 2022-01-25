@@ -15,29 +15,30 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parseJob :: FromJSON a => FakerSettings -> Value -> Parser a
 parseJob settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   job <- faker .: "job"
   pure job
 parseJob settings val = fail $ "expected Object, but got " <> (show val)
 
 parseJobField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
 parseJobField settings txt val = do
   job <- parseJob settings val
   field <- job .:? txt .!= mempty
   pure field
 
 parseJobFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
 parseJobFields settings txts val = do
   job <- parseJob settings val
   helper job txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -47,7 +48,7 @@ parseJobFields settings txts val = do
 parseUnresolvedJobField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> K.Key
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedJobField settings txt val = do
@@ -90,10 +91,10 @@ $(genParserUnresolved "job" "title")
 
 $(genProviderUnresolved "job" "title")
 
-resolveJobText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolveJobText :: (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
 resolveJobText = genericResolver' resolveJobField
 
-resolveJobField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveJobField :: (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
 resolveJobField settings field@"seniority" =
   cachedRandomVec "job" field jobSeniorityProvider settings
 resolveJobField settings field@"field" =
