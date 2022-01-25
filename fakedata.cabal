@@ -794,6 +794,7 @@ test-suite fakedata-test
       hspec-discover:hspec-discover
   build-depends:
       QuickCheck
+    , aeson >= 2.0
     , attoparsec
     , base >=4.7 && <5
     , bytestring
