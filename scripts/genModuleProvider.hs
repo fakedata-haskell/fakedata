@@ -35,6 +35,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
+import qualified Data.Aeson.Key as K
 
 parse#{capModname} :: FromJSON a => FakerSettings -> Value -> Parser a
 parse#{capModname} settings (Object obj) = do
