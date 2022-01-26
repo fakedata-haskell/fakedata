@@ -4,8 +4,6 @@
 
 * Make it compatible with aeson 1 and 2.
 
-### Breaking changes
-
 ## 1.0.1
 
 * Improve README with use cases
