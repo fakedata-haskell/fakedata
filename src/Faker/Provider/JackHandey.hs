@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseJackHandey :: FromJSON a => FakerSettings -> Value -> Parser a
 parseJackHandey settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   jackHandey <- faker .: "quote"
   pure jackHandey
 parseJackHandey settings val = fail $ "expected Object, but got " <> (show val)
 
 parseJackHandeyField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseJackHandeyField settings txt val = do
   jackHandey <- parseJackHandey settings val
   field <- jackHandey .:? txt .!= mempty
   pure field
 
 parseJackHandeyFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseJackHandeyFields settings txts val = do
   jackHandey <- parseJackHandey settings val
   helper jackHandey txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseJackHandeyFields settings txts val = do
 parseUnresolvedJackHandeyFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedJackHandeyFields settings txts val = do
   jackHandey <- parseJackHandey settings val
   helper jackHandey txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -70,11 +71,3 @@ parseUnresolvedJackHandeyFields settings txts val = do
 $(genParser "jackHandey" "jack_handey")
 
 $(genProvider "jackHandey" "jack_handey")
-
-
-
-
-
-
-
-

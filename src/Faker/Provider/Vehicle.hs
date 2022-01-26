@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseVehicle :: FromJSON a => FakerSettings -> Value -> Parser a
 parseVehicle settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   vehicle <- faker .: "vehicle"
   pure vehicle
 parseVehicle settings val = fail $ "expected Object, but got " <> (show val)
 
 parseVehicleField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseVehicleField settings txt val = do
   vehicle <- parseVehicle settings val
   field <- vehicle .:? txt .!= mempty
   pure field
 
 parseVehicleFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseVehicleFields settings txts val = do
   vehicle <- parseVehicle settings val
   helper vehicle txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -47,7 +48,7 @@ parseVehicleFields settings txts val = do
 parseUnresolvedVehicleField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedVehicleField settings txt val = do
@@ -116,11 +117,11 @@ vehicleLicensePlateProvider ::
 vehicleLicensePlateProvider _ = pure $ pure $ pure "???-###"
 
 resolveVehicleText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveVehicleText settings txt = genericResolver settings txt resolveVehicleField
 
 resolveVehicleField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveVehicleField settings str = throwM $ InvalidField "vehicle" str
 
 $(genParsers "vehicle" ["models_by_make", "BMW"])

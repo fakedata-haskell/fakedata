@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseFamilyGuy :: FromJSON a => FakerSettings -> Value -> Parser a
 parseFamilyGuy settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   familyGuy <- faker .: "family_guy"
   pure familyGuy
 parseFamilyGuy settings val = fail $ "expected Object, but got " <> (show val)
 
 parseFamilyGuyField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseFamilyGuyField settings txt val = do
   familyGuy <- parseFamilyGuy settings val
   field <- familyGuy .:? txt .!= mempty
   pure field
 
 parseFamilyGuyFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseFamilyGuyFields settings txts val = do
   familyGuy <- parseFamilyGuy settings val
   helper familyGuy txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

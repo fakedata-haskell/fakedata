@@ -14,9 +14,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseClashOfClans :: FromJSON a => FakerSettings -> Value -> Parser a
 parseClashOfClans settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   games <- faker .: "games"
   clashOfClans <- games .: "clash_of_clans"
@@ -24,19 +25,19 @@ parseClashOfClans settings (Object obj) = do
 parseClashOfClans settings val = fail $ "expected Object, but got " <> (show val)
 
 parseClashOfClansField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseClashOfClansField settings txt val = do
   clashOfClans <- parseClashOfClans settings val
   field <- clashOfClans .:? txt .!= mempty
   pure field
 
 parseClashOfClansFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseClashOfClansFields settings txts val = do
   clashOfClans <- parseClashOfClans settings val
   helper clashOfClans txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,14 +50,14 @@ parseClashOfClansFields settings txts val = do
 parseUnresolvedClashOfClansFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedClashOfClansFields settings txts val = do
   clashOfClans <- parseClashOfClans settings val
   helper clashOfClans txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

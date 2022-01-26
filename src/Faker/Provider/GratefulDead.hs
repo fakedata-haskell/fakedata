@@ -16,9 +16,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseGratefulDead :: FromJSON a => FakerSettings -> Value -> Parser a
 parseGratefulDead settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   gratefulDead <- faker .: "grateful_dead"
   pure gratefulDead
@@ -26,19 +27,19 @@ parseGratefulDead settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseGratefulDeadField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseGratefulDeadField settings txt val = do
   gratefulDead <- parseGratefulDead settings val
   field <- gratefulDead .:? txt .!= mempty
   pure field
 
 parseGratefulDeadFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseGratefulDeadFields settings txts val = do
   gratefulDead <- parseGratefulDead settings val
   helper gratefulDead txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

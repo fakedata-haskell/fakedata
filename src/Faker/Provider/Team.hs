@@ -17,28 +17,29 @@ import Faker.Provider.Address (resolveAddressText, stateProvider, resolveAddress
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseTeam :: FromJSON a => FakerSettings -> Value -> Parser a
 parseTeam settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   team <- faker .: "team"
   pure team
 parseTeam settings val = fail $ "expected Object, but got " <> (show val)
 
 parseTeamField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseTeamField settings txt val = do
   team <- parseTeam settings val
   field <- team .:? txt .!= mempty
   pure field
 
 parseTeamFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseTeamFields settings txts val = do
   team <- parseTeam settings val
   helper team txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,7 +49,7 @@ parseTeamFields settings txts val = do
 parseUnresolvedTeamField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedTeamField settings txt val = do
@@ -97,10 +98,10 @@ $(genParser "team" "team_prefix")
 
 $(genProvider "team" "team_prefix")
 
-resolveTeamText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolveTeamText :: (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveTeamText = genericResolver' resolveTeamField
 
-resolveTeamField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveTeamField :: (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveTeamField settings field@"creature" =
   cachedRandomVec "team" field teamCreatureProvider settings
 resolveTeamField settings "Address.state" =

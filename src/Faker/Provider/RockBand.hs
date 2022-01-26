@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseRockBand :: FromJSON a => FakerSettings -> Value -> Parser a
 parseRockBand settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   rockBand <- faker .: "rock_band"
   pure rockBand
 parseRockBand settings val = fail $ "expected Object, but got " <> (show val)
 
 parseRockBandField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseRockBandField settings txt val = do
   rockBand <- parseRockBand settings val
   field <- rockBand .:? txt .!= mempty
   pure field
 
 parseRockBandFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseRockBandFields settings txts val = do
   rockBand <- parseRockBand settings val
   helper rockBand txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

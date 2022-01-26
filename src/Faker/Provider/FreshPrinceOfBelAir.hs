@@ -16,9 +16,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseFreshPrinceOfBelAir :: FromJSON a => FakerSettings -> Value -> Parser a
 parseFreshPrinceOfBelAir settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   freshPrinceOfBelAir <- faker .: "the_fresh_prince_of_bel_air"
   pure freshPrinceOfBelAir
@@ -26,19 +27,19 @@ parseFreshPrinceOfBelAir settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseFreshPrinceOfBelAirField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseFreshPrinceOfBelAirField settings txt val = do
   freshPrinceOfBelAir <- parseFreshPrinceOfBelAir settings val
   field <- freshPrinceOfBelAir .:? txt .!= mempty
   pure field
 
 parseFreshPrinceOfBelAirFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseFreshPrinceOfBelAirFields settings txts val = do
   freshPrinceOfBelAir <- parseFreshPrinceOfBelAir settings val
   helper freshPrinceOfBelAir txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

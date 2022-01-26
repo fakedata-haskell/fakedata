@@ -18,16 +18,17 @@ import Faker.Internal
 import Faker.Provider.TH
 import Faker.Provider.Name (nameNameProvider, resolveNameField)
 
+
 parseAddress :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAddress settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   address <- faker .: "address"
   pure address
 parseAddress settings val = fail $ "expected Object, but got " <> (show val)
 
 parseAddressField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseAddressField settings txt val = do
   address <- parseAddress settings val
   field <- address .:? txt .!= mempty
@@ -36,7 +37,7 @@ parseAddressField settings txt val = do
 parseUnresolvedAddressField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedAddressField settings txt val = do
@@ -315,11 +316,11 @@ $(genProviderUnresolved "address" "road_name")
 
 -- > resolveCommunityText "#{community_prefix} #{community_suffix}"
 resolveAddressText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveAddressText = genericResolver' resolveAddressField
 
 resolveAddressField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveAddressField settings field@"community_suffix" =
   cachedRandomVec "address" field communitySuffixProvider settings
 resolveAddressField settings field@"community_prefix" =

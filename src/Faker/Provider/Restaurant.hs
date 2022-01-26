@@ -17,28 +17,29 @@ import Faker.Provider.TH
 import Faker.Provider.Name (resolveNameField)
 import Language.Haskell.TH
 
+
 parseRestaurant :: FromJSON a => FakerSettings -> Value -> Parser a
 parseRestaurant settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   restaurant <- faker .: "restaurant"
   pure restaurant
 parseRestaurant settings val = fail $ "expected Object, but got " <> (show val)
 
 parseRestaurantField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseRestaurantField settings txt val = do
   restaurant <- parseRestaurant settings val
   field <- restaurant .:? txt .!= mempty
   pure field
 
 parseRestaurantFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseRestaurantFields settings txts val = do
   restaurant <- parseRestaurant settings val
   helper restaurant txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,7 +49,7 @@ parseRestaurantFields settings txts val = do
 parseUnresolvedRestaurantField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedRestaurantField settings txt val = do
@@ -81,11 +82,11 @@ $(genParserUnresolved "restaurant" "name")
 $(genProviderUnresolved "restaurant" "name")
 
 resolveRestaurantText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveRestaurantText = genericResolver' resolveRestaurantField
 
 resolveRestaurantField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveRestaurantField settings field@"name_prefix" =
   cachedRandomUnresolvedVec
     "restaurant"

@@ -13,16 +13,17 @@ import Data.Yaml
 import Faker
 import Faker.Internal
 
+
 parseAppliance :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAppliance settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   appliance <- faker .: "appliance"
   pure appliance
 parseAppliance settings val = fail $ "expected Object, but got " <> (show val)
 
 parseApplianceField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseApplianceField settings txt val = do
   appliance <- parseAppliance settings val
   field <- appliance .:? txt .!= mempty

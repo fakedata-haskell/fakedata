@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseHouse :: FromJSON a => FakerSettings -> Value -> Parser a
 parseHouse settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   house <- faker .: "house"
   pure house
 parseHouse settings val = fail $ "expected Object, but got " <> (show val)
 
 parseHouseField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseHouseField settings txt val = do
   house <- parseHouse settings val
   field <- house .:? txt .!= mempty
   pure field
 
 parseHouseFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseHouseFields settings txts val = do
   house <- parseHouse settings val
   helper house txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

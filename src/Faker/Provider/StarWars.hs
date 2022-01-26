@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseStarWars :: FromJSON a => FakerSettings -> Value -> Parser a
 parseStarWars settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   starWars <- faker .: "star_wars"
   pure starWars
 parseStarWars settings val = fail $ "expected Object, but got " <> (show val)
 
 parseStarWarsField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseStarWarsField settings txt val = do
   starWars <- parseStarWars settings val
   field <- starWars .:? txt .!= mempty
   pure field
 
 parseStarWarsFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseStarWarsFields settings txts val = do
   starWars <- parseStarWars settings val
   helper starWars txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -47,7 +48,7 @@ parseStarWarsFields settings txts val = do
 parseUnresolvedStarWarsField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedStarWarsField settings txt val = do
@@ -92,11 +93,11 @@ $(genParserUnresolved "starWars" "call_sign")
 $(genProviderUnresolved "starWars" "call_sign")
 
 resolveStarWarsText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveStarWarsText = genericResolver' resolveStarWarsField
 
 resolveStarWarsField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveStarWarsField settings field@"call_number" =
   cachedRandomUnresolvedVec
     "starWars"

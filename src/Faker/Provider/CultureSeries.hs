@@ -15,9 +15,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseCultureSeries :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCultureSeries settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   cultureSeries <- faker .: "culture_series"
   pure cultureSeries
@@ -25,7 +26,7 @@ parseCultureSeries settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseCultureSeriesField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCultureSeriesField settings txt val = do
   cultureSeries <- parseCultureSeries settings val
   field <- cultureSeries .:? txt .!= mempty

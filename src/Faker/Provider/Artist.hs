@@ -13,16 +13,17 @@ import Data.Yaml
 import Faker
 import Faker.Internal
 
+
 parseArtist :: FromJSON a => FakerSettings -> Value -> Parser a
 parseArtist settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   artist <- faker .: "artist"
   pure artist
 parseArtist settings val = fail $ "expected Object, but got " <> (show val)
 
 parseArtistField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseArtistField settings txt val = do
   artist <- parseArtist settings val
   field <- artist .:? txt .!= mempty

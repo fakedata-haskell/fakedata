@@ -15,16 +15,17 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseCryptoCoin :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCryptoCoin settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   cryptoCoin <- faker .: "crypto_coin"
   pure cryptoCoin
 parseCryptoCoin settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCryptoCoinField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCryptoCoinField settings txt val = do
   cryptoCoin <- parseCryptoCoin settings val
   field <- cryptoCoin .:? txt .!= mempty

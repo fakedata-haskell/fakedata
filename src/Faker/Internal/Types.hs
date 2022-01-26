@@ -1,12 +1,36 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE CPP #-}
 
 module Faker.Internal.Types where
 
 import Data.Hashable
 import Data.Text (Text)
 import GHC.Generics
+#if MIN_VERSION_aeson(2,0,0)
+import qualified Data.Aeson.Key as K
+#endif
+
+#if MIN_VERSION_aeson(2,0,0)
+type AesonKey = K.Key
+#else
+type AesonKey = Text
+#endif
+
+aesonKeyToText :: AesonKey -> Text
+#if MIN_VERSION_aeson(2,0,0)
+aesonKeyToText key = K.toText key
+#else
+aesonKeyToText key = key
+#endif
+
+aesonKeyFromText :: Text -> AesonKey
+#if MIN_VERSION_aeson(2,0,0)
+aesonKeyFromText key = K.fromText key
+#else
+aesonKeyFromText key = key
+#endif
 
 data SourceData
   = Address
@@ -199,7 +223,7 @@ data SourceData
 data CacheFieldKey =
   CacheFieldKey
     { ckSource :: !Text
-    , ckField :: !Text
+    , ckField :: !AesonKey
     , ckLocale :: !Text
     }
   deriving (Show, Eq, Ord, Generic, Hashable)

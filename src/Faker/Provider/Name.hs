@@ -15,28 +15,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseName :: FromJSON a => FakerSettings -> Value -> Parser a
 parseName settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   name <- faker .: "name"
   pure name
 parseName settings val = fail $ "expected Object, but got " <> (show val)
 
 parseNameField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseNameField settings txt val = do
   name <- parseName settings val
   field <- name .:? txt .!= mempty
   pure field
 
 parseNameFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseNameFields settings txts val = do
   name <- parseName settings val
   helper name txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -46,7 +47,7 @@ parseNameFields settings txts val = do
 parseUnresolvedNameField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedNameField settings txt val = do
@@ -96,10 +97,10 @@ $(genParser "name" "surname")
 
 $(genProvider "name" "surname")
 
-resolveNameText :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveNameText :: (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveNameText = genericResolver' resolveNameField
 
-resolveNameField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveNameField :: (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveNameField settings field@"female_first_name" =
   cachedRandomVec "name" field nameFemaleFirstNameProvider settings
 resolveNameField settings field@"male_first_name" =

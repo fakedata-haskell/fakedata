@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseMarketing :: FromJSON a => FakerSettings -> Value -> Parser a
 parseMarketing settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   marketing <- faker .: "marketing"
   pure marketing
 parseMarketing settings val = fail $ "expected Object, but got " <> (show val)
 
 parseMarketingField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseMarketingField settings txt val = do
   marketing <- parseMarketing settings val
   field <- marketing .:? txt .!= mempty
   pure field
 
 parseMarketingFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseMarketingFields settings txts val = do
   marketing <- parseMarketing settings val
   helper marketing txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

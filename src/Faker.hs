@@ -1,4 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE InstanceSigs #-}
@@ -45,8 +46,11 @@ import Data.Typeable
 import Data.Vector (Vector)
 import Data.Word (Word64)
 import Data.Yaml (Value)
-import Faker.Internal.Types (CacheFieldKey, CacheFileKey)
+import Faker.Internal.Types (CacheFieldKey, CacheFileKey, AesonKey)
 import System.Random (StdGen, mkStdGen, newStdGen, split)
+#if MIN_VERSION_aeson(2,0,0)
+import qualified Data.Aeson.Key as K
+#endif
 
 data FakerSettings = FakerSettings
   { fslocale :: !Text -- ^ Locale settings for your fake data source.
@@ -71,9 +75,9 @@ data FakerException
                          -- find the fake data source for your
                          -- localization.
   | InvalidField String
-                 Text -- ^ The 'String' represents the field it is
-                             -- trying to resolve and the 'Text' field
-                             -- is something you passed on.
+                 AesonKey -- ^ The 'String' represents the field it is
+                       -- trying to resolve and the 'Key' field
+                       -- is something you passed on.
   | NoDataFound FakerSettings -- ^ This is thrown when you have no
                               -- data. This may likely happen for
                               -- locales other than `en`.
@@ -199,7 +203,7 @@ instance Monad m => Functor (FakeT m) where
          pure b)
 
 instance Monad m => Applicative (FakeT m) where
-  {-# INLINE pure #-}    
+  {-# INLINE pure #-}
   pure x = FakeT (\_ -> pure x)
   {-# INLINE (<*>) #-}
   (<*>) = ap

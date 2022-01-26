@@ -14,9 +14,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseStreetFighter :: FromJSON a => FakerSettings -> Value -> Parser a
 parseStreetFighter settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   games <- faker .: "games"
   streetFighter <- games .: "street_fighter"
@@ -24,19 +25,19 @@ parseStreetFighter settings (Object obj) = do
 parseStreetFighter settings val = fail $ "expected Object, but got " <> (show val)
 
 parseStreetFighterField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseStreetFighterField settings txt val = do
   streetFighter <- parseStreetFighter settings val
   field <- streetFighter .:? txt .!= mempty
   pure field
 
 parseStreetFighterFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseStreetFighterFields settings txts val = do
   streetFighter <- parseStreetFighter settings val
   helper streetFighter txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,14 +50,14 @@ parseStreetFighterFields settings txts val = do
 parseUnresolvedStreetFighterFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedStreetFighterFields settings txts val = do
   streetFighter <- parseStreetFighter settings val
   helper streetFighter txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -87,14 +88,3 @@ $(genProvider "streetFighter" "quotes")
 $(genParser "streetFighter" "moves")
 
 $(genProvider "streetFighter" "moves")
-
-
-
-
-
-
-
-
-
-
-

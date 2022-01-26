@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parsePearlJam :: FromJSON a => FakerSettings -> Value -> Parser a
 parsePearlJam settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   pearlJam <- faker .: "pearl_jam"
   pure pearlJam
 parsePearlJam settings val = fail $ "expected Object, but got " <> (show val)
 
 parsePearlJamField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parsePearlJamField settings txt val = do
   pearlJam <- parsePearlJam settings val
   field <- pearlJam .:? txt .!= mempty
   pure field
 
 parsePearlJamFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parsePearlJamFields settings txts val = do
   pearlJam <- parsePearlJam settings val
   helper pearlJam txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

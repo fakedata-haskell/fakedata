@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseHowToTrainYourDragon :: FromJSON a => FakerSettings -> Value -> Parser a
 parseHowToTrainYourDragon settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   howToTrainYourDragon <- faker .: "how_to_train_your_dragon"
   pure howToTrainYourDragon
 parseHowToTrainYourDragon settings val = fail $ "expected Object, but got " <> (show val)
 
 parseHowToTrainYourDragonField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseHowToTrainYourDragonField settings txt val = do
   howToTrainYourDragon <- parseHowToTrainYourDragon settings val
   field <- howToTrainYourDragon .:? txt .!= mempty
   pure field
 
 parseHowToTrainYourDragonFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseHowToTrainYourDragonFields settings txts val = do
   howToTrainYourDragon <- parseHowToTrainYourDragon settings val
   helper howToTrainYourDragon txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseHowToTrainYourDragonFields settings txts val = do
 parseUnresolvedHowToTrainYourDragonFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedHowToTrainYourDragonFields settings txts val = do
   howToTrainYourDragon <- parseHowToTrainYourDragon settings val
   helper howToTrainYourDragon txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -78,11 +79,3 @@ $(genProvider "howToTrainYourDragon" "dragons")
 $(genParser "howToTrainYourDragon" "locations")
 
 $(genProvider "howToTrainYourDragon" "locations")
-
-
-
-
-
-
-
-

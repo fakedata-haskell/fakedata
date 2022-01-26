@@ -14,9 +14,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseSuperMario :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSuperMario settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   games <- faker .: "games"
   superMario <- games .: "super_mario"
@@ -24,19 +25,19 @@ parseSuperMario settings (Object obj) = do
 parseSuperMario settings val = fail $ "expected Object, but got " <> (show val)
 
 parseSuperMarioField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseSuperMarioField settings txt val = do
   superMario <- parseSuperMario settings val
   field <- superMario .:? txt .!= mempty
   pure field
 
 parseSuperMarioFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseSuperMarioFields settings txts val = do
   superMario <- parseSuperMario settings val
   helper superMario txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,14 +50,14 @@ parseSuperMarioFields settings txts val = do
 parseUnresolvedSuperMarioFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedSuperMarioFields settings txts val = do
   superMario <- parseSuperMario settings val
   helper superMario txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

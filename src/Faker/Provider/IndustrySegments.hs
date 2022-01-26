@@ -16,9 +16,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseIndustrySegments :: FromJSON a => FakerSettings -> Value -> Parser a
 parseIndustrySegments settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   industrySegments <- faker .: "industry_segments"
   pure industrySegments
@@ -26,19 +27,19 @@ parseIndustrySegments settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseIndustrySegmentsField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseIndustrySegmentsField settings txt val = do
   industrySegments <- parseIndustrySegments settings val
   field <- industrySegments .:? txt .!= mempty
   pure field
 
 parseIndustrySegmentsFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseIndustrySegmentsFields settings txts val = do
   industrySegments <- parseIndustrySegments settings val
   helper industrySegments txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

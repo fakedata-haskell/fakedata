@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseBasketball :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBasketball settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   basketball <- faker .: "basketball"
   pure basketball
 parseBasketball settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBasketballField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseBasketballField settings txt val = do
   basketball <- parseBasketball settings val
   field <- basketball .:? txt .!= mempty
   pure field
 
 parseBasketballFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseBasketballFields settings txts val = do
   basketball <- parseBasketball settings val
   helper basketball txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

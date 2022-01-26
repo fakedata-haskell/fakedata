@@ -14,9 +14,10 @@ import Data.Yaml
 import Faker
 import Faker.Internal
 
+
 parseAnimal :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAnimal settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   creature <- faker .: "creature"
   animal <- creature .: "animal"
@@ -24,7 +25,7 @@ parseAnimal settings (Object obj) = do
 parseAnimal settings val = fail $ "expected Object, but got " <> (show val)
 
 parseAnimalField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseAnimalField settings txt val = do
   animal <- parseAnimal settings val
   field <- animal .:? txt .!= mempty

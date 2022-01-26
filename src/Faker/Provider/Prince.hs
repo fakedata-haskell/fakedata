@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parsePrince :: FromJSON a => FakerSettings -> Value -> Parser a
 parsePrince settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   prince <- faker .: "prince"
   pure prince
 parsePrince settings val = fail $ "expected Object, but got " <> (show val)
 
 parsePrinceField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parsePrinceField settings txt val = do
   prince <- parsePrince settings val
   field <- prince .:? txt .!= mempty
   pure field
 
 parsePrinceFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parsePrinceFields settings txts val = do
   prince <- parsePrince settings val
   helper prince txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parsePrinceFields settings txts val = do
 parseUnresolvedPrinceFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedPrinceFields settings txts val = do
   prince <- parsePrince settings val
   helper prince txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -86,14 +87,3 @@ $(genProvider "prince" "album")
 $(genParser "prince" "band")
 
 $(genProvider "prince" "band")
-
-
-
-
-
-
-
-
-
-
-

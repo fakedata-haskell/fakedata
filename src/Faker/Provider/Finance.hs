@@ -15,9 +15,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseFinance :: FromJSON a => FakerSettings -> Value -> Parser a
 parseFinance settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   finance <- faker .: "finance"
   creditCard <- finance .: "credit_card"
@@ -25,19 +26,19 @@ parseFinance settings (Object obj) = do
 parseFinance settings val = fail $ "expected Object, but got " <> (show val)
 
 parseFinanceField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseFinanceField settings txt val = do
   finance <- parseFinance settings val
   field <- finance .:? txt .!= mempty
   pure field
 
 parseFinanceFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseFinanceFields settings txts val = do
   finance <- parseFinance settings val
   helper finance txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -47,7 +48,7 @@ parseFinanceFields settings txts val = do
 parseUnresolvedFinanceField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedFinanceField settings txt val = do
@@ -112,11 +113,11 @@ $(genParsers "finance" ["ticker", "nyse"])
 $(genProviders "finance" ["ticker", "nyse"])
 
 resolveFinanceText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveFinanceText = genericResolver' resolveFinanceField
 
 resolveFinanceField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveFinanceField settings field@"visa" =
   cachedRandomUnresolvedVec
     "finance"

@@ -16,9 +16,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseWorldOfWarcraft :: FromJSON a => FakerSettings -> Value -> Parser a
 parseWorldOfWarcraft settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   games <- faker .: "games"
   worldOfWarcraft <- games .: "world_of_warcraft"
@@ -27,19 +28,19 @@ parseWorldOfWarcraft settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseWorldOfWarcraftField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseWorldOfWarcraftField settings txt val = do
   worldOfWarcraft <- parseWorldOfWarcraft settings val
   field <- worldOfWarcraft .:? txt .!= mempty
   pure field
 
 parseWorldOfWarcraftFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseWorldOfWarcraftFields settings txts val = do
   worldOfWarcraft <- parseWorldOfWarcraft settings val
   helper worldOfWarcraft txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

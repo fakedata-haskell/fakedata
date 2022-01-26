@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseCamera :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCamera settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   camera <- faker .: "camera"
   pure camera
 parseCamera settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCameraField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCameraField settings txt val = do
   camera <- parseCamera settings val
   field <- camera .:? txt .!= mempty
   pure field
 
 parseCameraFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseCameraFields settings txts val = do
   camera <- parseCamera settings val
   helper camera txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseCameraFields settings txts val = do
 parseUnresolvedCameraFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedCameraFields settings txts val = do
   camera <- parseCamera settings val
   helper camera txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -78,11 +79,3 @@ $(genProvider "camera" "model")
 $(genParser "camera" "brand_with_model")
 
 $(genProvider "camera" "brand_with_model")
-
-
-
-
-
-
-
-

@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseSouthPark :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSouthPark settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   southPark <- faker .: "south_park"
   pure southPark
 parseSouthPark settings val = fail $ "expected Object, but got " <> (show val)
 
 parseSouthParkField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseSouthParkField settings txt val = do
   southPark <- parseSouthPark settings val
   field <- southPark .:? txt .!= mempty
   pure field
 
 parseSouthParkFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseSouthParkFields settings txts val = do
   southPark <- parseSouthPark settings val
   helper southPark txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

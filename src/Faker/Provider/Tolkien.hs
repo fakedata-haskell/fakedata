@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseTolkien :: FromJSON a => FakerSettings -> Value -> Parser a
 parseTolkien settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   tolkien <- faker .: "tolkien"
   pure tolkien
 parseTolkien settings val = fail $ "expected Object, but got " <> (show val)
 
 parseTolkienField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseTolkienField settings txt val = do
   tolkien <- parseTolkien settings val
   field <- tolkien .:? txt .!= mempty
   pure field
 
 parseTolkienFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseTolkienFields settings txts val = do
   tolkien <- parseTolkien settings val
   helper tolkien txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseTolkienFields settings txts val = do
 parseUnresolvedTolkienFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedTolkienFields settings txts val = do
   tolkien <- parseTolkien settings val
   helper tolkien txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

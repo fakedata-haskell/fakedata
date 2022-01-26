@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseStargate :: FromJSON a => FakerSettings -> Value -> Parser a
 parseStargate settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   stargate <- faker .: "stargate"
   pure stargate
 parseStargate settings val = fail $ "expected Object, but got " <> (show val)
 
 parseStargateField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseStargateField settings txt val = do
   stargate <- parseStargate settings val
   field <- stargate .:? txt .!= mempty
   pure field
 
 parseStargateFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseStargateFields settings txts val = do
   stargate <- parseStargate settings val
   helper stargate txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

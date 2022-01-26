@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseLorem :: FromJSON a => FakerSettings -> Value -> Parser a
 parseLorem settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   lorem <- faker .: "lorem"
   pure lorem
 parseLorem settings val = fail $ "expected Object, but got " <> (show val)
 
 parseLoremField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseLoremField settings txt val = do
   lorem <- parseLorem settings val
   field <- lorem .:? txt .!= mempty
   pure field
 
 parseLoremFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseLoremFields settings txts val = do
   lorem <- parseLorem settings val
   helper lorem txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

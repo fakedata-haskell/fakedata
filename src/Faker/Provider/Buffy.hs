@@ -16,16 +16,17 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseBuffy :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBuffy settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   buffy <- faker .: "buffy"
   pure buffy
 parseBuffy settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBuffyField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseBuffyField settings txt val = do
   buffy <- parseBuffy settings val
   field <- buffy .:? txt .!= mempty
@@ -34,7 +35,7 @@ parseBuffyField settings txt val = do
 parseUnresolvedBuffyField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedBuffyField settings txt val = do

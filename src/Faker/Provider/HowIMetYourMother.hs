@@ -16,9 +16,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseHowIMetYourMother :: FromJSON a => FakerSettings -> Value -> Parser a
 parseHowIMetYourMother settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   howIMetYourMother <- faker .: "how_i_met_your_mother"
   pure howIMetYourMother
@@ -26,19 +27,19 @@ parseHowIMetYourMother settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseHowIMetYourMotherField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseHowIMetYourMotherField settings txt val = do
   howIMetYourMother <- parseHowIMetYourMother settings val
   field <- howIMetYourMother .:? txt .!= mempty
   pure field
 
 parseHowIMetYourMotherFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseHowIMetYourMotherFields settings txts val = do
   howIMetYourMother <- parseHowIMetYourMother settings val
   helper howIMetYourMother txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

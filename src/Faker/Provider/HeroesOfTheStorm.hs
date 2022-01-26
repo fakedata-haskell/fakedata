@@ -16,9 +16,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseHeroesOfTheStorm :: FromJSON a => FakerSettings -> Value -> Parser a
 parseHeroesOfTheStorm settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   heroesOfTheStorm <- faker .: "heroes_of_the_storm"
   pure heroesOfTheStorm
@@ -26,19 +27,19 @@ parseHeroesOfTheStorm settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseHeroesOfTheStormField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseHeroesOfTheStormField settings txt val = do
   heroesOfTheStorm <- parseHeroesOfTheStorm settings val
   field <- heroesOfTheStorm .:? txt .!= mempty
   pure field
 
 parseHeroesOfTheStormFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseHeroesOfTheStormFields settings txts val = do
   heroesOfTheStorm <- parseHeroesOfTheStorm settings val
   helper heroesOfTheStorm txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

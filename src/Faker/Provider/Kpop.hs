@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseKpop :: FromJSON a => FakerSettings -> Value -> Parser a
 parseKpop settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   kpop <- faker .: "kpop"
   pure kpop
 parseKpop settings val = fail $ "expected Object, but got " <> (show val)
 
 parseKpopField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseKpopField settings txt val = do
   kpop <- parseKpop settings val
   field <- kpop .:? txt .!= mempty
   pure field
 
 parseKpopFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseKpopFields settings txts val = do
   kpop <- parseKpop settings val
   helper kpop txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

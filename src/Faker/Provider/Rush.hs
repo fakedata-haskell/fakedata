@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseRush :: FromJSON a => FakerSettings -> Value -> Parser a
 parseRush settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   rush <- faker .: "rush"
   pure rush
 parseRush settings val = fail $ "expected Object, but got " <> (show val)
 
 parseRushField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseRushField settings txt val = do
   rush <- parseRush settings val
   field <- rush .:? txt .!= mempty
   pure field
 
 parseRushFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseRushFields settings txts val = do
   rush <- parseRush settings val
   helper rush txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseRushFields settings txts val = do
 parseUnresolvedRushFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedRushFields settings txts val = do
   rush <- parseRush settings val
   helper rush txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -76,14 +77,3 @@ $(genProvider "rush" "players")
 $(genParser "rush" "albums")
 
 $(genProvider "rush" "albums")
-
-
-
-
-
-
-
-
-
-
-

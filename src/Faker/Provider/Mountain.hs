@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseMountain :: FromJSON a => FakerSettings -> Value -> Parser a
 parseMountain settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   mountain <- faker .: "mountain"
   pure mountain
 parseMountain settings val = fail $ "expected Object, but got " <> (show val)
 
 parseMountainField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseMountainField settings txt val = do
   mountain <- parseMountain settings val
   field <- mountain .:? txt .!= mempty
   pure field
 
 parseMountainFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseMountainFields settings txts val = do
   mountain <- parseMountain settings val
   helper mountain txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseMountainFields settings txts val = do
 parseUnresolvedMountainFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedMountainFields settings txts val = do
   mountain <- parseMountain settings val
   helper mountain txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -74,11 +75,3 @@ $(genProvider "mountain" "name")
 $(genParser "mountain" "range")
 
 $(genProvider "mountain" "range")
-
-
-
-
-
-
-
-

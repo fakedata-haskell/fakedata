@@ -16,9 +16,10 @@ import Faker.Provider.TH
 import Language.Haskell.TH
 import Faker.Provider.Name (resolveNameField)
 
+
 parseBird :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBird settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   creature <- faker .: "creature"
   bird <- creature .: "bird"
@@ -26,19 +27,19 @@ parseBird settings (Object obj) = do
 parseBird settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBirdField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseBirdField settings txt val = do
   bird <- parseBird settings val
   field <- bird .:? txt .!= mempty
   pure field
 
 parseBirdFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseBirdFields settings txts val = do
   bird <- parseBird settings val
   helper bird txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,7 +50,7 @@ parseBirdFields settings txts val = do
 parseUnresolvedBirdField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedBirdField settings txt val = do
@@ -62,14 +63,14 @@ parseUnresolvedBirdField settings txt val = do
 parseUnresolvedBirdFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedBirdFields settings txts val = do
   bird <- parseBird settings val
   helper bird txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -121,10 +122,10 @@ $(genParserUnresolved "bird" "implausible_common_names")
 $(genProviderUnresolved "bird" "implausible_common_names")
 
 
-resolveBirdText :: (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+resolveBirdText :: (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveBirdText = genericResolver' resolveBirdField
 
-resolveBirdField :: (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+resolveBirdField :: (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveBirdField settings field@"geo" =
   cachedRandomVec "bird" field birdGeoProvider settings
 resolveBirdField settings field@"adjective" =

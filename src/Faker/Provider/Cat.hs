@@ -15,9 +15,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseCat :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCat settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   creature <- faker .: "creature"
   cat <- creature .: "cat"
@@ -25,7 +26,7 @@ parseCat settings (Object obj) = do
 parseCat settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCatField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCatField settings txt val = do
   cat <- parseCat settings val
   field <- cat .:? txt .!= mempty

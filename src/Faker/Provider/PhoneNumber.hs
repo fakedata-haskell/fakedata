@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parsePhoneNumber :: FromJSON a => FakerSettings -> Value -> Parser a
 parsePhoneNumber settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   phoneNumber <- faker .: "phone_number"
   pure phoneNumber
 parsePhoneNumber settings val = fail $ "expected Object, but got " <> (show val)
 
 parsePhoneNumberField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parsePhoneNumberField settings txt val = do
   phoneNumber <- parsePhoneNumber settings val
   field <- phoneNumber .:? txt .!= mempty
   pure field
 
 parsePhoneNumberFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parsePhoneNumberFields settings txts val = do
   phoneNumber <- parsePhoneNumber settings val
   helper phoneNumber txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -46,14 +47,14 @@ parsePhoneNumberFields settings txts val = do
 
 parseCellPhone :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCellPhone settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   phoneNumber <- faker .: "cell_phone"
   pure phoneNumber
 parseCellPhone settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCellPhoneField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCellPhoneField settings txt val = do
   phoneNumber <- parsePhoneNumber settings val
   field <- phoneNumber .:? txt .!= mempty
@@ -62,7 +63,7 @@ parseCellPhoneField settings txt val = do
 parseUnresolvedCellPhoneField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedCellPhoneField settings txt val = do
@@ -73,7 +74,7 @@ parseUnresolvedCellPhoneField settings txt val = do
 parseUnresolvedPhoneNumberField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> Text
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedPhoneNumberField settings txt val = do
@@ -97,7 +98,7 @@ cellPhoneFormatProvider settings =
 -- $(genProvider "cellPhone" "formats")
 parseCountryCode :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCountryCode settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   countryCode <- faker .: "country_code"
   pure countryCode
@@ -108,11 +109,11 @@ countryCodeProvider ::
 countryCodeProvider settings = fetchData settings PhoneNumber parseCountryCode
 
 resolvePhoneNumberText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> Text -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolvePhoneNumberText = genericResolver' resolvePhoneNumberField
 
 resolvePhoneNumberField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> Text -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolvePhoneNumberField settings field@"PhoneNumber.area_code" = let
     parser ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a

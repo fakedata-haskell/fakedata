@@ -15,16 +15,17 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseCode :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCode settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   code <- faker .: "code"
   pure code
 parseCode settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCodeField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCodeField settings txt val = do
   code <- parseCode settings val
   field <- code .:? txt .!= mempty

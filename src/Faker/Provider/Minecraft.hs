@@ -14,9 +14,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseMinecraft :: FromJSON a => FakerSettings -> Value -> Parser a
 parseMinecraft settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   games <- faker .: "games"
   minecraft <- games .: "minecraft"
@@ -24,19 +25,19 @@ parseMinecraft settings (Object obj) = do
 parseMinecraft settings val = fail $ "expected Object, but got " <> (show val)
 
 parseMinecraftField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseMinecraftField settings txt val = do
   minecraft <- parseMinecraft settings val
   field <- minecraft .:? txt .!= mempty
   pure field
 
 parseMinecraftFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseMinecraftFields settings txts val = do
   minecraft <- parseMinecraft settings val
   helper minecraft txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,14 +50,14 @@ parseMinecraftFields settings txts val = do
 parseUnresolvedMinecraftFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedMinecraftFields settings txts val = do
   minecraft <- parseMinecraft settings val
   helper minecraft txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

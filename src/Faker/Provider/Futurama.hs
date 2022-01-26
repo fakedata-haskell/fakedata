@@ -14,28 +14,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseFuturama :: FromJSON a => FakerSettings -> Value -> Parser a
 parseFuturama settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   futurama <- faker .: "futurama"
   pure futurama
 parseFuturama settings val = fail $ "expected Object, but got " <> (show val)
 
 parseFuturamaField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseFuturamaField settings txt val = do
   futurama <- parseFuturama settings val
   field <- futurama .:? txt .!= mempty
   pure field
 
 parseFuturamaFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseFuturamaFields settings txts val = do
   futurama <- parseFuturama settings val
   helper futurama txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,14 +49,14 @@ parseFuturamaFields settings txts val = do
 parseUnresolvedFuturamaFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [Text]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedFuturamaFields settings txts val = do
   futurama <- parseFuturama settings val
   helper futurama txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -86,14 +87,3 @@ $(genProvider "futurama" "quotes")
 $(genParser "futurama" "hermes_catchphrases")
 
 $(genProvider "futurama" "hermes_catchphrases")
-
-
-
-
-
-
-
-
-
-
-

@@ -16,16 +16,17 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseBossaNova :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBossaNova settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   bossaNova <- faker .: "bossa_nova"
   pure bossaNova
 parseBossaNova settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBossaNovaField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseBossaNovaField settings txt val = do
   bossaNova <- parseBossaNova settings val
   field <- bossaNova .:? txt .!= mempty

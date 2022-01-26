@@ -16,16 +16,17 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseCannabis :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCannabis settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   cannabis <- faker .: "cannabis"
   pure cannabis
 parseCannabis settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCannabisField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCannabisField settings txt val = do
   cannabis <- parseCannabis settings val
   field <- cannabis .:? txt .!= mempty

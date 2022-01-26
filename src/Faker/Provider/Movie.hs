@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseMovie :: FromJSON a => FakerSettings -> Value -> Parser a
 parseMovie settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   movie <- faker .: "movie"
   pure movie
 parseMovie settings val = fail $ "expected Object, but got " <> (show val)
 
 parseMovieField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseMovieField settings txt val = do
   movie <- parseMovie settings val
   field <- movie .:? txt .!= mempty
   pure field
 
 parseMovieFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseMovieFields settings txts val = do
   movie <- parseMovie settings val
   helper movie txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

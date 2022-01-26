@@ -16,28 +16,29 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseDune :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDune settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   dune <- faker .: "dune"
   pure dune
 parseDune settings val = fail $ "expected Object, but got " <> (show val)
 
 parseDuneField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseDuneField settings txt val = do
   dune <- parseDune settings val
   field <- dune .:? txt .!= mempty
   pure field
 
 parseDuneFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseDuneFields settings txts val = do
   dune <- parseDune settings val
   helper dune txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

@@ -16,9 +16,10 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 
+
 parseVForVendetta :: FromJSON a => FakerSettings -> Value -> Parser a
 parseVForVendetta settings (Object obj) = do
-  en <- obj .: (getLocale settings)
+  en <- obj .: (getLocaleKey settings)
   faker <- en .: "faker"
   vForVendetta <- faker .: "v_for_vendetta"
   pure vForVendetta
@@ -26,19 +27,19 @@ parseVForVendetta settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseVForVendettaField ::
-     (FromJSON a, Monoid a) => FakerSettings -> Text -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseVForVendettaField settings txt val = do
   vForVendetta <- parseVForVendetta settings val
   field <- vForVendetta .:? txt .!= mempty
   pure field
 
 parseVForVendettaFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [Text] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseVForVendettaFields settings txts val = do
   vForVendetta <- parseVForVendetta settings val
   helper vForVendetta txts
   where
-    helper :: (FromJSON a) => Value -> [Text] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
