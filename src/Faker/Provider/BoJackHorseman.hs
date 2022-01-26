@@ -12,7 +12,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import qualified Data.Aeson.Key as K
+
 
 parseBoJackHorseman :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBoJackHorseman settings (Object obj) = do
@@ -24,7 +24,7 @@ parseBoJackHorseman settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseBoJackHorsemanField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseBoJackHorsemanField settings txt val = do
   boJackHorseman <- parseBoJackHorseman settings val
   field <- boJackHorseman .:? txt .!= mempty

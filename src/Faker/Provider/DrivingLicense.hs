@@ -14,7 +14,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseDrivingLicense :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDrivingLicense settings (Object obj) = do
@@ -25,19 +25,19 @@ parseDrivingLicense settings (Object obj) = do
 parseDrivingLicense settings val = fail $ "expected Object, but got " <> (show val)
 
 parseDrivingLicenseField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseDrivingLicenseField settings txt val = do
   drivingLicense <- parseDrivingLicense settings val
   field <- drivingLicense .:? txt .!= mempty
   pure field
 
 parseDrivingLicenseFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseDrivingLicenseFields settings txts val = do
   drivingLicense <- parseDrivingLicense settings val
   helper drivingLicense txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,7 +48,7 @@ parseDrivingLicenseFields settings txts val = do
 parseUnresolvedDrivingLicenseField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> K.Key
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedDrivingLicenseField settings txt val = do
@@ -61,14 +61,14 @@ parseUnresolvedDrivingLicenseField settings txt val = do
 parseUnresolvedDrivingLicenseFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [K.Key]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedDrivingLicenseFields settings txts val = do
   drivingLicense <- parseDrivingLicense settings val
   helper drivingLicense txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -231,9 +231,9 @@ $(genProviderUnresolveds "drivingLicense" ["usa","wyoming"])
 $(genParserUnresolveds "drivingLicense" ["usa","north_dakota"])
 $(genProviderUnresolveds "drivingLicense" ["usa","north_dakota"])
 
-resolveDrivingLicenseText :: (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
+resolveDrivingLicenseText :: (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveDrivingLicenseText = genericResolver' resolveDrivingLicenseField
 
-resolveDrivingLicenseField :: (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
+resolveDrivingLicenseField :: (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 
 resolveDrivingLicenseField settings str = throwM $ InvalidField "drivingLicense" str

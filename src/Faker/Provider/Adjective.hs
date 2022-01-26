@@ -13,7 +13,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseAdjective :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAdjective settings (Object obj) = do
@@ -24,19 +24,19 @@ parseAdjective settings (Object obj) = do
 parseAdjective settings val = fail $ "expected Object, but got " <> (show val)
 
 parseAdjectiveField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseAdjectiveField settings txt val = do
   adjective <- parseAdjective settings val
   field <- adjective .:? txt .!= mempty
   pure field
 
 parseAdjectiveFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseAdjectiveFields settings txts val = do
   adjective <- parseAdjective settings val
   helper adjective txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,14 +49,14 @@ parseAdjectiveFields settings txts val = do
 parseUnresolvedAdjectiveFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [K.Key]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedAdjectiveFields settings txts val = do
   adjective <- parseAdjective settings val
   helper adjective txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

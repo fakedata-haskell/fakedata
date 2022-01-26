@@ -1,4 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE InstanceSigs #-}
@@ -25,7 +26,6 @@ module Faker
     -- * Getters
   , getRandomGen
   , getLocale
-  , getLocaleKey
   , getDeterministic
   , getCacheField
   , getCacheFile
@@ -46,9 +46,11 @@ import Data.Typeable
 import Data.Vector (Vector)
 import Data.Word (Word64)
 import Data.Yaml (Value)
-import Faker.Internal.Types (CacheFieldKey, CacheFileKey)
+import Faker.Internal.Types (CacheFieldKey, CacheFileKey, AesonKey)
 import System.Random (StdGen, mkStdGen, newStdGen, split)
+#if MIN_VERSION_aeson(2,0,0)
 import qualified Data.Aeson.Key as K
+#endif
 
 data FakerSettings = FakerSettings
   { fslocale :: !Text -- ^ Locale settings for your fake data source.
@@ -73,7 +75,7 @@ data FakerException
                          -- find the fake data source for your
                          -- localization.
   | InvalidField String
-                 K.Key -- ^ The 'String' represents the field it is
+                 AesonKey -- ^ The 'String' represents the field it is
                        -- trying to resolve and the 'Key' field
                        -- is something you passed on.
   | NoDataFound FakerSettings -- ^ This is thrown when you have no
@@ -117,10 +119,6 @@ getRandomGen settings = fsrandomGen settings
 -- | Get the Locale settings for your fake data source
 getLocale :: FakerSettings -> Text
 getLocale FakerSettings {..} = fslocale
-
--- | Get the Locale settings for your fake data source as a YAML  key.
-getLocaleKey :: FakerSettings -> K.Key
-getLocaleKey FakerSettings {..} = K.fromText fslocale
 
 -- | Set the output of fakedata to be deterministic. With this you
 -- will get the same ouput for the functions every time.

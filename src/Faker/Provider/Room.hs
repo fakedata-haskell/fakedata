@@ -13,7 +13,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseRoom :: FromJSON a => FakerSettings -> Value -> Parser a
 parseRoom settings (Object obj) = do
@@ -24,19 +24,19 @@ parseRoom settings (Object obj) = do
 parseRoom settings val = fail $ "expected Object, but got " <> (show val)
 
 parseRoomField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseRoomField settings txt val = do
   room <- parseRoom settings val
   field <- room .:? txt .!= mempty
   pure field
 
 parseRoomFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseRoomFields settings txts val = do
   room <- parseRoom settings val
   helper room txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,14 +49,14 @@ parseRoomFields settings txts val = do
 parseUnresolvedRoomFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [K.Key]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedRoomFields settings txts val = do
   room <- parseRoom settings val
   helper room txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

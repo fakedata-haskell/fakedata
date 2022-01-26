@@ -14,7 +14,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseCoin :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCoin settings (Object obj) = do
@@ -25,7 +25,7 @@ parseCoin settings (Object obj) = do
 parseCoin settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCoinField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCoinField settings txt val = do
   coin <- parseCoin settings val
   field <- coin .:? txt .!= mempty

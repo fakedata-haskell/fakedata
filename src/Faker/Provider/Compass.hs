@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseCompass :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCompass settings (Object obj) = do
@@ -26,19 +26,19 @@ parseCompass settings (Object obj) = do
 parseCompass settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCompassField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCompassField settings txt val = do
   compass <- parseCompass settings val
   field <- compass .:? txt .!= mempty
   pure field
 
 parseCompassFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseCompassFields settings txts val = do
   compass <- parseCompass settings val
   helper compass txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,7 +48,7 @@ parseCompassFields settings txts val = do
 parseUnresolvedCompassField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> K.Key
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedCompassField settings txt val = do
@@ -117,7 +117,7 @@ $(genParsers "compass" ["quarter-wind", "azimuth"])
 $(genProviders "compass" ["quarter-wind", "azimuth"])
 
 resolveCompassText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveCompassText = genericResolver' resolveCompassField
 
 cardinalProvider ::
@@ -161,7 +161,7 @@ abbreviationProvider settings = do
   pure $ cw <> ca <> caz <> qw
 
 resolveCompassField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveCompassField settings field@"cardinal" =
   cachedRandomVec "compass" field cardinalProvider settings
 resolveCompassField settings field@"ordinal" =

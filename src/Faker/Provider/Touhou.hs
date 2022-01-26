@@ -13,7 +13,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseTouhou :: FromJSON a => FakerSettings -> Value -> Parser a
 parseTouhou settings (Object obj) = do
@@ -25,19 +25,19 @@ parseTouhou settings (Object obj) = do
 parseTouhou settings val = fail $ "expected Object, but got " <> (show val)
 
 parseTouhouField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseTouhouField settings txt val = do
   touhou <- parseTouhou settings val
   field <- touhou .:? txt .!= mempty
   pure field
 
 parseTouhouFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseTouhouFields settings txts val = do
   touhou <- parseTouhou settings val
   helper touhou txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -50,14 +50,14 @@ parseTouhouFields settings txts val = do
 parseUnresolvedTouhouFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [K.Key]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedTouhouFields settings txts val = do
   touhou <- parseTouhou settings val
   helper touhou txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

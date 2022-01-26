@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseEducator :: FromJSON a => FakerSettings -> Value -> Parser a
 parseEducator settings (Object obj) = do
@@ -26,19 +26,19 @@ parseEducator settings (Object obj) = do
 parseEducator settings val = fail $ "expected Object, but got " <> (show val)
 
 parseEducatorField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseEducatorField settings txt val = do
   educator <- parseEducator settings val
   field <- educator .:? txt .!= mempty
   pure field
 
 parseEducatorFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseEducatorFields settings txts val = do
   educator <- parseEducator settings val
   helper educator txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,7 +48,7 @@ parseEducatorFields settings txts val = do
 parseUnresolvedEducatorField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> K.Key
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedEducatorField settings txt val = do
@@ -59,14 +59,14 @@ parseUnresolvedEducatorField settings txt val = do
 parseUnresolvedEducatorFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [K.Key]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedEducatorFields settings txts val = do
   educator <- parseEducator settings val
   helper educator txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v
@@ -138,11 +138,11 @@ $(genParserUnresolveds "educator" ["tertiary", "degree", "course_number"])
 $(genProviderUnresolveds "educator" ["tertiary", "degree", "course_number"])
 
 resolveEducatorText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveEducatorText = genericResolver' resolveEducatorField
 
 resolveEducatorField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveEducatorField settings field@"course_number" =
   cachedRandomUnresolvedVec
     "educator"

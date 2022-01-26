@@ -3,7 +3,6 @@
 
 module AddressSpec where
 
-import qualified Data.Aeson.Key as K
 import qualified Data.Map as M
 import Data.Text hiding (all, map)
 import qualified Data.Text as T
@@ -13,6 +12,7 @@ import Faker.Address
 import Test.Hspec
 import TestImport
 import Faker.Internal
+import Faker.Internal.Types (aesonKeyToText)
 
 fakerException :: Selector FakerException
 fakerException = const True
@@ -25,14 +25,14 @@ spec = do
         resolveUnresolved
           defaultFakerSettings
           (pure $ pure $ "32-????-####")
-          (\s t -> pure $ K.toText t)
+          (\s t -> pure $ aesonKeyToText t)
       txt `shouldBeOneOf` ["32-SZJX-4351", "32-GODI-8116"]
     it "doesn't get confused with garbage" $ do
       txt <-
         resolveUnresolved
           defaultFakerSettings
           (pure $ pure $ "abjakf-324jak")
-          (\s t -> pure $ K.toText t)
+          (\s t -> pure $ aesonKeyToText t)
       txt `shouldBe` "abjakf-324jak"
     describe "Address functions" $ do
       it "basic check" $ do

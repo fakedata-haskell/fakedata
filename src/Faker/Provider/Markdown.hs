@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseMarkdown :: FromJSON a => FakerSettings -> Value -> Parser a
 parseMarkdown settings (Object obj) = do
@@ -26,19 +26,19 @@ parseMarkdown settings (Object obj) = do
 parseMarkdown settings val = fail $ "expected Object, but got " <> (show val)
 
 parseMarkdownField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseMarkdownField settings txt val = do
   markdown <- parseMarkdown settings val
   field <- markdown .:? txt .!= mempty
   pure field
 
 parseMarkdownFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseMarkdownFields settings txts val = do
   markdown <- parseMarkdown settings val
   helper markdown txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

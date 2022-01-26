@@ -13,7 +13,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseNaruto :: FromJSON a => FakerSettings -> Value -> Parser a
 parseNaruto settings (Object obj) = do
@@ -24,19 +24,19 @@ parseNaruto settings (Object obj) = do
 parseNaruto settings val = fail $ "expected Object, but got " <> (show val)
 
 parseNarutoField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseNarutoField settings txt val = do
   naruto <- parseNaruto settings val
   field <- naruto .:? txt .!= mempty
   pure field
 
 parseNarutoFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseNarutoFields settings txts val = do
   naruto <- parseNaruto settings val
   helper naruto txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,14 +49,14 @@ parseNarutoFields settings txts val = do
 parseUnresolvedNarutoFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [K.Key]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedNarutoFields settings txts val = do
   naruto <- parseNaruto settings val
   helper naruto txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

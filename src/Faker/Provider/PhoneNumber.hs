@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parsePhoneNumber :: FromJSON a => FakerSettings -> Value -> Parser a
 parsePhoneNumber settings (Object obj) = do
@@ -26,19 +26,19 @@ parsePhoneNumber settings (Object obj) = do
 parsePhoneNumber settings val = fail $ "expected Object, but got " <> (show val)
 
 parsePhoneNumberField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parsePhoneNumberField settings txt val = do
   phoneNumber <- parsePhoneNumber settings val
   field <- phoneNumber .:? txt .!= mempty
   pure field
 
 parsePhoneNumberFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parsePhoneNumberFields settings txts val = do
   phoneNumber <- parsePhoneNumber settings val
   helper phoneNumber txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -54,7 +54,7 @@ parseCellPhone settings (Object obj) = do
 parseCellPhone settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCellPhoneField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCellPhoneField settings txt val = do
   phoneNumber <- parsePhoneNumber settings val
   field <- phoneNumber .:? txt .!= mempty
@@ -63,7 +63,7 @@ parseCellPhoneField settings txt val = do
 parseUnresolvedCellPhoneField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> K.Key
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedCellPhoneField settings txt val = do
@@ -74,7 +74,7 @@ parseUnresolvedCellPhoneField settings txt val = do
 parseUnresolvedPhoneNumberField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> K.Key
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedPhoneNumberField settings txt val = do
@@ -109,11 +109,11 @@ countryCodeProvider ::
 countryCodeProvider settings = fetchData settings PhoneNumber parseCountryCode
 
 resolvePhoneNumberText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolvePhoneNumberText = genericResolver' resolvePhoneNumberField
 
 resolvePhoneNumberField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolvePhoneNumberField settings field@"PhoneNumber.area_code" = let
     parser ::
      (FromJSON a, Monoid a) => FakerSettings -> Value -> Parser a

@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseHalfLife :: FromJSON a => FakerSettings -> Value -> Parser a
 parseHalfLife settings (Object obj) = do
@@ -27,19 +27,19 @@ parseHalfLife settings (Object obj) = do
 parseHalfLife settings val = fail $ "expected Object, but got " <> (show val)
 
 parseHalfLifeField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseHalfLifeField settings txt val = do
   halfLife <- parseHalfLife settings val
   field <- halfLife .:? txt .!= mempty
   pure field
 
 parseHalfLifeFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseHalfLifeFields settings txts val = do
   halfLife <- parseHalfLife settings val
   helper halfLife txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

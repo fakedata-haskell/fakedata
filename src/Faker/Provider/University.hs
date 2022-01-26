@@ -17,7 +17,7 @@ import Faker.Provider.Address (stateProvider, cityProvider, resolveAddressText, 
 import Faker.Provider.Name (nameLastNameProvider)
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseUniversity :: FromJSON a => FakerSettings -> Value -> Parser a
 parseUniversity settings (Object obj) = do
@@ -28,19 +28,19 @@ parseUniversity settings (Object obj) = do
 parseUniversity settings val = fail $ "expected Object, but got " <> (show val)
 
 parseUniversityField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseUniversityField settings txt val = do
   university <- parseUniversity settings val
   field <- university .:? txt .!= mempty
   pure field
 
 parseUniversityFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseUniversityFields settings txts val = do
   university <- parseUniversity settings val
   helper university txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -50,7 +50,7 @@ parseUniversityFields settings txts val = do
 parseUnresolvedUniversityField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> K.Key
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedUniversityField settings txt val = do
@@ -77,11 +77,11 @@ $(genProvider "university" "region")
 
 
 resolveUniversityText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveUniversityText = genericResolver' resolveUniversityField
 
 resolveUniversityField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveUniversityField settings "University.prefix" =
   cachedRandomVec "university" "prefix" universityPrefixProvider settings
 resolveUniversityField settings "University.suffix" =

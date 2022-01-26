@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseSeinfeld :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSeinfeld settings (Object obj) = do
@@ -26,19 +26,19 @@ parseSeinfeld settings (Object obj) = do
 parseSeinfeld settings val = fail $ "expected Object, but got " <> (show val)
 
 parseSeinfeldField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseSeinfeldField settings txt val = do
   seinfeld <- parseSeinfeld settings val
   field <- seinfeld .:? txt .!= mempty
   pure field
 
 parseSeinfeldFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseSeinfeldFields settings txts val = do
   seinfeld <- parseSeinfeld settings val
   helper seinfeld txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

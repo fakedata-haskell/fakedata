@@ -13,7 +13,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseOpera :: FromJSON a => FakerSettings -> Value -> Parser a
 parseOpera settings (Object obj) = do
@@ -24,19 +24,19 @@ parseOpera settings (Object obj) = do
 parseOpera settings val = fail $ "expected Object, but got " <> (show val)
 
 parseOperaField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseOperaField settings txt val = do
   opera <- parseOpera settings val
   field <- opera .:? txt .!= mempty
   pure field
 
 parseOperaFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseOperaFields settings txts val = do
   opera <- parseOpera settings val
   helper opera txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

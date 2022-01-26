@@ -13,7 +13,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseJackHandey :: FromJSON a => FakerSettings -> Value -> Parser a
 parseJackHandey settings (Object obj) = do
@@ -24,19 +24,19 @@ parseJackHandey settings (Object obj) = do
 parseJackHandey settings val = fail $ "expected Object, but got " <> (show val)
 
 parseJackHandeyField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseJackHandeyField settings txt val = do
   jackHandey <- parseJackHandey settings val
   field <- jackHandey .:? txt .!= mempty
   pure field
 
 parseJackHandeyFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseJackHandeyFields settings txts val = do
   jackHandey <- parseJackHandey settings val
   helper jackHandey txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,14 +49,14 @@ parseJackHandeyFields settings txts val = do
 parseUnresolvedJackHandeyFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [K.Key]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedJackHandeyFields settings txts val = do
   jackHandey <- parseJackHandey settings val
   helper jackHandey txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

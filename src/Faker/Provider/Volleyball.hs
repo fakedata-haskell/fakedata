@@ -13,7 +13,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseVolleyball :: FromJSON a => FakerSettings -> Value -> Parser a
 parseVolleyball settings (Object obj) = do
@@ -24,19 +24,19 @@ parseVolleyball settings (Object obj) = do
 parseVolleyball settings val = fail $ "expected Object, but got " <> (show val)
 
 parseVolleyballField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseVolleyballField settings txt val = do
   volleyball <- parseVolleyball settings val
   field <- volleyball .:? txt .!= mempty
   pure field
 
 parseVolleyballFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseVolleyballFields settings txts val = do
   volleyball <- parseVolleyball settings val
   helper volleyball txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -49,14 +49,14 @@ parseVolleyballFields settings txts val = do
 parseUnresolvedVolleyballFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [K.Key]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedVolleyballFields settings txts val = do
   volleyball <- parseVolleyball settings val
   helper volleyball txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

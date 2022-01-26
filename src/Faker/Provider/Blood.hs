@@ -14,7 +14,7 @@ import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
 import Control.Monad.IO.Class
-import qualified Data.Aeson.Key as K
+
 
 parseBlood :: FromJSON a => FakerSettings -> Value -> Parser a
 parseBlood settings (Object obj) = do
@@ -25,19 +25,19 @@ parseBlood settings (Object obj) = do
 parseBlood settings val = fail $ "expected Object, but got " <> (show val)
 
 parseBloodField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseBloodField settings txt val = do
   blood <- parseBlood settings val
   field <- blood .:? txt .!= mempty
   pure field
 
 parseBloodFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseBloodFields settings txts val = do
   blood <- parseBlood settings val
   helper blood txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -47,7 +47,7 @@ parseBloodFields settings txts val = do
 parseUnresolvedBloodField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> K.Key
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedBloodField settings txt val = do
@@ -67,11 +67,11 @@ $(genParserUnresolved "blood" "group")
 
 $(genProviderUnresolved "blood" "group")
 
-resolveBloodText :: (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
+resolveBloodText :: (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveBloodText = genericResolver' resolveBloodField
 
 resolveBloodField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveBloodField settings field@"type" =
   cachedRandomVec "blood" field bloodTypeProvider settings
 resolveBloodField settings field@"rh_factor" =

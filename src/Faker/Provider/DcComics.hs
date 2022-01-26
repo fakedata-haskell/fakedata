@@ -14,7 +14,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseDcComics :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDcComics settings (Object obj) = do
@@ -25,7 +25,7 @@ parseDcComics settings (Object obj) = do
 parseDcComics settings val = fail $ "expected Object, but got " <> (show val)
 
 parseDcComicsField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseDcComicsField settings txt val = do
   dcComics <- parseDcComics settings val
   field <- dcComics .:? txt .!= mempty

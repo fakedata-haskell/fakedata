@@ -14,7 +14,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseDemographic :: FromJSON a => FakerSettings -> Value -> Parser a
 parseDemographic settings (Object obj) = do
@@ -25,7 +25,7 @@ parseDemographic settings (Object obj) = do
 parseDemographic settings val = fail $ "expected Object, but got " <> (show val)
 
 parseDemographicField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseDemographicField settings txt val = do
   demographic <- parseDemographic settings val
   field <- demographic .:? txt .!= mempty

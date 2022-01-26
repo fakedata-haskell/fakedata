@@ -13,7 +13,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseStreetFighter :: FromJSON a => FakerSettings -> Value -> Parser a
 parseStreetFighter settings (Object obj) = do
@@ -25,19 +25,19 @@ parseStreetFighter settings (Object obj) = do
 parseStreetFighter settings val = fail $ "expected Object, but got " <> (show val)
 
 parseStreetFighterField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseStreetFighterField settings txt val = do
   streetFighter <- parseStreetFighter settings val
   field <- streetFighter .:? txt .!= mempty
   pure field
 
 parseStreetFighterFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseStreetFighterFields settings txts val = do
   streetFighter <- parseStreetFighter settings val
   helper streetFighter txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -50,14 +50,14 @@ parseStreetFighterFields settings txts val = do
 parseUnresolvedStreetFighterFields ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> [K.Key]
+  -> [AesonKey]
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedStreetFighterFields settings txts val = do
   streetFighter <- parseStreetFighter settings val
   helper streetFighter txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser (Unresolved a)
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser (Unresolved a)
     helper a [] = do
       v <- parseJSON a
       pure $ pure v

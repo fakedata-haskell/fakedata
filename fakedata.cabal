@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.34.5.
 --
 -- see: https://github.com/sol/hpack
 
@@ -677,7 +677,7 @@ library
   hs-source-dirs:
       src
   build-depends:
-      aeson >= 2.0
+      aeson
     , attoparsec
     , base >=4.7 && <5
     , bytestring
@@ -794,7 +794,7 @@ test-suite fakedata-test
       hspec-discover:hspec-discover
   build-depends:
       QuickCheck
-    , aeson >= 2.0
+    , aeson
     , attoparsec
     , base >=4.7 && <5
     , bytestring
@@ -827,7 +827,8 @@ benchmark fakebench
       bench
   ghc-options: -O2
   build-depends:
-      attoparsec
+      aeson
+    , attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers

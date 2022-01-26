@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseSpace :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSpace settings (Object obj) = do
@@ -26,19 +26,19 @@ parseSpace settings (Object obj) = do
 parseSpace settings val = fail $ "expected Object, but got " <> (show val)
 
 parseSpaceField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseSpaceField settings txt val = do
   space <- parseSpace settings val
   field <- space .:? txt .!= mempty
   pure field
 
 parseSpaceFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseSpaceFields settings txts val = do
   space <- parseSpace settings val
   helper space txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

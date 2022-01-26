@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseSwordArtOnline :: FromJSON a => FakerSettings -> Value -> Parser a
 parseSwordArtOnline settings (Object obj) = do
@@ -27,19 +27,19 @@ parseSwordArtOnline settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseSwordArtOnlineField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseSwordArtOnlineField settings txt val = do
   swordArtOnline <- parseSwordArtOnline settings val
   field <- swordArtOnline .:? txt .!= mempty
   pure field
 
 parseSwordArtOnlineFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseSwordArtOnlineFields settings txts val = do
   swordArtOnline <- parseSwordArtOnline settings val
   helper swordArtOnline txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

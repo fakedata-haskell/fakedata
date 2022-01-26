@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseRickAndMorty :: FromJSON a => FakerSettings -> Value -> Parser a
 parseRickAndMorty settings (Object obj) = do
@@ -27,19 +27,19 @@ parseRickAndMorty settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseRickAndMortyField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseRickAndMortyField settings txt val = do
   rickAndMorty <- parseRickAndMorty settings val
   field <- rickAndMorty .:? txt .!= mempty
   pure field
 
 parseRickAndMortyFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseRickAndMortyFields settings txts val = do
   rickAndMorty <- parseRickAndMorty settings val
   helper rickAndMorty txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

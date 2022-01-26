@@ -12,7 +12,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import qualified Data.Aeson.Key as K
+
 
 parseAppliance :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAppliance settings (Object obj) = do
@@ -23,7 +23,7 @@ parseAppliance settings (Object obj) = do
 parseAppliance settings val = fail $ "expected Object, but got " <> (show val)
 
 parseApplianceField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseApplianceField settings txt val = do
   appliance <- parseAppliance settings val
   field <- appliance .:? txt .!= mempty

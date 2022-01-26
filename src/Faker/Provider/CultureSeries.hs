@@ -14,7 +14,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseCultureSeries :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCultureSeries settings (Object obj) = do
@@ -26,7 +26,7 @@ parseCultureSeries settings val =
   fail $ "expected Object, but got " <> (show val)
 
 parseCultureSeriesField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCultureSeriesField settings txt val = do
   cultureSeries <- parseCultureSeries settings val
   field <- cultureSeries .:? txt .!= mempty

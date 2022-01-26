@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseCannabis :: FromJSON a => FakerSettings -> Value -> Parser a
 parseCannabis settings (Object obj) = do
@@ -26,7 +26,7 @@ parseCannabis settings (Object obj) = do
 parseCannabis settings val = fail $ "expected Object, but got " <> (show val)
 
 parseCannabisField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseCannabisField settings txt val = do
   cannabis <- parseCannabis settings val
   field <- cannabis .:? txt .!= mempty

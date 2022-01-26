@@ -14,7 +14,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseFinance :: FromJSON a => FakerSettings -> Value -> Parser a
 parseFinance settings (Object obj) = do
@@ -26,19 +26,19 @@ parseFinance settings (Object obj) = do
 parseFinance settings val = fail $ "expected Object, but got " <> (show val)
 
 parseFinanceField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseFinanceField settings txt val = do
   finance <- parseFinance settings val
   field <- finance .:? txt .!= mempty
   pure field
 
 parseFinanceFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseFinanceFields settings txts val = do
   finance <- parseFinance settings val
   helper finance txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
@@ -48,7 +48,7 @@ parseFinanceFields settings txts val = do
 parseUnresolvedFinanceField ::
      (FromJSON a, Monoid a)
   => FakerSettings
-  -> K.Key
+  -> AesonKey
   -> Value
   -> Parser (Unresolved a)
 parseUnresolvedFinanceField settings txt val = do
@@ -113,11 +113,11 @@ $(genParsers "finance" ["ticker", "nyse"])
 $(genProviders "finance" ["ticker", "nyse"])
 
 resolveFinanceText ::
-     (MonadIO m, MonadThrow m) => FakerSettings -> K.Key -> m Text
+     (MonadIO m, MonadThrow m) => FakerSettings -> AesonKey -> m Text
 resolveFinanceText = genericResolver' resolveFinanceField
 
 resolveFinanceField ::
-     (MonadThrow m, MonadIO m) => FakerSettings -> K.Key -> m Text
+     (MonadThrow m, MonadIO m) => FakerSettings -> AesonKey -> m Text
 resolveFinanceField settings field@"visa" =
   cachedRandomUnresolvedVec
     "finance"

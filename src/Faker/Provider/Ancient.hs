@@ -13,7 +13,7 @@ import Data.Vector (Vector)
 import Data.Yaml
 import Faker
 import Faker.Internal
-import qualified Data.Aeson.Key as K
+
 
 parseAncient :: FromJSON a => FakerSettings -> Value -> Parser a
 parseAncient settings (Object obj) = do
@@ -24,7 +24,7 @@ parseAncient settings (Object obj) = do
 parseAncient settings val = fail $ "expected Object, but got " <> (show val)
 
 parseAncientField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseAncientField settings txt val = do
   ancient <- parseAncient settings val
   field <- ancient .:? txt .!= mempty

@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseFallout :: FromJSON a => FakerSettings -> Value -> Parser a
 parseFallout settings (Object obj) = do
@@ -27,19 +27,19 @@ parseFallout settings (Object obj) = do
 parseFallout settings val = fail $ "expected Object, but got " <> (show val)
 
 parseFalloutField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseFalloutField settings txt val = do
   fallout <- parseFallout settings val
   field <- fallout .:? txt .!= mempty
   pure field
 
 parseFalloutFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseFalloutFields settings txts val = do
   fallout <- parseFallout settings val
   helper fallout txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

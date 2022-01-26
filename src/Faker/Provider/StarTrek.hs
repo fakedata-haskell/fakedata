@@ -15,7 +15,7 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
+
 
 parseStarTrek :: FromJSON a => FakerSettings -> Value -> Parser a
 parseStarTrek settings (Object obj) = do
@@ -26,19 +26,19 @@ parseStarTrek settings (Object obj) = do
 parseStarTrek settings val = fail $ "expected Object, but got " <> (show val)
 
 parseStarTrekField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseStarTrekField settings txt val = do
   starTrek <- parseStarTrek settings val
   field <- starTrek .:? txt .!= mempty
   pure field
 
 parseStarTrekFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseStarTrekFields settings txts val = do
   starTrek <- parseStarTrek settings val
   helper starTrek txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x

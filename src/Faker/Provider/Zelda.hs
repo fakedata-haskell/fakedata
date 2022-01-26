@@ -15,7 +15,6 @@ import Faker
 import Faker.Internal
 import Faker.Provider.TH
 import Language.Haskell.TH
-import qualified Data.Aeson.Key as K
 
 parseZelda :: FromJSON a => FakerSettings -> Value -> Parser a
 parseZelda settings (Object obj) = do
@@ -27,19 +26,19 @@ parseZelda settings (Object obj) = do
 parseZelda settings val = fail $ "expected Object, but got " <> (show val)
 
 parseZeldaField ::
-     (FromJSON a, Monoid a) => FakerSettings -> K.Key -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> AesonKey -> Value -> Parser a
 parseZeldaField settings txt val = do
   zelda <- parseZelda settings val
   field <- zelda .:? txt .!= mempty
   pure field
 
 parseZeldaFields ::
-     (FromJSON a, Monoid a) => FakerSettings -> [K.Key] -> Value -> Parser a
+     (FromJSON a, Monoid a) => FakerSettings -> [AesonKey] -> Value -> Parser a
 parseZeldaFields settings txts val = do
   zelda <- parseZelda settings val
   helper zelda txts
   where
-    helper :: (FromJSON a) => Value -> [K.Key] -> Parser a
+    helper :: (FromJSON a) => Value -> [AesonKey] -> Parser a
     helper a [] = parseJSON a
     helper (Object a) (x:xs) = do
       field <- a .: x
