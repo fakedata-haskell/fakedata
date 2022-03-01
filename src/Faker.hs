@@ -184,7 +184,7 @@ newtype FakeT m a = FakeT
 
 -- | Fake data type. This is the type you will be using to produce
 -- fake values.
-type Fake a = FakeT IO a
+type Fake = FakeT IO
 
 pattern Fake :: (FakerSettings -> IO a) -> Fake a
 pattern Fake f = FakeT f
