@@ -1,5 +1,9 @@
 # Changelog for fakedata
 
+## 1.0.3 (Unreleased)
+
+* [Make the `Fake` type synonym partially applied](https://github.com/fakedata-haskell/fakedata/pull/45)
+
 ## 1.0.2
 
 * Make it compatible with aeson 1 and 2.
