@@ -107,9 +107,9 @@ elements xs =
 listOf :: forall a m. Monad m => Int -> FakeT m a -> FakeT m [a]
 listOf = replicateM
 
--- | A pure version of `listOf`. The resulting list will be the same each time (deterministic).
-deterministicListOf :: Int -> Fake a -> Fake [a]
-deterministicListOf n fakedata = FakeT $ \settings -> traverse generate $ take n $ unfoldr coalgebra settings
+-- | A pure version of `listOf`. The resulting list will be deterministic, while containing varied elements (unlike `listOf`).
+variedListOf :: Int -> Fake a -> Fake [a]
+variedListOf n fakedata = FakeT $ \settings -> traverse generate $ take n $ unfoldr coalgebra settings
   where
     -- implemented as an anamorphism: `( settings -> (fakedata, newSettings) ) -> [fakedata]`
     coalgebra fakerSettings =
