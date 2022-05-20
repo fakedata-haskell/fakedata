@@ -42,3 +42,7 @@ spec = do
     it "orderedList" $ do
       item :: [Text] <- generate $ orderedList 5 country
       item `shouldSatisfy` (\x -> Prelude.length x == 5)
+    it "works with FixedSeed" $ do
+      items1 :: [Int] <- generateNonDeterministicWithFixedSeed $ listOf 5 $ fromRange (1,50)
+      items2 :: [Int] <- generateNonDeterministicWithFixedSeed $ listOf 5 $ fromRange (1,50)
+      items1 `shouldBe` items2
