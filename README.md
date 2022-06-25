@@ -6,6 +6,25 @@ Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.or
 LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
 ![Build Status](https://github.com/psibi/fakedata/workflows/Tests/badge.svg?branch=master)
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [fakedata](#fakedata)
+- [Tutorial](#tutorial)
+  - [Generating address](#generating-address)
+  - [Generating name](#generating-name)
+  - [Generate quotes from the movie Back to the Future](#generate-quotes-from-the-movie-back-to-the-future)
+  - [Combining Fake datas](#combining-fake-datas)
+- [Deterministic vs Non Deterministic values](#deterministic-vs-non-deterministic-values)
+- [Combinators](#combinators)
+  - [listOf](#listof)
+  - [oneOf](#oneof)
+  - [suchThat](#suchthat)
+- [Using the `FakeT` transformer](#using-the-faket-transformer)
+- [Comparision with other libraries](#comparision-with-other-libraries)
+- [Acknowledgments](#acknowledgments)
+
+<!-- markdown-toc end -->
 
 
 # fakedata
