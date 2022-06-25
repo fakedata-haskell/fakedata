@@ -6,24 +6,7 @@ Nightly](http://stackage.org/package/fakedata/badge/nightly)](http://stackage.or
 LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/package/fakedata)
 ![Build Status](https://github.com/psibi/fakedata/workflows/Tests/badge.svg?branch=master)
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
 
-- [fakedata](#fakedata)
-    - [Tutorial](#tutorial)
-        - [Generating address](#generating-address)
-        - [Generating name](#generating-name)
-        - [Generate quotes from the movie Back to the Future](#generate-quotes-from-the-movie-back-to-the-future)
-        - [Combining Fake datas](#combining-fake-datas)
-        - [Combinators](#combinators)
-            - [listOf](#listof)
-            - [oneOf](#oneof)
-            - [suchThat](#suchthat)
-    - [Using the `FakeT` transformer](#using-the-faket-transformer)
-    - [Comparision with other libraries](#comparision-with-other-libraries)
-    - [Acknowledgments](#acknowledgments)
-
-<!-- markdown-toc end -->
 
 # fakedata
 
@@ -44,9 +27,9 @@ is useful for property testing:
 * [fakedata-quickcheck](https://github.com/fakedata-haskell/fakedata-quickcheck)
 * [hedgehog-fakedata](https://github.com/parsonsmatt/hedgehog-fakedata)
 
-## Tutorial
+# Tutorial
 
-### Generating address
+## Generating address
 
 ``` {.shellsession}
 ~/g/fakedata (master) $ stack ghci
@@ -57,7 +40,7 @@ is useful for property testing:
 "Apt. 298 340 Ike Mission, Goldnertown, FL 19488-9259"
 ```
 
-### Generating name
+## Generating name
 
 ``` {.shellsession}
 λ> fullName <- generate name
@@ -65,20 +48,22 @@ is useful for property testing:
 "Sherryl Steuber"
 ```
 
-### Generate quotes from the movie Back to the Future
+## Generate quotes from the movie Back to the Future
 
-    λ> import Faker.Movie.BackToTheFuture
-    λ> import Faker.Combinators
-    λ> qs <- generateNonDeterministic $ listOf 5 quotes
-    λ> qs
-    [ "Yes. Yes. I'm George. George McFly. I'm your density. I mean, your destiny."
-    , "Hello? Hello? Anybody home? Huh? Think, McFly. Think! I gotta have time to get them retyped. Do you realize what would happen if I hand in my reports in your handwriting? I'll get fired. You wouldn't want that to happen, would ya? Would ya?"
-    , "Lorraine. My density has brought me to you."
-    , "See you in about 30 years."
-    , "You really think I ought to swear?"
-    ]
+``` haskell
+λ> import Faker.Movie.BackToTheFuture
+λ> import Faker.Combinators
+λ> qs <- generateNonDeterministic $ listOf 5 quotes
+λ> qs
+[ "Yes. Yes. I'm George. George McFly. I'm your density. I mean, your destiny."
+, "Hello? Hello? Anybody home? Huh? Think, McFly. Think! I gotta have time to get them retyped. Do you realize what would happen if I hand in my reports in your handwriting? I'll get fired. You wouldn't want that to happen, would ya? Would ya?"
+, "Lorraine. My density has brought me to you."
+, "See you in about 30 years."
+, "You really think I ought to swear?"
+]
+```
 
-### Combining Fake datas
+## Combining Fake datas
 
 ``` {.haskell}
 {-#LANGUAGE RecordWildCards#-}
@@ -107,11 +92,13 @@ main = do
 
 And on executing them:
 
-    $ stack name.hs
-    Person
-      { personName = "Sherryl Steuber"
-      , personAddress = "Apt. 298 340 Ike Mission, Goldnertown, FL 19488-9259"
-      }
+``` haskell
+$ stack name.hs
+Person
+  { personName = "Sherryl Steuber"
+  , personAddress = "Apt. 298 340 Ike Mission, Goldnertown, FL 19488-9259"
+  }
+```
 
 You would have noticed in the above output that the name and address are
 the same as generated before in the GHCi REPL. That's because, by
@@ -119,12 +106,14 @@ default all the generated data are deterministic. If you want a
 different set of output each time, you would have to modify the random
 generator output:
 
-    main :: IO ()
-    main = do
-        gen <- newStdGen
-        let settings = setRandomGen gen defaultFakerSettings
-        person <- generateWithSettings settings fakePerson
-        print person
+``` haskell
+main :: IO ()
+main = do
+    gen <- newStdGen
+    let settings = setRandomGen gen defaultFakerSettings
+    person <- generateWithSettings settings fakePerson
+    print person
+```
 
 And on executing the program, you will get a different output:
 
@@ -154,42 +143,7 @@ main = do
     print person
 ```
 
-### Combinators
-
-#### listOf
-
-``` {.haskell}
-λ> import Faker.Address
-λ> item <- generateNonDeterministic $ listOf 5 country
-λ> item
-["Ecuador","French Guiana","Faroe Islands","Canada","Armenia"]
-```
-
-#### oneOf
-
-``` {.haskell}
-λ> item <- generate $ oneof [country, fullAddress]
-λ> item
-"Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"
-```
-
-#### suchThat
-
-``` {.shellsession}
-λ> import qualified Faker.Address as AD
-λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 5))
-λ> item
-"Ecuador"
-λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 8))
-λ> item
-"French Guiana"
-```
-
-For seeing the full list of combinators, see the module documentation of
-`Faker.Combinators`.
-
-
-## Deterministic vs Non Deterministic values
+# Deterministic vs Non Deterministic values
 
 We have various function for generating fake values:
 
@@ -261,7 +215,42 @@ time. If you instead want to have a fixed seed, you should use
 [98,87,77,33,98]
 ```
 
-## Using the `FakeT` transformer
+# Combinators
+
+## listOf
+
+``` {.haskell}
+λ> import Faker.Address
+λ> item <- generateNonDeterministic $ listOf 5 country
+λ> item
+["Ecuador","French Guiana","Faroe Islands","Canada","Armenia"]
+```
+
+## oneOf
+
+``` {.haskell}
+λ> item <- generate $ oneof [country, fullAddress]
+λ> item
+"Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"
+```
+
+## suchThat
+
+``` {.shellsession}
+λ> import qualified Faker.Address as AD
+λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 5))
+λ> item
+"Ecuador"
+λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 8))
+λ> item
+"French Guiana"
+```
+
+For seeing the full list of combinators, see the module documentation of
+`Faker.Combinators`.
+
+
+# Using the `FakeT` transformer
 
 When generating values, you may want to perform some side-effects.
 
@@ -322,8 +311,7 @@ fastFunction = generateNonDeterministic go
     go = replicateM 1000 logQuote
 ```
 
-
-## Comparision with other libraries
+# Comparision with other libraries
 
 There are two other libraries in the Hackage providing fake data:
 
@@ -340,7 +328,7 @@ source, we get free updates and high quality data source with little
 effort. Also, it's easier to extend the library with [it's own data
 source](https://github.com/psibi/fakedata/blob/master/Development.md#custom-fake-source-support-with-yml-file) if we want to do it that way.
 
-## Acknowledgments
+# Acknowledgments
 
 Benjamin Curtis for his [Ruby faker library](https://github.com/stympy/faker) from which the data
 source is taken from.
