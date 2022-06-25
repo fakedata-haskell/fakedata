@@ -1,6 +1,6 @@
 # Changelog for fakedata
 
-## 1.0.3 (Unreleased)
+## 1.0.3
 
 * [Make the `Fake` type synonym partially applied](https://github.com/fakedata-haskell/fakedata/pull/45)
 * Implement deterministic output with fixed seed.

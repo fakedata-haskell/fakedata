@@ -12,7 +12,7 @@ module Faker
     FakeT (.., Fake),
     FakerSettings,
     FakerException (..),
-    NonDeterministicSeed,
+    NonDeterministicSeed (..),
     defaultFakerSettings,
 
     -- * Setters
@@ -272,7 +272,8 @@ instance (Monoid a, Monad m) => Monoid (FakeT m a) where
   mempty = pure mempty
   mappend mx my = mappend <$> mx <*> my
 
--- | Generate fake value with 'defaultFakerSettings'
+-- | Generate fake value with 'defaultFakerSettings'. This produces
+-- deterministic output by default.
 --
 -- @
 -- λ> import qualified Faker.Name as FN
@@ -320,12 +321,13 @@ generateWithSettings settings (FakeT f) = do
   cacheFile <- liftIO $ newIORef HM.empty
   f $ newSettings {fsCacheField = cacheField, fsCacheFile = cacheFile}
 
--- | Geneerate fake value with 'NonDeterministicSeed' as
+-- | Generate fake value with 'NonDeterministicSeed' as
 -- 'FixedSeed'. The difference between 'generateNonDeterministic' and
 -- this function is that this uses a fixed seed set via `setRandomGen`
 -- as it's initial seed value.
 --
--- Execute this function multiple times will result in same values.
+-- Executing this function multiple times will result in generation of
+-- same values.
 --
 -- @since 1.0.3
 -- @
@@ -343,8 +345,8 @@ generateNonDeterministicWithFixedSeed =
           }
       )
 
--- | NonDeterministicSeed type which controls the behavior of how it's
--- non deterministic nature.
+-- | NonDeterministicSeed type which controls if a fixed seed is going
+-- to be used or if a new seed will be generated each time.
 --
 -- @since 1.0.3
 data NonDeterministicSeed
