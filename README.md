@@ -25,8 +25,7 @@ LTS](http://stackage.org/package/fakedata/badge/lts)](http://stackage.org/lts/pa
 
 <!-- markdown-toc end -->
 
-fakedata
-========
+# fakedata
 
 This library is a port of Ruby's [faker](https://github.com/stympy/faker). It's a library for
 producing fake data such as names, addressess and phone numbers. Note
@@ -45,8 +44,7 @@ is useful for property testing:
 * [fakedata-quickcheck](https://github.com/fakedata-haskell/fakedata-quickcheck)
 * [hedgehog-fakedata](https://github.com/parsonsmatt/hedgehog-fakedata)
 
-Tutorial
---------
+## Tutorial
 
 ### Generating address
 
@@ -191,8 +189,79 @@ For seeing the full list of combinators, see the module documentation of
 `Faker.Combinators`.
 
 
-Using the `FakeT` transformer
------------------------------
+## Deterministic vs Non Deterministic values
+
+We have various function for generating fake values:
+
+- generate
+- generateNonDeterministic
+- generateNonDeterministicWithFixedSeed
+
+By default, `generate` produces deterministic values. It's performance
+is better than the others and for cases where we are going to generate
+a single fake value using record type, it's a good default to
+have. Example:
+
+``` {.haskell}
+{-#LANGUAGE RecordWildCards#-}
+
+import Faker
+import Faker.Name
+import Faker.Address
+import Data.Text
+
+data Person = Person {
+    personName :: Text,
+    personAddress :: Text
+} deriving (Show, Eq)
+
+fakePerson :: Fake Person
+fakePerson = do
+    personName <- name
+    personAddress <- fullAddress
+    pure $ Person{..}
+
+main :: IO ()
+main = do
+    person <- generate fakePerson
+    print person
+```
+
+And executing it, you will get:
+
+``` haskell
+Person
+  { personName = "Sherryl Steuber"
+  , personAddress = "Apt. 298 340 Ike Mission, Goldnertown, FL 19488-9259"
+  }
+```
+
+While, it's a good default we would need non deterministic output for
+certain cases:
+
+``` haskell
+> generate $ listOf 5 $ fromRange (1,100)
+[39,39,39,39,39]
+> generate $ listOf 5 $ fromRange (1,100)
+[39,39,39,39,39]
+> generateNonDeterministic $ listOf 5 $ fromRange (1,100)
+[94,18,17,48,17]
+> generateNonDeterministic $ listOf 5 $ fromRange (1,100)
+[15,2,47,85,94]
+```
+
+Not how `generateNonDeterministic` is generating different values each
+time. If you instead want to have a fixed seed, you should use
+`generateNonDeterministicWithFixedSeed` instead:
+
+``` haskell
+> generateNonDeterministicWithFixedSeed $ listOf 5 $ fromRange (1,100)
+[98,87,77,33,98]
+> generateNonDeterministicWithFixedSeed $ listOf 5 $ fromRange (1,100)
+[98,87,77,33,98]
+```
+
+## Using the `FakeT` transformer
 
 When generating values, you may want to perform some side-effects.
 
@@ -254,32 +323,26 @@ fastFunction = generateNonDeterministic go
 ```
 
 
-Comparision with other libraries
---------------------------------
+## Comparision with other libraries
 
 There are two other libraries in the Hackage providing fake data:
 
--   [faker](https://hackage.haskell.org/package/faker-0.0.0.2)
--   [fake](https://hackage.haskell.org/package/fake-0.1.1.1)
+- [faker](https://hackage.haskell.org/package/faker-0.0.0.2)
+- [fake](https://hackage.haskell.org/package/fake-0.1.1.1)
 
 The problem with both the above libraries is that the library covers
 only a very small amount of fake data source. I wanted to have an
-equivalent functionality with something like
-[faker](https://github.com/stympy/faker). Also, most of the
-combinators in this packages has been inspired (read as taken) from
-the `fake` library. Also, `fakedata` offers fairly good amount of
+equivalent functionality with something like [faker](https://github.com/stympy/faker). Also, most of
+the combinators in this packages has been inspired (read as taken)
+from the `fake` library. Also, `fakedata` offers fairly good amount of
 support of different locales. Also since we rely on an external data
 source, we get free updates and high quality data source with little
 effort. Also, it's easier to extend the library with [it's own data
-source](https://github.com/psibi/fakedata/blob/master/Development.md#custom-fake-source-support-with-yml-file)
-if we want to do it that way.
+source](https://github.com/psibi/fakedata/blob/master/Development.md#custom-fake-source-support-with-yml-file) if we want to do it that way.
 
-Acknowledgments
----------------
+## Acknowledgments
 
-Benjamin Curtis for his [Ruby faker
-library](https://github.com/stympy/faker) from which the data source is
-taken from.
+Benjamin Curtis for his [Ruby faker library](https://github.com/stympy/faker) from which the data
+source is taken from.
 
-Icons made by [Freepik](https://www.flaticon.com/authors/freepik) from
-[Flaticon](https://www.flaticon.com/).
+Icons made by [Freepik](https://www.flaticon.com/authors/freepik) from [Flaticon](https://www.flaticon.com/).
