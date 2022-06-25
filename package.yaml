@@ -251,7 +251,6 @@ tests:
     - time
     - QuickCheck
     - regex-tdfa
-    - quickcheck-classes
 
 benchmarks:
   fakebench:
