@@ -23,10 +23,7 @@ jobs:
           stack-yaml: stack.yaml
           resolver: lts-18
         - os: ubuntu-latest
-          stack-yaml: stack-old-resolver.yaml
-          resolver: lts-17
-        - os: ubuntu-latest
-          stack-yaml: stack-old-resolver.yaml
+          stack-yaml: stack-lts-16.yaml
           resolver: lts-16
         - os: macos-latest
           stack-yaml: stack.yaml
@@ -35,17 +32,11 @@ jobs:
           stack-yaml: stack.yaml
           resolver: lts-18
         - os: macos-latest
-          stack-yaml: stack-old-resolver.yaml
-          resolver: lts-17
-        - os: macos-latest
-          stack-yaml: stack-old-resolver.yaml
+          stack-yaml: stack-lts-16.yaml
           resolver: lts-16
         - os: windows-latest
           stack-yaml: stack.yaml
           resolver: lts-18
-        - os: windows-latest
-          stack-yaml: stack-old-resolver.yaml
-          resolver: lts-17
 
     steps:
       - name: Clone project

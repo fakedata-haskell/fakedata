@@ -3,6 +3,37 @@
 ## 1.0.3 (Unreleased)
 
 * [Make the `Fake` type synonym partially applied](https://github.com/fakedata-haskell/fakedata/pull/45)
+* Implement deterministic output with fixed seed.
+
+This is the behavior of `generateNonDeterministic` vs `generate`
+function:
+
+``` haskell
+> generate $ listOf 5 $ fromRange (1,100)
+[39,39,39,39,39]
+> generate $ listOf 5 $ fromRange (1,100)
+[39,39,39,39,39]
+> generateNonDeterministic $ listOf 5 $ fromRange (1,100)
+[94,18,17,48,17]
+> generateNonDeterministic $ listOf 5 $ fromRange (1,100)
+[15,2,47,85,94]
+```
+
+As you can see with `generate` we get deterministic value output and
+they are all same in this case. With `generateNonDeterministic`
+function we use a different seed each time which results in generating
+different values.
+
+There are times when we instead want to generate non deterministic
+values but with a fixed seed. And for such use case, we have
+implemented `generateNonDeterministicWithFixedSeed` function:
+
+``` haskell
+> generateNonDeterministicWithFixedSeed $ listOf 5 $ fromRange (1,100)
+[98,87,77,33,98]
+> generateNonDeterministicWithFixedSeed $ listOf 5 $ fromRange (1,100)
+[98,87,77,33,98]
+```
 
 ## 1.0.2
 

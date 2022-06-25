@@ -1,39 +1,46 @@
-{-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE CPP #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE InstanceSigs #-}
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Faker
-  (
-    -- * Types
-    Fake
-  , FakeT(.., Fake)
-  , FakerSettings
-  , FakerException(..)
-  , defaultFakerSettings
+  ( -- * Types
+    Fake,
+    FakeT (.., Fake),
+    FakerSettings,
+    FakerException (..),
+    NonDeterministicSeed,
+    defaultFakerSettings,
+
     -- * Setters
-  , setLocale
-  , setRandomGen
-  , setDeterministic
-  , setNonDeterministic
-  , setCacheField
-  , setCacheFile
-  , replaceCacheField
-  , replaceCacheFile
+    setLocale,
+    setRandomGen,
+    setDeterministic,
+    setNonDeterministic,
+    setNonDeterministicSeed,
+    setCacheField,
+    setCacheFile,
+    replaceCacheField,
+    replaceCacheFile,
+
     -- * Getters
-  , getRandomGen
-  , getLocale
-  , getDeterministic
-  , getCacheField
-  , getCacheFile
+    getRandomGen,
+    getLocale,
+    getDeterministic,
+    getNonDeterministicSeed,
+    getCacheField,
+    getCacheFile,
+
     -- * Generators
-  , generate
-  , generateNonDeterministic
-  , generateWithSettings
-  ) where
+    generate,
+    generateNonDeterministic,
+    generateNonDeterministicWithFixedSeed,
+    generateWithSettings,
+  )
+where
 
 import Control.Exception (Exception)
 import Control.Monad (ap)
@@ -44,46 +51,55 @@ import Data.Semigroup (Semigroup, (<>))
 import Data.Text (Text)
 import Data.Typeable
 import Data.Vector (Vector)
-import Data.Word (Word64)
 import Data.Yaml (Value)
-import Faker.Internal.Types (CacheFieldKey, CacheFileKey, AesonKey)
+import Faker.Internal.Types (AesonKey, CacheFieldKey, CacheFileKey)
 import System.Random (StdGen, mkStdGen, newStdGen, split)
 #if MIN_VERSION_aeson(2,0,0)
 import qualified Data.Aeson.Key as K
 #endif
 
 data FakerSettings = FakerSettings
-  { fslocale :: !Text -- ^ Locale settings for your fake data source.
-  , fsrandomGen :: !StdGen -- ^ Seed to initialize random generator state
-  , fsDeterministic :: !Bool -- ^ Controls whether you want
-                            -- deterministic out. This overrides
-                            -- 'fsrandomGen'.
-  , fsCacheField :: (IORef (HM.HashMap CacheFieldKey (Vector Text)))
-  , fsCacheFile :: (IORef (HM.HashMap CacheFileKey Value))
+  { -- | Locale settings for your fake data source.
+    fslocale :: !Text,
+    -- | Seed to initialize random generator state
+    fsrandomGen :: !StdGen,
+    -- | Controls whether you want
+    -- deterministic out. This overrides
+    -- 'fsrandomGen'.
+    fsDeterministic :: !Bool,
+    fsNonDeterministicBehavior :: !NonDeterministicSeed,
+    fsCacheField :: (IORef (HM.HashMap CacheFieldKey (Vector Text))),
+    fsCacheFile :: (IORef (HM.HashMap CacheFileKey Value))
   }
 
 newtype FakerGen = FakerGen
   { unFakerGen :: (Int, StdGen)
-  } deriving (Show)
+  }
+  deriving (Show)
 
 instance Show FakerSettings where
   show (FakerSettings {..}) =
     show fslocale ++ show fsrandomGen ++ show fsDeterministic
 
 data FakerException
-  = InvalidLocale String -- ^ This is thrown when it is not able to
-                         -- find the fake data source for your
-                         -- localization.
-  | InvalidField String
-                 AesonKey -- ^ The 'String' represents the field it is
-                       -- trying to resolve and the 'Key' field
-                       -- is something you passed on.
-  | NoDataFound FakerSettings -- ^ This is thrown when you have no
-                              -- data. This may likely happen for
-                              -- locales other than `en`.
-  | ParseError String -- ^ This is thrown when the parsing step
-                      -- fails. The 'String' represents the error
-                      -- message.
+  = -- | This is thrown when it is not able to
+    -- find the fake data source for your
+    -- localization.
+    InvalidLocale String
+  | -- | The 'String' represents the field it is
+    -- trying to resolve and the 'Key' field
+    -- is something you passed on.
+    InvalidField
+      String
+      AesonKey
+  | -- | This is thrown when you have no
+    -- data. This may likely happen for
+    -- locales other than `en`.
+    NoDataFound FakerSettings
+  | -- | This is thrown when the parsing step
+    -- fails. The 'String' represents the error
+    -- message.
+    ParseError String
   deriving (Typeable, Show)
 
 instance Exception FakerException
@@ -92,11 +108,12 @@ instance Exception FakerException
 defaultFakerSettings :: FakerSettings
 defaultFakerSettings =
   FakerSettings
-    { fslocale = "en"
-    , fsrandomGen = mkStdGen 10000
-    , fsDeterministic = True
-    , fsCacheField = error "defaultFakerSettings: fsCacheField not initialized"
-    , fsCacheFile = error "defaultFakerSettings: fsCacheFile not initialized"
+    { fslocale = "en",
+      fsrandomGen = mkStdGen 10000,
+      fsDeterministic = True,
+      fsCacheField = error "defaultFakerSettings: fsCacheField not initialized",
+      fsCacheFile = error "defaultFakerSettings: fsCacheFile not initialized",
+      fsNonDeterministicBehavior = NewSeed
     }
 
 -- | Sets the locale. Note that for any other locale apart from
@@ -119,6 +136,10 @@ getRandomGen settings = fsrandomGen settings
 -- | Get the Locale settings for your fake data source
 getLocale :: FakerSettings -> Text
 getLocale FakerSettings {..} = fslocale
+
+-- | Sets the 'NonDeterministicSeed'
+setNonDeterministicSeed :: NonDeterministicSeed -> FakerSettings -> FakerSettings
+setNonDeterministicSeed seed fs = fs { fsNonDeterministicBehavior = seed }
 
 -- | Set the output of fakedata to be deterministic. With this you
 -- will get the same ouput for the functions every time.
@@ -152,16 +173,21 @@ setNonDeterministic fs = fs {fsDeterministic = False}
 getDeterministic :: FakerSettings -> Bool
 getDeterministic FakerSettings {..} = fsDeterministic
 
+-- | Get the 'NonDeterministicSeed' from faker settings. Note that
+-- this setting is only applicable when use non deterministic output.
+getNonDeterministicSeed :: FakerSettings -> NonDeterministicSeed
+getNonDeterministicSeed FakerSettings {..} = fsNonDeterministicBehavior
+
 getCacheField :: FakerSettings -> IO (HM.HashMap CacheFieldKey (Vector Text))
 getCacheField FakerSettings {..} = readIORef fsCacheField
 
 setCacheField ::
-     HM.HashMap CacheFieldKey (Vector Text) -> FakerSettings -> IO ()
+  HM.HashMap CacheFieldKey (Vector Text) -> FakerSettings -> IO ()
 setCacheField cache fs = do
   writeIORef (fsCacheField fs) cache
 
 replaceCacheField ::
-     HM.HashMap CacheFieldKey (Vector Text) -> FakerSettings -> IO FakerSettings
+  HM.HashMap CacheFieldKey (Vector Text) -> FakerSettings -> IO FakerSettings
 replaceCacheField cache fs = do
   ref <- newIORef cache
   pure $ fs {fsCacheField = ref}
@@ -173,7 +199,7 @@ setCacheFile :: HM.HashMap CacheFileKey Value -> FakerSettings -> IO ()
 setCacheFile cache fs = writeIORef (fsCacheFile fs) cache
 
 replaceCacheFile ::
-     HM.HashMap CacheFileKey Value -> FakerSettings -> IO FakerSettings
+  HM.HashMap CacheFileKey Value -> FakerSettings -> IO FakerSettings
 replaceCacheFile cache fs = do
   ref <- newIORef cache
   pure $ fs {fsCacheFile = ref}
@@ -197,10 +223,11 @@ instance Monad m => Functor (FakeT m) where
   fmap :: (a -> b) -> FakeT m a -> FakeT m b
   fmap f (FakeT h) =
     FakeT
-      (\r -> do
-         a <- h r
-         let b = f a
-         pure b)
+      ( \r -> do
+          a <- h r
+          let b = f a
+          pure b
+      )
 
 instance Monad m => Applicative (FakeT m) where
   {-# INLINE pure #-}
@@ -217,15 +244,19 @@ instance Monad m => Monad (FakeT m) where
   f >>= k = generateNewFake f k
 
 generateNewFake :: Monad m => FakeT m a -> (a -> FakeT m b) -> FakeT m b
-generateNewFake (FakeT h) k = FakeT (\settings -> do
-  let deterministic = getDeterministic settings
-      currentStdGen = getRandomGen settings
-      newStdGen = if deterministic
-                  then currentStdGen
-                  else fst $ split currentStdGen
-  item <- h settings
-  let (FakeT k1) = k item
-  k1 (setRandomGen newStdGen settings))
+generateNewFake (FakeT h) k =
+  FakeT
+    ( \settings -> do
+        let deterministic = getDeterministic settings
+            currentStdGen = getRandomGen settings
+            newStdGen =
+              if deterministic
+                then currentStdGen
+                else fst $ split currentStdGen
+        item <- h settings
+        let (FakeT k1) = k item
+        k1 (setRandomGen newStdGen settings)
+    )
 {-# SPECIALIZE INLINE generateNewFake :: Fake Text -> (Text -> Fake Text) -> Fake Text #-}
 
 instance MonadIO m => MonadIO (FakeT m) where
@@ -281,8 +312,43 @@ generateWithSettings settings (FakeT f) = do
   stdGen <-
     if deterministic
       then pure $ getRandomGen settings
-      else liftIO newStdGen
+      else case fsNonDeterministicBehavior settings of
+        FixedSeed -> pure $ fst $ split (getRandomGen settings)
+        NewSeed -> liftIO newStdGen
   let newSettings = setRandomGen stdGen settings
   cacheField <- liftIO $ newIORef HM.empty
   cacheFile <- liftIO $ newIORef HM.empty
   f $ newSettings {fsCacheField = cacheField, fsCacheFile = cacheFile}
+
+-- | Geneerate fake value with 'NonDeterministicSeed' as
+-- 'FixedSeed'. The difference between 'generateNonDeterministic' and
+-- this function is that this uses a fixed seed set via `setRandomGen`
+-- as it's initial seed value.
+--
+-- Execute this function multiple times will result in same values.
+--
+-- @since 1.0.3
+-- @
+-- λ> generateNonDeterministicWithFixedSeed $ listOf 5 $ fromRange (1,100)
+-- [98,87,77,33,98]
+-- λ> generateNonDeterministicWithFixedSeed $ listOf 5 $ fromRange (1,100)
+-- [98,87,77,33,98]
+-- @
+generateNonDeterministicWithFixedSeed :: MonadIO m => FakeT m a -> m a
+generateNonDeterministicWithFixedSeed =
+  generateWithSettings $
+    setNonDeterministic
+      ( defaultFakerSettings
+          { fsNonDeterministicBehavior = FixedSeed
+          }
+      )
+
+-- | NonDeterministicSeed type which controls the behavior of how it's
+-- non deterministic nature.
+--
+-- @since 1.0.3
+data NonDeterministicSeed
+  = -- | Always use a fixed seed.
+    FixedSeed
+  | -- | Use a new seed every time.
+    NewSeed
