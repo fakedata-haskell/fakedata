@@ -50,7 +50,7 @@ is useful for property testing:
 
 ## Generating address
 
-``` {.shellsession}
+``` haskell
 ~/g/fakedata (master) $ stack ghci
 λ> import Faker
 λ> import Faker.Address
@@ -61,7 +61,7 @@ is useful for property testing:
 
 ## Generating name
 
-``` {.shellsession}
+``` haskell
 λ> fullName <- generate name
 λ> fullName
 "Sherryl Steuber"
@@ -84,7 +84,7 @@ is useful for property testing:
 
 ## Combining Fake datas
 
-``` {.haskell}
+``` haskell
 {-#LANGUAGE RecordWildCards#-}
 
 import Faker
@@ -136,7 +136,7 @@ main = do
 
 And on executing the program, you will get a different output:
 
-``` {.shellsession}
+``` haskell
 Person
   { personName = "Ned Effertz Sr."
   , personAddress = "Suite 158 1580 Schulist Mall, Schulistburgh, NY 15804-3392"
@@ -145,7 +145,7 @@ Person
 
 The above program can be even minimized like this:
 
-``` {.haskell}
+``` haskell
 main :: IO ()
 main = do
     let settings = setNonDeterministic defaultFakerSettings
@@ -155,7 +155,7 @@ main = do
 
 Or even better:
 
-``` {.haskell}
+``` haskell
 main :: IO ()
 main = do
     person <- generateNonDeterministic fakePerson
@@ -175,7 +175,7 @@ is better than the others and for cases where we are going to generate
 a single fake value using record type, it's a good default to
 have. Example:
 
-``` {.haskell}
+``` haskell
 {-#LANGUAGE RecordWildCards#-}
 
 import Faker
@@ -238,7 +238,7 @@ time. If you instead want to have a fixed seed, you should use
 
 ## listOf
 
-``` {.haskell}
+``` haskell
 λ> import Faker.Address
 λ> item <- generateNonDeterministic $ listOf 5 country
 λ> item
@@ -247,7 +247,7 @@ time. If you instead want to have a fixed seed, you should use
 
 ## oneOf
 
-``` {.haskell}
+``` haskell
 λ> item <- generate $ oneof [country, fullAddress]
 λ> item
 "Suite 599 599 Brakus Flat, South Mason, MT 59962-6876"
@@ -255,7 +255,7 @@ time. If you instead want to have a fixed seed, you should use
 
 ## suchThat
 
-``` {.shellsession}
+``` haskell
 λ> import qualified Faker.Address as AD
 λ> item :: Text <- generate $ suchThat AD.country (\x -> (T.length x > 5))
 λ> item
