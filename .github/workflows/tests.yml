@@ -19,10 +19,10 @@ jobs:
         - os: ubuntu-latest
           stack-yaml: stack.yaml
           resolver: nightly
-       - os: macos-latest
+        - os: macos-latest
           stack-yaml: stack.yaml
           resolver: nightly
-       - os: windows-latest
+        - os: windows-latest
           stack-yaml: stack.yaml
           resolver: nightly
         - os: ubuntu-latest
