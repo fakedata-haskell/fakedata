@@ -30,7 +30,11 @@ dependencies:
 - base >= 4.7 && < 5
 - aeson
 - random
-- text == 2.0.2
+- text == 1.2.5.0
+- deepseq == 1.4.8.1
+- ghc-prim == 0.10.0
+- parsec == 3.1.17.0
+- template-haskell == 2.20.0.0
 - exceptions
 - vector
 - yaml
@@ -39,7 +43,6 @@ dependencies:
 - unordered-containers
 - hashable
 - containers
-- template-haskell
 - bytestring
 - time
 - string-random == 0.1.4.3
