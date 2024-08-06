@@ -3,5 +3,8 @@ resolver: nightly
 packages:
   - . 
 
+extra-deps:
+  - string-random-0.1.4.3@sha256:4b3092568889e00b419093a1938f14a67743844bc86476ee5cb6f8827dc40545,2172
+
 nix:
   shell-file: shell.nix
