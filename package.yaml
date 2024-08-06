@@ -42,7 +42,7 @@ dependencies:
 - template-haskell
 - bytestring
 - time
-- string-random
+- string-random == 0.1.4.3
 - fakedata-parser
 - attoparsec
 - transformers
