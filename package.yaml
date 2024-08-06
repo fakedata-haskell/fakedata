@@ -30,6 +30,10 @@ dependencies:
 - base >= 4.7 && < 5
 - aeson
 - random
+- Cabal == 3.8.1.0
+- binary == 0.8.9.2
+- pretty == 1.1.3.6
+- process == 1.6.20.0
 - text == 1.2.5.0
 - deepseq == 1.4.8.1
 - ghc-prim == 0.10.0
@@ -38,13 +42,14 @@ dependencies:
 - exceptions
 - vector
 - yaml
-- directory
+- directory == 1.3.8.5
+- ghc-boot-th == 9.6.1
 - filepath
 - unordered-containers
 - hashable
-- containers
-- bytestring
-- time
+- containers == 0.7
+- bytestring == 0.12.1.0
+- time == 1.14
 - string-random == 0.1.4.3
 - fakedata-parser
 - attoparsec
