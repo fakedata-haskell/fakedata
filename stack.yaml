@@ -1,27 +1,5 @@
 resolver: nightly
 
-extra-deps:
-  - aeson
-  - attoparsec
-  - base
-  - bytestring
-  - containers
-  - directory
-  - exceptions
-  - fakedata-parser
-  - filepath
-  - hashable
-  - random
-  - string-random
-  - template-haskell
-  - text
-  - time
-  - transformers
-  - unordered-containers
-  - vector
-  - yaml
-
-
 packages:
   - . 
 
