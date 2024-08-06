@@ -20,7 +20,7 @@ jobs:
           stack-yaml: stack.yaml
           resolver: nightly
         - os: ubuntu-latest
-          stack-yaml: stack.yaml
+          stack-yaml: stack-lts-18.yaml
           resolver: lts-18
         - os: ubuntu-latest
           stack-yaml: stack-lts-16.yaml
@@ -29,28 +29,28 @@ jobs:
           stack-yaml: stack.yaml
           resolver: nightly
         - os: macos-latest
-          stack-yaml: stack.yaml
+          stack-yaml: stack-lts-18.yaml
           resolver: lts-18
         - os: macos-latest
           stack-yaml: stack-lts-16.yaml
           resolver: lts-16
         - os: windows-latest
           stack-yaml: stack.yaml
-          resolver: lts-18
+          resolver: nightly
         - os: ubuntu-latest
           stack-yaml: stack-lts-22.yaml
           resolver: lts-22
         - os: ubuntu-latest
-          stack-yaml: stack.yaml
+          stack-yaml: stack-lts-21.yaml
           resolver: lts-21
         - os: ubuntu-latest
-          stack-yaml: stack-lts-16.yaml
+          stack-yaml: stack-lts-20.yaml
           resolver: lts-20
         - os: macos-latest
           stack-yaml: stack.yaml
           resolver: nightly
         - os: macos-latest
-          stack-yaml: stack.yaml
+          stack-yaml: stack-lts-22.yaml
           resolver: lts-22
         - os: macos-latest
           stack-yaml: stack-lts-21.yaml
@@ -59,13 +59,13 @@ jobs:
           stack-yaml: stack-lts-20.yaml
           resolver: lts-20
         - os: windows-latest
-          stack-yaml: stack.yaml
+          stack-yaml: stack-lts-22.yaml
           resolver: lts-22
         - os: windows-latest
-          stack-yaml: stack.yaml
+          stack-yaml: stack-lts-21.yaml
           resolver: lts-21
         - os: windows-latest
-          stack-yaml: stack.yaml
+          stack-yaml: stack-lts-20.yaml
           resolver: lts-20
 
 
