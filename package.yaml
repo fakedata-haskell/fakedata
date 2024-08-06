@@ -30,7 +30,7 @@ dependencies:
 - base >= 4.7 && < 5
 - aeson
 - random
-- text
+- text == 2.0.2
 - exceptions
 - vector
 - yaml
