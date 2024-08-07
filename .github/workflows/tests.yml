@@ -25,19 +25,19 @@ jobs:
         - os: windows-latest
           stack-yaml: stack.yaml
           resolver: lts-22.32
-       - os: ubuntu-latest
+        - os: ubuntu-latest
           stack-yaml: stack-lts-21.yaml
           resolver: lts-21.25
         - os: ubuntu-latest
           stack-yaml: stack-lts-20.yaml
           resolver: lts-20.26
-       - os: macos-latest
+        - os: macos-latest
           stack-yaml: stack-lts-21.yaml
           resolver: lts-21.25
         - os: macos-latest
           stack-yaml: stack-lts-20.yaml
           resolver: lts-20.26
-       - os: windows-latest
+        - os: windows-latest
           stack-yaml: stack-lts-21.yaml
           resolver: lts-21.25
         - os: windows-latest
