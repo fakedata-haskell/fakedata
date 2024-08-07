@@ -27,33 +27,25 @@ category:            Random, Fake, FakeData
 description:         Please see the README on GitHub at <https://github.com/psibi/fakedata#readme>
 
 dependencies:
-- base >= 4.7 && < 5
-- aeson
-- random
-- Cabal
-- binary
-- pretty
-- process
-- text
-- deepseq
-- ghc-prim
-- parsec 
-- template-haskell
-- exceptions
-- vector
-- yaml
-- directory
-- ghc-boot-th
-- filepath
-- unordered-containers
-- hashable
-- containers
-- bytestring 
-- time
-- string-random 
-- fakedata-parser
-- attoparsec
-- transformers
+  - base >= 4.7 && < 5
+  - aeson
+  - random
+  - text
+  - exceptions
+  - vector
+  - yaml
+  - directory
+  - filepath
+  - unordered-containers
+  - hashable
+  - containers
+  - template-haskell
+  - bytestring
+  - time
+  - string-random
+  - fakedata-parser
+  - attoparsec
+  - transformers
 
 library:
   source-dirs: src
