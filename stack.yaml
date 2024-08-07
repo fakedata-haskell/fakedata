@@ -3,6 +3,12 @@ resolver: nightly
 packages:
   - . 
 
+allow-newer: true
+
+allow-newer-deps: 
+  - deepseq
+  - template-haskell
+
 extra-deps:
   - string-random-0.1.4.3@sha256:4b3092568889e00b419093a1938f14a67743844bc86476ee5cb6f8827dc40545,2172
   - text-2.0.2@sha256:71b5fa8c64d3c1fd0a08f993463220867b08290a2256e94b0952bf0e8f5a45cc,9905
