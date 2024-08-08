@@ -3,4 +3,6 @@
 stack.yaml.lock
 dist-newstyle/cache/config
 cabal.project.local
+dist-newstyle/cache/config
+dist/cabal-config-flags
 
