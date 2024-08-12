@@ -68,7 +68,7 @@ spec = do
               c2 <- country
               pure (c1, c2)
         fakeCountry <- generateWithSettings (setNonDeterministic defaultFakerSettings) someCountry
-        (fst fakeCountry) `shouldNotBe` (snd fakeCountry)  -- Provides random test failures here (i.e. the two values are actually equal). It uses `Config.localesEnDirectory` that is "faker/lib/locales/en" and `Config.fetchData` with data from file with "address" in its name in this directory. Such directory is not in the repository itself, probably it is created during compilation and installation of the package. The contents of the file are available at the link: https://hackage.haskell.org/package/fakedata-1.0.3/src/faker/lib/locales/en/address.yml There are rather many countries there, it is strange that they often coincide to fail the test here.
+        (fst fakeCountry) `shouldNotBe` (snd fakeCountry)  
       it "Equality of sequence" $ do
         let someCountry :: Fake (Text, Text)
             someCountry = do
