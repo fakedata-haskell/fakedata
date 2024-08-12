@@ -18,25 +18,33 @@ jobs:
         include:
         - os: ubuntu-latest
           stack-yaml: stack.yaml
-          resolver: nightly
-        - os: ubuntu-latest
-          stack-yaml: stack.yaml
-          resolver: lts-18
-        - os: ubuntu-latest
-          stack-yaml: stack-lts-16.yaml
-          resolver: lts-16
+          resolver: lts-22.32
         - os: macos-latest
           stack-yaml: stack.yaml
-          resolver: nightly
-        - os: macos-latest
-          stack-yaml: stack.yaml
-          resolver: lts-18
-        - os: macos-latest
-          stack-yaml: stack-lts-16.yaml
-          resolver: lts-16
+          resolver: lts-22.32
         - os: windows-latest
           stack-yaml: stack.yaml
-          resolver: lts-18
+          resolver: lts-22.32
+        - os: ubuntu-latest
+          stack-yaml: stack-lts-21.yaml
+          resolver: lts-21.25
+        - os: ubuntu-latest
+          stack-yaml: stack-lts-20.yaml
+          resolver: lts-20.26
+        - os: macos-latest
+          stack-yaml: stack-lts-21.yaml
+          resolver: lts-21.25
+        - os: macos-latest
+          stack-yaml: stack-lts-20.yaml
+          resolver: lts-20.26
+        - os: windows-latest
+          stack-yaml: stack-lts-21.yaml
+          resolver: lts-21.25
+        - os: windows-latest
+          stack-yaml: stack-lts-20.yaml
+          resolver: lts-20.26
+
+
 
     steps:
       - name: Clone project

@@ -1,8 +1,0 @@
-resolver: lts-16.31
-
-packages:
-- .
-
-extra-deps:
-- string-random-0.1.2.0@sha256:db4f801dec1ec72cba7d662b9774da60ff54de6d05478e94478d6d730dc5034f,2439
-- fakedata-parser-0.1.0.0

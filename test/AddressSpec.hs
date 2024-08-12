@@ -68,7 +68,7 @@ spec = do
               c2 <- country
               pure (c1, c2)
         fakeCountry <- generateWithSettings (setNonDeterministic defaultFakerSettings) someCountry
-        (fst fakeCountry) `shouldNotBe` (snd fakeCountry)
+        (fst fakeCountry) `shouldNotBe` (snd fakeCountry)  
       it "Equality of sequence" $ do
         let someCountry :: Fake (Text, Text)
             someCountry = do
