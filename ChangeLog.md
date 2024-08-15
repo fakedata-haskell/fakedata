@@ -1,5 +1,11 @@
 # Changelog for fakedata
 
+## 1.0.4
+
+* Only generate fake email domains with alphanumeric characters and hyphens. [#53](https://github.com/fakedata-haskell/fakedata/pull/53)
+
+Updated according to jezen's pull-request with his permission. 
+
 ## 1.0.3
 
 * [Make the `Fake` type synonym partially applied](https://github.com/fakedata-haskell/fakedata/pull/45)

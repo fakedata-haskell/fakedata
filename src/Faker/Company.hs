@@ -17,7 +17,8 @@ module Faker.Company
   ) where
 
 import Data.Monoid ((<>))
-import Data.Text
+import Data.Text (Text)
+import qualified Data.Text as T 
 import qualified Data.Vector as V
 import Faker
 import Faker.Internal
@@ -44,7 +45,7 @@ bs =
   Fake
     (\settings -> do
        vec :: V.Vector (V.Vector Text) <- companyBsProvider settings
-       let item :: V.Vector (IO Text) = V.map (\v -> rvec settings v) vec
+       let item :: V.Vector (IO Text) = V.map (rvec settings) vec
            item' :: IO (V.Vector Text) = sequence item
        items <- item'
        let txt = V.foldl1' (\a b -> a <> " " <> b) items
@@ -72,27 +73,31 @@ domain :: Fake Text
 domain = do
   suffix <- F.domainSuffix
   companyName <- name
-  pure $ fixupName companyName <> "." <> suffix
+  pure $ sanitise companyName <> "." <> suffix
+  where
+  -- Replaces spaces with hyphens and filters out anything that isn't an
+  -- alphanumeric character or a hyphen, so the domain has a better chance of
+  -- conforming to RFC 1035.
+  --
+  -- See: https://datatracker.ietf.org/doc/html/rfc1035#section-2.3.1
+  sanitise :: Text -> Text
+  sanitise = T.filter (\c -> isAlphaNum c || c == '-') . T.replace " " "-"
 
 -- | Generates an email like "jappie_klooster@crazychairauction.com"
 --
 -- @since 0.8.1
---
 email :: Fake Text
 email = do
   humanName <-  F.name
   number <- F.fromRange @Int (0, 999999999) -- reasonable uniqueness
   domainName <- domain
   let numText :: Text
-      numText = pack $ show number
-  pure $ fixupName humanName <> "-" <> numText <> "@" <> domainName
-
--- | Ensures the spaces are replaced by "_",
---   and no special characters are in the name.
---   So "Elizabeth Warder!" becomes "Elizabeth_Warder".
---   Any fancy symbols such as "!@#$" etc are filtered out.
---
--- @since 0.8.1
---
-fixupName :: Text -> Text
-fixupName = Data.Text.filter (\c -> isAlphaNum c || c == '_') . replace " " "_"
+      numText = T.pack $ show number
+  pure $ sanitise humanName <> "-" <> numText <> "@" <> domainName
+  where
+  -- Ensures the spaces are replaced by "_",
+  -- and no special characters are in the name.
+  -- So "Elizabeth Warder!" becomes "Elizabeth_Warder".
+  -- Any fancy symbols such as "!@#$" etc are filtered out.
+  sanitise :: Text -> Text
+  sanitise = T.filter (\c -> isAlphaNum c || c == '_') . T.replace " " "_"

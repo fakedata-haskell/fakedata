@@ -213,7 +213,7 @@ fakeQuickcheck f = do
             f
 
 isDomain :: Text -> Bool
-isDomain = (=~ "^[A-Za-z_]+\\.[a-z]{1,4}$") . T.unpack
+isDomain = (=~ "^[A-Za-z]{1,}[A-Za-z-]{0,}\\.[a-z]{1,4}$") . T.unpack -- Added to possible domain name also a hyphen inside. According to https://stackoverflow.com/questions/3697202/including-a-hyphen-in-a-regex-character-bracket this should be sufficient. Removed underscore as a possible symbol according to: https://datatracker.ietf.org/doc/html/rfc1035#section-2.3.1 Added check for the first letter character in the domain name.
 
 isName :: Text -> Bool
 isName = (=~ "^[A-Za-z_]+$") . T.unpack
