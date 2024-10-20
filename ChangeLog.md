@@ -1,10 +1,14 @@
 # Changelog for fakedata
 
+## 1.0.5
+
+- Fix missing data files.
+
 ## 1.0.4
 
 * Only generate fake email domains with alphanumeric characters and hyphens. [#53](https://github.com/fakedata-haskell/fakedata/pull/53)
 
-Updated according to jezen's pull-request with his permission. 
+Updated according to jezen's pull-request with his permission.
 
 ## 1.0.3
 
