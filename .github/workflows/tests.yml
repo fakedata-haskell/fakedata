@@ -17,34 +17,8 @@ jobs:
       matrix:
         include:
         - os: ubuntu-latest
-          stack-yaml: stack.yaml
-          resolver: lts-22.32
         - os: macos-latest
-          stack-yaml: stack.yaml
-          resolver: lts-22.32
         - os: windows-latest
-          stack-yaml: stack.yaml
-          resolver: lts-22.32
-        - os: ubuntu-latest
-          stack-yaml: stack-lts-21.yaml
-          resolver: lts-21.25
-        - os: ubuntu-latest
-          stack-yaml: stack-lts-20.yaml
-          resolver: lts-20.26
-        - os: macos-latest
-          stack-yaml: stack-lts-21.yaml
-          resolver: lts-21.25
-        - os: macos-latest
-          stack-yaml: stack-lts-20.yaml
-          resolver: lts-20.26
-        - os: windows-latest
-          stack-yaml: stack-lts-21.yaml
-          resolver: lts-21.25
-        - os: windows-latest
-          stack-yaml: stack-lts-20.yaml
-          resolver: lts-20.26
-
-
 
     steps:
       - name: Clone project
@@ -69,4 +43,4 @@ jobs:
             if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
                 curl -sSL https://get.haskellstack.org/ | sh -s - -f
             fi
-            stack test --fast --no-terminal --stack-yaml=${{ matrix.stack-yaml }} --resolver=${{ matrix.resolver }}
+            stack test --fast --no-terminal
