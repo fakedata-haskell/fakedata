@@ -43,4 +43,5 @@ jobs:
             if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
                 curl -sSL https://get.haskellstack.org/ | sh -s - -f
             fi
+            stack update
             stack test --fast --no-terminal
