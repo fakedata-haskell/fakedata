@@ -22,19 +22,19 @@ jobs:
 
     steps:
       - name: Clone project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           submodules: 'true'
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v6
         with:
           path: |
             ~/.stack
             ${{ github.workspace }}/.stack
-          key: ${{ runner.os }}-${{ matrix.resolver }}-haskell-${{ hashFiles('stack.yaml') }}
+          key: ${{ runner.os }}-haskell-${{ hashFiles('stack.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.resolver }}-haskell-
+            ${{ runner.os }}-haskell-
 
       - name: Build and run tests
         shell: bash
