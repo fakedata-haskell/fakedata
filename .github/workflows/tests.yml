@@ -17,50 +17,24 @@ jobs:
       matrix:
         include:
         - os: ubuntu-latest
-          stack-yaml: stack.yaml
-          resolver: lts-22.32
         - os: macos-latest
-          stack-yaml: stack.yaml
-          resolver: lts-22.32
         - os: windows-latest
-          stack-yaml: stack.yaml
-          resolver: lts-22.32
-        - os: ubuntu-latest
-          stack-yaml: stack-lts-21.yaml
-          resolver: lts-21.25
-        - os: ubuntu-latest
-          stack-yaml: stack-lts-20.yaml
-          resolver: lts-20.26
-        - os: macos-latest
-          stack-yaml: stack-lts-21.yaml
-          resolver: lts-21.25
-        - os: macos-latest
-          stack-yaml: stack-lts-20.yaml
-          resolver: lts-20.26
-        - os: windows-latest
-          stack-yaml: stack-lts-21.yaml
-          resolver: lts-21.25
-        - os: windows-latest
-          stack-yaml: stack-lts-20.yaml
-          resolver: lts-20.26
-
-
 
     steps:
       - name: Clone project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           submodules: 'true'
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v6
         with:
           path: |
             ~/.stack
             ${{ github.workspace }}/.stack
-          key: ${{ runner.os }}-${{ matrix.resolver }}-haskell-${{ hashFiles('stack.yaml') }}
+          key: ${{ runner.os }}-haskell-${{ hashFiles('stack.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.resolver }}-haskell-
+            ${{ runner.os }}-haskell-
 
       - name: Build and run tests
         shell: bash
@@ -69,4 +43,5 @@ jobs:
             if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
                 curl -sSL https://get.haskellstack.org/ | sh -s - -f
             fi
-            stack test --fast --no-terminal --stack-yaml=${{ matrix.stack-yaml }} --resolver=${{ matrix.resolver }}
+            stack update
+            stack test --fast --no-terminal
